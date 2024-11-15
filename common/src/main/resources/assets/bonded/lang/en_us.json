@@ -1,0 +1,13 @@
+{
+  "bonded.configuration.title": "Bonded",
+
+  "bonded.configuration.section.bonded.common.toml.title": "Bonded Common",
+  "bonded.configuration.section.bonded.common.toml": "Common Config",
+
+  "bonded.config.upgrading_enabled": "Enable Gear Upgrades",
+  "bonded.config.upgrading_enabled.tooltip": "If enabled players can upgrade gear on tool benches when the gear reaches max level.",
+  "bonded.config.repairing_enabled": "Enable Gear Repairing",
+  "bonded.config.repairing_enabled.tooltip": "If enabled players can repair gear on repair benches.",
+  "bonded.config.levels_to_upgrade": "Max Gear Level",
+  "bonded.config.levels_to_upgrade.tooltip": "To what level a gear can level. Once a gear is max level it can be upgraded."
+}
