@@ -13,6 +13,7 @@ public class BondedCommonConfig {
     public final ModConfigSpec.ConfigValue<Double> armorDamageTakenExperienceGainedMultiplier;
     public final ModConfigSpec.ConfigValue<Double> durabilityGainedOnRepairBench;
     public final ModConfigSpec.ConfigValue<Integer> experienceForMiningOres;
+    public final ModConfigSpec.ConfigValue<Boolean> sendChatMessages;
 
 //    public final ModConfigSpec.ConfigValue<Boolean> tooltipsEnabled;
 
@@ -51,5 +52,8 @@ public class BondedCommonConfig {
 
         experienceForMiningOres = builder.translation("bonded.config.experience_for_mining_ores")
                 .defineInRange("experience_for_mining_ores", 10, 1, 10);
+
+        sendChatMessages =
+                builder.translation("bonded.config.send_chat_messages").define("send_chat_messages", true);
     }
 }

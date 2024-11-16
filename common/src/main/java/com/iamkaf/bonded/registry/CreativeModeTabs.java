@@ -16,7 +16,7 @@ public class CreativeModeTabs {
     public static final RegistrySupplier<CreativeModeTab> BONDED = TABS.register(
             Bonded.MOD_ID,
             () -> CreativeTabRegistry.create(Component.translatable("creativetab." + Bonded.MOD_ID + "." + Bonded.MOD_ID),
-                    () -> new ItemStack(Items.EXAMPLE_ITEM.get())
+                    () -> new ItemStack(Blocks.TOOL_BENCH_ITEM.get())
             )
     );
 

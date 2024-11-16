@@ -1,23 +1,20 @@
 package com.iamkaf.bonded.leveling;
 
+import com.iamkaf.amber.api.inventory.ItemHelper;
 import com.iamkaf.bonded.Bonded;
 import com.iamkaf.bonded.component.ItemLevelContainer;
-import com.iamkaf.bonded.leveling.types.GearTypeLeveler;
-import com.iamkaf.bonded.registry.BlockExperienceRegistry;
-import com.iamkaf.bonded.registry.BondBonusRegistry;
-import com.iamkaf.bonded.registry.DataComponents;
-import com.iamkaf.bonded.registry.GearTypeLevelerRegistry;
+import com.iamkaf.bonded.leveling.levelers.GearTypeLeveler;
+import com.iamkaf.bonded.registry.*;
 import com.mojang.logging.LogUtils;
 import dev.architectury.event.events.common.LifecycleEvent;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
-import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
@@ -26,32 +23,42 @@ import java.util.Optional;
 
 public class GearManager {
     public static final Logger LOGGER = LogUtils.getLogger();
-
     public static GearTypeLevelerRegistry gearTypeLevelerRegistry = new GearTypeLevelerRegistry();
     public static BondBonusRegistry bondBonusRegistry = new BondBonusRegistry();
     public static BlockExperienceRegistry blockExperienceRegistry = new BlockExperienceRegistry();
+    private static boolean READY = false;
 
     public GearManager() {
         LifecycleEvent.SERVER_LEVEL_LOAD.register(GearManager::loadGearRegistries);
     }
 
     private static void loadGearRegistries(ServerLevel serverLevel) {
+        if (READY) return;
         LOGGER.info("Now loading leveling registries...");
-        Registry<Block> registry = serverLevel.registryAccess().registryOrThrow(Registries.BLOCK);
-        Optional<HolderSet.Named<Block>> ores = registry.getTag(TagKey.create(Registries.BLOCK,
-                ResourceLocation.fromNamespaceAndPath("c", "ores")
-        ));
+        READY = true;
+
+        Registry<Block> blockRegistry = serverLevel.registryAccess().registryOrThrow(Registries.BLOCK);
+        Optional<HolderSet.Named<Block>> ores = blockRegistry.getTag(Tags.ORES);
         ores.ifPresent(holders -> {
-            LOGGER.info("Found {} ores", holders.size());
-            holders.stream().forEach(blockHolder -> blockExperienceRegistry.blocks.add(
-                    blockHolder.value(),
-                    Bonded.CONFIG.experienceForMiningOres.get()
-            ));
+            LOGGER.info("Found {} ores [{}]", holders.size(), Tags.ORES.location());
+            holders.stream()
+                    .forEach(blockHolder -> blockExperienceRegistry.blocks.add(blockHolder.value(),
+                            Bonded.CONFIG.experienceForMiningOres.get()
+                    ));
         });
 
-        // TODO: add gear types using tags
-        // TODO: add gear bonuses
-        throw new NotImplementedException("implement me kaf!!!!!!!! ♥");
+        Registry<Item> itemRegistry = serverLevel.registryAccess().registryOrThrow(Registries.ITEM);
+
+        for (var type : gearTypeLevelerRegistry.gearTypeLevelers()) {
+            TagKey<Item> tag = type.tag();
+            Optional<HolderSet.Named<Item>> items = itemRegistry.getTag(tag);
+            items.ifPresent(holders -> {
+                LOGGER.info("Found {} {} [{}]", holders.size(), type.name(), tag.location());
+                holders.stream()
+                        .forEach(itemHolder -> gearTypeLevelerRegistry.add(itemHolder.value()
+                                .arch$registryName(), type));
+            });
+        }
     }
 
     public ItemStack initComponent(ItemStack gear) {
@@ -66,6 +73,10 @@ public class GearManager {
         ItemLevelContainer container = gear.get(DataComponents.ITEM_LEVEL_CONTAINER.get());
 
         if (container != null) {
+            var bonuses = bondBonusRegistry.getModifiersForItem(gear, getLeveler(gear), container);
+            for (var bonus : bonuses) {
+                ItemHelper.addModifier(gear, bonus.attribute(), bonus.modifier(), bonus.equipmentSlotGroup());
+            }
             return gear;
         }
 

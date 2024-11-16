@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "A": {
+      "tag": "minecraft:planks"
+    },
+    "B": {
+      "tag": "minecraft:logs"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "A A",
+    "B B"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bonded:tool_bench"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "bonded:block/tool_bench"
+    }
+  }
+}

@@ -6,7 +6,9 @@ import com.iamkaf.amber.api.player.FeedbackHelper;
 import com.iamkaf.bonded.Bonded;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -63,6 +65,19 @@ public class RepairBenchBlock extends Block {
                 SoundEvents.ANVIL_PLACE,
                 SoundSource.BLOCKS
         );
+        if (level instanceof ServerLevel serverLevel) {
+            serverLevel.sendParticles(
+                    ParticleTypes.SMOKE,
+                    pos.getX() + 0.5d,
+                    pos.getY() + 1,
+                    pos.getZ() + 0.5d,
+                    10,
+                    0.01d,
+                    0.5d,
+                    0.01d,
+                    0.05d
+            );
+        }
         return ItemInteractionResult.SUCCESS;
     }
 

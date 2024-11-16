@@ -2,6 +2,8 @@ package com.iamkaf.bonded.util;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FireworkRocketEntity;
 import net.minecraft.world.item.ItemStack;
@@ -49,5 +51,17 @@ public class ItemUtils {
             return null;
         }
         return tryToFindStack(player, new ItemStack(Items.CROSSBOW));
+    }
+
+    public static EquipmentSlotGroup slotToSlotGroup(EquipmentSlot slot) {
+        return switch (slot) {
+            case MAINHAND -> EquipmentSlotGroup.MAINHAND;
+            case OFFHAND -> EquipmentSlotGroup.OFFHAND;
+            case FEET -> EquipmentSlotGroup.FEET;
+            case LEGS -> EquipmentSlotGroup.LEGS;
+            case CHEST -> EquipmentSlotGroup.CHEST;
+            case HEAD -> EquipmentSlotGroup.HEAD;
+            case BODY -> EquipmentSlotGroup.BODY;
+        };
     }
 }

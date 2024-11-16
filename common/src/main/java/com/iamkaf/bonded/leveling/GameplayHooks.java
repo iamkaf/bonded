@@ -5,6 +5,7 @@ import com.iamkaf.amber.api.inventory.ItemHelper;
 import com.iamkaf.bonded.Bonded;
 import com.iamkaf.bonded.api.event.BondEvent;
 import com.iamkaf.bonded.api.event.GameEvents;
+import com.iamkaf.bonded.component.ItemLevelContainer;
 import com.iamkaf.bonded.registry.DataComponents;
 import com.iamkaf.bonded.util.ItemUtils;
 import dev.architectury.event.EventResult;
@@ -13,8 +14,11 @@ import dev.architectury.event.events.common.EntityEvent;
 import dev.architectury.event.events.common.PlayerEvent;
 import dev.architectury.utils.value.IntValue;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -33,7 +37,34 @@ public class GameplayHooks {
         PlayerEvent.PICKUP_ITEM_POST.register(GameplayHooks::onItemPickedUp);
         GameEvents.SHIELD_BLOCK.register(GameplayHooks::onDamageBlockedByShield);
         EntityEvent.LIVING_HURT.register(GameplayHooks::onEntityHurt);
+        BondEvent.ITEM_LEVELED_UP.register(GameplayHooks::onItemLeveledUp);
         // TODO: add wood stripping xp, shovel pathing xp and hoe hoeing xp
+    }
+
+    private static void onItemLeveledUp(ItemStack stack, Player player, ItemLevelContainer container,
+            Integer integer) {
+        var itemLevel = stack.get(DataComponents.ITEM_LEVEL_CONTAINER.get()).getLevel();
+        var level = player.level();
+
+        Integer maxLevel = Bonded.CONFIG.levelsToUpgrade.get();
+
+        level.playSound(null,
+                player.getX(),
+                player.getY(),
+                player.getZ(),
+                itemLevel == maxLevel ? SoundEvents.PLAYER_LEVELUP : SoundEvents.EXPERIENCE_ORB_PICKUP,
+                SoundSource.PLAYERS
+        );
+
+        if (!Bonded.CONFIG.sendChatMessages.get()) {
+            return;
+        }
+
+        String message =
+                (itemLevel == maxLevel ? "§eMax Level! §f" : "§aLevel Up! §f") + stack.getDisplayName()
+                        .getString() + " §6+" + itemLevel;
+
+        player.sendSystemMessage(Component.literal(message));
     }
 
     private static void emitProgressEvents(ItemStack item, Player player, int experienceAmount) {
@@ -93,11 +124,11 @@ public class GameplayHooks {
     }
 
     private static void onItemCrafted(Player player, ItemStack stack, Container container) {
-        Bonded.GEAR.initComponent(stack);
+        player.getInventory().items.forEach(item -> Bonded.GEAR.initComponent(item));
     }
 
     private static void onItemPickedUp(Player player, ItemEntity itemEntity, ItemStack stack) {
-        Bonded.GEAR.initComponent(stack);
+        player.getInventory().items.forEach(item -> Bonded.GEAR.initComponent(item));
     }
 
     private static void onDamageBlockedByShield(Player pl, Float damage) {
@@ -105,8 +136,7 @@ public class GameplayHooks {
             var shield = ItemUtils.findShield(player);
             if (shield == null) return;
 
-            emitProgressEvents(
-                    shield,
+            emitProgressEvents(shield,
                     player,
                     (int) ((damage + 1) * Bonded.CONFIG.armorDamageTakenExperienceGainedMultiplier.get())
             );
@@ -143,8 +173,7 @@ public class GameplayHooks {
                 handItem.getItem() instanceof SwordItem || handItem.getItem() instanceof AxeItem || handItem.getItem() instanceof TridentItem;
 
         if (isMeleeWeapon) {
-            emitProgressEvents(
-                    handItem,
+            emitProgressEvents(handItem,
                     player,
                     (int) (amount * Bonded.CONFIG.weaponDamageDealtExperienceGainedMultiplier.get())
             );
@@ -154,8 +183,7 @@ public class GameplayHooks {
         boolean isProjectile = source.getDirectEntity() instanceof Projectile;
         if (isRangedWeapon && isProjectile) {
             ItemStack foundBow = ItemUtils.tryToFindStack(player, handItem);
-            emitProgressEvents(
-                    foundBow,
+            emitProgressEvents(foundBow,
                     player,
                     (int) (amount * Bonded.CONFIG.weaponDamageDealtExperienceGainedMultiplier.get())
             );
@@ -165,8 +193,7 @@ public class GameplayHooks {
 
         for (var slot : playerArmorSlots) {
             if (!Bonded.GEAR.isGear(slot)) continue;
-            emitProgressEvents(
-                    slot,
+            emitProgressEvents(slot,
                     player,
                     (int) ((amount * Bonded.CONFIG.weaponDamageDealtExperienceGainedMultiplier.get()) + 1)
             );
@@ -180,8 +207,7 @@ public class GameplayHooks {
 
         for (var slot : playerArmorSlots) {
             if (!Bonded.GEAR.isGear(slot)) continue;
-            emitProgressEvents(
-                    slot,
+            emitProgressEvents(slot,
                     player,
                     Bonded.CONFIG.armorDamageTakenExperienceGainedMultiplier.get().intValue()
             );

@@ -1,12 +1,16 @@
 package com.iamkaf.bonded;
 
 import com.iamkaf.amber.api.core.AmberMod;
+import com.iamkaf.bonded.api.event.BondEvent;
 import com.iamkaf.bonded.api.event.GameEvents;
+import com.iamkaf.bonded.bonuses.Bonuses;
 import com.iamkaf.bonded.config.BondedCommonConfig;
 import com.iamkaf.bonded.leveling.GameplayHooks;
 import com.iamkaf.bonded.leveling.GearManager;
+import com.iamkaf.bonded.leveling.levelers.Levelers;
 import com.iamkaf.bonded.registry.Blocks;
 import com.iamkaf.bonded.registry.CreativeModeTabs;
+import com.iamkaf.bonded.registry.DataComponents;
 import com.iamkaf.bonded.registry.Items;
 import com.mojang.logging.LogUtils;
 import net.minecraft.resources.ResourceLocation;
@@ -43,8 +47,11 @@ public class Bonded extends AmberMod {
         // Registries
         Items.init();
         Blocks.init();
+        DataComponents.init();
         CreativeModeTabs.init();
         GameplayHooks.init();
+        Levelers.init();
+        Bonuses.init();
     }
 
     /**
