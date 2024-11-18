@@ -82,8 +82,7 @@ public class ToolBenchBlock extends Block {
                 SoundSource.BLOCKS
         );
         if (level instanceof ServerLevel serverLevel) {
-            serverLevel.sendParticles(
-                    ParticleTypes.SMOKE,
+            serverLevel.sendParticles(ParticleTypes.SMOKE,
                     pos.getX() + 0.5d,
                     pos.getY() + 1,
                     pos.getZ() + 0.5d,
@@ -99,6 +98,10 @@ public class ToolBenchBlock extends Block {
 
     private boolean shouldHandle(Level level, Player player, InteractionHand hand) {
         if (level.isClientSide || !hand.equals(InteractionHand.MAIN_HAND)) {
+            return false;
+        }
+
+        if (!Bonded.CONFIG.enableUpgrading.get()) {
             return false;
         }
 
@@ -125,8 +128,8 @@ public class ToolBenchBlock extends Block {
     }
 
     @Override
-    protected @NotNull InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player,
-            BlockHitResult hitResult) {
+    protected @NotNull InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
+            Player player, BlockHitResult hitResult) {
         if (level.isClientSide) {
             return InteractionResult.SUCCESS;
         } else {

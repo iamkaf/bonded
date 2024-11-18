@@ -25,5 +25,9 @@ public class ModItemTagProvider extends ItemTagsProvider {
                 .addTag(ItemTags.AXES)
                 .addTag(ItemTags.SHOVELS)
                 .addTag(ItemTags.HOES);
+        tag(Tags.UTILITY_EQUIPMENT).addTag(Tags.FISHING_RODS)
+                .addTag(Tags.BRUSHES)
+                .addTag(Tags.IGNITERS)
+                .addTag(Tags.SHEARS);
     }
 }

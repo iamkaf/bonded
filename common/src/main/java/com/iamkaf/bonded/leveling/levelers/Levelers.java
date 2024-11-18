@@ -8,5 +8,6 @@ public class Levelers {
         GearManager.gearTypeLevelerRegistry.register(new MeleeWeaponsLeveler());
         GearManager.gearTypeLevelerRegistry.register(new RangedWeaponsLeveler());
         GearManager.gearTypeLevelerRegistry.register(new MiningToolsLeveler());
+        GearManager.gearTypeLevelerRegistry.register(new UtilityToolLeveler());
     }
 }

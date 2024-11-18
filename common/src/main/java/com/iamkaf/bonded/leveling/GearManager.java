@@ -102,16 +102,6 @@ public class GearManager {
         return container.getExperience() >= container.getMaxExperience();
     }
 
-    public boolean isUpgradable(ItemStack gear) {
-        GearTypeLeveler leveler = getLeveler(gear);
-
-        if (leveler != null) {
-            return leveler.isUpgradable(gear);
-        }
-
-        return false;
-    }
-
     private int getMaxExperienceForItemType(ItemStack gear) {
         GearTypeLeveler leveler = getLeveler(gear);
 
@@ -120,15 +110,6 @@ public class GearManager {
         }
 
         return Bonded.CONFIG.defaultMaxExperienceForUnknownItems.get();
-    }
-
-    public ItemStack upgrade(ItemStack gear) {
-        GearTypeLeveler leveler = getLeveler(gear);
-
-        if (leveler != null) {
-            return leveler.transmuteUpgrade(gear);
-        }
-        return gear;
     }
 
     public @Nullable GearTypeLeveler getLeveler(ItemStack gear) {

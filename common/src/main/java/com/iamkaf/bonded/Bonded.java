@@ -1,7 +1,6 @@
 package com.iamkaf.bonded;
 
 import com.iamkaf.amber.api.core.AmberMod;
-import com.iamkaf.bonded.api.event.BondEvent;
 import com.iamkaf.bonded.api.event.GameEvents;
 import com.iamkaf.bonded.bonuses.Bonuses;
 import com.iamkaf.bonded.config.BondedCommonConfig;

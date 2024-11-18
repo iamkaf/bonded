@@ -86,6 +86,10 @@ public class RepairBenchBlock extends Block {
             return false;
         }
 
+        if (!Bonded.CONFIG.enableRepairing.get()) {
+            return false;
+        }
+
         var handItem = player.getMainHandItem();
 
         if (!handItem.isDamaged()) {

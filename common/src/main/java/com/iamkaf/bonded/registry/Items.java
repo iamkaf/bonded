@@ -2,7 +2,6 @@ package com.iamkaf.bonded.registry;
 
 import com.iamkaf.bonded.Bonded;
 import dev.architectury.registry.registries.DeferredRegister;
-import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Item;
 
