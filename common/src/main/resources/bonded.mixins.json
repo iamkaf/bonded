@@ -9,6 +9,7 @@
     "ShieldItemMixin"
   ],
   "mixins": [
+    "SmithingMenuMixin"
   ],
   "injectors": {
     "defaultRequire": 1

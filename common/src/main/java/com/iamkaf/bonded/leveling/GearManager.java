@@ -73,16 +73,15 @@ public class GearManager {
         ItemLevelContainer container = gear.get(DataComponents.ITEM_LEVEL_CONTAINER.get());
 
         if (container != null) {
-            var bonuses = bondBonusRegistry.getModifiersForItem(gear, getLeveler(gear), container);
-            for (var bonus : bonuses) {
-                ItemHelper.addModifier(gear, bonus.attribute(), bonus.modifier(), bonus.equipmentSlotGroup());
-            }
+            bondBonusRegistry.applyBonuses(gear, getLeveler(gear), container);
             return gear;
         }
 
         int maxExperience = getMaxExperienceForItemType(gear);
 
-        gear.set(DataComponents.ITEM_LEVEL_CONTAINER.get(), ItemLevelContainer.make(maxExperience));
+        ItemLevelContainer newContainer = ItemLevelContainer.make(maxExperience);
+        gear.set(DataComponents.ITEM_LEVEL_CONTAINER.get(), newContainer);
+        bondBonusRegistry.applyBonuses(gear, getLeveler(gear), newContainer);
 
         return gear;
     }

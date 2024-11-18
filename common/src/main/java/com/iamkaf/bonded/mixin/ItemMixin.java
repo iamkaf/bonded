@@ -23,7 +23,7 @@ public class ItemMixin {
             "appendHoverText(Lnet/minecraft/world/item/ItemStack;" + "Lnet/minecraft/world/item" +
                     "/Item$TooltipContext;Ljava/util/List;" + "Lnet/minecraft/world/item/TooltipFlag;)V",
             at = @At("HEAD"))
-    public void addItemLevelToTooltip(ItemStack stack, Item.TooltipContext context,
+    public void bonded$addItemLevelToTooltip(ItemStack stack, Item.TooltipContext context,
             List<Component> tooltipComponents, TooltipFlag tooltipFlag, CallbackInfo ci) {
         if (!Bonded.CONFIG.enableTooltips.get()) {
             return;

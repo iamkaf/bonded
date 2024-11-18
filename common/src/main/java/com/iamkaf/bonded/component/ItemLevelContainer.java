@@ -40,10 +40,6 @@ public class ItemLevelContainer {
         this.bond = bond;
     }
 
-    public static ItemLevelContainer make() {
-        return new ItemLevelContainer(0, 100, 1, 0);
-    }
-
     public static ItemLevelContainer make(int maxExperience) {
         return new ItemLevelContainer(0, maxExperience, 1, 0);
     }

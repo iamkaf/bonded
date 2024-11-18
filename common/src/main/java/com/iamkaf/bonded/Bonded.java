@@ -7,10 +7,7 @@ import com.iamkaf.bonded.config.BondedCommonConfig;
 import com.iamkaf.bonded.leveling.GameplayHooks;
 import com.iamkaf.bonded.leveling.GearManager;
 import com.iamkaf.bonded.leveling.levelers.Levelers;
-import com.iamkaf.bonded.registry.Blocks;
-import com.iamkaf.bonded.registry.CreativeModeTabs;
-import com.iamkaf.bonded.registry.DataComponents;
-import com.iamkaf.bonded.registry.Items;
+import com.iamkaf.bonded.registry.*;
 import com.mojang.logging.LogUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
@@ -51,6 +48,7 @@ public class Bonded extends AmberMod {
         GameplayHooks.init();
         Levelers.init();
         Bonuses.init();
+        TierMap.init();
     }
 
     /**

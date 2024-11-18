@@ -16,17 +16,24 @@ public class ArmorHealthBonus5k1Heart implements BondBonus {
     private static final float BONUS = 2f;
 
     @Override
+    public ResourceLocation id() {
+        return ID;
+    }
+
+    @Override
     public boolean shouldApply(ItemStack gear, GearTypeLeveler gearType, ItemLevelContainer container) {
         return gear.getItem() instanceof ArmorItem && container.getBond() >= 5000;
     }
 
     @Override
-    public AttributeModifierHolder getBonus(ItemStack gear, GearTypeLeveler gearTypeLeveler,
+    public AttributeModifierHolder getAttributeModifiers(ItemStack gear, GearTypeLeveler gearTypeLeveler,
             ItemLevelContainer container) {
         ArmorItem item = (ArmorItem) gear.getItem();
         return new AttributeModifierHolder(
                 Attributes.MAX_HEALTH,
-                new AttributeModifier(ID, BONUS, AttributeModifier.Operation.ADD_VALUE),
+                new AttributeModifier(Bonded.resource(ID.getPath() + "_" + item.getEquipmentSlot()
+                        .toString()
+                        .toLowerCase()), BONUS, AttributeModifier.Operation.ADD_VALUE),
                 ItemUtils.slotToSlotGroup(item.getEquipmentSlot())
         );
     }

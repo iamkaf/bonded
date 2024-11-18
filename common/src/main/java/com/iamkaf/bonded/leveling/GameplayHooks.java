@@ -7,6 +7,7 @@ import com.iamkaf.bonded.api.event.BondEvent;
 import com.iamkaf.bonded.api.event.GameEvents;
 import com.iamkaf.bonded.component.ItemLevelContainer;
 import com.iamkaf.bonded.registry.DataComponents;
+import com.iamkaf.bonded.registry.TierMap;
 import com.iamkaf.bonded.util.ItemUtils;
 import dev.architectury.event.CompoundEventResult;
 import dev.architectury.event.EventResult;
@@ -15,6 +16,7 @@ import dev.architectury.event.events.common.EntityEvent;
 import dev.architectury.event.events.common.PlayerEvent;
 import dev.architectury.utils.value.IntValue;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -31,10 +33,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 public class GameplayHooks {
     public static void init() {
         BlockEvent.BREAK.register(GameplayHooks::onBlockBreak);
         PlayerEvent.CRAFT_ITEM.register(GameplayHooks::onItemCrafted);
+        GameEvents.MODIFY_SMITHING_RESULT.register(GameplayHooks::onItemSmithed);
         PlayerEvent.PICKUP_ITEM_POST.register(GameplayHooks::onItemPickedUp);
         GameEvents.SHIELD_BLOCK.register(GameplayHooks::onDamageBlockedByShield);
         EntityEvent.LIVING_HURT.register(GameplayHooks::onEntityHurt);
@@ -84,7 +89,7 @@ public class GameplayHooks {
             return;
         }
 
-        var newExperienceAmount = result.object() == null ? result.object() : experienceAmount;
+        var newExperienceAmount = result.object() != null ? result.object() : experienceAmount;
 
         boolean hasLeveled = Bonded.GEAR.giveItemExperience(gear, newExperienceAmount);
         if (hasLeveled) {
@@ -128,6 +133,27 @@ public class GameplayHooks {
 
     private static void onItemCrafted(Player player, ItemStack stack, Container container) {
         player.getInventory().items.forEach(item -> Bonded.GEAR.initComponent(item));
+    }
+
+    private static void onItemSmithed(ItemStack stack, List<ItemStack> relevantItems) {
+        DataComponentType<ItemLevelContainer> component = DataComponents.ITEM_LEVEL_CONTAINER.get();
+        var container = stack.get(component);
+
+        boolean isNetheriteUpgrade = relevantItems.stream()
+                .anyMatch(stack1 -> stack1.is(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE));
+        // this is kind of risky but will increase mod compat
+        boolean isCompat = relevantItems.stream()
+                .anyMatch(stack1 -> stack1.getItem()
+                        .arch$registryName()
+                        .getPath()
+                        .contains("upgrade_smithing_template"));
+
+        if (container != null && (isNetheriteUpgrade || isCompat)) {
+            stack.set(component,
+                    ItemLevelContainer.make(TierMap.getExperienceCap(stack.getItem()))
+                            .addBond(container.getBond())
+            );
+        }
     }
 
     private static void onItemPickedUp(Player player, ItemEntity itemEntity, ItemStack stack) {
@@ -212,7 +238,7 @@ public class GameplayHooks {
             if (!Bonded.GEAR.isGear(slot)) continue;
             emitProgressEvents(slot,
                     player,
-                    Bonded.CONFIG.armorDamageTakenExperienceGainedMultiplier.get().intValue()
+                    Bonded.CONFIG.armorDamageTakenExperienceGainedMultiplier.get().intValue() * 100
             );
         }
     }

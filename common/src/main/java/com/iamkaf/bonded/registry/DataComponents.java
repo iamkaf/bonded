@@ -1,6 +1,7 @@
 package com.iamkaf.bonded.registry;
 
 import com.iamkaf.bonded.Bonded;
+import com.iamkaf.bonded.component.AppliedBonusesContainer;
 import com.iamkaf.bonded.component.ItemLevelContainer;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.DeferredSupplier;
@@ -16,6 +17,13 @@ public class DataComponents {
                     Bonded.resource("item_level"),
                     () -> DataComponentType.<ItemLevelContainer>builder()
                             .persistent(ItemLevelContainer.CODEC)
+                            .build()
+            );
+    public static final DeferredSupplier<DataComponentType<AppliedBonusesContainer>> APPLIED_BONUSES_CONTAINER =
+            DATA_COMPONENT_TYPES.register(
+                    Bonded.resource("applied_bonuses"),
+                    () -> DataComponentType.<AppliedBonusesContainer>builder()
+                            .persistent(AppliedBonusesContainer.CODEC)
                             .build()
             );
 

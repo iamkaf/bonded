@@ -67,9 +67,11 @@ public class ToolBenchBlock extends Block {
 
         var upgraded = leveler.transmuteUpgrade(handItem);
 
-        if (upgraded == null || !upgraded.isEmpty()) {
+
+        if (upgraded == null || upgraded.isEmpty()) {
             return ItemInteractionResult.FAIL;
         }
+
 
         InventoryHelper.consumeIfAvailable(player.getInventory(), ingredient, 1);
         handItem.shrink(1);
@@ -82,11 +84,11 @@ public class ToolBenchBlock extends Block {
                 SoundSource.BLOCKS
         );
         if (level instanceof ServerLevel serverLevel) {
-            serverLevel.sendParticles(ParticleTypes.SMOKE,
+            serverLevel.sendParticles(ParticleTypes.CLOUD,
                     pos.getX() + 0.5d,
                     pos.getY() + 1,
                     pos.getZ() + 0.5d,
-                    10,
+                    80,
                     0.01d,
                     0.5d,
                     0.01d,
