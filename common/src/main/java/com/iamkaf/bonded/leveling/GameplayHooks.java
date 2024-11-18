@@ -8,6 +8,7 @@ import com.iamkaf.bonded.api.event.GameEvents;
 import com.iamkaf.bonded.component.ItemLevelContainer;
 import com.iamkaf.bonded.registry.DataComponents;
 import com.iamkaf.bonded.util.ItemUtils;
+import dev.architectury.event.CompoundEventResult;
 import dev.architectury.event.EventResult;
 import dev.architectury.event.events.common.BlockEvent;
 import dev.architectury.event.events.common.EntityEvent;
@@ -76,14 +77,16 @@ public class GameplayHooks {
         var container = gear.get(DataComponents.ITEM_LEVEL_CONTAINER.get());
         assert container != null;
 
-        EventResult result = BondEvent.ITEM_EXPERIENCE_GAINED.invoker()
+        CompoundEventResult<Integer> result = BondEvent.ITEM_EXPERIENCE_GAINED.invoker()
                 .experience(gear, player, container, experienceAmount);
 
         if (result.interruptsFurtherEvaluation()) {
             return;
         }
 
-        boolean hasLeveled = Bonded.GEAR.giveItemExperience(gear, experienceAmount);
+        var newExperienceAmount = result.object() == null ? result.object() : experienceAmount;
+
+        boolean hasLeveled = Bonded.GEAR.giveItemExperience(gear, newExperienceAmount);
         if (hasLeveled) {
             if (Bonded.CONFIG.enableDurabilityGainOnLevelUp.get()) {
                 ItemHelper.repairBy(gear, Bonded.CONFIG.durabilityGainOnLevelUp.get().floatValue());
