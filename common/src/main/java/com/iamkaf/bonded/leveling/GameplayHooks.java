@@ -238,7 +238,7 @@ public class GameplayHooks {
             if (!Bonded.GEAR.isGear(slot)) continue;
             emitProgressEvents(slot,
                     player,
-                    Bonded.CONFIG.armorDamageTakenExperienceGainedMultiplier.get().intValue() * 100
+                    Bonded.CONFIG.armorDamageTakenExperienceGainedMultiplier.get().intValue()
             );
         }
     }
