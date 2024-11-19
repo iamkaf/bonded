@@ -27,5 +27,8 @@
   "bonded.config.default_experience_for_unknown_items": "Default Max Experience For Unknown Items",
   "bonded.config.default_experience_for_unknown_items.tooltip": "",
   "bonded.config.tooltips_enabled": "Enable Tooltips",
-  "bonded.config.tooltips_enabled.tooltip": "You can disable the tooltips if you're having issues with them."
+  "bonded.config.tooltips_enabled.tooltip": "You can disable the tooltips if you're having issues with them.",
+
+  "tag.item.bonded.digging_equipment": "Digging Equipment",
+  "tag.item.bonded.utility_tool": "Utility Tool"
 }

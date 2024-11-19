@@ -159,5 +159,7 @@ public class TierMap {
         addExperienceCap(Items.GOLDEN_BOOTS, 500);
 
         addExperienceCap(Items.TURTLE_HELMET, 900);
+
+        addRepairMaterial(Items.ELYTRA, Ingredient.of(Items.PHANTOM_MEMBRANE));
     }
 }
