@@ -1,6 +1,13 @@
 {
   "bonded.configuration.title": "Bonded",
 
+  "bonded.repair_bench.missing_ingredient": "Missing 1 %s",
+  "bonded.tool_bench.item_not_max_level": "Item not max level.",
+  "bonded.tool_bench.missing_ingredient": "Missing 1 %s",
+  "bonded.tool_bench.no_upgrade_path": "This tier doesn't have an upgrade path.",
+  "bonded.gameplay.max_level": "§eMax Level! §f%s §6+",
+  "bonded.gameplay.level_up": "§aLevel Up! §f%s §6+",
+
   "bonded.configuration.section.bonded.common.toml.title": "Bonded Common",
   "bonded.configuration.section.bonded.common.toml": "Common Config",
 

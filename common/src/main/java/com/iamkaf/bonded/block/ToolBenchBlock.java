@@ -41,7 +41,8 @@ public class ToolBenchBlock extends Block {
         if (!Bonded.GEAR.hasEnoughLevelsToUpgrade(handItem)) {
             errorFeedback(level,
                     player,
-                    Component.literal("Item not max level").withStyle(ChatFormatting.RED)
+                    Component.translatable("bonded.tool_bench.item_not_max_level")
+                            .withStyle(ChatFormatting.RED)
             );
             return ItemInteractionResult.FAIL;
         }
@@ -52,14 +53,17 @@ public class ToolBenchBlock extends Block {
         var ingredient = leveler.getUpgradeIngredient(handItem);
 
         if (ingredient == null || ingredient.isEmpty() || !leveler.isUpgradable(handItem)) {
-            errorFeedback(level, player, Component.literal("This tier doesn't have an upgrade path."));
+            errorFeedback(level, player, Component.translatable("bonded.tool_bench.no_upgrade_path"));
             return ItemInteractionResult.FAIL;
         }
 
         if (!InventoryHelper.has(player.getInventory(), ingredient)) {
-            errorFeedback(level,
+            errorFeedback(
+                    level,
                     player,
-                    Component.literal("Missing 1 " + ItemHelper.getIngredientDisplayName(ingredient))
+                    Component.translatable("bonded.tool_bench.missing_ingredient",
+                                    ItemHelper.getIngredientDisplayName(ingredient)
+                            )
                             .withStyle(ChatFormatting.RED)
             );
             return ItemInteractionResult.FAIL;

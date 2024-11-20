@@ -19,6 +19,7 @@ public class BondBonusRegistry {
         return bonus;
     }
 
+    @SuppressWarnings("deprecation")
     public void applyBonuses(ItemStack gear, GearTypeLeveler gearType, ItemLevelContainer container) {
         List<BondBonus> bonusToApply = this.bonuses.getSet()
                 .stream()
@@ -33,6 +34,7 @@ public class BondBonusRegistry {
             if (bonus == null) continue;
             ItemHelper.addModifier(gear, bonus.attribute(), bonus.modifier(), bonus.equipmentSlotGroup());
         }
+
         for (var mod : gear.getItem().getDefaultAttributeModifiers().modifiers()) {
             ItemHelper.addModifier(gear, mod.attribute(), mod.modifier(), mod.slot());
         }

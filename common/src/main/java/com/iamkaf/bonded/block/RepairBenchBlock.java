@@ -49,8 +49,10 @@ public class RepairBenchBlock extends Block {
             errorFeedback(
                     level,
                     player,
-                    Component.literal("Missing 1 " + ItemHelper.getIngredientDisplayName(ingredient))
-                            .withStyle(ChatFormatting.RED)
+                    Component.translatable(
+                            "bonded.repair_bench.missing_ingredient",
+                            ItemHelper.getIngredientDisplayName(ingredient)
+                    ).withStyle(ChatFormatting.RED)
             );
             return ItemInteractionResult.FAIL;
         }

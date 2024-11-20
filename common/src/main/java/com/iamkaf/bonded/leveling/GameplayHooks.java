@@ -15,9 +15,11 @@ import dev.architectury.event.events.common.BlockEvent;
 import dev.architectury.event.events.common.EntityEvent;
 import dev.architectury.event.events.common.PlayerEvent;
 import dev.architectury.utils.value.IntValue;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -67,11 +69,13 @@ public class GameplayHooks {
             return;
         }
 
-        String message =
-                (itemLevel == maxLevel ? "§eMax Level! §f" : "§aLevel Up! §f") + stack.getDisplayName()
-                        .getString() + " §6+" + itemLevel;
+        MutableComponent message = itemLevel == maxLevel ? Component.translatable("bonded.gameplay.max_level",
+                stack.getDisplayName().getString(),
+                itemLevel
+        ) : Component.translatable("bonded.gameplay.level_up", stack.getDisplayName().getString(), itemLevel);
 
-        player.sendSystemMessage(Component.literal(message));
+        player.sendSystemMessage(message.append(Component.literal(String.valueOf(itemLevel))
+                .withStyle(ChatFormatting.GOLD)));
     }
 
     private static void emitProgressEvents(ItemStack item, Player player, int experienceAmount) {
