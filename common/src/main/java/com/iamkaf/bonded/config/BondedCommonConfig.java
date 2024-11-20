@@ -43,7 +43,7 @@ public class BondedCommonConfig {
 
         weaponDamageDealtExperienceGainedMultiplier =
                 builder.translation("bonded.config.weapon_damage_dealt_experience_multiplier")
-                        .defineInRange("weapon_damage_dealt_experience_multiplier", 5d, 1.0d, 20d);
+                        .defineInRange("weapon_damage_dealt_experience_multiplier", 3d, 1.0d, 20d);
         armorDamageTakenExperienceGainedMultiplier =
                 builder.translation("bonded.config.armor_damage_taken_experience_multiplier")
                         .defineInRange("armor_damage_taken_experience_multiplier", 1d, 1.0d, 20d);
