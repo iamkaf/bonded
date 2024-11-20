@@ -20,14 +20,10 @@ public class BondBonusRegistry {
     }
 
     public void applyBonuses(ItemStack gear, GearTypeLeveler gearType, ItemLevelContainer container) {
-        List<BondBonus> bonusToApply = this.bonuses.get()
+        List<BondBonus> bonusToApply = this.bonuses.getSet()
                 .stream()
                 .filter(bondBonus -> bondBonus.shouldApply(gear, gearType, container))
                 .toList();
-
-        List<ResourceLocation> eee = bonusToApply.stream().map(BondBonus::id).toList();
-
-        gear.set(DataComponents.APPLIED_BONUSES_CONTAINER.get(), AppliedBonusesContainer.make(eee));
 
         var attributeModifierHolders = bonusToApply.stream()
                 .map(bondBonus -> bondBonus.getAttributeModifiers(gear, gearType, container))
@@ -40,5 +36,13 @@ public class BondBonusRegistry {
         for (var mod : gear.getItem().getDefaultAttributeModifiers().modifiers()) {
             ItemHelper.addModifier(gear, mod.attribute(), mod.modifier(), mod.slot());
         }
+
+        bonusToApply.forEach(bondBonus -> bondBonus.modifyItem(gear, gearType, container));
+
+        List<ResourceLocation> appliedBonuses = bonusToApply.stream().map(BondBonus::id).toList();
+        gear.set(
+                DataComponents.APPLIED_BONUSES_CONTAINER.get(),
+                AppliedBonusesContainer.make(appliedBonuses)
+        );
     }
 }

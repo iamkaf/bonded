@@ -38,6 +38,7 @@ import java.util.List;
 public class GameplayHooks {
     public static void init() {
         BlockEvent.BREAK.register(GameplayHooks::onBlockBreak);
+        GameEvents.AWARD_ITEM_EXPERIENCE.register(GameplayHooks::onGenericItemExperience);
         PlayerEvent.CRAFT_ITEM.register(GameplayHooks::onItemCrafted);
         GameEvents.MODIFY_SMITHING_RESULT.register(GameplayHooks::onItemSmithed);
         PlayerEvent.PICKUP_ITEM_POST.register(GameplayHooks::onItemPickedUp);
@@ -129,6 +130,17 @@ public class GameplayHooks {
         }
 
         return Bonded.GEAR.getExperienceForBlock(level.getBlockState(pos).getBlock());
+    }
+
+    private static void onGenericItemExperience(Player player, ItemStack stack, int experienceAmount) {
+        var leveler = Bonded.GEAR.getLeveler(stack);
+        boolean isEligibleItemType = leveler != null;
+
+        if (!isEligibleItemType) {
+            return;
+        }
+
+        emitProgressEvents(stack, player, experienceAmount);
     }
 
     private static void onItemCrafted(Player player, ItemStack stack, Container container) {

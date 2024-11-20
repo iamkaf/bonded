@@ -26,10 +26,6 @@ public class UtilityToolLeveler implements GearTypeLeveler {
         return Objects.requireNonNullElseGet(registeredRepairMaterial, () -> switch (gear.getItem()) {
             case TieredItem tieredItem -> tieredItem.getTier().getRepairIngredient();
             case ArmorItem armorItem -> armorItem.getMaterial().value().repairIngredient().get();
-            case ShearsItem shearsItem -> Ingredient.of(Items.IRON_INGOT);
-            case FlintAndSteelItem flintAndSteelItem -> Ingredient.of(Items.FLINT);
-            case FishingRodItem fishingRodItem -> Ingredient.of(Items.STRING);
-            case BrushItem brushItem -> Ingredient.of(Items.COPPER_INGOT);
             default -> Ingredient.of(Items.NETHER_STAR);
         });
 

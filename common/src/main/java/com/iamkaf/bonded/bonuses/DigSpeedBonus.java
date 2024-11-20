@@ -1,40 +1,43 @@
 package com.iamkaf.bonded.bonuses;
 
-import com.iamkaf.bonded.Bonded;
 import com.iamkaf.bonded.component.ItemLevelContainer;
 import com.iamkaf.bonded.leveling.levelers.GearTypeLeveler;
 import com.iamkaf.bonded.util.ItemUtils;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ItemStack;
 
-public class ArmorHealthBonus5k1Heart implements BondBonus {
-    public static final ResourceLocation ID = Bonded.resource("armor_health_bonus_5000");
-    // 1 heart
-    private static final float BONUS = 2f;
+public class DigSpeedBonus implements BondBonus {
+    private final ResourceLocation id;
+    private final int threshold;
+    private final float bonus;
+
+    public DigSpeedBonus(ResourceLocation id, int threshold, float bonus) {
+        this.id = id;
+        this.threshold = threshold;
+        this.bonus = bonus;
+    }
 
     @Override
     public ResourceLocation id() {
-        return ID;
+        return id;
     }
 
     @Override
     public boolean shouldApply(ItemStack gear, GearTypeLeveler gearType, ItemLevelContainer container) {
-        return gear.getItem() instanceof ArmorItem && container.getBond() >= 5000;
+        return gear.getItem() instanceof DiggerItem && container.getBond() >= threshold;
     }
 
     @Override
     public AttributeModifierHolder getAttributeModifiers(ItemStack gear, GearTypeLeveler gearTypeLeveler,
             ItemLevelContainer container) {
-        ArmorItem item = (ArmorItem) gear.getItem();
         return new AttributeModifierHolder(
-                Attributes.MAX_HEALTH,
-                new AttributeModifier(Bonded.resource(ID.getPath() + "_" + item.getEquipmentSlot()
-                        .toString()
-                        .toLowerCase()), BONUS, AttributeModifier.Operation.ADD_VALUE),
-                ItemUtils.slotToSlotGroup(item.getEquipmentSlot())
+                Attributes.MINING_EFFICIENCY,
+                new AttributeModifier(id, bonus, AttributeModifier.Operation.ADD_VALUE),
+                ItemUtils.slotToSlotGroup(EquipmentSlot.MAINHAND)
         );
     }
 }

@@ -160,6 +160,20 @@ public class TierMap {
 
         addExperienceCap(Items.TURTLE_HELMET, 900);
 
+        addExperienceCap(Items.ELYTRA, 2000);
         addRepairMaterial(Items.ELYTRA, Ingredient.of(Items.PHANTOM_MEMBRANE));
+
+        // Utility Equipment
+        addExperienceCap(Items.SHEARS, 200);
+        addRepairMaterial(Items.SHEARS, Ingredient.of(Items.IRON_INGOT));
+
+        addExperienceCap(Items.FISHING_ROD, 150);
+        addRepairMaterial(Items.FISHING_ROD, Ingredient.of(Items.STRING));
+
+        addExperienceCap(Items.BRUSH, 150);
+        addRepairMaterial(Items.BRUSH, Ingredient.of(Items.FEATHER));
+
+        addExperienceCap(Items.FLINT_AND_STEEL, 150);
+        addRepairMaterial(Items.FLINT_AND_STEEL, Ingredient.of(Items.IRON_INGOT));
     }
 }

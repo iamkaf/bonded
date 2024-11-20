@@ -10,6 +10,7 @@ import java.util.List;
 public interface GameEvents {
     Event<ShieldBlock> SHIELD_BLOCK = EventFactory.createLoop();
     Event<ModifySmithingResult> MODIFY_SMITHING_RESULT = EventFactory.createLoop();
+    Event<ItemExperience> AWARD_ITEM_EXPERIENCE = EventFactory.createLoop();
 
     interface ShieldBlock {
         void block(Player player, Float damage);
@@ -17,5 +18,9 @@ public interface GameEvents {
 
     interface ModifySmithingResult {
         void smith(ItemStack stack, List<ItemStack> relevantItems);
+    }
+
+    interface ItemExperience {
+        void experience(Player player, ItemStack stack, int experienceAmount);
     }
 }

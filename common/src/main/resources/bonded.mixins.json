@@ -9,7 +9,19 @@
     "ShieldItemMixin"
   ],
   "mixins": [
-    "SmithingMenuMixin"
+    "SmithingMenuMixin",
+    "ShearsItemMixin",
+    "SheepMixin",
+    "MushroomCowMixin",
+    "SnowGolemMixin",
+    "BeehiveBlockMixin",
+    "PumpkinBlockMixin",
+    "FishingHookMixin",
+    "BrushableBlockEntityMixin",
+    "ArmadilloMixin",
+    "FlintAndSteelItemMixin",
+    "CreeperMixin",
+    "TntBlockMixin"
   ],
   "injectors": {
     "defaultRequire": 1
