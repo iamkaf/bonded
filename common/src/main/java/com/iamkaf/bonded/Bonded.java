@@ -41,8 +41,8 @@ public class Bonded extends AmberMod {
         new Bonded();
 
         // Registries
-        Items.init();
         Blocks.init();
+        Items.init();
         DataComponents.init();
         CreativeModeTabs.init();
         GameplayHooks.init();
