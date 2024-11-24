@@ -1,3 +1,7 @@
+plugins {
+    id "com.hypherionmc.modutils.modpublisher" version "2.1.6"
+}
+
 apply from: "https://raw.githubusercontent.com/iamkaf/modresources/refs/heads/main/gradle/${minecraft_version}/neoforge.gradle"
 
 dependencies {
@@ -7,3 +11,85 @@ dependencies {
     modRuntimeOnly("dev.emi:emi-neoforge:${rootProject.emi_version}")
 }
 
+def extractLatestChangelog() {
+    // Read the changelog file
+    def changelogFile = file('../changelog.md').text
+
+    // Use regex to match the first section of the changelog (latest version and its changes)
+    def changelog = (changelogFile =~ /## [\s\S]+(?=\n##)/)[0]
+
+    // Return the changelog string
+    return changelog
+}
+
+publisher {
+    // Setup the required API keys. You only need to define the keys for
+    // the platforms you plan on uploading to
+    apiKeys {
+        // Modrinth Token
+        modrinth System.getenv("MODRINTH_TOKEN")
+        // Curseforge Token
+        curseforge System.getenv("CURSEFORGE_TOKEN")
+    }
+
+    // Enable Debug mode. When enabled, no files will actually be uploaded
+    setDebug(false)
+
+    // Curseforge Project ID
+    setCurseID(curse_id)
+
+    // Modrinth Project ID
+    setModrinthID(modrinth_id)
+
+    // Type of release. beta, alpha or release
+    // You can also use VersionType.BETA, VersionType.ALPHA or VersionType.RELEASE
+    setVersionType(release_type)
+
+    setChangelog(extractLatestChangelog())
+
+    // Required for Modrinth/GitHub
+    setProjectVersion(mod_version)
+
+    // Fancy display name for the upload.
+    // Will default to the project version if not set
+    setDisplayName("$mod_id-$project.name-$project.minecraft_version-$project.version")
+
+    // The supported game versions
+    setGameVersions(game_versions.split(','))
+
+    // The modloaders your upload supports.
+    // This can also be an Enum from ModLoader,
+    // like setLoaders(ModLoader.FABRIC, ModLoader.FORGE)
+    setLoaders("neoforge")
+
+    // The new Curseforge Environment tag. Optional
+    // Valid values are "server", "client" or "both"
+    // You can also use CurseEnvironment.BOTH, or CurseEnvironment.SERVER or CurseEnvironment.CLIENT
+    setCurseEnvironment(mod_environment)
+
+    // Upload the release, but keep it "private" until you are ready
+    // Unreleased feature on CurseForge, working on Modrinth
+    setIsManualRelease(false)
+
+    // The file to be uploaded. This can be a file, task, or string.
+    // setArtifact("build/libs/mymod.jar")
+    // setArtifact(jar.getArchiveFile().get())
+    // If this is a task, the task specified will be executed before publishing
+    var toPublish = "build/libs/$mod_id-$project.name-$project.minecraft_version-$project.version" + ".jar";
+    setArtifact(toPublish)
+    setDisableEmptyJarCheck(false)
+
+    // Add supported java versions. Currently only used by CurseForge
+    // Supports anything that can be parsed using JavaVersion.toVersion()
+    setJavaVersions(JavaVersion.VERSION_21, JavaVersion.VERSION_22)
+
+    modrinthDepends {
+        // Multiple required dependencies
+        required "amber", "architectury-api", "forge-config-api-port"
+    }
+
+    curseDepends {
+        // Multiple required dependencies
+        required "amber-lib", "architectury-api", "forge-config-api-port-fabric"
+    }
+}

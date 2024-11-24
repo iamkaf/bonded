@@ -1,9 +1,11 @@
 package com.iamkaf.bonded.leveling.levelers;
 
 import com.iamkaf.bonded.Bonded;
+import com.iamkaf.bonded.component.AppliedBonusesContainer;
 import com.iamkaf.bonded.component.ItemLevelContainer;
 import com.iamkaf.bonded.registry.DataComponents;
 import com.iamkaf.bonded.registry.TierMap;
+import com.iamkaf.bonded.util.ItemUtils;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -34,13 +36,15 @@ public interface GearTypeLeveler {
         }
 
         var upgradedGear = new ItemStack(upgrade.arch$holder(), 1, gear.getComponentsPatch());
+        ItemUtils.reapplyDefaultAttributeModifiers(upgradedGear);
         var container = upgradedGear.get(DataComponents.ITEM_LEVEL_CONTAINER.get());
         assert container != null;
         upgradedGear.set(
                 DataComponents.ITEM_LEVEL_CONTAINER.get(),
                 ItemLevelContainer.make(TierMap.getExperienceCap(upgrade)).addBond(container.getBond())
         );
-        upgradedGear.set(DataComponents.APPLIED_BONUSES_CONTAINER.get(), null);
+        upgradedGear.set(DataComponents.APPLIED_BONUSES_CONTAINER.get(), AppliedBonusesContainer.make());
+        upgradedGear.set(net.minecraft.core.component.DataComponents.MAX_DAMAGE, upgrade.getDefaultInstance().getMaxDamage());
         Bonded.GEAR.initComponent(upgradedGear);
         return upgradedGear;
     }

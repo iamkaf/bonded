@@ -1,5 +1,6 @@
 package com.iamkaf.bonded.util;
 
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -9,6 +10,7 @@ import net.minecraft.world.entity.projectile.FireworkRocketEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ShieldItem;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 import org.jetbrains.annotations.Nullable;
 
 public class ItemUtils {
@@ -63,5 +65,29 @@ public class ItemUtils {
             case HEAD -> EquipmentSlotGroup.HEAD;
             case BODY -> EquipmentSlotGroup.BODY;
         };
+    }
+
+    @SuppressWarnings("deprecation")
+    public static void reapplyDefaultAttributeModifiers(ItemStack item) {
+        var defaultModifiers = item.getItem()
+                .getDefaultInstance()
+                .getOrDefault(DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.EMPTY);
+
+        ItemAttributeModifiers result = ItemAttributeModifiers.EMPTY;
+
+        ItemAttributeModifiers modifiers =
+                item.getOrDefault(DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.EMPTY);
+        for (var mod : modifiers.modifiers()) {
+            if (defaultModifiers.modifiers()
+                    .stream()
+                    .noneMatch(d -> d.modifier().id().equals(mod.modifier().id()))) {
+                result = result.withModifierAdded(mod.attribute(), mod.modifier(), mod.slot());
+            }
+        }
+        for (var d : defaultModifiers.modifiers()) {
+            result = result.withModifierAdded(d.attribute(), d.modifier(), d.slot());
+        }
+
+        item.set(DataComponents.ATTRIBUTE_MODIFIERS, result);
     }
 }

@@ -31,9 +31,6 @@ public class DurabilityBonus implements BondBonus {
 
     @Override
     public void modifyItem(ItemStack gear, GearTypeLeveler gearTypeLeveler, ItemLevelContainer container) {
-        AppliedBonusesContainer bonusContainer = gear.get(DataComponents.APPLIED_BONUSES_CONTAINER.get());
-        if (bonusContainer != null && !bonusContainer.bonuses().contains(id)) {
-            gear.set(net.minecraft.core.component.DataComponents.MAX_DAMAGE, gear.getMaxDamage() + bonus);
-        }
+        gear.set(net.minecraft.core.component.DataComponents.MAX_DAMAGE, gear.getMaxDamage() + bonus);
     }
 }

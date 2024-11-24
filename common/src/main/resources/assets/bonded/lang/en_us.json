@@ -3,8 +3,8 @@
 
   "creativetab.bonded.bonded": "Bonded",
 
-  "item.bonded.tool_bench": "Tool Bench",
-  "item.bonded.repair_bench": "Repair Bench",
+  "block.bonded.tool_bench": "Tool Bench",
+  "block.bonded.repair_bench": "Repair Bench",
 
   "bonded.repair_bench.missing_ingredient": "Missing 1 %s",
   "bonded.tool_bench.item_not_max_level": "Item not max level.",

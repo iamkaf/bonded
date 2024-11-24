@@ -6,6 +6,8 @@ import com.iamkaf.bonded.Bonded;
 import com.iamkaf.bonded.api.event.BondEvent;
 import com.iamkaf.bonded.api.event.GameEvents;
 import com.iamkaf.bonded.component.ItemLevelContainer;
+import com.iamkaf.bonded.leveling.levelers.GearTypeLeveler;
+import com.iamkaf.bonded.leveling.levelers.MeleeWeaponsLeveler;
 import com.iamkaf.bonded.registry.DataComponents;
 import com.iamkaf.bonded.registry.TierMap;
 import com.iamkaf.bonded.util.ItemUtils;
@@ -30,7 +32,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
@@ -173,7 +177,16 @@ public class GameplayHooks {
     }
 
     private static void onItemPickedUp(Player player, ItemEntity itemEntity, ItemStack stack) {
-        player.getInventory().items.forEach(item -> Bonded.GEAR.initComponent(item));
+        for (var i = 0; i < player.getInventory().items.size(); i++) {
+            if (i == player.getInventory().selected) {
+                continue;
+            }
+            ItemStack item = player.getInventory().getItem(i);
+            if (item.isEmpty()) {
+                continue;
+            }
+            Bonded.GEAR.initComponent(item);
+        }
     }
 
     private static void onDamageBlockedByShield(Player pl, Float damage) {
@@ -214,8 +227,8 @@ public class GameplayHooks {
             return;
         }
 
-        boolean isMeleeWeapon =
-                handItem.getItem() instanceof SwordItem || handItem.getItem() instanceof AxeItem || handItem.getItem() instanceof TridentItem;
+        GearTypeLeveler leveler = Bonded.GEAR.getLeveler(handItem);
+        boolean isMeleeWeapon = leveler instanceof MeleeWeaponsLeveler;
 
         if (isMeleeWeapon) {
             emitProgressEvents(handItem,
