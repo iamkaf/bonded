@@ -78,8 +78,8 @@ public class GameplayHooks {
                 itemLevel
         ) : Component.translatable("bonded.gameplay.level_up", stack.getDisplayName().getString(), itemLevel);
 
-        player.sendSystemMessage(message.append(Component.literal(String.valueOf(itemLevel))
-                .withStyle(ChatFormatting.GOLD)));
+        player.displayClientMessage(message.append(Component.literal(String.valueOf(itemLevel))
+                .withStyle(ChatFormatting.GOLD)), false);
     }
 
     private static void emitProgressEvents(ItemStack item, Player player, int experienceAmount) {

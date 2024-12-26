@@ -1,6 +1,5 @@
 package com.iamkaf.bonded.leveling;
 
-import com.iamkaf.amber.api.inventory.ItemHelper;
 import com.iamkaf.bonded.Bonded;
 import com.iamkaf.bonded.component.ItemLevelContainer;
 import com.iamkaf.bonded.leveling.levelers.GearTypeLeveler;
@@ -37,8 +36,8 @@ public class GearManager {
         LOGGER.info("Now loading leveling registries...");
         READY = true;
 
-        Registry<Block> blockRegistry = serverLevel.registryAccess().registryOrThrow(Registries.BLOCK);
-        Optional<HolderSet.Named<Block>> ores = blockRegistry.getTag(Tags.ORES);
+        Registry<Block> blockRegistry = serverLevel.registryAccess().lookupOrThrow(Registries.BLOCK);
+        Optional<HolderSet.Named<Block>> ores = blockRegistry.get(Tags.ORES);
         ores.ifPresent(holders -> {
             LOGGER.info("Found {} ores [{}]", holders.size(), Tags.ORES.location());
             holders.stream()
@@ -47,11 +46,11 @@ public class GearManager {
                     ));
         });
 
-        Registry<Item> itemRegistry = serverLevel.registryAccess().registryOrThrow(Registries.ITEM);
+        Registry<Item> itemRegistry = serverLevel.registryAccess().lookupOrThrow(Registries.ITEM);
 
         for (var type : gearTypeLevelerRegistry.gearTypeLevelers()) {
             TagKey<Item> tag = type.tag();
-            Optional<HolderSet.Named<Item>> items = itemRegistry.getTag(tag);
+            Optional<HolderSet.Named<Item>> items = itemRegistry.get(tag);
             items.ifPresent(holders -> {
                 LOGGER.info("Found {} {} [{}]", holders.size(), type.name(), tag.location());
                 holders.stream()
@@ -68,6 +67,16 @@ public class GearManager {
 
         if (!isGear(gear)) {
             return gear;
+        }
+
+        // this is to patch items that existed prior to the mod being installed
+        if (TierMap.getRepairMaterialMap()
+                .containsKey(gear.getItem()) && gear.get(net.minecraft.core.component.DataComponents.REPAIRABLE) == null) {
+            gear.set(net.minecraft.core.component.DataComponents.REPAIRABLE,
+                    gear.getItem()
+                            .getDefaultInstance()
+                            .get(net.minecraft.core.component.DataComponents.REPAIRABLE)
+            );
         }
 
         ItemLevelContainer container = gear.get(DataComponents.ITEM_LEVEL_CONTAINER.get());

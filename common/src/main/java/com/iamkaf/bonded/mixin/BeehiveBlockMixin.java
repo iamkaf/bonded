@@ -3,7 +3,7 @@ package com.iamkaf.bonded.mixin;
 import com.iamkaf.bonded.api.event.GameEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShearsItem;
@@ -26,7 +26,7 @@ public abstract class BeehiveBlockMixin extends BaseEntityBlock {
     @Inject(method = "useItemOn", at = @At("HEAD"))
     private void bonded$useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
             Player player, InteractionHand hand, BlockHitResult hitResult,
-            CallbackInfoReturnable<ItemInteractionResult> cir) {
+            CallbackInfoReturnable<InteractionResult> cir) {
         int honeyLevel = state.getValue(BeehiveBlock.HONEY_LEVEL);
 
         if (!level.isClientSide && honeyLevel >= 5 && stack.getItem() instanceof ShearsItem) {

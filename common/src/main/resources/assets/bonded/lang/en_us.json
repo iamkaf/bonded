@@ -5,10 +5,12 @@
 
   "block.bonded.tool_bench": "Tool Bench",
   "block.bonded.repair_bench": "Repair Bench",
+  "item.bonded.tool_bench": "Tool Bench",
+  "item.bonded.repair_bench": "Repair Bench",
 
-  "bonded.repair_bench.missing_ingredient": "Missing 1 %s",
+  "bonded.repair_bench.missing_ingredient": "Missing repair material.",
   "bonded.tool_bench.item_not_max_level": "Item not max level.",
-  "bonded.tool_bench.missing_ingredient": "Missing 1 %s",
+  "bonded.tool_bench.missing_ingredient": "Missing upgrade material.",
   "bonded.tool_bench.no_upgrade_path": "This tier doesn't have an upgrade path.",
   "bonded.gameplay.max_level": "§eMax Level! §f%s §6+",
   "bonded.gameplay.level_up": "§aLevel Up! §f%s §6+",

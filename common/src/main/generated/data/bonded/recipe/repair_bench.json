@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "A": {
-      "item": "minecraft:cobblestone"
-    },
-    "B": {
-      "item": "minecraft:stone_bricks"
-    }
+    "A": "minecraft:cobblestone",
+    "B": "minecraft:stone_bricks"
   },
   "pattern": [
     "AAA",

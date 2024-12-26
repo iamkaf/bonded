@@ -1,7 +1,6 @@
 package com.iamkaf.bonded.block;
 
 import com.iamkaf.amber.api.inventory.InventoryHelper;
-import com.iamkaf.amber.api.inventory.ItemHelper;
 import com.iamkaf.amber.api.player.FeedbackHelper;
 import com.iamkaf.bonded.Bonded;
 import com.iamkaf.bonded.registry.DataComponents;
@@ -12,11 +11,12 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -30,7 +30,7 @@ public class ToolBenchBlock extends Block {
     }
 
     @Override
-    protected @NotNull ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level,
+    protected @NotNull InteractionResult useItemOn(ItemStack stack, BlockState state, Level level,
             BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (!shouldHandle(level, player, hand)) {
             return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
@@ -39,48 +39,48 @@ public class ToolBenchBlock extends Block {
         ItemStack handItem = player.getMainHandItem();
 
         if (!Bonded.GEAR.hasEnoughLevelsToUpgrade(handItem)) {
-            errorFeedback(level,
+            errorFeedback(
+                    level,
                     player,
                     Component.translatable("bonded.tool_bench.item_not_max_level")
                             .withStyle(ChatFormatting.RED)
             );
-            return ItemInteractionResult.FAIL;
+            return InteractionResult.FAIL;
         }
 
         var leveler = Bonded.GEAR.getLeveler(handItem);
         assert leveler != null;
 
-        var ingredient = leveler.getUpgradeIngredient(handItem);
+        TagKey<Item> upgradeItemTag = leveler.getUpgradeIngredient(handItem);
 
-        if (ingredient == null || ingredient.isEmpty() || !leveler.isUpgradable(handItem)) {
+        if (upgradeItemTag == null || !leveler.isUpgradable(handItem)) {
             errorFeedback(level, player, Component.translatable("bonded.tool_bench.no_upgrade_path"));
-            return ItemInteractionResult.FAIL;
+            return InteractionResult.FAIL;
         }
 
-        if (!InventoryHelper.has(player.getInventory(), ingredient)) {
+        if (!InventoryHelper.has(player.getInventory(), upgradeItemTag)) {
             errorFeedback(
                     level,
                     player,
-                    Component.translatable("bonded.tool_bench.missing_ingredient",
-                                    ItemHelper.getIngredientDisplayName(ingredient)
-                            )
+                    Component.translatable("bonded.tool_bench.missing_ingredient")
                             .withStyle(ChatFormatting.RED)
             );
-            return ItemInteractionResult.FAIL;
+            return InteractionResult.FAIL;
         }
 
         var upgraded = leveler.transmuteUpgrade(handItem);
 
 
         if (upgraded == null || upgraded.isEmpty()) {
-            return ItemInteractionResult.FAIL;
+            return InteractionResult.FAIL;
         }
 
 
-        InventoryHelper.consumeIfAvailable(player.getInventory(), ingredient, 1);
+        InventoryHelper.consumeIfAvailable(player.getInventory(), upgradeItemTag, 1);
         handItem.shrink(1);
         player.setItemSlot(EquipmentSlot.MAINHAND, upgraded);
-        level.playSound(null,
+        level.playSound(
+                null,
                 player.getX(),
                 player.getY(),
                 player.getZ(),
@@ -88,7 +88,8 @@ public class ToolBenchBlock extends Block {
                 SoundSource.BLOCKS
         );
         if (level instanceof ServerLevel serverLevel) {
-            serverLevel.sendParticles(ParticleTypes.CLOUD,
+            serverLevel.sendParticles(
+                    ParticleTypes.CLOUD,
                     pos.getX() + 0.5d,
                     pos.getY() + 1,
                     pos.getZ() + 0.5d,
@@ -99,7 +100,7 @@ public class ToolBenchBlock extends Block {
                     0.05d
             );
         }
-        return ItemInteractionResult.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 
     private boolean shouldHandle(Level level, Player player, InteractionHand hand) {
@@ -123,7 +124,8 @@ public class ToolBenchBlock extends Block {
     }
 
     private void errorFeedback(Level level, Player player, Component message) {
-        level.playSound(null,
+        level.playSound(
+                null,
                 player.getX(),
                 player.getY(),
                 player.getZ(),

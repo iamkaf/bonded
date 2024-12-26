@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class FlintAndSteelItemMixin {
     @Inject(method = "useOn", at = @At("RETURN"))
     private void bonded$useOn(UseOnContext context, CallbackInfoReturnable<InteractionResult> cir) {
-        if (cir.getReturnValue().indicateItemUse()) {
+        if (cir.getReturnValue().equals(InteractionResult.SUCCESS)) {
             Player player = context.getPlayer();
             ItemStack stack = context.getItemInHand();
             if (!player.level().isClientSide) {

@@ -1,11 +1,11 @@
 package com.iamkaf.bonded.block;
 
-import com.iamkaf.amber.api.inventory.InventoryHelper;
 import com.iamkaf.amber.api.inventory.ItemHelper;
 import com.iamkaf.amber.api.player.FeedbackHelper;
 import com.iamkaf.bonded.Bonded;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -13,9 +13,10 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Repairable;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -28,7 +29,7 @@ public class RepairBenchBlock extends Block {
     }
 
     @Override
-    protected @NotNull ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level,
+    protected @NotNull InteractionResult useItemOn(ItemStack stack, BlockState state, Level level,
             BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (!shouldHandle(level, player, hand)) {
             return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
@@ -38,27 +39,32 @@ public class RepairBenchBlock extends Block {
 
         var leveler = Bonded.GEAR.getLeveler(handItem);
         assert leveler != null;
+        Repairable repairable = handItem.get(DataComponents.REPAIRABLE);
 
-        var ingredient = leveler.getRepairIngredient(handItem);
-
-        if (ingredient == null || ingredient.isEmpty()) {
+        if (repairable == null) {
             return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
         }
 
-        if (!InventoryHelper.has(player.getInventory(), ingredient)) {
+        Inventory inventory = player.getInventory();
+
+        if (inventory.items.stream().noneMatch(repairable::isValidRepairItem)) {
             errorFeedback(
                     level,
                     player,
-                    Component.translatable(
-                            "bonded.repair_bench.missing_ingredient",
-                            ItemHelper.getIngredientDisplayName(ingredient)
-                    ).withStyle(ChatFormatting.RED)
+                    Component.translatable("bonded.repair_bench.missing_ingredient")
+                            .withStyle(ChatFormatting.RED)
             );
-            return ItemInteractionResult.FAIL;
+            return InteractionResult.FAIL;
         }
 
         ItemHelper.repairBy(handItem, Bonded.CONFIG.durabilityGainedOnRepairBench.get().floatValue());
-        InventoryHelper.consumeIfAvailable(player.getInventory(), ingredient, 1);
+        for (int i = 0; i < inventory.getContainerSize(); i++) {
+            var slot = inventory.getItem(i);
+            if (repairable.isValidRepairItem(slot)) {
+                slot.shrink(1);
+                break;
+            }
+        }
         level.playSound(
                 null,
                 player.getX(),
@@ -80,7 +86,7 @@ public class RepairBenchBlock extends Block {
                     0.05d
             );
         }
-        return ItemInteractionResult.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 
     private boolean shouldHandle(Level level, Player player, InteractionHand hand) {

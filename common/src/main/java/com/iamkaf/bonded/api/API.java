@@ -1,6 +1,7 @@
 package com.iamkaf.bonded.api;
 
 import com.iamkaf.bonded.registry.TierMap;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 
@@ -19,9 +20,9 @@ public class API {
      *
      * @param from     The item to be upgraded.
      * @param to       The item it upgrades into.
-     * @param material The {@link Ingredient} required to perform the upgrade.
+     * @param material The {@link TagKey<Item>} required to perform the upgrade.
      */
-    public static void addUpgrade(Item from, Item to, Ingredient material) {
+    public static void addUpgrade(Item from, Item to, TagKey<Item> material) {
         TierMap.addUpgrade(from, to, material);
     }
 
@@ -31,7 +32,7 @@ public class API {
      * @param from     The item to be repaired.
      * @param material The {@link Ingredient} used for repairing the item.
      */
-    public static void addRepairMaterial(Item from, Ingredient material) {
+    public static void addRepairMaterial(Item from, Item material) {
         TierMap.addRepairMaterial(from, material);
     }
 

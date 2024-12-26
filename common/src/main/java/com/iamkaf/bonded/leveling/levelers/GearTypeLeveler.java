@@ -49,9 +49,7 @@ public interface GearTypeLeveler {
         return upgradedGear;
     }
 
-    Ingredient getRepairIngredient(ItemStack gear);
-
-    default @Nullable Ingredient getUpgradeIngredient(ItemStack gear) {
+    default @Nullable TagKey<Item> getUpgradeIngredient(ItemStack gear) {
         return TierMap.getUpgradeMaterial(gear.getItem());
     }
 }

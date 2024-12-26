@@ -11,11 +11,10 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "bonded:tool_bench"
+          "name": "bonded:repair_bench"
         }
       ],
       "rolls": 1.0
     }
-  ],
-  "random_sequence": "bonded:blocks/tool_bench"
+  ]
 }

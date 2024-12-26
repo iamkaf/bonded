@@ -1,11 +1,11 @@
 package com.iamkaf.bonded.registry;
 
 import com.iamkaf.bonded.Bonded;
-import net.minecraft.world.item.ArmorMaterials;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.Tiers;
-import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.ToolMaterial;
+import net.minecraft.world.item.equipment.ArmorMaterials;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -13,11 +13,11 @@ import java.util.Map;
 
 public class TierMap {
     private static final Map<Item, Item> upgradeMap = new HashMap<>();
-    private static final Map<Item, Ingredient> upgradeMaterialMap = new HashMap<>();
-    private static final Map<Item, Ingredient> repairMaterialMap = new HashMap<>();
+    private static final Map<Item, TagKey<Item>> upgradeMaterialMap = new HashMap<>();
+    private static final Map<Item, Item> repairMaterialMap = new HashMap<>();
     private static final Map<Item, Integer> experienceMap = new HashMap<>();
 
-    public static void addUpgrade(Item from, Item to, Ingredient material) {
+    public static void addUpgrade(Item from, Item to, TagKey<Item> material) {
         upgradeMap.put(from, to);
         upgradeMaterialMap.put(from, material);
     }
@@ -26,16 +26,16 @@ public class TierMap {
         return upgradeMap.get(from);
     }
 
-    public static @Nullable Ingredient getUpgradeMaterial(Item from) {
+    public static @Nullable TagKey<Item> getUpgradeMaterial(Item from) {
         return upgradeMaterialMap.get(from);
     }
 
-    public static void addRepairMaterial(Item from, Ingredient material) {
+    public static void addRepairMaterial(Item from, Item material) {
         repairMaterialMap.put(from, material);
     }
 
-    public static @Nullable Ingredient getRepairMaterial(Item from) {
-        return repairMaterialMap.get(from);
+    public static Map<Item, Item> getRepairMaterialMap() {
+        return repairMaterialMap;
     }
 
     public static void addExperienceCap(Item gear, Integer maxExperience) {
@@ -48,27 +48,26 @@ public class TierMap {
 
     public static void init() {
         // -- Tools
-
         // Wooden to Stone
-        addUpgrade(Items.WOODEN_AXE, Items.STONE_AXE, Tiers.STONE.getRepairIngredient());
-        addUpgrade(Items.WOODEN_PICKAXE, Items.STONE_PICKAXE, Tiers.STONE.getRepairIngredient());
-        addUpgrade(Items.WOODEN_SHOVEL, Items.STONE_SHOVEL, Tiers.STONE.getRepairIngredient());
-        addUpgrade(Items.WOODEN_HOE, Items.STONE_HOE, Tiers.STONE.getRepairIngredient());
-        addUpgrade(Items.WOODEN_SWORD, Items.STONE_SWORD, Tiers.STONE.getRepairIngredient());
+        addUpgrade(Items.WOODEN_AXE, Items.STONE_AXE, ToolMaterial.STONE.repairItems());
+        addUpgrade(Items.WOODEN_PICKAXE, Items.STONE_PICKAXE, ToolMaterial.STONE.repairItems());
+        addUpgrade(Items.WOODEN_SHOVEL, Items.STONE_SHOVEL, ToolMaterial.STONE.repairItems());
+        addUpgrade(Items.WOODEN_HOE, Items.STONE_HOE, ToolMaterial.STONE.repairItems());
+        addUpgrade(Items.WOODEN_SWORD, Items.STONE_SWORD, ToolMaterial.STONE.repairItems());
 
         // Stone to Iron
-        addUpgrade(Items.STONE_AXE, Items.IRON_AXE, Tiers.IRON.getRepairIngredient());
-        addUpgrade(Items.STONE_PICKAXE, Items.IRON_PICKAXE, Tiers.IRON.getRepairIngredient());
-        addUpgrade(Items.STONE_SHOVEL, Items.IRON_SHOVEL, Tiers.IRON.getRepairIngredient());
-        addUpgrade(Items.STONE_HOE, Items.IRON_HOE, Tiers.IRON.getRepairIngredient());
-        addUpgrade(Items.STONE_SWORD, Items.IRON_SWORD, Tiers.IRON.getRepairIngredient());
+        addUpgrade(Items.STONE_AXE, Items.IRON_AXE, ToolMaterial.IRON.repairItems());
+        addUpgrade(Items.STONE_PICKAXE, Items.IRON_PICKAXE, ToolMaterial.IRON.repairItems());
+        addUpgrade(Items.STONE_SHOVEL, Items.IRON_SHOVEL, ToolMaterial.IRON.repairItems());
+        addUpgrade(Items.STONE_HOE, Items.IRON_HOE, ToolMaterial.IRON.repairItems());
+        addUpgrade(Items.STONE_SWORD, Items.IRON_SWORD, ToolMaterial.IRON.repairItems());
 
         // Iron to Diamond
-        addUpgrade(Items.IRON_AXE, Items.DIAMOND_AXE, Tiers.DIAMOND.getRepairIngredient());
-        addUpgrade(Items.IRON_PICKAXE, Items.DIAMOND_PICKAXE, Tiers.DIAMOND.getRepairIngredient());
-        addUpgrade(Items.IRON_SHOVEL, Items.DIAMOND_SHOVEL, Tiers.DIAMOND.getRepairIngredient());
-        addUpgrade(Items.IRON_HOE, Items.DIAMOND_HOE, Tiers.DIAMOND.getRepairIngredient());
-        addUpgrade(Items.IRON_SWORD, Items.DIAMOND_SWORD, Tiers.DIAMOND.getRepairIngredient());
+        addUpgrade(Items.IRON_AXE, Items.DIAMOND_AXE, ToolMaterial.DIAMOND.repairItems());
+        addUpgrade(Items.IRON_PICKAXE, Items.DIAMOND_PICKAXE, ToolMaterial.DIAMOND.repairItems());
+        addUpgrade(Items.IRON_SHOVEL, Items.DIAMOND_SHOVEL, ToolMaterial.DIAMOND.repairItems());
+        addUpgrade(Items.IRON_HOE, Items.DIAMOND_HOE, ToolMaterial.DIAMOND.repairItems());
+        addUpgrade(Items.IRON_SWORD, Items.DIAMOND_SWORD, ToolMaterial.DIAMOND.repairItems());
 
         // Experience
         addExperienceCap(Items.WOODEN_AXE, 30);
@@ -110,22 +109,34 @@ public class TierMap {
         // -- Armor
 
         // Leather to Chainmail
-        addUpgrade(Items.LEATHER_HELMET, Items.CHAINMAIL_HELMET, ArmorMaterials.CHAIN.value().repairIngredient().get());
-        addUpgrade(Items.LEATHER_CHESTPLATE, Items.CHAINMAIL_CHESTPLATE, ArmorMaterials.CHAIN.value().repairIngredient().get());
-        addUpgrade(Items.LEATHER_LEGGINGS, Items.CHAINMAIL_LEGGINGS, ArmorMaterials.CHAIN.value().repairIngredient().get());
-        addUpgrade(Items.LEATHER_BOOTS, Items.CHAINMAIL_BOOTS, ArmorMaterials.CHAIN.value().repairIngredient().get());
+        addUpgrade(Items.LEATHER_HELMET, Items.CHAINMAIL_HELMET, ArmorMaterials.CHAINMAIL.repairIngredient());
+        addUpgrade(
+                Items.LEATHER_CHESTPLATE,
+                Items.CHAINMAIL_CHESTPLATE,
+                ArmorMaterials.CHAINMAIL.repairIngredient()
+        );
+        addUpgrade(
+                Items.LEATHER_LEGGINGS,
+                Items.CHAINMAIL_LEGGINGS,
+                ArmorMaterials.CHAINMAIL.repairIngredient()
+        );
+        addUpgrade(Items.LEATHER_BOOTS, Items.CHAINMAIL_BOOTS, ArmorMaterials.CHAINMAIL.repairIngredient());
 
         // Chainmail to Iron
-        addUpgrade(Items.CHAINMAIL_HELMET, Items.IRON_HELMET, ArmorMaterials.IRON.value().repairIngredient().get());
-        addUpgrade(Items.CHAINMAIL_CHESTPLATE, Items.IRON_CHESTPLATE, ArmorMaterials.IRON.value().repairIngredient().get());
-        addUpgrade(Items.CHAINMAIL_LEGGINGS, Items.IRON_LEGGINGS, ArmorMaterials.IRON.value().repairIngredient().get());
-        addUpgrade(Items.CHAINMAIL_BOOTS, Items.IRON_BOOTS, ArmorMaterials.IRON.value().repairIngredient().get());
+        addUpgrade(Items.CHAINMAIL_HELMET, Items.IRON_HELMET, ArmorMaterials.IRON.repairIngredient());
+        addUpgrade(Items.CHAINMAIL_CHESTPLATE, Items.IRON_CHESTPLATE, ArmorMaterials.IRON.repairIngredient());
+        addUpgrade(Items.CHAINMAIL_LEGGINGS, Items.IRON_LEGGINGS, ArmorMaterials.IRON.repairIngredient());
+        addUpgrade(Items.CHAINMAIL_BOOTS, Items.IRON_BOOTS, ArmorMaterials.IRON.repairIngredient());
 
         // Iron to Diamond
-        addUpgrade(Items.IRON_HELMET, Items.DIAMOND_HELMET, ArmorMaterials.DIAMOND.value().repairIngredient().get());
-        addUpgrade(Items.IRON_CHESTPLATE, Items.DIAMOND_CHESTPLATE, ArmorMaterials.DIAMOND.value().repairIngredient().get());
-        addUpgrade(Items.IRON_LEGGINGS, Items.DIAMOND_LEGGINGS, ArmorMaterials.DIAMOND.value().repairIngredient().get());
-        addUpgrade(Items.IRON_BOOTS, Items.DIAMOND_BOOTS, ArmorMaterials.DIAMOND.value().repairIngredient().get());
+        addUpgrade(Items.IRON_HELMET, Items.DIAMOND_HELMET, ArmorMaterials.DIAMOND.repairIngredient());
+        addUpgrade(
+                Items.IRON_CHESTPLATE,
+                Items.DIAMOND_CHESTPLATE,
+                ArmorMaterials.DIAMOND.repairIngredient()
+        );
+        addUpgrade(Items.IRON_LEGGINGS, Items.DIAMOND_LEGGINGS, ArmorMaterials.DIAMOND.repairIngredient());
+        addUpgrade(Items.IRON_BOOTS, Items.DIAMOND_BOOTS, ArmorMaterials.DIAMOND.repairIngredient());
 
         // Experience
         addExperienceCap(Items.LEATHER_HELMET, 90);
@@ -161,19 +172,18 @@ public class TierMap {
         addExperienceCap(Items.TURTLE_HELMET, 900);
 
         addExperienceCap(Items.ELYTRA, 2000);
-        addRepairMaterial(Items.ELYTRA, Ingredient.of(Items.PHANTOM_MEMBRANE));
 
         // Utility Equipment
         addExperienceCap(Items.SHEARS, 200);
-        addRepairMaterial(Items.SHEARS, Ingredient.of(Items.IRON_INGOT));
+        addRepairMaterial(Items.SHEARS, Items.IRON_INGOT);
 
         addExperienceCap(Items.FISHING_ROD, 150);
-        addRepairMaterial(Items.FISHING_ROD, Ingredient.of(Items.STRING));
+        addRepairMaterial(Items.FISHING_ROD, Items.STRING);
 
         addExperienceCap(Items.BRUSH, 150);
-        addRepairMaterial(Items.BRUSH, Ingredient.of(Items.FEATHER));
+        addRepairMaterial(Items.BRUSH, Items.FEATHER);
 
         addExperienceCap(Items.FLINT_AND_STEEL, 150);
-        addRepairMaterial(Items.FLINT_AND_STEEL, Ingredient.of(Items.IRON_INGOT));
+        addRepairMaterial(Items.FLINT_AND_STEEL, Items.IRON_INGOT);
     }
 }
