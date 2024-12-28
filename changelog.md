@@ -2,6 +2,10 @@
 
 See the full changelog at https://github.com/iamkaf/bonded/commits/main
 
+## 1.1.1
+
+- fix: fixed a bug where the tool bench would drop the repair bench when broken
+
 ## 1.1.0
 
 - feat: port to 1.21.4

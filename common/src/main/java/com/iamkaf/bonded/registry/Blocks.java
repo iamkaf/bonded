@@ -29,7 +29,7 @@ public class Blocks {
     public static Supplier<Block> REPAIR_BENCH = register("repair_bench",
             () -> new RepairBenchBlock(BlockBehaviour.Properties.ofFullCopy(net.minecraft.world.level.block.Blocks.COBBLESTONE)
                     .noOcclusion()
-                    .setId(id2("tool_bench")))
+                    .setId(id2("repair_bench")))
     );
     public static Supplier<Item> REPAIR_BENCH_ITEM =
             thisShouldBeDoneAutomaticallyAndInternallyByArchitectury("repair_bench", REPAIR_BENCH);
