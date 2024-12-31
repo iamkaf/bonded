@@ -9,6 +9,7 @@ import com.iamkaf.bonded.component.ItemLevelContainer;
 import com.iamkaf.bonded.leveling.levelers.GearTypeLeveler;
 import com.iamkaf.bonded.leveling.levelers.MeleeWeaponsLeveler;
 import com.iamkaf.bonded.registry.DataComponents;
+import com.iamkaf.bonded.registry.Sounds;
 import com.iamkaf.bonded.registry.TierMap;
 import com.iamkaf.bonded.util.ItemUtils;
 import dev.architectury.event.CompoundEventResult;
@@ -24,7 +25,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.damagesource.DamageSource;
@@ -65,7 +65,7 @@ public class GameplayHooks {
                 player.getX(),
                 player.getY(),
                 player.getZ(),
-                itemLevel == maxLevel ? SoundEvents.PLAYER_LEVELUP : SoundEvents.EXPERIENCE_ORB_PICKUP,
+                itemLevel == maxLevel ? Sounds.ITEM_MAX_LEVEL.get() : Sounds.ITEM_LEVEL.get(),
                 SoundSource.PLAYERS
         );
 

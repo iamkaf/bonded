@@ -1,5 +1,6 @@
 package com.iamkaf.bonded.mixin;
 
+import com.iamkaf.bonded.Bonded;
 import com.iamkaf.bonded.api.event.GameEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -22,10 +23,11 @@ public abstract class SheepMixin extends Animal implements Shearable {
         super(entityType, level);
     }
 
-    @Inject(method = "mobInteract", at = @At("TAIL"))
+    @Inject(method = "mobInteract", at = @At("HEAD"))
     private void bonded$mobInteract(Player player, InteractionHand hand,
             CallbackInfoReturnable<InteractionResult> cir) {
         ItemStack stack = player.getItemInHand(hand);
+        Bonded.LOGGER.info("Sheep mobInteract {} {} {}", stack, stack.getItem() instanceof ShearsItem, this.readyForShearing());
         if (stack.getItem() instanceof ShearsItem) {
             if (!this.level().isClientSide && this.readyForShearing()) {
                 GameEvents.AWARD_ITEM_EXPERIENCE.invoker().experience(player, stack, 10);

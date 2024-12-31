@@ -25,7 +25,7 @@ public abstract class MushroomCowMixin extends Animal implements Shearable {
         super(entityType, level);
     }
 
-    @Inject(method = "mobInteract", at = @At("TAIL"))
+    @Inject(method = "mobInteract", at = @At("HEAD"))
     private void bonded$mobInteract(Player player, InteractionHand hand,
             CallbackInfoReturnable<InteractionResult> cir) {
         ItemStack stack = player.getItemInHand(hand);

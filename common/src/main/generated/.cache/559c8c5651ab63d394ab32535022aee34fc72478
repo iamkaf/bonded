@@ -1,1 +1,3 @@
-// 1.21.1	2024-11-16T05:18:45.5780065	Tags for minecraft:block mod id bonded
+// 1.21.1	2024-12-30T12:05:09.153191	Tags for minecraft:block mod id bonded
+49bbd7ab6f617cf4b89913e7d3c19b2f2adb51de data/minecraft/tags/block/mineable/axe.json
+32c21a486bcaa8d425a11d72140733439ffde14e data/minecraft/tags/block/mineable/pickaxe.json

@@ -26,11 +26,6 @@ public abstract class SmithingMenuMixin extends ItemCombinerMenu {
     @Shadow
     protected abstract List<ItemStack> getRelevantItems();
 
-//    @Inject(method = "onTake", at = @At("TAIL"))
-//    private void bonded$onTake(Player player, ItemStack stack, CallbackInfo ci) {
-//        GameEvents.MODIFY_SMITHING_RESULT.invoker().smith(player, stack, this.getRelevantItems());
-//    }
-
     @Inject(method = "createResult", at = @At("TAIL"))
     private void bonded$emitSmithingResultEvent(CallbackInfo ci) {
         GameEvents.MODIFY_SMITHING_RESULT.invoker().smith(this.resultSlots.getItem(0), getRelevantItems());

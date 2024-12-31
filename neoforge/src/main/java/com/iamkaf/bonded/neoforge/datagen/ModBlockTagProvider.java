@@ -1,8 +1,10 @@
 package com.iamkaf.bonded.neoforge.datagen;
 
 import com.iamkaf.bonded.Bonded;
+import com.iamkaf.bonded.registry.Blocks;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+import net.minecraft.tags.BlockTags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
@@ -17,6 +19,7 @@ public class ModBlockTagProvider extends BlockTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-
+        tag(BlockTags.MINEABLE_WITH_AXE).add(Blocks.TOOL_BENCH.get());
+        tag(BlockTags.MINEABLE_WITH_PICKAXE).add(Blocks.REPAIR_BENCH.get());
     }
 }
