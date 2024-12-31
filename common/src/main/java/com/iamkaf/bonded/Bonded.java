@@ -49,6 +49,7 @@ public class Bonded extends AmberMod {
         Levelers.init();
         Bonuses.init();
         TierMap.init();
+        Sounds.init();
     }
 
     /**

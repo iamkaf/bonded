@@ -2,6 +2,13 @@
 
 See the full changelog at https://github.com/iamkaf/bonded/commits/main
 
+## 1.2.0
+
+- feat: added a HUD for the tool and repair benches
+- feat: added custom sounds for item level ups
+- feat: improved some feedback messages
+- fix: fixed a bug that prevented shears from getting experience
+
 ## 1.1.1
 
 - fix: fixed a bug where the tool bench would drop the repair bench when broken

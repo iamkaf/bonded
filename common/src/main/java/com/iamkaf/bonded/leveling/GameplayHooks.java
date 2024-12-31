@@ -9,6 +9,7 @@ import com.iamkaf.bonded.component.ItemLevelContainer;
 import com.iamkaf.bonded.leveling.levelers.GearTypeLeveler;
 import com.iamkaf.bonded.leveling.levelers.MeleeWeaponsLeveler;
 import com.iamkaf.bonded.registry.DataComponents;
+import com.iamkaf.bonded.registry.Sounds;
 import com.iamkaf.bonded.registry.TierMap;
 import com.iamkaf.bonded.util.ItemUtils;
 import dev.architectury.event.CompoundEventResult;
@@ -65,7 +66,7 @@ public class GameplayHooks {
                 player.getX(),
                 player.getY(),
                 player.getZ(),
-                itemLevel == maxLevel ? SoundEvents.PLAYER_LEVELUP : SoundEvents.EXPERIENCE_ORB_PICKUP,
+                itemLevel == maxLevel ? Sounds.ITEM_MAX_LEVEL.get() : Sounds.ITEM_LEVEL.get(),
                 SoundSource.PLAYERS
         );
 
