@@ -31,7 +31,8 @@
     "minecraft": ["1.21", "1.21.1"],
     "java": ">=21",
     "architectury": ">=${architectury_api_version}",
-    "fabric-api": "*",
-    "amber": ">=${amber_version}"
+    "fabric-api": ">=0.103.0",
+    "amber": ">=${amber_version}",
+    "forgeconfigapiport": "*"
   }
 }
