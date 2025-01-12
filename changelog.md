@@ -2,6 +2,10 @@
 
 See the full changelog at https://github.com/iamkaf/bonded/commits/main
 
+## 1.2.1
+
+- fix: added a missing mod to the dependency list
+
 ## 1.2.0
 
 - feat: added a HUD for the tool and repair benches
