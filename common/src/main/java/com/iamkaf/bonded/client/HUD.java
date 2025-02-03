@@ -136,7 +136,7 @@ public class HUD {
 
         Ingredient upgradeIngredient = leveler.getUpgradeIngredient(stack);
         Item upgrade = leveler.getUpgrade(stack);
-        if (stack.isEmpty() || upgradeIngredient == null || upgrade == null) return;
+        if (stack.isEmpty() || upgradeIngredient == null || upgrade == null || upgradeIngredient.getItems().length == 0) return;
 
         text(guiGraphics,
                 textRenderer,
