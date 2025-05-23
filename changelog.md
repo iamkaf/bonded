@@ -2,6 +2,10 @@
 
 See the full changelog at https://github.com/iamkaf/bonded/commits/main
 
+## 1.2.2
+
+- fix(1.21.1): fixed a crash when trying to upgrade an item but the target upgrade doesn't have an upgrade material
+
 ## 1.2.1
 
 - fix: added a missing mod to the dependency list
