@@ -2,6 +2,10 @@
 
 See the full changelog at https://github.com/iamkaf/bonded/commits/main
 
+## 1.3.0
+
+- feat: port to 1.21.5
+
 ## 1.2.2
 
 - fix(1.21.1): fixed a crash when trying to upgrade an item but the target upgrade doesn't have an upgrade material

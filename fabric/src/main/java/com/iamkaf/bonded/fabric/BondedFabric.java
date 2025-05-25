@@ -2,7 +2,7 @@ package com.iamkaf.bonded.fabric;
 
 import com.iamkaf.bonded.Bonded;
 import com.iamkaf.bonded.registry.TierMap;
-import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.NeoForgeConfigRegistry;
+import fuzs.forgeconfigapiport.fabric.api.v5.ConfigRegistry;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents;
@@ -19,7 +19,7 @@ public final class BondedFabric implements ModInitializer {
     @SuppressWarnings("deprecation")
     public void onInitialize() {
         Bonded.init();
-        NeoForgeConfigRegistry.INSTANCE.register(Bonded.MOD_ID, ModConfig.Type.COMMON, Bonded.CONFIG_SPEC);
+        ConfigRegistry.INSTANCE.register(Bonded.MOD_ID, ModConfig.Type.COMMON, Bonded.CONFIG_SPEC);
 
         ServerLivingEntityEvents.AFTER_DAMAGE.register((LivingEntity entity, DamageSource source,
                 float baseDamageTaken, float damageTaken, boolean blocked) -> {

@@ -21,12 +21,12 @@ public abstract class ShieldItemMixin extends Item {
         super(properties);
     }
 
-    @Inject(method =
-            "appendHoverText(Lnet/minecraft/world/item/ItemStack;" + "Lnet/minecraft/world/item" +
-                    "/Item$TooltipContext;Ljava/util/List;" + "Lnet/minecraft/world/item/TooltipFlag;)V",
-            at = @At("HEAD"))
-    public void bonded$addItemLevelToTooltip(ItemStack stack, TooltipContext context,
-            List<Component> tooltipComponents, TooltipFlag tooltipFlag, CallbackInfo ci) {
-        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-    }
+//    @Inject(method =
+//            "appendHoverText(Lnet/minecraft/world/item/ItemStack;" + "Lnet/minecraft/world/item" +
+//                    "/Item$TooltipContext;Ljava/util/List;" + "Lnet/minecraft/world/item/TooltipFlag;)V",
+//            at = @At("HEAD"))
+//    public void bonded$addItemLevelToTooltip(ItemStack stack, TooltipContext context,
+//            List<Component> tooltipComponents, TooltipFlag tooltipFlag, CallbackInfo ci) {
+//        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+//    }
 }

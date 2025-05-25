@@ -9,8 +9,6 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.FlintAndSteelItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -28,8 +26,7 @@ public abstract class CreeperMixin extends Monster {
     public abstract boolean isIgnited();
 
     @Inject(method = "mobInteract", at = @At("HEAD"))
-    private void bonded$mobInteract(Player player, InteractionHand hand,
-            CallbackInfoReturnable<InteractionResult> cir) {
+    private void bonded$mobInteract(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
         ItemStack stack = player.getItemInHand(hand);
         if (stack.getItem() instanceof FlintAndSteelItem && !this.level().isClientSide && !this.isIgnited()) {
             GameEvents.AWARD_ITEM_EXPERIENCE.invoker().experience(player, stack, 50);

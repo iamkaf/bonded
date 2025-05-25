@@ -3,11 +3,11 @@ package com.iamkaf.bonded.bonuses;
 import com.iamkaf.bonded.component.ItemLevelContainer;
 import com.iamkaf.bonded.leveling.levelers.GearTypeLeveler;
 import com.iamkaf.bonded.util.ItemUtils;
+import com.iamkaf.bonded.util.UpgradeHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ItemStack;
 
 public class DigSpeedBonus implements BondBonus {
@@ -28,7 +28,7 @@ public class DigSpeedBonus implements BondBonus {
 
     @Override
     public boolean shouldApply(ItemStack gear, GearTypeLeveler gearType, ItemLevelContainer container) {
-        return gear.getItem() instanceof DiggerItem && container.getBond() >= threshold;
+        return UpgradeHelper.isTool(gear) && container.getBond() >= threshold;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.iamkaf.bonded.util;
 
+import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
@@ -37,7 +38,8 @@ public class ItemUtils {
         if (player.getOffhandItem().is(stack.getItem())) {
             return player.getOffhandItem();
         }
-        for (var slot : player.getInventory().items) {
+        NonNullList<ItemStack> items = UpgradeHelper.getInventoryItems(player.getInventory());
+        for (var slot : items) {
             if (slot.is(stack.getItem())) {
                 return slot;
             }
@@ -64,6 +66,7 @@ public class ItemUtils {
             case CHEST -> EquipmentSlotGroup.CHEST;
             case HEAD -> EquipmentSlotGroup.HEAD;
             case BODY -> EquipmentSlotGroup.BODY;
+            case SADDLE -> EquipmentSlotGroup.SADDLE;
         };
     }
 

@@ -2,7 +2,6 @@ package com.iamkaf.bonded.mixin;
 
 import com.iamkaf.bonded.api.event.GameEvents;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
@@ -16,7 +15,8 @@ import java.util.List;
 
 @Mixin(SmithingMenu.class)
 public abstract class SmithingMenuMixin extends ItemCombinerMenu {
-    public SmithingMenuMixin(@Nullable MenuType<?> menuType, int i, Inventory inventory, ContainerLevelAccess containerLevelAccess, ItemCombinerMenuSlotDefinition itemCombinerMenuSlotDefinition) {
+    public SmithingMenuMixin(@Nullable MenuType<?> menuType, int i, Inventory inventory,
+            ContainerLevelAccess containerLevelAccess, ItemCombinerMenuSlotDefinition itemCombinerMenuSlotDefinition) {
         super(menuType, i, inventory, containerLevelAccess, itemCombinerMenuSlotDefinition);
     }
 

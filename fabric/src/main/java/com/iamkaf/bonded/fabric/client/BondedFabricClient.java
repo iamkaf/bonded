@@ -2,7 +2,7 @@ package com.iamkaf.bonded.fabric.client;
 
 import com.iamkaf.bonded.Bonded;
 import com.iamkaf.bonded.BondedClient;
-import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.client.ConfigScreenFactoryRegistry;
+import fuzs.forgeconfigapiport.fabric.api.v5.client.ConfigScreenFactoryRegistry;
 import net.fabricmc.api.ClientModInitializer;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 

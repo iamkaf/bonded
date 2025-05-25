@@ -3,11 +3,11 @@ package com.iamkaf.bonded.bonuses;
 import com.iamkaf.bonded.component.ItemLevelContainer;
 import com.iamkaf.bonded.leveling.levelers.GearTypeLeveler;
 import com.iamkaf.bonded.util.ItemUtils;
+import com.iamkaf.bonded.util.UpgradeHelper;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.equipment.Equippable;
 
@@ -29,7 +29,7 @@ public class ArmorBonus implements BondBonus {
 
     @Override
     public boolean shouldApply(ItemStack gear, GearTypeLeveler gearType, ItemLevelContainer container) {
-        return gear.getItem() instanceof ArmorItem && container.getBond() >= threshold;
+        return UpgradeHelper.isArmor(gear) && container.getBond() >= threshold;
     }
 
     @Override

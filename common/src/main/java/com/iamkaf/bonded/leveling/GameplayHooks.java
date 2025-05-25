@@ -12,6 +12,7 @@ import com.iamkaf.bonded.registry.DataComponents;
 import com.iamkaf.bonded.registry.Sounds;
 import com.iamkaf.bonded.registry.TierMap;
 import com.iamkaf.bonded.util.ItemUtils;
+import com.iamkaf.bonded.util.UpgradeHelper;
 import dev.architectury.event.CompoundEventResult;
 import dev.architectury.event.EventResult;
 import dev.architectury.event.events.common.BlockEvent;
@@ -20,6 +21,7 @@ import dev.architectury.event.events.common.PlayerEvent;
 import dev.architectury.utils.value.IntValue;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -29,6 +31,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -153,7 +156,8 @@ public class GameplayHooks {
     }
 
     private static void onItemCrafted(Player player, ItemStack stack, Container container) {
-        player.getInventory().items.forEach(item -> Bonded.GEAR.initComponent(item));
+        NonNullList<ItemStack> items = UpgradeHelper.getInventoryItems(player.getInventory());
+        items.forEach(item -> Bonded.GEAR.initComponent(item));
     }
 
     private static void onItemSmithed(ItemStack stack, List<ItemStack> relevantItems) {
@@ -178,8 +182,9 @@ public class GameplayHooks {
     }
 
     private static void onItemPickedUp(Player player, ItemEntity itemEntity, ItemStack stack) {
-        for (var i = 0; i < player.getInventory().items.size(); i++) {
-            if (i == player.getInventory().selected) {
+        NonNullList<ItemStack> items = UpgradeHelper.getInventoryItems(player.getInventory());
+        for (var i = 0; i < items.size(); i++) {
+            if (i == player.getInventory().getSelectedSlot()) {
                 continue;
             }
             ItemStack item = player.getInventory().getItem(i);
@@ -248,9 +253,7 @@ public class GameplayHooks {
             );
         }
 
-        var playerArmorSlots = player.getArmorSlots();
-
-        for (var slot : playerArmorSlots) {
+        for (var slot : UpgradeHelper.getArmorSlots(player)) {
             if (!Bonded.GEAR.isGear(slot)) continue;
             emitProgressEvents(slot,
                     player,
@@ -260,11 +263,9 @@ public class GameplayHooks {
     }
 
     private static void processPlayerTakenDamage(Player player, DamageSource source, float amount) {
-        var playerArmorSlots = player.getArmorSlots();
-
         if (source.getEntity() == null) return;
 
-        for (var slot : playerArmorSlots) {
+        for (var slot : UpgradeHelper.getArmorSlots(player)) {
             if (!Bonded.GEAR.isGear(slot)) continue;
             emitProgressEvents(slot,
                     player,

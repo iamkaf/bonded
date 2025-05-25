@@ -3,8 +3,10 @@ package com.iamkaf.bonded.block;
 import com.iamkaf.amber.api.inventory.ItemHelper;
 import com.iamkaf.amber.api.player.FeedbackHelper;
 import com.iamkaf.bonded.Bonded;
+import com.iamkaf.bonded.util.UpgradeHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -46,8 +48,9 @@ public class RepairBenchBlock extends Block {
         }
 
         Inventory inventory = player.getInventory();
+        NonNullList<ItemStack> items = UpgradeHelper.getInventoryItems(inventory);
 
-        if (inventory.items.stream().noneMatch(repairable::isValidRepairItem)) {
+        if (items.stream().noneMatch(repairable::isValidRepairItem)) {
             errorFeedback(
                     level,
                     player,
