@@ -10,18 +10,17 @@ import net.minecraft.world.item.Items;
 import java.util.concurrent.CompletableFuture;
 
 public class ModItemTagProvider extends FabricTagProvider.ItemTagProvider {
-    public ModItemTagProvider(FabricDataOutput output,
-            CompletableFuture<HolderLookup.Provider> completableFuture) {
+    public ModItemTagProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> completableFuture) {
         super(output, completableFuture);
     }
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        getOrCreateTagBuilder(Tags.DIGGING_EQUIPMENT).forceAddTag(ItemTags.PICKAXES)
+        valueLookupBuilder(Tags.DIGGING_EQUIPMENT).forceAddTag(ItemTags.PICKAXES)
                 .forceAddTag(ItemTags.AXES)
                 .forceAddTag(ItemTags.SHOVELS)
                 .forceAddTag(ItemTags.HOES);
-        getOrCreateTagBuilder(Tags.UTILITY_EQUIPMENT).forceAddTag(Tags.FISHING_RODS)
+        valueLookupBuilder(Tags.UTILITY_EQUIPMENT).forceAddTag(Tags.FISHING_RODS)
                 .forceAddTag(Tags.BRUSHES)
                 .forceAddTag(Tags.IGNITERS)
                 .forceAddTag(Tags.SHEARS)

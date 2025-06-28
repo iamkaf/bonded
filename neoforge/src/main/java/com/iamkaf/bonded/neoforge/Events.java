@@ -9,7 +9,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent;
 
-@EventBusSubscriber(modid = Bonded.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = Bonded.MOD_ID)
 public class Events {
     @SuppressWarnings("deprecation")
     @SubscribeEvent

@@ -9,12 +9,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
+import net.minecraft.client.gui.screens.inventory.tooltip.DefaultTooltipPositioner;
 import net.minecraft.client.gui.screens.inventory.tooltip.TooltipRenderUtil;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.TagKey;
@@ -22,7 +22,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.Repairable;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -37,8 +36,8 @@ import java.util.Optional;
  * HUD class responsible for rendering custom HUD elements in the game.
  */
 public class HUD {
-    public static final int WHITE = 0xffffff;
-    public static final int OUTLINE_COLOR = 0x000000;
+    public static final int WHITE = 0xffffffff;
+    public static final int OUTLINE_COLOR = 0x00000000;
     public static boolean enabled = true;
     private static Minecraft mc;
 
@@ -56,6 +55,8 @@ public class HUD {
      * @param deltaTracker The delta tracker for tracking changes.
      */
     public static void onRenderHud(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
+        if (mc == null) mc = Minecraft.getInstance();
+
         if (!shouldRender()) {
             return;
         }
@@ -103,31 +104,25 @@ public class HUD {
      * @param y            The y-coordinate for rendering.
      * @param player       The local player.
      */
-    private static void renderRepairBenchInfo(GuiGraphics guiGraphics, Font textRenderer, int x, int y,
-            LocalPlayer player) {
+    private static void renderRepairBenchInfo(GuiGraphics guiGraphics, Font textRenderer, int x, int y, LocalPlayer player) {
         ItemStack stack = player.getMainHandItem();
         GearTypeLeveler leveler = Bonded.GEAR.getLeveler(stack);
         if (leveler == null) return;
 
-//        Ingredient repairIngredient = leveler.getRepairIngredient(stack);
         Repairable repairable = stack.get(DataComponents.REPAIRABLE);
         if (stack.isEmpty() || repairable == null) return;
         ItemStack repairIngredient = repairable.items().get(0).value().getDefaultInstance();
 
-        text(guiGraphics,
+        text(
+                guiGraphics,
                 textRenderer,
                 Component.translatable("bonded.hud.repair"),
                 x - 2,
                 y - textRenderer.lineHeight - 4
         );
-        TooltipRenderUtil.renderTooltipBackground(guiGraphics, x, y, 20, 20, 20, null);
+        TooltipRenderUtil.renderTooltipBackground(guiGraphics, x, y, 20, 20, null);
         guiGraphics.renderItem(repairIngredient, x + 2, y + 2);
-        guiGraphics.renderTooltip(mc.font,
-                Screen.getTooltipFromItem(mc, repairIngredient),
-                stack.getTooltipImage(),
-                x + 16,
-                y + 12
-        );
+        HUD.renderTooltip(guiGraphics, repairIngredient, x + 16, y + 12);
     }
 
     /**
@@ -139,8 +134,7 @@ public class HUD {
      * @param y            The y-coordinate for rendering.
      * @param player       The local player.
      */
-    private static void renderToolBenchInfo(GuiGraphics guiGraphics, Font textRenderer, int x, int y,
-            LocalPlayer player) {
+    private static void renderToolBenchInfo(GuiGraphics guiGraphics, Font textRenderer, int x, int y, LocalPlayer player) {
         ItemStack stack = player.getMainHandItem();
         GearTypeLeveler leveler = Bonded.GEAR.getLeveler(stack);
         if (leveler == null) return;
@@ -157,17 +151,18 @@ public class HUD {
         Item upgrade = leveler.getUpgrade(stack);
         if (stack.isEmpty() || upgrade == null) return;
 
-        text(guiGraphics,
+        text(
+                guiGraphics,
                 textRenderer,
                 Component.translatable("bonded.hud.upgrade"),
                 x - 1,
                 y - textRenderer.lineHeight - 4
         );
-        TooltipRenderUtil.renderTooltipBackground(guiGraphics, x, y, 16, 16, 20, null);
-        guiGraphics.renderItem(upgradeIngredient, x, y);
-        TooltipRenderUtil.renderTooltipBackground(guiGraphics, x + 24, y, 16, 16, 20, null);
-        guiGraphics.renderItem(upgrade.getDefaultInstance(), x + 24, y);
-        guiGraphics.renderTooltip(mc.font, stack, x + 38, y + 12);
+        TooltipRenderUtil.renderTooltipBackground(guiGraphics, x, y, 20, 20, null);
+        guiGraphics.renderItem(upgradeIngredient, x + 2, y + 2);
+        TooltipRenderUtil.renderTooltipBackground(guiGraphics, x + 24 + 4, y, 20, 20, null);
+        guiGraphics.renderItem(upgrade.getDefaultInstance(), x + 24 + 2 + 4, y + 2);
+        HUD.renderTooltip(guiGraphics, stack, x + 44, y + 12);
     }
 
     /**
@@ -180,17 +175,7 @@ public class HUD {
      * @param y       The y-coordinate for rendering.
      */
     private static void text(GuiGraphics context, Font font, Component message, int x, int y) {
-        MultiBufferSource.BufferSource buffers = mc.renderBuffers().bufferSource();
-        font.drawInBatch8xOutline(message.getVisualOrderText(),
-                x,
-                y,
-                HUD.WHITE,
-                HUD.OUTLINE_COLOR,
-                context.pose().last().pose(),
-                buffers,
-                15728880
-        );
-        context.flush();
+        context.drawString(font, message, x, y, WHITE);
     }
 
     /**
@@ -205,11 +190,26 @@ public class HUD {
         Vec3 rotation = player.getViewVector(1);
         double reach = player.getAttributeValue(Attributes.BLOCK_INTERACTION_RANGE);
         Vec3 combined = eyePosition.add(rotation.x * reach, rotation.y * reach, rotation.z * reach);
-        return level.clip(new ClipContext(eyePosition,
-                combined,
-                ClipContext.Block.OUTLINE,
-                ClipContext.Fluid.NONE,
-                player
-        ));
+        return level.clip(new ClipContext(eyePosition, combined, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player));
+    }
+
+    /**
+     * Renders a tooltip for the given item stack at the specified coordinates.
+     *
+     * @param guiGraphics The graphics context for rendering the GUI.
+     * @param stack       The item stack for which to render the tooltip.
+     * @param x           The x-coordinate for rendering the tooltip.
+     * @param y           The y-coordinate for rendering the tooltip.
+     */
+    private static void renderTooltip(GuiGraphics guiGraphics, ItemStack stack, int x, int y) {
+        guiGraphics.renderTooltip(
+                mc.font,
+                // converts a list of components to a list of ClientTooltipComponents
+                Screen.getTooltipFromItem(mc, stack)
+                        .stream()
+                        .map(Component::getVisualOrderText)
+                        .map(ClientTooltipComponent::create)
+                        .toList(), x, y, DefaultTooltipPositioner.INSTANCE, stack.get(DataComponents.TOOLTIP_STYLE)
+        );
     }
 }

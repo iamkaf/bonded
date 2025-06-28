@@ -2,6 +2,11 @@
 
 See the full changelog at https://github.com/iamkaf/bonded/commits/main
 
+## 1.4.0
+
+- feat: port to 1.21.6
+- fix: fixed a crash related to the HUD
+
 ## 1.3.0
 
 - feat: port to 1.21.5

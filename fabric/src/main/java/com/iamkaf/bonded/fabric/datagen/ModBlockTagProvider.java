@@ -16,7 +16,7 @@ public class ModBlockTagProvider extends FabricTagProvider.BlockTagProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_AXE).add(Blocks.TOOL_BENCH.get());
-        getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_PICKAXE).add(Blocks.REPAIR_BENCH.get());
+        valueLookupBuilder(BlockTags.MINEABLE_WITH_AXE).add(Blocks.TOOL_BENCH.get());
+        valueLookupBuilder(BlockTags.MINEABLE_WITH_PICKAXE).add(Blocks.REPAIR_BENCH.get());
     }
 }
