@@ -123,6 +123,7 @@ public class HUD {
         TooltipRenderUtil.renderTooltipBackground(guiGraphics, x, y, 20, 20, null);
         guiGraphics.renderItem(repairIngredient, x + 2, y + 2);
         HUD.renderTooltip(guiGraphics, repairIngredient, x + 16, y + 12);
+        // TODO: guiGraphics.renderItemDecorations()
     }
 
     /**
