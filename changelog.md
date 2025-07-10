@@ -2,6 +2,10 @@
 
 See the full changelog at https://github.com/iamkaf/bonded/commits/main
 
+## 1.4.1
+
+- feat: port to 1.21.7
+
 ## 1.4.0
 
 - feat: port to 1.21.6
