@@ -6,6 +6,7 @@ import com.iamkaf.bonded.bonuses.BondBonus;
 import com.iamkaf.bonded.component.AppliedBonusesContainer;
 import com.iamkaf.bonded.component.ItemLevelContainer;
 import com.iamkaf.bonded.leveling.levelers.GearTypeLeveler;
+import com.iamkaf.bonded.util.SafeValues;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
@@ -55,7 +56,7 @@ public class BondBonusRegistry {
         // TODO: i have to come up with something else if i add some other bonus other than the durability
         //  one, that uses .modifyItem()
         gear.set(net.minecraft.core.component.DataComponents.MAX_DAMAGE,
-                gear.getItem().getDefaultInstance().getMaxDamage()
+                SafeValues.safeMaxDamageValue(gear.getItem().getDefaultInstance().getMaxDamage())
         );
         bonusToApply.forEach(bondBonus -> bondBonus.modifyItem(gear, gearType, container));
 

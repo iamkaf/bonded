@@ -5,6 +5,7 @@ import com.iamkaf.bonded.component.AppliedBonusesContainer;
 import com.iamkaf.bonded.component.ItemLevelContainer;
 import com.iamkaf.bonded.leveling.levelers.GearTypeLeveler;
 import com.iamkaf.bonded.registry.DataComponents;
+import com.iamkaf.bonded.util.SafeValues;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
@@ -31,6 +32,6 @@ public class DurabilityBonus implements BondBonus {
 
     @Override
     public void modifyItem(ItemStack gear, GearTypeLeveler gearTypeLeveler, ItemLevelContainer container) {
-        gear.set(net.minecraft.core.component.DataComponents.MAX_DAMAGE, gear.getMaxDamage() + bonus);
+        gear.set(net.minecraft.core.component.DataComponents.MAX_DAMAGE, SafeValues.safeMaxDamageValue(gear.getMaxDamage() + bonus));
     }
 }
