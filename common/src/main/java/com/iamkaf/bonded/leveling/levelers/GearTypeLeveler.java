@@ -6,6 +6,7 @@ import com.iamkaf.bonded.component.ItemLevelContainer;
 import com.iamkaf.bonded.registry.DataComponents;
 import com.iamkaf.bonded.registry.TierMap;
 import com.iamkaf.bonded.util.ItemUtils;
+import com.iamkaf.bonded.util.SafeValues;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -44,7 +45,7 @@ public interface GearTypeLeveler {
                 ItemLevelContainer.make(TierMap.getExperienceCap(upgrade)).addBond(container.getBond())
         );
         upgradedGear.set(DataComponents.APPLIED_BONUSES_CONTAINER.get(), AppliedBonusesContainer.make());
-        upgradedGear.set(net.minecraft.core.component.DataComponents.MAX_DAMAGE, upgrade.getDefaultInstance().getMaxDamage());
+        upgradedGear.set(net.minecraft.core.component.DataComponents.MAX_DAMAGE, SafeValues.safeMaxDamageValue(upgrade.getDefaultInstance().getMaxDamage()));
         Bonded.GEAR.initComponent(upgradedGear);
         return upgradedGear;
     }
