@@ -19,7 +19,7 @@ public abstract class ShearsItemMixin {
     private void bonded$mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos,
             LivingEntity miningEntity, CallbackInfoReturnable<Boolean> cir) {
         if (cir.getReturnValue()) {
-            if (miningEntity instanceof Player player && !level.isClientSide) {
+            if (miningEntity instanceof Player player && !level.isClientSide()) {
                 GameEvents.AWARD_ITEM_EXPERIENCE.invoker().experience(player, stack, 1);
             }
         }

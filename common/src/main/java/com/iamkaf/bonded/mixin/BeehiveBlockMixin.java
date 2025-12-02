@@ -29,7 +29,7 @@ public abstract class BeehiveBlockMixin extends BaseEntityBlock {
             CallbackInfoReturnable<InteractionResult> cir) {
         int honeyLevel = state.getValue(BeehiveBlock.HONEY_LEVEL);
 
-        if (!level.isClientSide && honeyLevel >= 5 && stack.getItem() instanceof ShearsItem) {
+        if (!level.isClientSide()&& honeyLevel >= 5 && stack.getItem() instanceof ShearsItem) {
             GameEvents.AWARD_ITEM_EXPERIENCE.invoker().experience(player, stack, 10);
         }
     }

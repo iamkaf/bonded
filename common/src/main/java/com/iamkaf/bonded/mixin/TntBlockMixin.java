@@ -27,7 +27,7 @@ public abstract class TntBlockMixin extends Block {
     private void bonded$useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
             Player player, InteractionHand hand, BlockHitResult hitResult,
             CallbackInfoReturnable<InteractionResult> cir) {
-        if (!level.isClientSide && stack.getItem() instanceof FlintAndSteelItem) {
+        if (!level.isClientSide() && stack.getItem() instanceof FlintAndSteelItem) {
             GameEvents.AWARD_ITEM_EXPERIENCE.invoker().experience(player, stack, 10);
         }
     }

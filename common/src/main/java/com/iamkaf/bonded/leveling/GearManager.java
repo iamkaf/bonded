@@ -5,7 +5,7 @@ import com.iamkaf.bonded.component.ItemLevelContainer;
 import com.iamkaf.bonded.leveling.levelers.GearTypeLeveler;
 import com.iamkaf.bonded.registry.*;
 import com.mojang.logging.LogUtils;
-import dev.architectury.event.events.common.LifecycleEvent;
+import com.iamkaf.amber.api.event.v1.events.common.WorldEvents;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
@@ -28,7 +28,11 @@ public class GearManager {
     private static boolean READY = false;
 
     public GearManager() {
-        LifecycleEvent.SERVER_LEVEL_LOAD.register(GearManager::loadGearRegistries);
+        WorldEvents.WORLD_LOAD.register((server, level) -> {
+            if (level instanceof ServerLevel serverLevel) {
+                GearManager.loadGearRegistries(serverLevel);
+            }
+        });
     }
 
     private static void loadGearRegistries(ServerLevel serverLevel) {
@@ -54,8 +58,7 @@ public class GearManager {
             items.ifPresent(holders -> {
                 LOGGER.info("Found {} {} [{}]", holders.size(), type.name(), tag.location());
                 holders.stream()
-                        .forEach(itemHolder -> gearTypeLevelerRegistry.add(itemHolder.value()
-                                .arch$registryName(), type));
+                        .forEach(itemHolder -> gearTypeLevelerRegistry.add(itemRegistry.getKey(itemHolder.value()), type));
             });
         }
     }

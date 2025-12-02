@@ -3,8 +3,7 @@ package com.iamkaf.bonded.registry;
 import com.iamkaf.bonded.Bonded;
 import com.iamkaf.bonded.block.RepairBenchBlock;
 import com.iamkaf.bonded.block.ToolBenchBlock;
-import dev.architectury.registry.registries.DeferredRegister;
-//import dev.architectury.registry.registries.RegistrySupplier;
+import com.iamkaf.amber.api.registry.v1.DeferredRegister;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.BlockItem;
@@ -39,11 +38,14 @@ public class Blocks {
     }
 
     private static Supplier<Item> thisShouldBeDoneAutomaticallyAndInternallyByArchitectury(String id, Supplier<Block> block) {
-        return Items.ITEMS.register(id,
+        Supplier<Item> item = Items.ITEMS.register(id,
                 () -> new BlockItem(block.get(),
-                        new Item.Properties().setId(id(id)).arch$tab(CreativeModeTabs.BONDED)
+                        new Item.Properties().setId(id(id))
                 )
         );
+        // Add item to creative tab manually
+        CreativeModeTabs.addItem(item);
+        return item;
     }
 
     private static ResourceKey<Item> id(String id) {

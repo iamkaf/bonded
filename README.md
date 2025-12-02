@@ -1,8 +1,14 @@
 # Bonded
 
-[![Amber](https://img.shields.io/badge/Amber-iamkaf?style=for-the-badge&label=Requires&color=%23ebb134)](https://modrinth.com/mod/amber)
-[![Issues](https://img.shields.io/github/issues/iamkaf/mod-issues?style=for-the-badge&color=%23eee)](https://github.com/iamkaf/mod-issues)
-[![Discord](https://img.shields.io/discord/1207469438719492176?style=for-the-badge&logo=discord&label=DISCORD&color=%235865F2)](https://discord.gg/HV5WgTksaB)
-[![KoFi](https://img.shields.io/badge/KoFi-iamkaf?style=for-the-badge&logo=kofi&logoColor=%2330d1e3&label=Support%20Me&color=%2330d1e3)](https://ko-fi.com/iamkaffe)
+A gear leveling mod for modern Minecraft.
 
-A gear leveling mod for Fabric and NeoForge.
+This repository provides a starting point for creating Minecraft mods that target Fabric, Forge and NeoForge from the same codebase.
+It is adapted from [jaredlll08's MultiLoader-Template](https://github.com/jaredlll08/MultiLoader-Template) and stripped down to a minimal starting point.
+
+## Directory layout
+
+- `common/` contains code shared between all loaders.
+- `fabric/`, `forge/` and `neoforge/` contain loader specific entry points and build logic.
+- `buildSrc/` holds the Gradle scripts that wire everything together.
+
+Feel free to expand upon this structure to suit the needs of your own mods.

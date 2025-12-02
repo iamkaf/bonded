@@ -13,12 +13,10 @@ import com.iamkaf.bonded.registry.Sounds;
 import com.iamkaf.bonded.registry.TierMap;
 import com.iamkaf.bonded.util.ItemUtils;
 import com.iamkaf.bonded.util.UpgradeHelper;
-import dev.architectury.event.CompoundEventResult;
-import dev.architectury.event.EventResult;
-import dev.architectury.event.events.common.BlockEvent;
-import dev.architectury.event.events.common.EntityEvent;
-import dev.architectury.event.events.common.PlayerEvent;
-import dev.architectury.utils.value.IntValue;
+import com.iamkaf.amber.api.event.v1.events.common.BlockEvents;
+import com.iamkaf.amber.api.event.v1.events.common.EntityEvent;
+import com.iamkaf.amber.api.event.v1.events.common.ItemEvents;
+import com.iamkaf.amber.api.event.v1.events.common.PlayerEvents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
@@ -32,14 +30,17 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
@@ -47,13 +48,18 @@ import java.util.List;
 
 public class GameplayHooks {
     public static void init() {
-        BlockEvent.BREAK.register(GameplayHooks::onBlockBreak);
+        BlockEvents.BLOCK_BREAK_BEFORE.register((level, player, pos, state, blockEntity) -> {
+            if (player instanceof ServerPlayer serverPlayer) {
+                return GameplayHooks.onBlockBreak(level, pos, state, serverPlayer, blockEntity);
+            }
+            return InteractionResult.PASS;
+        });
         GameEvents.AWARD_ITEM_EXPERIENCE.register(GameplayHooks::onGenericItemExperience);
-        PlayerEvent.CRAFT_ITEM.register(GameplayHooks::onItemCrafted);
+        PlayerEvents.CRAFT_ITEM.register(GameplayHooks::onItemCrafted);
         GameEvents.MODIFY_SMITHING_RESULT.register(GameplayHooks::onItemSmithed);
-        PlayerEvent.PICKUP_ITEM_POST.register(GameplayHooks::onItemPickedUp);
+        ItemEvents.ITEM_PICKUP.register(GameplayHooks::onItemPickedUp);
         GameEvents.SHIELD_BLOCK.register(GameplayHooks::onDamageBlockedByShield);
-        EntityEvent.LIVING_HURT.register(GameplayHooks::onEntityHurt);
+        EntityEvent.AFTER_DAMAGE.register(GameplayHooks::onEntityHurt);
         BondEvent.ITEM_LEVELED_UP.register(GameplayHooks::onItemLeveledUp);
         // TODO: add wood stripping xp, shovel pathing xp and hoe hoeing xp
     }
@@ -95,16 +101,14 @@ public class GameplayHooks {
         var container = gear.get(DataComponents.ITEM_LEVEL_CONTAINER.get());
         assert container != null;
 
-        CompoundEventResult<Integer> result = BondEvent.ITEM_EXPERIENCE_GAINED.invoker()
+        InteractionResult result = BondEvent.ITEM_EXPERIENCE_GAINED.invoker()
                 .experience(gear, player, container, experienceAmount);
 
-        if (result.interruptsFurtherEvaluation()) {
+        if (result != InteractionResult.PASS) {
             return;
         }
 
-        var newExperienceAmount = result.object() != null ? result.object() : experienceAmount;
-
-        boolean hasLeveled = Bonded.GEAR.giveItemExperience(gear, newExperienceAmount);
+        boolean hasLeveled = Bonded.GEAR.giveItemExperience(gear, experienceAmount);
         if (hasLeveled) {
             if (Bonded.CONFIG.enableDurabilityGainOnLevelUp.get()) {
                 ItemHelper.repairBy(gear, Bonded.CONFIG.durabilityGainOnLevelUp.get().floatValue());
@@ -113,24 +117,24 @@ public class GameplayHooks {
         }
     }
 
-    private static EventResult onBlockBreak(Level level, BlockPos pos, BlockState state,
-            ServerPlayer player, @Nullable IntValue xp) {
+    private static InteractionResult onBlockBreak(Level level, BlockPos pos, BlockState state,
+            ServerPlayer player, BlockEntity blockEntity) {
         var handItem = player.getMainHandItem();
         if (handItem.isEmpty()) {
-            return EventResult.pass();
+            return InteractionResult.PASS;
         }
 
         var leveler = Bonded.GEAR.getLeveler(handItem);
         boolean isEligibleItemType = leveler != null;
 
         if (!isEligibleItemType || !(handItem.getItem()).isCorrectToolForDrops(handItem, state)) {
-            return EventResult.pass();
+            return InteractionResult.PASS;
         }
 
         var experienceAmount = getBlockBreakExperienceAmount(level, pos, player);
         emitProgressEvents(handItem, player, experienceAmount);
 
-        return EventResult.pass();
+        return InteractionResult.PASS;
     }
 
     private static int getBlockBreakExperienceAmount(Level level, BlockPos pos, ServerPlayer player) {
@@ -155,7 +159,7 @@ public class GameplayHooks {
         emitProgressEvents(stack, player, experienceAmount);
     }
 
-    private static void onItemCrafted(Player player, ItemStack stack, Container container) {
+    private static void onItemCrafted(ServerPlayer player, List<ItemStack> stacks) {
         NonNullList<ItemStack> items = UpgradeHelper.getInventoryItems(player.getInventory());
         items.forEach(item -> Bonded.GEAR.initComponent(item));
     }
@@ -168,8 +172,7 @@ public class GameplayHooks {
                 .anyMatch(stack1 -> stack1.is(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE));
         // this is kind of risky but will increase mod compat
         boolean isCompat = relevantItems.stream()
-                .anyMatch(stack1 -> stack1.getItem()
-                        .arch$registryName()
+                .anyMatch(stack1 -> ResourceLocation.parse(stack1.getItem().builtInRegistryHolder().getRegisteredName())
                         .getPath()
                         .contains("upgrade_smithing_template"));
 
@@ -207,21 +210,19 @@ public class GameplayHooks {
         }
     }
 
-    private static EventResult onEntityHurt(LivingEntity entity, DamageSource source, float amount) {
+    private static void onEntityHurt(LivingEntity entity, DamageSource source, float baseDamageTaken, float damageTaken, boolean blocked) {
         var level = entity.level();
 
-        if (level.isClientSide) {
-            return EventResult.pass();
+        if (level.isClientSide()) {
+            return;
         }
 
         if (source.getEntity() instanceof Player player) {
-            processPlayerDealtDamage(player, source, amount);
+            processPlayerDealtDamage(player, source, damageTaken);
         }
         if (entity instanceof Player player) {
-            processPlayerTakenDamage(player, source, amount);
+            processPlayerTakenDamage(player, source, damageTaken);
         }
-
-        return EventResult.pass();
     }
 
     private static void processPlayerDealtDamage(Player player, DamageSource source, float amount) {

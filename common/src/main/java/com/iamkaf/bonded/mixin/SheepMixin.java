@@ -27,7 +27,7 @@ public abstract class SheepMixin extends Animal implements Shearable {
             CallbackInfoReturnable<InteractionResult> cir) {
         ItemStack stack = player.getItemInHand(hand);
         if (stack.getItem() instanceof ShearsItem) {
-            if (!this.level().isClientSide && this.readyForShearing()) {
+            if (!this.level().isClientSide()&& this.readyForShearing()) {
                 GameEvents.AWARD_ITEM_EXPERIENCE.invoker().experience(player, stack, 10);
             }
         }

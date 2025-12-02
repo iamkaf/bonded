@@ -104,7 +104,7 @@ public class ToolBenchBlock extends Block {
     }
 
     private boolean shouldHandle(Level level, Player player, InteractionHand hand) {
-        if (level.isClientSide || !hand.equals(InteractionHand.MAIN_HAND)) {
+        if (level.isClientSide()|| !hand.equals(InteractionHand.MAIN_HAND)) {
             return false;
         }
 
@@ -138,7 +138,7 @@ public class ToolBenchBlock extends Block {
     @Override
     protected @NotNull InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
             Player player, BlockHitResult hitResult) {
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             return InteractionResult.SUCCESS;
         } else {
             return InteractionResult.CONSUME;

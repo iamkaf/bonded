@@ -1,52 +1,44 @@
 # Bonded Changelog
 
-See the full changelog at https://github.com/iamkaf/bonded/commits/main
+All notable changes to Bonded will be documented in this file.
 
-## 1.4.1
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-- feat: port to 1.21.7
+## 1.4.1+1.21.7
 
-## 1.4.0
+### Fixed
+- Fixed a crash when trying to upgrade an item but the target upgrade doesn't have an upgrade material
+- Added a missing mod to the dependency list
 
-- feat: port to 1.21.6
-- fix: fixed a crash related to the HUD
+## 1.4.0+1.21.7
 
-## 1.3.0
+### Added
+- Added a HUD for the tool and repair benches
+- Added custom sounds for item level ups
+- Improved some feedback messages
 
-- feat: port to 1.21.5
+### Fixed
+- Fixed a bug that prevented shears from getting experience
+- Fixed a bug where the tool bench would drop the repair bench when broken
+- Fixed hand motion on item pickup
+- Added missing block translations
 
-## 1.2.2
+### Changed
+- Balancing changes
+- Improved mod compatibility
+- Some repair bench adjustments
+- Fixed inconsistent durability bonuses
 
-- fix(1.21.1): fixed a crash when trying to upgrade an item but the target upgrade doesn't have an upgrade material
+## 1.3.0+1.21.4
 
-## 1.2.1
+### Added
+- Port to Minecraft 1.21.4
 
-- fix: added a missing mod to the dependency list
-
-## 1.2.0
-
-- feat: added a HUD for the tool and repair benches
-- feat: added custom sounds for item level ups
-- feat: improved some feedback messages
-- fix: fixed a bug that prevented shears from getting experience
-
-## 1.1.1
-
-- fix: fixed a bug where the tool bench would drop the repair bench when broken
-
-## 1.1.0
-
-- feat: port to 1.21.4
-
-## 1.0.3-beta.13
-
-- fix: remove testing log
-
-## 1.0.2-beta.12
-
-- feat: balancing changes
-- feat: improved mod compat
-- fix: some repair bench adjustments
-- fix: hand motion on item pickup
-- fix: added missing block translations
-- fix: inconsistent durability bonuses
+## Types of changes
+- `Added` for new features.
+- `Changed` for changes in existing functionality.
+- `Deprecated` for soon-to-be removed features.
+- `Removed` for now removed features.
+- `Fixed` for any bug fixes.
+- `Security` in case of vulnerabilities.

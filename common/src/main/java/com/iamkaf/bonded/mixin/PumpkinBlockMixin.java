@@ -27,7 +27,7 @@ public abstract class PumpkinBlockMixin extends Block {
     private void bonded$useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
             Player player, InteractionHand hand, BlockHitResult hitResult,
             CallbackInfoReturnable<InteractionResult> cir) {
-        if (!level.isClientSide && stack.getItem() instanceof ShearsItem) {
+        if (!level.isClientSide()&& stack.getItem() instanceof ShearsItem) {
             GameEvents.AWARD_ITEM_EXPERIENCE.invoker().experience(player, stack, 10);
         }
     }

@@ -1,16 +1,36 @@
 package com.iamkaf.bonded.api.event;
 
-import dev.architectury.event.Event;
-import dev.architectury.event.EventFactory;
+import com.iamkaf.amber.api.event.v1.Event;
+import com.iamkaf.amber.api.event.v1.EventFactory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
 
 public interface GameEvents {
-    Event<ShieldBlock> SHIELD_BLOCK = EventFactory.createLoop();
-    Event<ModifySmithingResult> MODIFY_SMITHING_RESULT = EventFactory.createLoop();
-    Event<ItemExperience> AWARD_ITEM_EXPERIENCE = EventFactory.createLoop();
+    Event<ShieldBlock> SHIELD_BLOCK = EventFactory.createArrayBacked(
+            ShieldBlock.class, callbacks -> (player, damage) -> {
+                for (ShieldBlock callback : callbacks) {
+                    callback.block(player, damage);
+                }
+            }
+    );
+
+    Event<ModifySmithingResult> MODIFY_SMITHING_RESULT = EventFactory.createArrayBacked(
+            ModifySmithingResult.class, callbacks -> (stack, relevantItems) -> {
+                for (ModifySmithingResult callback : callbacks) {
+                    callback.smith(stack, relevantItems);
+                }
+            }
+    );
+
+    Event<ItemExperience> AWARD_ITEM_EXPERIENCE = EventFactory.createArrayBacked(
+            ItemExperience.class, callbacks -> (player, stack, experienceAmount) -> {
+                for (ItemExperience callback : callbacks) {
+                    callback.experience(player, stack, experienceAmount);
+                }
+            }
+    );
 
     interface ShieldBlock {
         void block(Player player, Float damage);

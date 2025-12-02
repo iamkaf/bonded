@@ -35,7 +35,7 @@ public interface GearTypeLeveler {
             return null;
         }
 
-        var upgradedGear = new ItemStack(upgrade.arch$holder(), 1, gear.getComponentsPatch());
+        var upgradedGear = new ItemStack(upgrade.builtInRegistryHolder(), 1, gear.getComponentsPatch());
         ItemUtils.reapplyDefaultAttributeModifiers(upgradedGear);
         var container = upgradedGear.get(DataComponents.ITEM_LEVEL_CONTAINER.get());
         assert container != null;

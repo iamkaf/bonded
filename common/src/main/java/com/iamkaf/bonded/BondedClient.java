@@ -1,11 +1,11 @@
 package com.iamkaf.bonded;
 
 import com.iamkaf.bonded.client.HUD;
-import dev.architectury.event.events.client.ClientGuiEvent;
+import com.iamkaf.amber.api.event.v1.events.common.client.HudEvents;
 
 public class BondedClient {
     public static void init() {
         HUD.init();
-        ClientGuiEvent.RENDER_HUD.register(HUD::onRenderHud);
+        HudEvents.RENDER_HUD.register(HUD::onRenderHud);
     }
 }

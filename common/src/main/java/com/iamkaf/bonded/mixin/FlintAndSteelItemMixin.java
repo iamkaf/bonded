@@ -18,7 +18,7 @@ public abstract class FlintAndSteelItemMixin {
         if (cir.getReturnValue().equals(InteractionResult.SUCCESS)) {
             Player player = context.getPlayer();
             ItemStack stack = context.getItemInHand();
-            if (!player.level().isClientSide) {
+            if (!player.level().isClientSide()) {
                 GameEvents.AWARD_ITEM_EXPERIENCE.invoker().experience(player, stack, 1);
             }
         }

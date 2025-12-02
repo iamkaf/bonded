@@ -1,11 +1,11 @@
 package com.iamkaf.bonded.api.event;
 
 import com.iamkaf.bonded.component.ItemLevelContainer;
-import dev.architectury.event.CompoundEventResult;
-import dev.architectury.event.Event;
-import dev.architectury.event.EventFactory;
+import com.iamkaf.amber.api.event.v1.Event;
+import com.iamkaf.amber.api.event.v1.EventFactory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionResult;
 
 /**
  * Defines events related to item progression, including experience gain,
@@ -20,25 +20,53 @@ public interface BondEvent {
      * Event triggered when an item gains experience.
      * Listeners can modify or cancel the experience gained.
      */
-    Event<ExperienceGained> ITEM_EXPERIENCE_GAINED = EventFactory.createCompoundEventResult();
+    Event<ExperienceGained> ITEM_EXPERIENCE_GAINED = EventFactory.createArrayBacked(
+            ExperienceGained.class, callbacks -> (gear, player, component, experienceAmount) -> {
+                for (ExperienceGained callback : callbacks) {
+                    InteractionResult result = callback.experience(gear, player, component, experienceAmount);
+                    if (result != InteractionResult.PASS) {
+                        return result; // Early return for cancellation/modification
+                    }
+                }
+                return InteractionResult.PASS; // Allow experience by default
+            }
+    );
 
     /**
      * Event triggered when an item levels up.
      * Listeners can execute additional logic when an item reaches a new level.
      */
-    Event<LeveledUp> ITEM_LEVELED_UP = EventFactory.createLoop();
+    Event<LeveledUp> ITEM_LEVELED_UP = EventFactory.createArrayBacked(
+            LeveledUp.class, callbacks -> (gear, player, component, newLevel) -> {
+                for (LeveledUp callback : callbacks) {
+                    callback.level(gear, player, component, newLevel);
+                }
+            }
+    );
 
     /**
      * Event triggered when an item is repaired.
      * Listeners can modify the resulting ItemStack.
      */
-    Event<Repaired> ITEM_REPAIRED = EventFactory.createLoop();
+    Event<Repaired> ITEM_REPAIRED = EventFactory.createArrayBacked(
+            Repaired.class, callbacks -> (gear, player, component, material) -> {
+                for (Repaired callback : callbacks) {
+                    callback.repair(gear, player, component, material);
+                }
+            }
+    );
 
     /**
      * Event triggered when an item is upgraded.
      * Listeners can modify the resulting ItemStack.
      */
-    Event<Upgraded> ITEM_UPGRADED = EventFactory.createLoop();
+    Event<Upgraded> ITEM_UPGRADED = EventFactory.createArrayBacked(
+            Upgraded.class, callbacks -> (oldGear, newGear, player, component, material) -> {
+                for (Upgraded callback : callbacks) {
+                    callback.upgrade(oldGear, newGear, player, component, material);
+                }
+            }
+    );
 
     /**
      * Functional interface for handling experience gain events.
@@ -51,10 +79,10 @@ public interface BondEvent {
          * @param player           The player interacting with the item.
          * @param component        The item level container associated with the item.
          * @param experienceAmount The amount of experience to be gained.
-         * @return A {@link CompoundEventResult} containing the modified or final experience amount.
+         * @return An {@link InteractionResult} indicating whether the experience gain should be allowed or cancelled.
          */
-        CompoundEventResult<Integer> experience(ItemStack gear, Player player, ItemLevelContainer component
-                , Integer experienceAmount);
+        InteractionResult experience(ItemStack gear, Player player, ItemLevelContainer component,
+                Integer experienceAmount);
     }
 
     /**

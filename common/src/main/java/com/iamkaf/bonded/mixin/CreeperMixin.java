@@ -28,7 +28,7 @@ public abstract class CreeperMixin extends Monster {
     @Inject(method = "mobInteract", at = @At("HEAD"))
     private void bonded$mobInteract(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
         ItemStack stack = player.getItemInHand(hand);
-        if (stack.getItem() instanceof FlintAndSteelItem && !this.level().isClientSide && !this.isIgnited()) {
+        if (stack.getItem() instanceof FlintAndSteelItem && !this.level().isClientSide()&& !this.isIgnited()) {
             GameEvents.AWARD_ITEM_EXPERIENCE.invoker().experience(player, stack, 50);
         }
     }

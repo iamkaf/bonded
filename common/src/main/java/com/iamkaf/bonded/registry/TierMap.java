@@ -55,12 +55,20 @@ public class TierMap {
         addUpgrade(Items.WOODEN_HOE, Items.STONE_HOE, ToolMaterial.STONE.repairItems());
         addUpgrade(Items.WOODEN_SWORD, Items.STONE_SWORD, ToolMaterial.STONE.repairItems());
 
-        // Stone to Iron
-        addUpgrade(Items.STONE_AXE, Items.IRON_AXE, ToolMaterial.IRON.repairItems());
-        addUpgrade(Items.STONE_PICKAXE, Items.IRON_PICKAXE, ToolMaterial.IRON.repairItems());
-        addUpgrade(Items.STONE_SHOVEL, Items.IRON_SHOVEL, ToolMaterial.IRON.repairItems());
-        addUpgrade(Items.STONE_HOE, Items.IRON_HOE, ToolMaterial.IRON.repairItems());
-        addUpgrade(Items.STONE_SWORD, Items.IRON_SWORD, ToolMaterial.IRON.repairItems());
+      
+        // Stone to Copper
+        addUpgrade(Items.STONE_AXE, Items.COPPER_AXE, ToolMaterial.COPPER.repairItems());
+        addUpgrade(Items.STONE_PICKAXE, Items.COPPER_PICKAXE, ToolMaterial.COPPER.repairItems());
+        addUpgrade(Items.STONE_SHOVEL, Items.COPPER_SHOVEL, ToolMaterial.COPPER.repairItems());
+        addUpgrade(Items.STONE_HOE, Items.COPPER_HOE, ToolMaterial.COPPER.repairItems());
+        addUpgrade(Items.STONE_SWORD, Items.COPPER_SWORD, ToolMaterial.COPPER.repairItems());
+
+        // Copper to Iron
+        addUpgrade(Items.COPPER_AXE, Items.IRON_AXE, ToolMaterial.IRON.repairItems());
+        addUpgrade(Items.COPPER_PICKAXE, Items.IRON_PICKAXE, ToolMaterial.IRON.repairItems());
+        addUpgrade(Items.COPPER_SHOVEL, Items.IRON_SHOVEL, ToolMaterial.IRON.repairItems());
+        addUpgrade(Items.COPPER_HOE, Items.IRON_HOE, ToolMaterial.IRON.repairItems());
+        addUpgrade(Items.COPPER_SWORD, Items.IRON_SWORD, ToolMaterial.IRON.repairItems());
 
         // Iron to Diamond
         addUpgrade(Items.IRON_AXE, Items.DIAMOND_AXE, ToolMaterial.DIAMOND.repairItems());
@@ -81,6 +89,12 @@ public class TierMap {
         addExperienceCap(Items.STONE_SHOVEL, 50);
         addExperienceCap(Items.STONE_HOE, 50);
         addExperienceCap(Items.STONE_SWORD, 50);
+
+        addExperienceCap(Items.COPPER_AXE, 75);
+        addExperienceCap(Items.COPPER_PICKAXE, 75);
+        addExperienceCap(Items.COPPER_SHOVEL, 75);
+        addExperienceCap(Items.COPPER_HOE, 75);
+        addExperienceCap(Items.COPPER_SWORD, 75);
 
         addExperienceCap(Items.IRON_AXE, 100);
         addExperienceCap(Items.IRON_PICKAXE, 100);

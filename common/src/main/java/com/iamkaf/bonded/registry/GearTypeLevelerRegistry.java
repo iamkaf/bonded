@@ -20,7 +20,7 @@ public class GearTypeLevelerRegistry {
             return null;
         }
 
-        return map.get(gear.getItem().arch$registryName());
+        return map.get(ResourceLocation.parse(gear.getItem().builtInRegistryHolder().getRegisteredName()));
     }
 
     public GearTypeLeveler register(GearTypeLeveler leveler) {

@@ -25,7 +25,7 @@ public abstract class ArmadilloMixin extends Animal {
     private void bonded$mobInteract(Player player, InteractionHand hand,
             CallbackInfoReturnable<InteractionResult> cir) {
         ItemStack stack = player.getItemInHand(hand);
-        if (stack.getItem() instanceof BrushItem && !this.level().isClientSide) {
+        if (stack.getItem() instanceof BrushItem && !this.level().isClientSide()) {
             GameEvents.AWARD_ITEM_EXPERIENCE.invoker().experience(player, stack, 25);
         }
     }

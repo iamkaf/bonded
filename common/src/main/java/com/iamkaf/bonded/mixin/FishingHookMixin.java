@@ -31,7 +31,7 @@ public abstract class FishingHookMixin {
             case 1:
                 // Fishing result (1): FISHING SUCCESSFUL
                 var player = getPlayerOwner();
-                if (player != null && !player.level().isClientSide) {
+                if (player != null && !player.level().isClientSide()) {
                     // TODO: level fishing rod
                     GameEvents.AWARD_ITEM_EXPERIENCE.invoker().experience(player, stack, 10);
                 }
