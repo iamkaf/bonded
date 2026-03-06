@@ -1,42 +1,8 @@
-# gradle
-
-.gradle/
-build/
-out/
-classes/
-
-# eclipse
-
-*.launch
-
-# idea
-
+# Root-level gitignore for monorepo
+.DS_Store
 .idea/
-*.iml
-*.ipr
-*.iws
-
-# vscode
-
-.settings/
 .vscode/
-bin/
-.classpath
-.project
+*.iml
 
-# macos
-
-*.DS_Store
-
-# fabric
-
-run/
-
-# java
-
-hs_err_*.log
-replay_*.log
-*.hprof
-*.jfr
-
-.architectury-transformer
+# Each version has its own .gitignore for build artifacts
+# This file is for root-level ignores only

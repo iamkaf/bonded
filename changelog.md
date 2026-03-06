@@ -5,6 +5,23 @@ All notable changes to Bonded will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 2.0.0+1.21.11
+
+### Added
+- Added support for Minecraft 1.21.11.
+- Added the new multiversion multiloader monorepo layout for Bonded.
+- Added automatic migration for legacy Bonded-managed attribute modifiers on existing items.
+
+### Changed
+- Ported Bonded to the current Amber-based Fabric, Forge, and NeoForge template stack.
+- Updated the build to the current Gradle 9.3.1 and ForgeGradle 7 toolchain layout.
+- Combined Bonded attribute bonuses by attribute/slot/operation so high-level gear shows cleaner total modifiers instead of repeated duplicate lines.
+
+### Fixed
+- Fixed Forge dependency resolution for Amber on the 1.21.11 toolchain.
+- Fixed missing 1.21.11 bench item/model resource wiring and missing sound subtitles.
+- Fixed legacy Bonded bonus stacks being preserved as duplicate attribute entries on migrated items.
+
 ## 1.4.1+1.21.7
 
 ### Fixed
