@@ -7,6 +7,7 @@
     "ItemMixin"
   ],
   "mixins": [
+    "AxeItemMixin",
     "SmithingMenuMixin",
     "ShearsItemMixin",
     "SheepMixin",
@@ -18,6 +19,7 @@
     "BrushableBlockEntityMixin",
     "ArmadilloMixin",
     "FlintAndSteelItemMixin",
+    "HoeItemMixin",
     "CreeperMixin",
     "TntBlockMixin"
   ],

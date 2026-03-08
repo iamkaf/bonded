@@ -96,6 +96,36 @@ test version="":
     just with-java "{{version}}" test; \
   fi
 
+publish version="":
+  @if [ -z "{{version}}" ]; then \
+    for v in $(just list-versions); do \
+      echo "==> $v"; just publish-version "$v"; \
+    done; \
+  else \
+    if [ ! -d "{{version}}" ]; then echo "Version {{version}} not found."; exit 1; fi; \
+    just publish-version "{{version}}"; \
+  fi
+
+publish-version version:
+  @just publish-common "{{version}}"
+  @for loader in fabric forge neoforge; do \
+    if [ "$(just loader-enabled "{{version}}" "$loader")" = "true" ]; then \
+      just publish-loader "{{version}}" "$loader"; \
+    else \
+      echo "Skipping {{version}}:$loader (not included in settings.gradle)"; \
+    fi; \
+  done
+
+publish-common version *args:
+  @just with-java "{{version}}" :common:publishAllPublicationsToKafMavenRepository {{args}}
+
+publish-loader version loader *args:
+  @if [ "$(just loader-enabled "{{version}}" "{{loader}}")" = "true" ]; then \
+    just with-java "{{version}}" :{{loader}}:publishAllPublicationsToKafMavenRepository {{args}}; \
+  else \
+    echo "Skipping {{version}}:{{loader}} (not included in settings.gradle)"; \
+  fi
+
 changed base="origin/main":
   @if ! git rev-parse --verify "{{base}}" >/dev/null 2>&1; then echo "Base ref {{base}} not found."; exit 1; fi
   @changed=$(git diff --name-only "{{base}}"...HEAD | grep -oP '^[0-9]+\\.[0-9]+[^/]*' | sort -u); \

@@ -76,6 +76,10 @@ public class TierMap {
         addUpgrade(Items.IRON_SHOVEL, Items.DIAMOND_SHOVEL, ToolMaterial.DIAMOND.repairItems());
         addUpgrade(Items.IRON_HOE, Items.DIAMOND_HOE, ToolMaterial.DIAMOND.repairItems());
         addUpgrade(Items.IRON_SWORD, Items.DIAMOND_SWORD, ToolMaterial.DIAMOND.repairItems());
+        addUpgrade(Items.WOODEN_SPEAR, Items.STONE_SPEAR, ToolMaterial.STONE.repairItems());
+        addUpgrade(Items.STONE_SPEAR, Items.COPPER_SPEAR, ToolMaterial.COPPER.repairItems());
+        addUpgrade(Items.COPPER_SPEAR, Items.IRON_SPEAR, ToolMaterial.IRON.repairItems());
+        addUpgrade(Items.IRON_SPEAR, Items.DIAMOND_SPEAR, ToolMaterial.DIAMOND.repairItems());
 
         // Experience
         addExperienceCap(Items.WOODEN_AXE, 30);
@@ -83,58 +87,79 @@ public class TierMap {
         addExperienceCap(Items.WOODEN_SHOVEL, 30);
         addExperienceCap(Items.WOODEN_HOE, 30);
         addExperienceCap(Items.WOODEN_SWORD, 30);
+        addExperienceCap(Items.WOODEN_SPEAR, 30);
 
         addExperienceCap(Items.STONE_AXE, 50);
         addExperienceCap(Items.STONE_PICKAXE, 50);
         addExperienceCap(Items.STONE_SHOVEL, 50);
         addExperienceCap(Items.STONE_HOE, 50);
         addExperienceCap(Items.STONE_SWORD, 50);
+        addExperienceCap(Items.STONE_SPEAR, 50);
 
         addExperienceCap(Items.COPPER_AXE, 75);
         addExperienceCap(Items.COPPER_PICKAXE, 75);
         addExperienceCap(Items.COPPER_SHOVEL, 75);
         addExperienceCap(Items.COPPER_HOE, 75);
         addExperienceCap(Items.COPPER_SWORD, 75);
+        addExperienceCap(Items.COPPER_SPEAR, 75);
 
         addExperienceCap(Items.IRON_AXE, 100);
         addExperienceCap(Items.IRON_PICKAXE, 100);
         addExperienceCap(Items.IRON_SHOVEL, 100);
         addExperienceCap(Items.IRON_HOE, 100);
         addExperienceCap(Items.IRON_SWORD, 100);
+        addExperienceCap(Items.IRON_SPEAR, 100);
 
         addExperienceCap(Items.DIAMOND_AXE, 500);
         addExperienceCap(Items.DIAMOND_PICKAXE, 500);
         addExperienceCap(Items.DIAMOND_SHOVEL, 500);
         addExperienceCap(Items.DIAMOND_HOE, 500);
         addExperienceCap(Items.DIAMOND_SWORD, 500);
+        addExperienceCap(Items.DIAMOND_SPEAR, 500);
 
         addExperienceCap(Items.NETHERITE_AXE, 1000);
         addExperienceCap(Items.NETHERITE_PICKAXE, 1000);
         addExperienceCap(Items.NETHERITE_SHOVEL, 1000);
         addExperienceCap(Items.NETHERITE_HOE, 1000);
         addExperienceCap(Items.NETHERITE_SWORD, 1000);
+        addExperienceCap(Items.NETHERITE_SPEAR, 1000);
 
         addExperienceCap(Items.GOLDEN_AXE, 300);
         addExperienceCap(Items.GOLDEN_PICKAXE, 300);
         addExperienceCap(Items.GOLDEN_SHOVEL, 300);
         addExperienceCap(Items.GOLDEN_HOE, 300);
         addExperienceCap(Items.GOLDEN_SWORD, 300);
+        addExperienceCap(Items.GOLDEN_SPEAR, 300);
 
         // -- Armor
 
-        // Leather to Chainmail
-        addUpgrade(Items.LEATHER_HELMET, Items.CHAINMAIL_HELMET, ArmorMaterials.CHAINMAIL.repairIngredient());
+        // Leather to Copper
+        addUpgrade(Items.LEATHER_HELMET, Items.COPPER_HELMET, ToolMaterial.COPPER.repairItems());
         addUpgrade(
                 Items.LEATHER_CHESTPLATE,
+                Items.COPPER_CHESTPLATE,
+                ToolMaterial.COPPER.repairItems()
+        );
+        addUpgrade(
+                Items.LEATHER_LEGGINGS,
+                Items.COPPER_LEGGINGS,
+                ToolMaterial.COPPER.repairItems()
+        );
+        addUpgrade(Items.LEATHER_BOOTS, Items.COPPER_BOOTS, ToolMaterial.COPPER.repairItems());
+
+        // Copper to Chainmail
+        addUpgrade(Items.COPPER_HELMET, Items.CHAINMAIL_HELMET, ArmorMaterials.CHAINMAIL.repairIngredient());
+        addUpgrade(
+                Items.COPPER_CHESTPLATE,
                 Items.CHAINMAIL_CHESTPLATE,
                 ArmorMaterials.CHAINMAIL.repairIngredient()
         );
         addUpgrade(
-                Items.LEATHER_LEGGINGS,
+                Items.COPPER_LEGGINGS,
                 Items.CHAINMAIL_LEGGINGS,
                 ArmorMaterials.CHAINMAIL.repairIngredient()
         );
-        addUpgrade(Items.LEATHER_BOOTS, Items.CHAINMAIL_BOOTS, ArmorMaterials.CHAINMAIL.repairIngredient());
+        addUpgrade(Items.COPPER_BOOTS, Items.CHAINMAIL_BOOTS, ArmorMaterials.CHAINMAIL.repairIngredient());
 
         // Chainmail to Iron
         addUpgrade(Items.CHAINMAIL_HELMET, Items.IRON_HELMET, ArmorMaterials.IRON.repairIngredient());
@@ -158,10 +183,15 @@ public class TierMap {
         addExperienceCap(Items.LEATHER_LEGGINGS, 90);
         addExperienceCap(Items.LEATHER_BOOTS, 90);
 
-        addExperienceCap(Items.CHAINMAIL_HELMET, 150);
-        addExperienceCap(Items.CHAINMAIL_CHESTPLATE, 150);
-        addExperienceCap(Items.CHAINMAIL_LEGGINGS, 150);
-        addExperienceCap(Items.CHAINMAIL_BOOTS, 150);
+        addExperienceCap(Items.COPPER_HELMET, 150);
+        addExperienceCap(Items.COPPER_CHESTPLATE, 150);
+        addExperienceCap(Items.COPPER_LEGGINGS, 150);
+        addExperienceCap(Items.COPPER_BOOTS, 150);
+
+        addExperienceCap(Items.CHAINMAIL_HELMET, 225);
+        addExperienceCap(Items.CHAINMAIL_CHESTPLATE, 225);
+        addExperienceCap(Items.CHAINMAIL_LEGGINGS, 225);
+        addExperienceCap(Items.CHAINMAIL_BOOTS, 225);
 
         addExperienceCap(Items.IRON_HELMET, 300);
         addExperienceCap(Items.IRON_CHESTPLATE, 300);

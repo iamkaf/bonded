@@ -21,6 +21,8 @@ minecraft {
     runs {
         configureEach {
             workingDir.convention layout.projectDirectory.dir('run')
+            args '--mixin.config', "${mod_id}.mixins.json"
+            args '--mixin.config', "${mod_id}.forge.mixins.json"
         }
 
         register('client') {

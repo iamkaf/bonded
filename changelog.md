@@ -8,21 +8,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 2.0.0+1.21.11
 
 ### Added
-- Added support for Minecraft 1.21.11.
-- Added the new multiversion multiloader monorepo layout for Bonded.
-- Added automatic migration for legacy Bonded-managed attribute modifiers on existing items.
-- Added `/bonded experience` and `/bonded xp` admin commands to inspect and modify Bonded item progress on players' held items.
+- Port to Minecraft 1.21.11
+- Added `/bonded experience` and `/bonded xp` commands
+- Added automatic migration for old Bonded attribute modifiers
 
 ### Changed
-- Ported Bonded to the current Amber-based Fabric, Forge, and NeoForge template stack.
-- Updated the build to the current Gradle 9.3.1 and ForgeGradle 7 toolchain layout.
-- Combined Bonded attribute bonuses by attribute/slot/operation so high-level gear shows cleaner total modifiers instead of repeated duplicate lines.
-- Matched the Bonded item experience command structure to the vanilla `experience` command with `add`, `set`, and `query` subcommands for points and levels.
+- Moved to the new multiloader monorepo and template
+- Added Forge support
+- Cleaned up how Bonded attribute bonuses stack on gear
 
 ### Fixed
-- Fixed Forge dependency resolution for Amber on the 1.21.11 toolchain.
-- Fixed missing 1.21.11 bench item/model resource wiring and missing sound subtitles.
-- Fixed legacy Bonded bonus stacks being preserved as duplicate attribute entries on migrated items.
+- Fixed missing bench models, items, and sound subtitles
+- Fixed duplicate Bonded bonus modifiers on items
+- Fixed silent repair and upgrade bench failures when those features are disabled
 
 ## 1.4.1+1.21.7
 

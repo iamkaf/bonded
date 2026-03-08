@@ -8,9 +8,9 @@ import net.minecraft.world.level.block.Block;
 
 public class Tags {
     public static final TagKey<Block> ORES = createBlockTag("c", "ores");
-    public static final TagKey<Item> ARMORS = createItemTag("c", "armors");
-    public static final TagKey<Item> MELEE_WEAPONS = createItemTag("c", "tools/melee_weapon");
-    public static final TagKey<Item> RANGED_WEAPONS = createItemTag("c", "tools/ranged_weapon");
+    public static final TagKey<Item> ARMORS = createItemTag("bonded", "armors");
+    public static final TagKey<Item> MELEE_WEAPONS = createItemTag("bonded", "melee_weapons");
+    public static final TagKey<Item> RANGED_WEAPONS = createItemTag("bonded", "ranged_weapons");
     public static final TagKey<Item> FISHING_RODS = createItemTag("c", "tools/fishing_rod");
     public static final TagKey<Item> BRUSHES = createItemTag("c", "tools/brush");
     public static final TagKey<Item> IGNITERS = createItemTag("c", "tools/igniter");

@@ -3,7 +3,6 @@ package com.iamkaf.bonded.block;
 import com.iamkaf.amber.api.functions.v1.ItemFunctions;
 import com.iamkaf.amber.api.functions.v1.PlayerFunctions;
 import com.iamkaf.bonded.Bonded;
-import com.iamkaf.bonded.registry.DataComponents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -32,11 +31,24 @@ public class ToolBenchBlock extends Block {
     @Override
     protected @NotNull InteractionResult useItemOn(ItemStack stack, BlockState state, Level level,
             BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (!level.isClientSide() && hand.equals(InteractionHand.MAIN_HAND) && !Bonded.CONFIG.enableUpgrading.get()) {
+            PlayerFunctions.sendActionBarMessage(
+                    player,
+                    Component.translatable("bonded.tool_bench.disabled").withStyle(ChatFormatting.RED)
+            );
+            return InteractionResult.SUCCESS_SERVER;
+        }
+
         if (!shouldHandle(level, player, hand)) {
             return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
         }
 
-        ItemStack handItem = player.getMainHandItem();
+        ItemStack handItem = Bonded.GEAR.initComponent(player.getMainHandItem());
+
+        var leveler = Bonded.GEAR.getLeveler(handItem);
+        if (leveler == null) {
+            return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
+        }
 
         if (!Bonded.GEAR.hasEnoughLevelsToUpgrade(handItem)) {
             errorFeedback(
@@ -45,34 +57,32 @@ public class ToolBenchBlock extends Block {
                     Component.translatable("bonded.tool_bench.item_not_max_level")
                             .withStyle(ChatFormatting.RED)
             );
-            return InteractionResult.FAIL;
+            return InteractionResult.SUCCESS_SERVER;
         }
-
-        var leveler = Bonded.GEAR.getLeveler(handItem);
-        assert leveler != null;
 
         TagKey<Item> upgradeItemTag = leveler.getUpgradeIngredient(handItem);
 
         if (upgradeItemTag == null || !leveler.isUpgradable(handItem)) {
             errorFeedback(level, player, Component.translatable("bonded.tool_bench.no_upgrade_path"));
-            return InteractionResult.FAIL;
+            return InteractionResult.SUCCESS_SERVER;
         }
 
-        if (!ItemFunctions.has(player.getInventory(), upgradeItemTag)) {
+        boolean hasIngredient = ItemFunctions.has(player.getInventory(), upgradeItemTag);
+        if (!hasIngredient) {
             errorFeedback(
                     level,
                     player,
                     Component.translatable("bonded.tool_bench.missing_ingredient")
                             .withStyle(ChatFormatting.RED)
             );
-            return InteractionResult.FAIL;
+            return InteractionResult.SUCCESS_SERVER;
         }
 
         var upgraded = leveler.transmuteUpgrade(handItem);
 
 
         if (upgraded == null || upgraded.isEmpty()) {
-            return InteractionResult.FAIL;
+            return InteractionResult.SUCCESS_SERVER;
         }
 
 
@@ -118,9 +128,7 @@ public class ToolBenchBlock extends Block {
             return false;
         }
 
-        var container = handItem.get(DataComponents.ITEM_LEVEL_CONTAINER.get());
-
-        return container != null;
+        return true;
     }
 
     private void errorFeedback(Level level, Player player, Component message) {
@@ -140,8 +148,15 @@ public class ToolBenchBlock extends Block {
             Player player, BlockHitResult hitResult) {
         if (level.isClientSide()) {
             return InteractionResult.SUCCESS;
-        } else {
-            return InteractionResult.CONSUME;
         }
+
+        if (!Bonded.CONFIG.enableUpgrading.get()) {
+            PlayerFunctions.sendActionBarMessage(
+                    player,
+                    Component.translatable("bonded.tool_bench.disabled").withStyle(ChatFormatting.RED)
+            );
+        }
+
+        return InteractionResult.CONSUME;
     }
 }

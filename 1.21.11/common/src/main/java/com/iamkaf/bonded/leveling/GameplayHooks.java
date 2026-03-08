@@ -61,7 +61,6 @@ public class GameplayHooks {
         EntityEvent.AFTER_DAMAGE.register(GameplayHooks::onEntityHurt);
         BondEvent.ITEM_LEVELED_UP.register(GameplayHooks::onItemLeveledUp);
         ItemEvents.MODIFY_DEFAULT_COMPONENTS.register(GameplayHooks::onModifyDefaultComponents);
-        // TODO: add wood stripping xp, shovel pathing xp and hoe hoeing xp
     }
 
     private static void onItemLeveledUp(ItemStack stack, Player player, ItemLevelContainer container, Integer integer) {
@@ -215,7 +214,10 @@ public class GameplayHooks {
 
     private static void processPlayerDealtDamage(Player player, DamageSource source, float amount) {
         ItemStack handItem = source.getWeaponItem();
-        if (handItem == null) {
+        if (handItem == null || handItem.isEmpty()) {
+            handItem = player.getWeaponItem();
+        }
+        if (handItem == null || handItem.isEmpty()) {
             handItem = ItemUtils.checkForRocketCrossbow(player, source);
         }
         if (handItem == null || handItem.isEmpty()) {

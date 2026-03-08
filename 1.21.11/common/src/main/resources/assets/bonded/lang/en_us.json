@@ -9,9 +9,11 @@
   "item.bonded.repair_bench": "Repair Bench",
 
   "bonded.repair_bench.missing_ingredient": "Missing repair material.",
+  "bonded.repair_bench.disabled": "Repairing is disabled.",
   "bonded.tool_bench.item_not_max_level": "Item not max level.",
   "bonded.tool_bench.missing_ingredient": "Missing upgrade material.",
   "bonded.tool_bench.no_upgrade_path": "Maximum upgrade reached.",
+  "bonded.tool_bench.disabled": "Upgrading is disabled.",
   "bonded.gameplay.max_level": "§eMax Level! §f%s §6+",
   "bonded.gameplay.level_up": "§aLevel Up! §f%s §6+",
   "commands.bonded.item_experience.no_item": "%s must hold an item in their main hand.",

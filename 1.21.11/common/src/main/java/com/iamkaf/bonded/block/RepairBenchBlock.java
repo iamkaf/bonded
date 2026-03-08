@@ -32,6 +32,14 @@ public class RepairBenchBlock extends Block {
     @Override
     protected @NotNull InteractionResult useItemOn(ItemStack stack, BlockState state, Level level,
             BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (!level.isClientSide() && hand.equals(InteractionHand.MAIN_HAND) && !Bonded.CONFIG.enableRepairing.get()) {
+            PlayerFunctions.sendActionBarMessage(
+                    player,
+                    Component.translatable("bonded.repair_bench.disabled").withStyle(ChatFormatting.RED)
+            );
+            return InteractionResult.SUCCESS_SERVER;
+        }
+
         if (!shouldHandle(level, player, hand)) {
             return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
         }
@@ -48,15 +56,16 @@ public class RepairBenchBlock extends Block {
 
         Inventory inventory = player.getInventory();
         NonNullList<ItemStack> items = ItemFunctions.getInventoryItems(inventory);
+        boolean hasRepairIngredient = items.stream().anyMatch(repairable::isValidRepairItem);
 
-        if (items.stream().noneMatch(repairable::isValidRepairItem)) {
+        if (!hasRepairIngredient) {
             errorFeedback(
                     level,
                     player,
                     Component.translatable("bonded.repair_bench.missing_ingredient")
                             .withStyle(ChatFormatting.RED)
             );
-            return InteractionResult.FAIL;
+            return InteractionResult.SUCCESS_SERVER;
         }
 
         ItemFunctions.repairBy(handItem, Bonded.CONFIG.durabilityGainedOnRepairBench.get().floatValue());
@@ -126,8 +135,15 @@ public class RepairBenchBlock extends Block {
             Player player, BlockHitResult hitResult) {
         if (level.isClientSide()) {
             return InteractionResult.SUCCESS;
-        } else {
-            return InteractionResult.CONSUME;
         }
+
+        if (!Bonded.CONFIG.enableRepairing.get()) {
+            PlayerFunctions.sendActionBarMessage(
+                    player,
+                    Component.translatable("bonded.repair_bench.disabled").withStyle(ChatFormatting.RED)
+            );
+        }
+
+        return InteractionResult.CONSUME;
     }
 }
