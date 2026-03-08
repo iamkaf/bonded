@@ -2,6 +2,7 @@ package com.iamkaf.bonded;
 
 import com.iamkaf.amber.api.core.v2.AmberInitializer;
 import com.iamkaf.bonded.bonuses.Bonuses;
+import com.iamkaf.bonded.command.BondedCommands;
 import com.iamkaf.bonded.config.BondedCommonConfig;
 import com.iamkaf.bonded.leveling.GameplayHooks;
 import com.iamkaf.bonded.leveling.GearManager;
@@ -37,6 +38,7 @@ public class Bonded {
         Items.init();
         DataComponents.init();
         CreativeModeTabs.init();
+        BondedCommands.init();
         GameplayHooks.init();
         Levelers.init();
         Bonuses.init();

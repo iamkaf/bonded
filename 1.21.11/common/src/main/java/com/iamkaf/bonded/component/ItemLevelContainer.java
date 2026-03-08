@@ -78,8 +78,16 @@ public class ItemLevelContainer {
         return new ItemLevelContainer(experience + amount, maxExperience, level, bond);
     }
 
+    public ItemLevelContainer withExperience(int amount) {
+        return new ItemLevelContainer(amount, maxExperience, level, bond);
+    }
+
     public ItemLevelContainer addLevel(int newMaxExperience) {
         return new ItemLevelContainer(0, newMaxExperience, level + 1, bond);
+    }
+
+    public ItemLevelContainer withLevel(int level) {
+        return new ItemLevelContainer(experience, maxExperience, level, bond);
     }
 
     public ItemLevelContainer addBond(int amount) {
