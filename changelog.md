@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed missing bench models, items, and sound subtitles
 - Fixed duplicate Bonded bonus modifiers on items
 - Fixed silent repair and upgrade bench failures when those features are disabled
+- Fixed shovels not gaining XP when turning grass blocks into path blocks
 
 ## 1.4.1+1.21.7
 

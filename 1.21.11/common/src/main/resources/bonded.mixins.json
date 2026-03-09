@@ -8,6 +8,7 @@
   ],
   "mixins": [
     "AxeItemMixin",
+    "ShovelItemMixin",
     "SmithingMenuMixin",
     "ShearsItemMixin",
     "SheepMixin",
