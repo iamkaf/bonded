@@ -58,9 +58,7 @@ public class BondBonusRegistry {
 
         // TODO: i have to come up with something else if i add some other bonus other than the durability
         //  one, that uses .modifyItem()
-        gear.set(net.minecraft.core.component.DataComponents.MAX_DAMAGE,
-                gear.getItem().getDefaultInstance().getMaxDamage()
-        );
+        ItemUtils.resetMaxDamage(gear);
         bonusToApply.forEach(bondBonus -> bondBonus.modifyItem(gear, gearType, container));
 
         List<Identifier> appliedBonuses = bonusToApply.stream().map(BondBonus::id).toList();

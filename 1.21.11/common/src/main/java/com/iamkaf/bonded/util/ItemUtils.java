@@ -72,6 +72,20 @@ public class ItemUtils {
         };
     }
 
+    public static boolean hasPositiveDefaultMaxDamage(ItemStack item) {
+        return item.getItem().getDefaultInstance().getMaxDamage() > 0;
+    }
+
+    public static void resetMaxDamage(ItemStack item) {
+        int defaultMaxDamage = item.getItem().getDefaultInstance().getMaxDamage();
+        if (defaultMaxDamage > 0) {
+            item.set(DataComponents.MAX_DAMAGE, defaultMaxDamage);
+            return;
+        }
+
+        item.remove(DataComponents.MAX_DAMAGE);
+    }
+
     @SuppressWarnings("deprecation")
     public static void reapplyDefaultAttributeModifiers(ItemStack item) {
         var defaultModifiers = item.getItem()

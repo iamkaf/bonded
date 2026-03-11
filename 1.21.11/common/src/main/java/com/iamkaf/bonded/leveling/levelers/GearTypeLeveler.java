@@ -44,7 +44,7 @@ public interface GearTypeLeveler {
                 ItemLevelContainer.make(TierMap.getExperienceCap(upgrade)).addBond(container.getBond())
         );
         upgradedGear.set(DataComponents.APPLIED_BONUSES_CONTAINER.get(), AppliedBonusesContainer.make());
-        upgradedGear.set(net.minecraft.core.component.DataComponents.MAX_DAMAGE, upgrade.getDefaultInstance().getMaxDamage());
+        ItemUtils.resetMaxDamage(upgradedGear);
         Bonded.GEAR.initComponent(upgradedGear);
         return upgradedGear;
     }
