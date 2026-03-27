@@ -1,0 +1,24 @@
+plugins {
+    id 'com.iamkaf.multiloader.fabric'
+}
+
+repositories {
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = 'Modrinth'
+                url = uri('https://api.modrinth.com/maven')
+            }
+        }
+        filter {
+            includeGroup('maven.modrinth')
+        }
+    }
+}
+
+dependencies {
+    compileOnly libs.amber
+    implementation libs.fabric.api
+    runtimeOnly libs.amber.fabric
+    implementation libs.forgeconfigapiport.fabric
+}

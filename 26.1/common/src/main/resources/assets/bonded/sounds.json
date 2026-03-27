@@ -1,0 +1,32 @@
+{
+  "item_level": {
+    "replace": true,
+    "sounds": [
+      {
+        "attenuation_distance": 8,
+        "name": "bonded:item_level",
+        "pitch": 1.2,
+        "preload": true,
+        "stream": true,
+        "volume": 0.8,
+        "weight": 2
+      }
+    ],
+    "subtitle": "sound.bonded.item_level"
+  },
+  "item_max_level": {
+    "replace": true,
+    "sounds": [
+      {
+        "attenuation_distance": 8,
+        "name": "bonded:item_max_level",
+        "pitch": 1.2,
+        "preload": true,
+        "stream": true,
+        "volume": 0.8,
+        "weight": 2
+      }
+    ],
+    "subtitle": "sound.bonded.item_max_level"
+  }
+}
