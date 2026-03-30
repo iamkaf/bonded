@@ -5,6 +5,7 @@ import com.iamkaf.bonded.component.AppliedBonusesContainer;
 import com.iamkaf.bonded.component.ItemLevelContainer;
 import com.iamkaf.bonded.leveling.levelers.GearTypeLeveler;
 import com.iamkaf.bonded.registry.DataComponents;
+import com.iamkaf.bonded.util.ItemUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
@@ -26,7 +27,9 @@ public class DurabilityBonus implements BondBonus {
 
     @Override
     public boolean shouldApply(ItemStack gear, GearTypeLeveler gearType, ItemLevelContainer container) {
-        return Bonded.GEAR.isGear(gear) && container.getBond() >= threshold;
+        return Bonded.GEAR.isGear(gear)
+                && container.getBond() >= threshold
+                && ItemUtils.hasPositiveDefaultMaxDamage(gear);
     }
 
     @Override

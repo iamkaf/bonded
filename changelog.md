@@ -2,6 +2,12 @@
 
 See the full changelog at https://github.com/iamkaf/bonded/commits/main
 
+## 1.2.3
+
+- fix(1.21.1): prevent item save crashes caused by invalid max damage data
+- fix(1.21.1): clean up duplicate Bonded bonus modifiers on items and migrate old stacks
+- fix(1.21.1): update the mod icon
+
 ## 1.2.2
 
 - fix(1.21.1): fixed a crash when trying to upgrade an item but the target upgrade doesn't have an upgrade material

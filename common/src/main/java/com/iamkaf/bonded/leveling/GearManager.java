@@ -73,6 +73,9 @@ public class GearManager {
         ItemLevelContainer container = gear.get(DataComponents.ITEM_LEVEL_CONTAINER.get());
 
         if (container != null) {
+            if (needsMigration(gear)) {
+                return migrateLegacyItem(gear, container);
+            }
             bondBonusRegistry.applyBonuses(gear, getLeveler(gear), container);
             return gear;
         }
@@ -83,6 +86,16 @@ public class GearManager {
         gear.set(DataComponents.ITEM_LEVEL_CONTAINER.get(), newContainer);
         bondBonusRegistry.applyBonuses(gear, getLeveler(gear), newContainer);
 
+        return gear;
+    }
+
+    private boolean needsMigration(ItemStack gear) {
+        return bondBonusRegistry.hasLegacyManagedAttributeModifiers(gear);
+    }
+
+    private ItemStack migrateLegacyItem(ItemStack gear, ItemLevelContainer container) {
+        LOGGER.info("Migrating legacy Bonded attribute modifiers for {}", gear.getItem());
+        bondBonusRegistry.applyBonuses(gear, getLeveler(gear), container);
         return gear;
     }
 
