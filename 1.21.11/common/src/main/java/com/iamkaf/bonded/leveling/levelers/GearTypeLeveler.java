@@ -36,6 +36,8 @@ public interface GearTypeLeveler {
         }
 
         var upgradedGear = new ItemStack(upgrade.builtInRegistryHolder(), 1, gear.getComponentsPatch());
+        AppliedBonusesContainer previousAppliedBonuses =
+                upgradedGear.getOrDefault(DataComponents.APPLIED_BONUSES_CONTAINER.get(), AppliedBonusesContainer.make());
         ItemUtils.reapplyDefaultAttributeModifiers(upgradedGear);
         var container = upgradedGear.get(DataComponents.ITEM_LEVEL_CONTAINER.get());
         assert container != null;
@@ -43,8 +45,8 @@ public interface GearTypeLeveler {
                 DataComponents.ITEM_LEVEL_CONTAINER.get(),
                 ItemLevelContainer.make(TierMap.getExperienceCap(upgrade)).addBond(container.getBond())
         );
+        Bonded.GEAR.bondBonusRegistry.restoreBaseMaxDamage(upgradedGear, previousAppliedBonuses);
         upgradedGear.set(DataComponents.APPLIED_BONUSES_CONTAINER.get(), AppliedBonusesContainer.make());
-        ItemUtils.resetMaxDamage(upgradedGear);
         Bonded.GEAR.initComponent(upgradedGear);
         return upgradedGear;
     }
