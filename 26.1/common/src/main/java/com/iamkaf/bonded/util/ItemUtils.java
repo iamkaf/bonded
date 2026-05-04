@@ -72,14 +72,26 @@ public class ItemUtils {
         };
     }
 
-    public static boolean hasPositiveDefaultMaxDamage(ItemStack item) {
-        return item.getItem().getDefaultInstance().getMaxDamage() > 0;
+    public static boolean hasDamageableMaxDamage(ItemStack item) {
+        return getStackMaxDamage(item) > 0
+                && item.has(DataComponents.DAMAGE)
+                && !item.has(DataComponents.UNBREAKABLE);
     }
 
-    public static void resetMaxDamage(ItemStack item) {
-        int defaultMaxDamage = item.getItem().getDefaultInstance().getMaxDamage();
-        if (defaultMaxDamage > 0) {
-            item.set(DataComponents.MAX_DAMAGE, defaultMaxDamage);
+    public static int getDefaultMaxDamage(ItemStack item) {
+        return item.getItem().getDefaultInstance().getMaxDamage();
+    }
+
+    public static int getStackMaxDamage(ItemStack item) {
+        return item.getOrDefault(DataComponents.MAX_DAMAGE, 0);
+    }
+
+    public static void restoreBaseMaxDamage(ItemStack item, int baseMaxDamage) {
+        if (baseMaxDamage > 0) {
+            item.set(DataComponents.MAX_DAMAGE, baseMaxDamage);
+            if (item.has(DataComponents.DAMAGE)) {
+                item.setDamageValue(item.getDamageValue());
+            }
             return;
         }
 
