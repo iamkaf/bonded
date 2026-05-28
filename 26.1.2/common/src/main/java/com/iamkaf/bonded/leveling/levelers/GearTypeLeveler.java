@@ -6,6 +6,7 @@ import com.iamkaf.bonded.component.ItemLevelContainer;
 import com.iamkaf.bonded.registry.DataComponents;
 import com.iamkaf.bonded.registry.TierMap;
 import com.iamkaf.bonded.util.ItemUtils;
+import com.iamkaf.bonded.util.MaxDamageModifiers;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -35,6 +36,7 @@ public interface GearTypeLeveler {
             return null;
         }
 
+        MaxDamageModifiers.clearOverRepair(gear);
         var upgradedGear = new ItemStack(upgrade.builtInRegistryHolder(), 1, gear.getComponentsPatch());
         AppliedBonusesContainer previousAppliedBonuses =
                 upgradedGear.getOrDefault(DataComponents.APPLIED_BONUSES_CONTAINER.get(), AppliedBonusesContainer.make());

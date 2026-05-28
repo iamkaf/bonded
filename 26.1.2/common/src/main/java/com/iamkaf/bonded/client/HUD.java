@@ -109,7 +109,11 @@ public class HUD {
 
         Repairable repairable = stack.get(DataComponents.REPAIRABLE);
         if (stack.isEmpty() || repairable == null) return;
-        ItemStack repairIngredient = repairable.items().get(0).value().getDefaultInstance();
+        Optional<ItemStack> repairIngredient = RepairBenchBlock.getInventoryRepairIngredientPreview(
+                player.getInventory(),
+                repairable
+        );
+        if (repairIngredient.isEmpty()) return;
 
         text(
                 guiGraphics,
@@ -119,8 +123,8 @@ public class HUD {
                 y - textRenderer.lineHeight - 4
         );
         TooltipRenderUtil.extractTooltipBackground(guiGraphics, x, y, 20, 20, null);
-        guiGraphics.item(repairIngredient, x + 2, y + 2);
-        HUD.renderTooltip(guiGraphics, repairIngredient, x + 16, y + 12);
+        guiGraphics.item(repairIngredient.get(), x + 2, y + 2);
+        HUD.renderTooltip(guiGraphics, repairIngredient.get(), x + 16, y + 12);
         // TODO: guiGraphics.renderItemDecorations()
     }
 

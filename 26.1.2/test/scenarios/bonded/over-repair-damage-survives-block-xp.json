@@ -1,0 +1,83 @@
+{
+  "name": "bonded-over-repair-damage-survives-block-xp",
+  "setup": [
+    {
+      "action": "command",
+      "command": "/clear @s"
+    },
+    {
+      "action": "command",
+      "command": "/gamemode survival @s"
+    },
+    {
+      "action": "command",
+      "command": "/tp @s 0 72 0"
+    },
+    {
+      "action": "command",
+      "command": "/fill -2 70 -2 2 70 2 minecraft:stone replace"
+    },
+    {
+      "action": "command",
+      "command": "/fill -2 71 -2 2 74 2 minecraft:air replace"
+    }
+  ],
+  "steps": [
+    {
+      "action": "command",
+      "command": "/item replace entity @s weapon.mainhand with minecraft:iron_shovel[minecraft:damage=251,minecraft:max_damage=650,minecraft:enchantments={\"minecraft:efficiency\":5},bonded:item_level={level:4,maxExperience:100,experience:40,bond:1000},bonded:applied_bonuses={bonuses:[\"bonded:durability_500\",\"bonded:durability_1000\",\"bonded:dig_speed_1000\"]},bonded:max_damage_modifiers={base_max_damage:250,modifiers:[{amount:300.0d,id:\"bonded:over_repair\",operation:\"add_value\"},{amount:50.0d,id:\"bonded:durability_500\",operation:\"add_value\"},{amount:50.0d,id:\"bonded:durability_1000\",operation:\"add_value\"}]}]"
+    },
+    {
+      "action": "assert_inventory_item",
+      "itemId": "minecraft:iron_shovel",
+      "slot": 0,
+      "damage": 251,
+      "maxDamage": 650
+    },
+    {
+      "action": "command",
+      "command": "/setblock 0 71 0 minecraft:dirt"
+    },
+    {
+      "action": "command",
+      "command": "/tp @s 0 72 -1"
+    },
+    {
+      "action": "wait_for_block",
+      "x": 0,
+      "y": 71,
+      "z": 0,
+      "blockId": "minecraft:dirt",
+      "timeoutMs": 3000
+    },
+    {
+      "action": "use_block_server",
+      "x": 0,
+      "y": 71,
+      "z": 0,
+      "direction": "up",
+      "hand": "main_hand"
+    },
+    {
+      "action": "assert_inventory_item",
+      "itemId": "minecraft:iron_shovel",
+      "slot": 0,
+      "damage": 252,
+      "maxDamage": 650
+    }
+  ],
+  "cleanup": [
+    {
+      "action": "command",
+      "command": "/clear @s"
+    },
+    {
+      "action": "command",
+      "command": "/gamemode creative @s"
+    },
+    {
+      "action": "command",
+      "command": "/fill -2 70 -2 2 74 2 minecraft:air replace"
+    }
+  ]
+}

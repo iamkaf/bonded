@@ -1,0 +1,47 @@
+{
+  "name": "bonded-over-repair-bonus-reapply-preserves-damage",
+  "setup": [
+    {
+      "action": "command",
+      "command": "/clear @s"
+    },
+    {
+      "action": "command",
+      "command": "/gamemode survival @s"
+    }
+  ],
+  "steps": [
+    {
+      "action": "command",
+      "command": "/item replace entity @s weapon.mainhand with minecraft:iron_shovel[minecraft:damage=251,minecraft:max_damage=650,minecraft:enchantments={\"minecraft:efficiency\":5},bonded:item_level={level:4,maxExperience:100,experience:40,bond:1000},bonded:applied_bonuses={bonuses:[\"bonded:durability_500\",\"bonded:durability_1000\",\"bonded:dig_speed_1000\"]},bonded:max_damage_modifiers={base_max_damage:250,modifiers:[{amount:300.0d,id:\"bonded:over_repair\",operation:\"add_value\"},{amount:50.0d,id:\"bonded:durability_500\",operation:\"add_value\"},{amount:50.0d,id:\"bonded:durability_1000\",operation:\"add_value\"}]}]"
+    },
+    {
+      "action": "assert_inventory_item",
+      "itemId": "minecraft:iron_shovel",
+      "slot": 0,
+      "damage": 251,
+      "maxDamage": 650
+    },
+    {
+      "action": "assert_command_success",
+      "command": "/bonded xp add @s 1 points"
+    },
+    {
+      "action": "assert_inventory_item",
+      "itemId": "minecraft:iron_shovel",
+      "slot": 0,
+      "damage": 251,
+      "maxDamage": 650
+    }
+  ],
+  "cleanup": [
+    {
+      "action": "command",
+      "command": "/clear @s"
+    },
+    {
+      "action": "command",
+      "command": "/gamemode creative @s"
+    }
+  ]
+}

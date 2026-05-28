@@ -1,0 +1,24 @@
+{
+  "parent": "bonded:bonded",
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.bonded.getting_attached.description"
+    },
+    "icon": {
+      "id": "minecraft:iron_pickaxe"
+    },
+    "title": {
+      "translate": "advancements.bonded.getting_attached.title"
+    }
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ]
+}

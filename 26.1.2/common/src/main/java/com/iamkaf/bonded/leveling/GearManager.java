@@ -108,6 +108,22 @@ public class GearManager {
         return gear;
     }
 
+    public ItemStack initComponentWithBond(ItemStack gear, int bond) {
+        if (bond <= 0 || gear.isEmpty() || !isGear(gear)) {
+            return gear;
+        }
+
+        if (gear.has(DataComponents.ITEM_LEVEL_CONTAINER.get())) {
+            return gear;
+        }
+
+        int maxExperience = getMaxExperienceForItemType(gear);
+        ItemLevelContainer container = ItemLevelContainer.make(maxExperience).addBond(bond);
+        gear.set(DataComponents.ITEM_LEVEL_CONTAINER.get(), container);
+        bondBonusRegistry.applyBonuses(gear, getLeveler(gear), container);
+        return gear;
+    }
+
     private boolean needsMigration(ItemStack gear) {
         return bondBonusRegistry.hasLegacyManagedAttributeModifiers(gear);
     }

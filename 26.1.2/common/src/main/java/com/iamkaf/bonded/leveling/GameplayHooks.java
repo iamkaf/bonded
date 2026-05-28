@@ -6,6 +6,7 @@ import com.iamkaf.amber.api.event.v1.events.common.ItemEvents;
 import com.iamkaf.amber.api.event.v1.events.common.PlayerEvents;
 import com.iamkaf.amber.api.functions.v1.ItemFunctions;
 import com.iamkaf.bonded.Bonded;
+import com.iamkaf.bonded.advancement.BondedAdvancements;
 import com.iamkaf.bonded.api.event.BondEvent;
 import com.iamkaf.bonded.api.event.GameEvents;
 import com.iamkaf.bonded.component.ItemLevelContainer;
@@ -46,11 +47,10 @@ import static net.minecraft.core.component.DataComponents.REPAIRABLE;
 
 public class GameplayHooks {
     public static void init() {
-        BlockEvents.BLOCK_BREAK_BEFORE.register((level, player, pos, state, blockEntity) -> {
+        BlockEvents.BLOCK_BREAK_AFTER.register((level, player, pos, state, blockEntity) -> {
             if (player instanceof ServerPlayer serverPlayer) {
-                return GameplayHooks.onBlockBreak(level, pos, state, serverPlayer, blockEntity);
+                GameplayHooks.onBlockBreak(level, pos, state, serverPlayer, blockEntity);
             }
-            return InteractionResult.PASS;
         });
 
         GameEvents.AWARD_ITEM_EXPERIENCE.register(GameplayHooks::onGenericItemExperience);
@@ -67,6 +67,12 @@ public class GameplayHooks {
         var itemLevel = stack.get(DataComponents.ITEM_LEVEL_CONTAINER.get()).getLevel();
         var level = player.level();
         Integer maxLevel = Bonded.CONFIG.levelsToUpgrade.get();
+        if (player instanceof ServerPlayer serverPlayer) {
+            BondedAdvancements.grant(serverPlayer, BondedAdvancements.FIRST_LEVEL);
+            if (itemLevel == maxLevel) {
+                BondedAdvancements.grant(serverPlayer, BondedAdvancements.MAX_LEVEL);
+            }
+        }
 
         level.playSound(
                 null,
@@ -106,28 +112,33 @@ public class GameplayHooks {
         }
 
         boolean hasLeveled = Bonded.GEAR.giveItemExperience(gear, experienceAmount);
-        if (hasLeveled) {
-            if (Bonded.CONFIG.enableDurabilityGainOnLevelUp.get()) {
-                ItemFunctions.repairBy(gear, Bonded.CONFIG.durabilityGainOnLevelUp.get().floatValue());
+        ItemLevelContainer updatedContainer = gear.get(DataComponents.ITEM_LEVEL_CONTAINER.get());
+        if (updatedContainer != null) {
+            Bonded.GEAR.bondBonusRegistry.applyBonuses(gear, Bonded.GEAR.getLeveler(gear), updatedContainer);
+        }
+        if (player instanceof ServerPlayer serverPlayer) {
+            if (updatedContainer != null) {
+                BondedAdvancements.grantBondMilestones(serverPlayer, updatedContainer.getBond());
             }
+        }
+        if (hasLeveled) {
             BondEvent.ITEM_LEVELED_UP.invoker().level(gear, player, container, container.getLevel());
         }
     }
 
-    private static InteractionResult onBlockBreak(Level level, BlockPos pos, BlockState state,
+    private static void onBlockBreak(Level level, BlockPos pos, BlockState state,
             ServerPlayer player, BlockEntity blockEntity) {
         var handItem = player.getMainHandItem();
         if (handItem.isEmpty()) {
-            return InteractionResult.PASS;
+            return;
         }
 
         var leveler = Bonded.GEAR.getLeveler(handItem);
         if (leveler == null || !handItem.getItem().isCorrectToolForDrops(handItem, state)) {
-            return InteractionResult.PASS;
+            return;
         }
 
         emitProgressEvents(handItem, player, getBlockBreakExperienceAmount(level, pos, player));
-        return InteractionResult.PASS;
     }
 
     private static int getBlockBreakExperienceAmount(Level level, BlockPos pos, ServerPlayer player) {
@@ -174,6 +185,14 @@ public class GameplayHooks {
     }
 
     private static void onItemPickedUp(Player player, ItemEntity itemEntity, ItemStack stack) {
+        if (player instanceof ServerPlayer serverPlayer) {
+            ItemStack pickedUpStack = Bonded.GEAR.initComponent(stack);
+            ItemLevelContainer container = pickedUpStack.get(DataComponents.ITEM_LEVEL_CONTAINER.get());
+            if (container != null) {
+                BondedAdvancements.grantBondMilestones(serverPlayer, container.getBond());
+            }
+        }
+
         NonNullList<ItemStack> items = ItemFunctions.getInventoryItems(player.getInventory());
         for (var i = 0; i < items.size(); i++) {
             if (i == player.getInventory().getSelectedSlot()) {
@@ -182,6 +201,12 @@ public class GameplayHooks {
             ItemStack item = player.getInventory().getItem(i);
             if (!item.isEmpty()) {
                 Bonded.GEAR.initComponent(item);
+                if (player instanceof ServerPlayer serverPlayer) {
+                    ItemLevelContainer container = item.get(DataComponents.ITEM_LEVEL_CONTAINER.get());
+                    if (container != null) {
+                        BondedAdvancements.grantBondMilestones(serverPlayer, container.getBond());
+                    }
+                }
             }
         }
     }

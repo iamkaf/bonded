@@ -21,4 +21,7 @@ dependencies {
     implementation libs.fabric.api
     runtimeOnly libs.amber.fabric
     implementation libs.forgeconfigapiport.fabric
+    if (providers.gradleProperty('bonded.withTeaKit').orElse('false').map { it.toBoolean() }.get()) {
+        runtimeOnly libs.teakit.fabric
+    }
 }

@@ -3,11 +3,17 @@ package com.iamkaf.bonded.block;
 import com.iamkaf.amber.api.functions.v1.ItemFunctions;
 import com.iamkaf.amber.api.functions.v1.PlayerFunctions;
 import com.iamkaf.bonded.Bonded;
+import com.iamkaf.bonded.advancement.BondedAdvancements;
+import com.iamkaf.bonded.api.event.BondEvent;
+import com.iamkaf.bonded.component.ItemLevelContainer;
+import com.iamkaf.bonded.loot.ScrapDrops;
+import java.util.Optional;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.TagKey;
@@ -67,7 +73,8 @@ public class ToolBenchBlock extends Block {
             return InteractionResult.SUCCESS_SERVER;
         }
 
-        boolean hasIngredient = ItemFunctions.has(player.getInventory(), upgradeItemTag);
+        boolean hasIngredient = ItemFunctions.has(player.getInventory(), upgradeItemTag)
+                || AdjacentBenchStorage.has(level, pos, item -> item.is(upgradeItemTag));
         if (!hasIngredient) {
             errorFeedback(
                     level,
@@ -78,17 +85,38 @@ public class ToolBenchBlock extends Block {
             return InteractionResult.SUCCESS_SERVER;
         }
 
+        ItemStack oldGear = handItem.copy();
+        ItemLevelContainer component = handItem.get(com.iamkaf.bonded.registry.DataComponents.ITEM_LEVEL_CONTAINER.get());
         var upgraded = leveler.transmuteUpgrade(handItem);
-
 
         if (upgraded == null || upgraded.isEmpty()) {
             return InteractionResult.SUCCESS_SERVER;
         }
 
+        Optional<AdjacentBenchStorage.ConsumedStorageItem> consumedStorageItem = Optional.empty();
+        Optional<ItemStack> consumedIngredient = consumeUpgradeIngredient(player, upgradeItemTag);
+        if (consumedIngredient.isEmpty()) {
+            consumedStorageItem = AdjacentBenchStorage.consume(level, pos, item -> item.is(upgradeItemTag));
+            consumedIngredient = consumedStorageItem.map(AdjacentBenchStorage.ConsumedStorageItem::stack);
+            if (consumedStorageItem.isEmpty()) {
+                errorFeedback(
+                        level,
+                        player,
+                        Component.translatable("bonded.tool_bench.missing_ingredient")
+                                .withStyle(ChatFormatting.RED)
+                );
+                return InteractionResult.SUCCESS_SERVER;
+            }
+        }
 
-        ItemFunctions.consumeIfAvailable(player.getInventory(), upgradeItemTag, 1);
         handItem.shrink(1);
         player.setItemSlot(EquipmentSlot.MAINHAND, upgraded);
+        BondEvent.ITEM_UPGRADED.invoker().upgrade(oldGear, upgraded, player, component, consumedIngredient.get());
+        if (player instanceof ServerPlayer serverPlayer) {
+            BondedAdvancements.grant(serverPlayer, BondedAdvancements.UPGRADE);
+        }
+        ScrapDrops.dropFromUpgrade(level, player);
+        consumedStorageItem.ifPresent(consumed -> AdjacentBenchStorage.emitStorageUseParticles(level, consumed));
         level.playSound(
                 null,
                 player.getX(),
@@ -129,6 +157,19 @@ public class ToolBenchBlock extends Block {
         }
 
         return true;
+    }
+
+    private Optional<ItemStack> consumeUpgradeIngredient(Player player, TagKey<Item> upgradeItemTag) {
+        for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+            ItemStack stack = player.getInventory().getItem(i);
+            if (!stack.isEmpty() && stack.is(upgradeItemTag)) {
+                ItemStack consumed = stack.copyWithCount(1);
+                stack.shrink(1);
+                return Optional.of(consumed);
+            }
+        }
+
+        return Optional.empty();
     }
 
     private void errorFeedback(Level level, Player player, Component message) {

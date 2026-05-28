@@ -1,0 +1,24 @@
+{
+  "parent": "bonded:old_reliable",
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.bonded.trusted_tool.description"
+    },
+    "icon": {
+      "id": "minecraft:iron_pickaxe"
+    },
+    "title": {
+      "translate": "advancements.bonded.trusted_tool.title"
+    }
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ]
+}

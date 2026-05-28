@@ -1,0 +1,24 @@
+{
+  "parent": "bonded:spare_parts",
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.bonded.better_than_new.description"
+    },
+    "icon": {
+      "id": "bonded:repair_bench"
+    },
+    "title": {
+      "translate": "advancements.bonded.better_than_new.title"
+    }
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ]
+}

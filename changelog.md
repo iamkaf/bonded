@@ -5,6 +5,26 @@ All notable changes to Bonded will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 3.1.0
+
+### Added
+- Repair benches can now over-repair gear. Extra repair becomes temporary durability, shown as a pink bar on the item.
+- Added Scrap, a general repair material for the repair bench. Scrap can appear in chest loot, drop rarely from armored enemies, drop from broken bonded gear, and appear as a byproduct of upgrading gear.
+- Tool benches and repair benches can now use matching items from adjacent chests and barrels.
+- Gear found in chest loot or carried by monsters can now start with an innate bond level.
+- Added config options for innate loot bond.
+- Added public addon APIs for registering Bonded gear behavior and reading or changing Bonded item stack state.
+- Added advancements for bonding, upgrading, over-repairing, and finding or using Scrap.
+
+### Changed
+- The old `API` addon entry point is deprecated. Addons should use `BondedApi`.
+
+### Removed
+- Item level-ups no longer automatically repair gear. Use over-repairing instead.
+
+### Fixed
+- Repair and upgrade addon events now fire from the benches.
+
 ## 3.0.0
 
 ### Added

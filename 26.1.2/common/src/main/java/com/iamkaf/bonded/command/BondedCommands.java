@@ -174,6 +174,7 @@ public final class BondedCommands {
         for (ServerPlayer player : targets) {
             ItemStack stack = getTargetItem(player);
             if (type.add(player, stack, amount)) {
+                Bonded.GEAR.initComponent(stack);
                 changed++;
             }
         }
@@ -219,6 +220,7 @@ public final class BondedCommands {
         for (ServerPlayer player : targets) {
             ItemStack stack = getTargetItem(player);
             if (type.set(stack, amount)) {
+                Bonded.GEAR.initComponent(stack);
                 changed++;
             }
         }

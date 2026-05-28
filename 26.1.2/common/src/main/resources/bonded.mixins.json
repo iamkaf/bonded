@@ -4,9 +4,12 @@
   "compatibilityLevel": "JAVA_21",
   "minVersion": "0.8",
   "client": [
+    "GuiGraphicsExtractorMixin",
     "ItemMixin"
   ],
   "mixins": [
+    "ItemStackMixin",
+    "LivingEntityMixin",
     "AxeItemMixin",
     "ShovelItemMixin",
     "SmithingMenuMixin",
@@ -17,6 +20,7 @@
     "BeehiveBlockMixin",
     "PumpkinBlockMixin",
     "FishingHookMixin",
+    "LootTableMixin",
     "BrushableBlockEntityMixin",
     "ArmadilloMixin",
     "FlintAndSteelItemMixin",

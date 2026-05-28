@@ -89,9 +89,6 @@ public class ItemUtils {
     public static void restoreBaseMaxDamage(ItemStack item, int baseMaxDamage) {
         if (baseMaxDamage > 0) {
             item.set(DataComponents.MAX_DAMAGE, baseMaxDamage);
-            if (item.has(DataComponents.DAMAGE)) {
-                item.setDamageValue(item.getDamageValue());
-            }
             return;
         }
 

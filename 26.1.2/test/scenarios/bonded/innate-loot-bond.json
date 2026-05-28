@@ -1,0 +1,67 @@
+{
+  "name": "bonded-innate-loot-bond",
+  "setup": [
+    {
+      "action": "command",
+      "command": "/clear @s"
+    },
+    {
+      "action": "command",
+      "command": "/gamemode creative @s"
+    }
+  ],
+  "steps": [
+    {
+      "action": "command",
+      "command": "/loot give @s loot bonded:test/innate_bond_chest"
+    },
+    {
+      "action": "assert_inventory_item",
+      "itemId": "minecraft:iron_shovel",
+      "slot": 0,
+      "damage": 0,
+      "maxDamage": 300
+    },
+    {
+      "action": "command",
+      "command": "/clear @s"
+    },
+    {
+      "action": "command",
+      "command": "/summon zombie 0 72 0 {NoAI:1b,PersistenceRequired:1b}"
+    },
+    {
+      "action": "wait_ms",
+      "durationMs": 250
+    },
+    {
+      "action": "command",
+      "command": "/item replace entity @e[type=minecraft:zombie,limit=1,sort=nearest] weapon.mainhand with minecraft:iron_shovel"
+    },
+    {
+      "action": "command",
+      "command": "/item replace entity @s hotbar.1 from entity @e[type=minecraft:zombie,limit=1,sort=nearest] weapon.mainhand"
+    },
+    {
+      "action": "assert_inventory_item",
+      "itemId": "minecraft:iron_shovel",
+      "damage": 0,
+      "maxDamage": 300
+    },
+    {
+      "action": "screenshot",
+      "name": "bonded-innate-loot-bond",
+      "hideOverlay": true
+    }
+  ],
+  "cleanup": [
+    {
+      "action": "command",
+      "command": "/clear @s"
+    },
+    {
+      "action": "command",
+      "command": "/kill @e[type=minecraft:zombie,distance=..16]"
+    }
+  ]
+}

@@ -8,4 +8,7 @@ dependencies {
     implementation libs.gson
     implementation libs.amber.forge
     implementation libs.forgeconfigapiport.forge
+    if (providers.gradleProperty('bonded.withTeaKit').orElse('false').map { it.toBoolean() }.get()) {
+        runtimeOnly libs.teakit.forge
+    }
 }

@@ -1,4 +1,4 @@
-set shell := ["bash", "-cu"]
+set shell := ["bash", "-euo", "pipefail", "-c"]
 
 default:
   @just --list
@@ -182,6 +182,15 @@ test-changed base="origin/main":
   for v in $changed; do \
     echo "==> $v"; just with-java "$v" test; \
   done
+
+scenario scenario="bonded/over-repair" node="26.1.2-fabric" timeout="240":
+  @scripts/runtime-node.sh "{{node}}" "{{timeout}}" "{{scenario}}"
+
+scenario-result node="26.1.2-fabric":
+  @result="/tmp/bonded-{{node}}.runtime.result.json"; if [ -f "$result" ]; then jq . "$result"; else echo "No scenario result found at $result"; exit 1; fi
+
+scenario-log node="26.1.2-fabric":
+  @log="/tmp/bonded-{{node}}.runtime.run.log"; if [ -f "$log" ]; then less "$log"; else echo "No scenario log found at $log"; exit 1; fi
 
 # Copy an existing version folder to create a new one.
 new-version from to:

@@ -1,9 +1,7 @@
 package com.iamkaf.bonded.api;
 
-import com.iamkaf.bonded.registry.TierMap;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.crafting.Ingredient;
 
 /**
  * Provides public methods to interact with the `TierMap` registry for adding
@@ -11,7 +9,10 @@ import net.minecraft.world.item.crafting.Ingredient;
  * <p>
  * This class serves as an abstraction layer for mod developers who wish to
  * extend or customize gear behavior in the `Bonded` mod.
+ *
+ * @deprecated use {@link BondedApi}
  */
+@Deprecated(forRemoval = false)
 public class API {
 
     /**
@@ -23,17 +24,17 @@ public class API {
      * @param material The {@link TagKey<Item>} required to perform the upgrade.
      */
     public static void addUpgrade(Item from, Item to, TagKey<Item> material) {
-        TierMap.addUpgrade(from, to, material);
+        BondedApi.addUpgrade(from, to, material);
     }
 
     /**
      * Sets the material required to repair a specific item.
      *
      * @param from     The item to be repaired.
-     * @param material The {@link Ingredient} used for repairing the item.
+     * @param material The item used for repairing the item.
      */
     public static void addRepairMaterial(Item from, Item material) {
-        TierMap.addRepairMaterial(from, material);
+        BondedApi.addRepairMaterial(from, material);
     }
 
     /**
@@ -46,6 +47,6 @@ public class API {
      * @param maxExperience The maximum experience value for the item.
      */
     public static void addExperienceCap(Item gear, Integer maxExperience) {
-        TierMap.addExperienceCap(gear, maxExperience);
+        BondedApi.addExperienceCap(gear, maxExperience);
     }
 }

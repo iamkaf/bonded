@@ -10,6 +10,7 @@ import com.iamkaf.bonded.component.ItemLevelContainer;
 import com.iamkaf.bonded.leveling.levelers.GearTypeLeveler;
 import com.iamkaf.bonded.util.CombinedModifier;
 import com.iamkaf.bonded.util.ItemUtils;
+import com.iamkaf.bonded.util.MaxDamageModifiers;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EquipmentSlotGroup;
@@ -38,6 +39,7 @@ public class BondBonusRegistry {
 
     @SuppressWarnings("deprecation")
     public void applyBonuses(ItemStack gear, GearTypeLeveler gearType, ItemLevelContainer container) {
+        int damageBefore = gear.getOrDefault(net.minecraft.core.component.DataComponents.DAMAGE, 0);
         AppliedBonusesContainer previousAppliedBonuses =
                 gear.getOrDefault(DataComponents.APPLIED_BONUSES_CONTAINER.get(), AppliedBonusesContainer.make());
         List<BondBonus> bonusToApply = this.bonuses
@@ -61,10 +63,18 @@ public class BondBonusRegistry {
             );
         }
 
-        // TODO: i have to come up with something else if i add some other bonus other than the durability
-        //  one, that uses .modifyItem()
-        restoreBaseMaxDamage(gear, previousAppliedBonuses);
+        int baseMaxDamage = getBaseMaxDamage(gear, previousAppliedBonuses);
+        restoreBaseMaxDamage(gear, baseMaxDamage);
+        MaxDamageModifiers.rebaseExisting(gear, baseMaxDamage);
+        removeManagedDurabilityModifiers(gear);
         bonusToApply.forEach(bondBonus -> bondBonus.modifyItem(gear, gearType, container));
+        if (gear.has(net.minecraft.core.component.DataComponents.DAMAGE)) {
+            gear.set(
+                    net.minecraft.core.component.DataComponents.DAMAGE,
+                    Math.min(damageBefore, gear.getMaxDamage())
+            );
+            MaxDamageModifiers.consumeOverRepairIfThresholdReached(gear);
+        }
 
         List<Identifier> appliedBonuses = bonusToApply.stream().map(BondBonus::id).toList();
         gear.set(DataComponents.APPLIED_BONUSES_CONTAINER.get(),
@@ -74,6 +84,10 @@ public class BondBonusRegistry {
 
     public void restoreBaseMaxDamage(ItemStack gear, AppliedBonusesContainer appliedBonuses) {
         ItemUtils.restoreBaseMaxDamage(gear, getBaseMaxDamage(gear, appliedBonuses));
+    }
+
+    private void restoreBaseMaxDamage(ItemStack gear, int baseMaxDamage) {
+        ItemUtils.restoreBaseMaxDamage(gear, baseMaxDamage);
     }
 
     public boolean hasLegacyManagedAttributeModifiers(ItemStack gear) {
@@ -162,10 +176,22 @@ public class BondBonusRegistry {
         return modifier.id().getNamespace().equals(Bonded.MOD_ID) && !defaultModifierIds.contains(modifier.id());
     }
 
+    private void removeManagedDurabilityModifiers(ItemStack gear) {
+        for (BondBonus bonus : bonuses) {
+            if (bonus instanceof DurabilityBonus) {
+                MaxDamageModifiers.remove(gear, bonus.id());
+            }
+        }
+    }
+
     private int getBaseMaxDamage(ItemStack gear, AppliedBonusesContainer appliedBonuses) {
         int defaultMaxDamage = ItemUtils.getDefaultMaxDamage(gear);
         if (defaultMaxDamage > 0) {
             return defaultMaxDamage;
+        }
+
+        if (gear.has(DataComponents.MAX_DAMAGE_MODIFIERS.get())) {
+            return MaxDamageModifiers.getIntrinsicMaxDamage(gear);
         }
 
         int stackMaxDamage = ItemUtils.getStackMaxDamage(gear);

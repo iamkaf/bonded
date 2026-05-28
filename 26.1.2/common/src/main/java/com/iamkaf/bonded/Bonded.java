@@ -7,6 +7,8 @@ import com.iamkaf.bonded.config.BondedCommonConfig;
 import com.iamkaf.bonded.leveling.GameplayHooks;
 import com.iamkaf.bonded.leveling.GearManager;
 import com.iamkaf.bonded.leveling.levelers.Levelers;
+import com.iamkaf.bonded.loot.ScrapDrops;
+import com.iamkaf.bonded.loot.WorldInnateBond;
 import com.iamkaf.bonded.registry.*;
 import com.mojang.logging.LogUtils;
 import net.minecraft.resources.Identifier;
@@ -40,6 +42,8 @@ public class Bonded {
         CreativeModeTabs.init();
         BondedCommands.init();
         GameplayHooks.init();
+        WorldInnateBond.init();
+        ScrapDrops.init();
         Levelers.init();
         Bonuses.init();
         TierMap.init();

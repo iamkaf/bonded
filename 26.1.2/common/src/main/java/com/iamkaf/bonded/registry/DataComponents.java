@@ -3,6 +3,7 @@ package com.iamkaf.bonded.registry;
 import com.iamkaf.bonded.Bonded;
 import com.iamkaf.bonded.component.AppliedBonusesContainer;
 import com.iamkaf.bonded.component.ItemLevelContainer;
+import com.iamkaf.bonded.component.MaxDamageModifiersComponent;
 import com.iamkaf.amber.api.registry.v1.DeferredRegister;
 import com.iamkaf.amber.api.registry.v1.RegistrySupplier;
 import net.minecraft.core.component.DataComponentType;
@@ -24,6 +25,13 @@ public class DataComponents {
                     Bonded.resource("applied_bonuses"),
                     () -> DataComponentType.<AppliedBonusesContainer>builder()
                             .persistent(AppliedBonusesContainer.CODEC)
+                            .build()
+            );
+    public static final RegistrySupplier<DataComponentType<MaxDamageModifiersComponent>> MAX_DAMAGE_MODIFIERS =
+            DATA_COMPONENT_TYPES.register(
+                    Bonded.resource("max_damage_modifiers"),
+                    () -> DataComponentType.<MaxDamageModifiersComponent>builder()
+                            .persistent(MaxDamageModifiersComponent.CODEC)
                             .build()
             );
 

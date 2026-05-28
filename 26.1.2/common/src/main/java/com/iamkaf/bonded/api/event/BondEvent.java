@@ -45,6 +45,22 @@ public interface BondEvent {
     );
 
     /**
+     * Event triggered before repair bench durability is applied.
+     *
+     * <p>Callbacks receive the amount produced by previous callbacks and should
+     * return the amount that should be applied next.</p>
+     */
+    Event<ModifyRepairAmount> MODIFY_REPAIR_AMOUNT = EventFactory.createArrayBacked(
+            ModifyRepairAmount.class, callbacks -> (gear, player, component, material, repairAmount) -> {
+                int modifiedAmount = repairAmount;
+                for (ModifyRepairAmount callback : callbacks) {
+                    modifiedAmount = Math.max(0, callback.modify(gear, player, component, material, modifiedAmount));
+                }
+                return modifiedAmount;
+            }
+    );
+
+    /**
      * Event triggered when an item is repaired.
      * Listeners can modify the resulting ItemStack.
      */
@@ -98,6 +114,23 @@ public interface BondEvent {
          * @param newLevel  The new level of the item.
          */
         void level(ItemStack gear, Player player, ItemLevelContainer component, Integer newLevel);
+    }
+
+    /**
+     * Functional interface for modifying repair bench durability.
+     */
+    interface ModifyRepairAmount {
+        /**
+         * Modifies the repair amount before Bonded applies normal repair and over-repair.
+         *
+         * @param gear         The item being repaired.
+         * @param player       The player repairing the item.
+         * @param component    The item level container associated with the item.
+         * @param material     The {@link ItemStack} used as the repair material.
+         * @param repairAmount The current repair amount in durability points.
+         * @return the repair amount to apply next
+         */
+        int modify(ItemStack gear, Player player, ItemLevelContainer component, ItemStack material, int repairAmount);
     }
 
     /**
