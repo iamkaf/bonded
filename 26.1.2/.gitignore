@@ -34,8 +34,6 @@ replay_*.log
 *.hprof
 *.jfr
 
-# generated resources and caches
-common/src/main/generated/
-fabric/src/main/generated/
+# caches
 **/.cache/
 .architectury-transformer
