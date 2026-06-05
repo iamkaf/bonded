@@ -25,3 +25,5 @@ dependencies {
         runtimeOnly libs.teakit.fabric
     }
 }
+
+enableCommonFabricDatagen.call()

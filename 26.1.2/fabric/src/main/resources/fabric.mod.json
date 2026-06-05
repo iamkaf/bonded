@@ -21,6 +21,9 @@
         ],
         "client": [
             "com.iamkaf.bonded.fabric.BondedFabricClient"
+        ],
+        "fabric-datagen": [
+            "com.iamkaf.bonded.fabric.BondedDatagen"
         ]
     },
     "mixins": [
