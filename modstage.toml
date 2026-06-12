@@ -27,7 +27,7 @@ mods = [
   "maven:fuzs.forgeconfigapiport:forgeconfigapiport-fabric:26.1.3",
   "maven:com.iamkaf.amber:amber-fabric:11.0.0+26.1.2",
   "maven:com.iamkaf.liteminer:liteminer-fabric:3.1.0+26.1.2",
-  "maven:com.iamkaf.teakit:teakit-fabric:0.9.0+26.1.2",
+  "maven:com.iamkaf.teakit:teakit-fabric:0.10.0+26.1.2",
 ]
 
 [[instance]]
@@ -42,7 +42,7 @@ mods = [
   "maven:fuzs.forgeconfigapiport:forgeconfigapiport-forge:26.1.3",
   "maven:com.iamkaf.amber:amber-forge:11.0.0+26.1.2",
   "maven:com.iamkaf.liteminer:liteminer-forge:3.1.0+26.1.2",
-  "maven:com.iamkaf.teakit:teakit-forge:0.9.0+26.1.2",
+  "maven:com.iamkaf.teakit:teakit-forge:0.10.0+26.1.2",
 ]
 
 [[instance]]
@@ -56,5 +56,5 @@ mods = [
   "./26.1.2/neoforge/build/libs/bonded-neoforge-3.1.0+26.1.2.jar",
   "maven:com.iamkaf.amber:amber-neoforge:11.0.0+26.1.2",
   "maven:com.iamkaf.liteminer:liteminer-neoforge:3.1.0+26.1.2",
-  "maven:com.iamkaf.teakit:teakit-neoforge:0.9.0+26.1.2",
+  "maven:com.iamkaf.teakit:teakit-neoforge:0.10.0+26.1.2",
 ]
