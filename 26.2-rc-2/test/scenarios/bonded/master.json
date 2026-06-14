@@ -1,0 +1,57 @@
+{
+  "name": "bonded-master",
+  "steps": [
+    {
+      "action": "run_scenario",
+      "scenario": "bonded/adjacent-storage-benches"
+    },
+    {
+      "action": "run_scenario",
+      "scenario": "bonded/innate-loot-bond"
+    },
+    {
+      "action": "run_scenario",
+      "scenario": "bonded/over-repair"
+    },
+    {
+      "action": "run_scenario",
+      "scenario": "bonded/over-repair-cap"
+    },
+    {
+      "action": "run_scenario",
+      "scenario": "bonded/over-repair-visual"
+    },
+    {
+      "action": "run_scenario",
+      "scenario": "bonded/over-repair-max-damage-stability"
+    },
+    {
+      "action": "run_scenario",
+      "scenario": "bonded/over-repair-upgrade-clears"
+    },
+    {
+      "action": "run_scenario",
+      "scenario": "bonded/over-repair-near-threshold-damage"
+    },
+    {
+      "action": "run_scenario",
+      "scenario": "bonded/over-repair-bonus-reapply-preserves-damage"
+    },
+    {
+      "action": "run_scenario",
+      "scenario": "bonded/over-repair-damage-survives-block-xp"
+    },
+    {
+      "action": "run_scenario",
+      "scenario": "bonded/over-repair-upgrade-chain-damage"
+    },
+    {
+      "action": "run_scenario",
+      "scenario": "bonded/scrap-repair-bench"
+    },
+    {
+      "action": "run_scenario",
+      "scenario": "bonded/scrap-world-sources"
+    }
+  ]
+}

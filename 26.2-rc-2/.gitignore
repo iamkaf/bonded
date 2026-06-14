@@ -1,0 +1,39 @@
+# eclipse
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
+
+# idea
+out
+*.ipr
+*.iws
+*.iml
+.idea/*
+!.idea/scopes
+
+# gradle
+build
+.gradle
+
+# other
+eclipse
+run
+runs
+*.bak
+*.DS_Store
+
+# annoying
+.vscode
+
+# java
+hs_err_*.log
+replay_*.log
+*.hprof
+*.jfr
+
+# caches
+**/.cache/
+.architectury-transformer

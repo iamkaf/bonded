@@ -1,0 +1,24 @@
+{
+  "parent": "bonded:it_learns",
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.bonded.fully_bonded.description"
+    },
+    "icon": {
+      "id": "minecraft:diamond_pickaxe"
+    },
+    "title": {
+      "translate": "advancements.bonded.fully_bonded.title"
+    }
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ]
+}

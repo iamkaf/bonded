@@ -1,0 +1,95 @@
+{
+  "name": "bonded-over-repair-near-threshold-damage",
+  "setup": [
+    {
+      "action": "command",
+      "command": "/clear @s"
+    },
+    {
+      "action": "command",
+      "command": "/gamemode survival @s"
+    },
+    {
+      "action": "command",
+      "command": "/tp @s 0 72 0"
+    },
+    {
+      "action": "command",
+      "command": "/fill -2 70 -2 4 75 2 minecraft:air replace"
+    },
+    {
+      "action": "command",
+      "command": "/fill -2 70 -2 4 70 2 minecraft:stone replace"
+    }
+  ],
+  "steps": [
+    {
+      "action": "command",
+      "command": "/item replace entity @s weapon.mainhand with minecraft:iron_shovel[minecraft:damage=299,minecraft:max_damage=650,bonded:item_level={level:4,maxExperience:100,experience:96,bond:1116},bonded:applied_bonuses={bonuses:[\"bonded:durability_500\",\"bonded:durability_1000\"]},bonded:max_damage_modifiers={base_max_damage:250,modifiers:[{amount:50.0d,id:\"bonded:durability_500\",operation:\"add_value\"},{amount:50.0d,id:\"bonded:durability_1000\",operation:\"add_value\"},{amount:300.0d,id:\"bonded:over_repair\",operation:\"add_value\"}]}]"
+    },
+    {
+      "action": "assert_inventory_item",
+      "itemId": "minecraft:iron_shovel",
+      "slot": 0,
+      "damage": 299
+    },
+    {
+      "action": "command",
+      "command": "/setblock 1 71 0 minecraft:dirt"
+    },
+    {
+      "action": "command",
+      "command": "/tp @s 1 72 -1"
+    },
+    {
+      "action": "use_block_server",
+      "x": 1,
+      "y": 71,
+      "z": 0,
+      "direction": "up",
+      "hand": "main_hand"
+    },
+    {
+      "action": "assert_inventory_item",
+      "itemId": "minecraft:iron_shovel",
+      "slot": 0,
+      "damage": 0
+    },
+    {
+      "action": "command",
+      "command": "/setblock 2 71 0 minecraft:dirt"
+    },
+    {
+      "action": "command",
+      "command": "/tp @s 2 72 -1"
+    },
+    {
+      "action": "use_block_server",
+      "x": 2,
+      "y": 71,
+      "z": 0,
+      "direction": "up",
+      "hand": "main_hand"
+    },
+    {
+      "action": "assert_inventory_item",
+      "itemId": "minecraft:iron_shovel",
+      "slot": 0,
+      "damage": 1
+    }
+  ],
+  "cleanup": [
+    {
+      "action": "command",
+      "command": "/clear @s"
+    },
+    {
+      "action": "command",
+      "command": "/gamemode creative @s"
+    },
+    {
+      "action": "command",
+      "command": "/fill -2 70 -2 4 75 2 minecraft:air replace"
+    }
+  ]
+}

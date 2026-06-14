@@ -1,0 +1,29 @@
+plugins {
+    id 'com.iamkaf.multiloader.common'
+    id 'net.neoforged.moddev'
+}
+
+neoForge {
+    neoFormVersion = libs.versions.neoform.get()
+    def at = file('src/main/resources/META-INF/accesstransformer.cfg')
+    if (at.exists()) {
+        accessTransformers.from(at.absolutePath)
+    }
+    def parchmentMinecraftVersion = libs.versions.parchment.minecraft.get()
+    def parchmentMappingsVersion = libs.parchment.get().version.toString()
+    if (parchmentMinecraftVersion != 'null' && parchmentMappingsVersion != 'null') {
+        parchment {
+            minecraftVersion = parchmentMinecraftVersion
+            mappingsVersion = parchmentMappingsVersion
+        }
+    }
+}
+
+dependencies {
+    compileOnly libs.mixin
+    compileOnly libs.mixin.extras
+    annotationProcessor libs.mixin.extras
+    implementation libs.gson
+    implementation libs.amber
+    implementation libs.konfig
+}

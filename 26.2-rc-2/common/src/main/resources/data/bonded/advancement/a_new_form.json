@@ -1,0 +1,24 @@
+{
+  "parent": "bonded:fully_bonded",
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.bonded.a_new_form.description"
+    },
+    "icon": {
+      "id": "bonded:tool_bench"
+    },
+    "title": {
+      "translate": "advancements.bonded.a_new_form.title"
+    }
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ]
+}
