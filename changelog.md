@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added Konfig-powered configuration screens for Minecraft 26.2.
+- Added client options for Bonded item tooltips, the repair or upgrade bench HUD, and the over-repair bar color.
 
 ### Changed
 

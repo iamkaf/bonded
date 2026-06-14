@@ -1,5 +1,6 @@
 package com.iamkaf.bonded.mixin;
 
+import com.iamkaf.bonded.BondedClient;
 import com.iamkaf.bonded.util.MaxDamageModifiers;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -12,7 +13,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(GuiGraphicsExtractor.class)
 public abstract class GuiGraphicsExtractorMixin {
-    private static final int BONDED_OVER_REPAIR_COLOR = ARGB.color(255, 255, 102, 221);
     private static final int BAR_WIDTH = 13;
 
     @Inject(method = "itemBar", at = @At("HEAD"), cancellable = true)
@@ -35,7 +35,14 @@ public abstract class GuiGraphicsExtractorMixin {
         );
         int pinkWidth = MaxDamageModifiers.getOverRepairBarWidth(itemStack, BAR_WIDTH);
         if (pinkWidth > 0) {
-            graphics.fill(RenderPipelines.GUI, left, top, left + pinkWidth, top + 1, BONDED_OVER_REPAIR_COLOR);
+            graphics.fill(
+                    RenderPipelines.GUI,
+                    left,
+                    top,
+                    left + pinkWidth,
+                    top + 1,
+                    BondedClient.CONFIG.overRepairBarColor.get()
+            );
         }
         ci.cancel();
     }
