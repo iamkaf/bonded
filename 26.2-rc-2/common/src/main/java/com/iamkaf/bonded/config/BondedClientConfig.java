@@ -7,6 +7,8 @@ public class BondedClientConfig {
     public final ConfigValue<Boolean> tooltipsEnabled;
     public final ConfigValue<Boolean> benchHudEnabled;
     public final ConfigValue<Integer> overRepairBarColor;
+    public final ConfigValue<Boolean> progressionSoundsEnabled;
+    public final ConfigValue<Double> progressionSoundVolume;
 
     public BondedClientConfig(ConfigBuilder builder) {
         builder.push("tooltips")
@@ -18,6 +20,24 @@ public class BondedClientConfig {
         tooltipsEnabled = builder.bool("tooltips_enabled", true)
                 .comment("Shows Bonded level, experience, and bonus information in item tooltips.")
                 .info(info -> info.inlineTextKey("bonded.config.tooltips_enabled.info"))
+                .clientOnly()
+                .build();
+        builder.pop();
+
+        builder.push("sounds")
+                .categoryComment("Client sound feedback for Bonded item progression.")
+                .categoryInfo(info -> info
+                        .headerKey("bonded.config.info.sounds.header")
+                        .inlineTextKey("bonded.config.info.sounds.text"))
+                .header("Sounds");
+        progressionSoundsEnabled = builder.bool("progression_sounds_enabled", true)
+                .comment("Plays Bonded level-up and max-level sounds on your own client.")
+                .info(info -> info.inlineTextKey("bonded.config.progression_sounds_enabled.info"))
+                .clientOnly()
+                .build();
+        progressionSoundVolume = builder.doubleRange("progression_sound_volume", 1.0d, 0.0d, 1.0d)
+                .comment("Volume for Bonded progression sounds on your own client.")
+                .info(info -> info.inlineTextKey("bonded.config.progression_sound_volume.info"))
                 .clientOnly()
                 .build();
         builder.pop();

@@ -5,7 +5,7 @@
   "bonded.config.info.common.header": "Bonded",
   "bonded.config.info.common.text": "Server-synced gameplay settings for gear upgrades, repair benches, item progression, and bonus loot.",
   "bonded.config.info.client.header": "Bonded Client",
-  "bonded.config.info.client.text": "Client settings control Bonded item tooltip details, repair or upgrade bench HUD previews, and over-repair item bar color.",
+  "bonded.config.info.client.text": "Client settings control Bonded item tooltip details, progression sounds, repair or upgrade bench HUD previews, and over-repair item bar color.",
   "bonded.config.info.features.header": "Features",
   "bonded.config.info.features.text": "Feature toggles control which Bonded gameplay systems are active and whether players see chat progress feedback.",
   "bonded.config.info.progression.header": "Progression",
@@ -16,6 +16,8 @@
   "bonded.config.info.tooltips.text": "Tooltip settings control extra Bonded details shown on items in your own client.",
   "bonded.config.info.hud.header": "HUD",
   "bonded.config.info.hud.text": "HUD settings control local repair and upgrade previews, plus the item bar color used for over-repaired gear.",
+  "bonded.config.info.sounds.header": "Sounds",
+  "bonded.config.info.sounds.text": "Sound settings control local Bonded progression feedback heard by your own client.",
 
   "creativetab.bonded.bonded": "Bonded",
 
@@ -92,6 +94,10 @@
   "bonded.config.bench_hud_enabled.info": "Shows repair and upgrade previews while you look at Bonded benches.",
   "bonded.config.over_repair_bar_color": "Over-repair Bar Color",
   "bonded.config.over_repair_bar_color.info": "Changes the color used for temporary over-repair durability on item bars.",
+  "bonded.config.progression_sounds_enabled": "Progression Sounds",
+  "bonded.config.progression_sounds_enabled.info": "Plays Bonded level-up and max-level sounds only for your own client.",
+  "bonded.config.progression_sound_volume": "Progression Sound Volume",
+  "bonded.config.progression_sound_volume.info": "Controls how loud Bonded level-up and max-level sounds are on your client.",
   "bonded.config.innate_loot_bond_enabled": "Enable Innate Loot Bond",
   "bonded.config.innate_loot_bond_enabled.tooltip": "If enabled, gear created by chest loot and monster gear rolls starts with some bond.",
   "bonded.config.innate_loot_bond_enabled.info": "Allows eligible loot-generated gear to start with Bond instead of always beginning at zero.",

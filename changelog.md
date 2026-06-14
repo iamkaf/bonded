@@ -10,13 +10,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added Konfig-powered configuration screens for Minecraft 26.2.
-- Added client options for Bonded item tooltips, the repair or upgrade bench HUD, and the over-repair bar color.
+- Added client options for Bonded item tooltips, progression sounds, the repair or upgrade bench HUD, and the over-repair bar color.
 
 ### Changed
 
 - Ported to Minecraft 26.2.
 - BREAKING: Bonded now requires Konfig for configuration support.
   - Get it from [Modrinth](https://modrinth.com/mod/konfig) or [CurseForge](https://www.curseforge.com/minecraft/mc-mods/konfig)
+
+### Fixed
+
+- Fixed Bonded's mod icon.
+- Fixed level-up and max-level sounds playing for nearby players.
 
 ## 3.1.0
 

@@ -9,6 +9,7 @@ import com.iamkaf.bonded.leveling.GearManager;
 import com.iamkaf.bonded.leveling.levelers.Levelers;
 import com.iamkaf.bonded.loot.ScrapDrops;
 import com.iamkaf.bonded.loot.WorldInnateBond;
+import com.iamkaf.bonded.network.BondedNetworking;
 import com.iamkaf.bonded.registry.*;
 import com.mojang.logging.LogUtils;
 import com.iamkaf.konfig.api.v1.ConfigBuilder;
@@ -79,6 +80,7 @@ public class Bonded {
         DataComponents.init();
         CreativeModeTabs.init();
         BondedCommands.init();
+        BondedNetworking.init();
         GameplayHooks.init();
         WorldInnateBond.init();
         ScrapDrops.init();

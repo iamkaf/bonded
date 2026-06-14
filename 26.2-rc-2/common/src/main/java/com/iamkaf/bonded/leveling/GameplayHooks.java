@@ -12,8 +12,9 @@ import com.iamkaf.bonded.api.event.GameEvents;
 import com.iamkaf.bonded.component.ItemLevelContainer;
 import com.iamkaf.bonded.leveling.levelers.GearTypeLeveler;
 import com.iamkaf.bonded.leveling.levelers.MeleeWeaponsLeveler;
+import com.iamkaf.bonded.network.BondedNetworking;
+import com.iamkaf.bonded.network.ProgressionSoundPacket;
 import com.iamkaf.bonded.registry.DataComponents;
-import com.iamkaf.bonded.registry.Sounds;
 import com.iamkaf.bonded.registry.TierMap;
 import com.iamkaf.bonded.util.ItemUtils;
 import net.minecraft.ChatFormatting;
@@ -26,7 +27,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -65,23 +65,17 @@ public class GameplayHooks {
 
     private static void onItemLeveledUp(ItemStack stack, Player player, ItemLevelContainer container, Integer integer) {
         var itemLevel = stack.get(DataComponents.ITEM_LEVEL_CONTAINER.get()).getLevel();
-        var level = player.level();
         Integer maxLevel = Bonded.CONFIG.levelsToUpgrade.get();
         if (player instanceof ServerPlayer serverPlayer) {
             BondedAdvancements.grant(serverPlayer, BondedAdvancements.FIRST_LEVEL);
             if (itemLevel == maxLevel) {
                 BondedAdvancements.grant(serverPlayer, BondedAdvancements.MAX_LEVEL);
             }
+            BondedNetworking.sendProgressionSound(
+                    serverPlayer,
+                    itemLevel == maxLevel ? ProgressionSoundPacket.Kind.MAX_LEVEL : ProgressionSoundPacket.Kind.LEVEL_UP
+            );
         }
-
-        level.playSound(
-                null,
-                player.getX(),
-                player.getY(),
-                player.getZ(),
-                itemLevel == maxLevel ? Sounds.ITEM_MAX_LEVEL.get() : Sounds.ITEM_LEVEL.get(),
-                SoundSource.PLAYERS
-        );
 
         if (!Bonded.CONFIG.sendChatMessages.get()) {
             return;
