@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Fixed a crash that could happen when blocking damage with some shields.
 - Fixed Bonded's mod icon.
 - Fixed level-up and max-level sounds playing for nearby players.
 

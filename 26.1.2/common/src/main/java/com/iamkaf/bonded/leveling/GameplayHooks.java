@@ -103,7 +103,9 @@ public class GameplayHooks {
 
         ItemStack gear = Bonded.GEAR.initComponent(item);
         var container = gear.get(DataComponents.ITEM_LEVEL_CONTAINER.get());
-        assert container != null;
+        if (container == null) {
+            return;
+        }
 
         InteractionResult result = BondEvent.ITEM_EXPERIENCE_GAINED.invoker()
                 .experience(gear, player, container, experienceAmount);
