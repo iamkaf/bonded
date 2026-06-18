@@ -1,0 +1,24 @@
+{
+  "parent": "bonded:getting_attached",
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.bonded.it_learns.description"
+    },
+    "icon": {
+      "id": "minecraft:experience_bottle"
+    },
+    "title": {
+      "translate": "advancements.bonded.it_learns.title"
+    }
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ]
+}

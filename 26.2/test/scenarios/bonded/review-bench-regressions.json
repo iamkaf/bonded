@@ -1,0 +1,17 @@
+{
+  "name": "bonded-review-bench-regressions",
+  "steps": [
+    {
+      "action": "run_scenario",
+      "scenario": "bonded/scrap-repair-bench"
+    },
+    {
+      "action": "run_scenario",
+      "scenario": "bonded/adjacent-storage-benches"
+    },
+    {
+      "action": "run_scenario",
+      "scenario": "bonded/over-repair-upgrade-clears"
+    }
+  ]
+}

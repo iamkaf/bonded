@@ -1,0 +1,138 @@
+{
+  "name": "bonded-scrap-world-sources",
+  "setup": [
+    {
+      "action": "command",
+      "command": "/clear @s"
+    },
+    {
+      "action": "command",
+      "command": "/gamemode survival @s"
+    },
+    {
+      "action": "command",
+      "command": "/tp @s 0 72 0"
+    },
+    {
+      "action": "command",
+      "command": "/fill -3 70 -3 6 70 3 minecraft:stone replace"
+    },
+    {
+      "action": "command",
+      "command": "/fill -3 71 -3 6 76 3 minecraft:air replace"
+    },
+    {
+      "action": "command",
+      "command": "/setblock 0 71 0 minecraft:grass_block"
+    },
+    {
+      "action": "wait_for_block",
+      "x": 0,
+      "y": 71,
+      "z": 0,
+      "blockId": "minecraft:grass_block",
+      "timeoutMs": 3000
+    },
+    {
+      "action": "command",
+      "command": "/setblock 4 71 0 bonded:tool_bench"
+    },
+    {
+      "action": "wait_for_block",
+      "x": 4,
+      "y": 71,
+      "z": 0,
+      "blockId": "bonded:tool_bench",
+      "timeoutMs": 3000
+    }
+  ],
+  "steps": [
+    {
+      "action": "clear_nearby_entities",
+      "radius": 16,
+      "entityType": "minecraft:item"
+    },
+    {
+      "action": "command",
+      "command": "/item replace entity @s weapon.mainhand with minecraft:iron_shovel[minecraft:damage=249,bonded:item_level={experience:0,maxExperience:1000,level:1,bond:250}]"
+    },
+    {
+      "action": "use_block_server",
+      "x": 0,
+      "y": 71,
+      "z": 0,
+      "direction": "up",
+      "hand": "main_hand"
+    },
+    {
+      "action": "wait_for_entity_count",
+      "radius": 8,
+      "entityType": "minecraft:item",
+      "itemId": "bonded:scrap",
+      "count": 1,
+      "timeoutMs": 5000
+    },
+    {
+      "action": "clear_nearby_entities",
+      "radius": 16,
+      "entityType": "minecraft:item"
+    },
+    {
+      "action": "command",
+      "command": "/clear @s"
+    },
+    {
+      "action": "command",
+      "command": "/item replace entity @s weapon.mainhand with minecraft:stone_pickaxe"
+    },
+    {
+      "action": "command",
+      "command": "/item replace entity @s hotbar.1 with minecraft:copper_ingot 1"
+    },
+    {
+      "action": "assert_command_success",
+      "command": "/bonded xp set @s 10 levels"
+    },
+    {
+      "action": "use_block_server",
+      "x": 4,
+      "y": 71,
+      "z": 0,
+      "direction": "up",
+      "hand": "main_hand"
+    },
+    {
+      "action": "assert_inventory_item",
+      "itemId": "minecraft:copper_pickaxe",
+      "slot": 0,
+      "count": 1
+    },
+    {
+      "action": "wait_for_entity_count",
+      "radius": 8,
+      "entityType": "minecraft:item",
+      "itemId": "bonded:scrap",
+      "minCount": 0,
+      "maxCount": 2,
+      "timeoutMs": 5000
+    }
+  ],
+  "cleanup": [
+    {
+      "action": "command",
+      "command": "/clear @s"
+    },
+    {
+      "action": "command",
+      "command": "/kill @e[type=minecraft:item,distance=..16]"
+    },
+    {
+      "action": "command",
+      "command": "/gamemode creative @s"
+    },
+    {
+      "action": "command",
+      "command": "/fill -3 70 -3 6 76 3 minecraft:air replace"
+    }
+  ]
+}

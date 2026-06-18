@@ -1,0 +1,24 @@
+{
+  "parent": "bonded:spare_parts",
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.bonded.waste_nothing.description"
+    },
+    "icon": {
+      "id": "minecraft:anvil"
+    },
+    "title": {
+      "translate": "advancements.bonded.waste_nothing.title"
+    }
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ]
+}
