@@ -1,8 +1,37 @@
-# Root-level gitignore for monorepo
-.DS_Store
+# IDEs
 .idea/
 .vscode/
 *.iml
 
-# Each version has its own .gitignore for build artifacts
-# This file is for root-level ignores only
+# Gradle
+.gradle/
+build/
+*/build/
+**/build/
+
+# Stonecutter
+**/versions/*/generated/
+**/versions/*/merged/
+
+# Minecraft runs
+run/
+runs/
+*/run/
+*/runs/
+**/run/
+**/runs/
+
+# TeaKit
+.teakit/
+
+# OS / JVM
+.DS_Store
+*.bak
+hs_err_*.log
+replay_*.log
+*.hprof
+*.jfr
+
+# Caches
+**/.cache/
+.architectury-transformer/

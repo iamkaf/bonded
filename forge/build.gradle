@@ -1,0 +1,31 @@
+plugins {
+    id 'com.iamkaf.multiloader.forge'
+}
+
+def minecraftVersion = requiredProp(project, 'project.minecraft')
+def libs = catalogFor(project, minecraftVersion)
+def useKonfig = minecraftVersion != '26.1.2'
+
+dependencies {
+
+    implementation('net.sf.jopt-simple:jopt-simple:5.0.4') { version { strictly '5.0.4' } }
+    implementation library(libs, 'gson')
+    implementation library(libs, 'amber-forge')
+    if (useKonfig) {
+        implementation library(libs, 'konfig-forge')
+    } else {
+        implementation library(libs, 'forgeconfigapiport-forge')
+    }
+    if (providers.gradleProperty('bonded.withTeaKit').orElse('false').map { it.toBoolean() }.get()) {
+        runtimeOnly library(libs, 'teakit-forge')
+    }
+}
+
+sourceSets {
+    main {
+        if (!useKonfig) {
+            java.exclude 'com/iamkaf/bonded/config/BondedClientConfig.java'
+            java.exclude 'com/iamkaf/bonded/network/**'
+        }
+    }
+}

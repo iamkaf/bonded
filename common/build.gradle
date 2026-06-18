@@ -1,0 +1,29 @@
+plugins {
+    id 'com.iamkaf.multiloader.common'
+}
+
+def minecraftVersion = requiredProp(project, 'project.minecraft')
+def libs = catalogFor(project, minecraftVersion)
+def useKonfig = minecraftVersion != '26.1.2'
+
+dependencies {
+    compileOnly library(libs, 'mixin')
+    compileOnly library(libs, 'mixin-extras')
+    annotationProcessor library(libs, 'mixin-extras')
+    implementation library(libs, 'gson')
+    implementation library(libs, 'amber')
+    if (useKonfig) {
+        implementation library(libs, 'konfig')
+    } else {
+        implementation library(libs, 'forgeconfigapiport-common-neoforgeapi')
+    }
+}
+
+sourceSets {
+    main {
+        if (!useKonfig) {
+            java.exclude 'com/iamkaf/bonded/config/BondedClientConfig.java'
+            java.exclude 'com/iamkaf/bonded/network/**'
+        }
+    }
+}

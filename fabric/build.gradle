@@ -1,0 +1,48 @@
+plugins {
+    id 'com.iamkaf.multiloader.fabric'
+}
+
+def minecraftVersion = requiredProp(project, 'project.minecraft')
+def libs = catalogFor(project, minecraftVersion)
+def useKonfig = minecraftVersion != '26.1.2'
+
+repositories {
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = 'Modrinth'
+                url = uri('https://api.modrinth.com/maven')
+            }
+        }
+        filter {
+            includeGroup('maven.modrinth')
+        }
+    }
+}
+
+dependencies {
+    compileOnly library(libs, 'amber')
+    implementation library(libs, 'fabric-api')
+    runtimeOnly library(libs, 'modmenu')
+    runtimeOnly library(libs, 'amber-fabric')
+    if (useKonfig) {
+        compileOnly library(libs, 'konfig')
+        runtimeOnly library(libs, 'konfig-fabric')
+    } else {
+        implementation library(libs, 'forgeconfigapiport-fabric')
+    }
+    if (providers.gradleProperty('bonded.withTeaKit').orElse('false').map { it.toBoolean() }.get()) {
+        runtimeOnly library(libs, 'teakit-fabric')
+    }
+}
+
+sourceSets {
+    main {
+        java.exclude 'com/iamkaf/bonded/fabric/BondedDatagen.java'
+        java.exclude 'com/iamkaf/bonded/fabric/datagen/**'
+        if (!useKonfig) {
+            java.exclude 'com/iamkaf/bonded/config/BondedClientConfig.java'
+            java.exclude 'com/iamkaf/bonded/network/**'
+        }
+    }
+}

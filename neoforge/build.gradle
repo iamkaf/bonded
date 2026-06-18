@@ -1,0 +1,40 @@
+plugins {
+    id 'com.iamkaf.multiloader.neoforge'
+}
+
+def minecraftVersion = requiredProp(project, 'project.minecraft')
+def libs = catalogFor(project, minecraftVersion)
+def useKonfig = minecraftVersion != '26.1.2'
+
+repositories {
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = 'Modrinth'
+                url = uri('https://api.modrinth.com/maven')
+            }
+        }
+        filter {
+            includeGroup('maven.modrinth')
+        }
+    }
+}
+
+dependencies {
+    implementation library(libs, 'amber-neoforge')
+    if (useKonfig) {
+        implementation library(libs, 'konfig-neoforge')
+    }
+    if (providers.gradleProperty('bonded.withTeaKit').orElse('false').map { it.toBoolean() }.get()) {
+        runtimeOnly library(libs, 'teakit-neoforge')
+    }
+}
+
+sourceSets {
+    main {
+        if (!useKonfig) {
+            java.exclude 'com/iamkaf/bonded/config/BondedClientConfig.java'
+            java.exclude 'com/iamkaf/bonded/network/**'
+        }
+    }
+}
