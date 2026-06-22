@@ -1,17 +1,25 @@
+.DS_Store
+Thumbs.db
+
 # IDEs
 .idea/
 .vscode/
 *.iml
+*.ipr
+*.iws
+*.bak
+*.log
+*.launch
 
 # Gradle
 .gradle/
+.cache/
+.teakit/
 build/
 */build/
 **/build/
-
-# Stonecutter
-**/versions/*/generated/
-**/versions/*/merged/
+out/
+bin/
 
 # Minecraft runs
 run/
@@ -21,12 +29,25 @@ runs/
 **/run/
 **/runs/
 
-# TeaKit
-.teakit/
+# Stonecutter version sandboxes
+common/versions/
+fabric/versions/
+forge/versions/
+neoforge/versions/
+versions/*/build/
+stonecutter.gradle
+
+# Runtime proof output
+.screens/
+.runclient-*/
+.runclient-check/
+.runclient-check-v2/
+.runclient-toml-check/
+.runclient-toml-rerun/
+forge/*.launch
+fabric/*.launch
 
 # OS / JVM
-.DS_Store
-*.bak
 hs_err_*.log
 replay_*.log
 *.hprof
