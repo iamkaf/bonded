@@ -23,6 +23,8 @@ public abstract class ItemStackMixin {
     private ItemStack bonded$stackBeforeEquipmentBreakDamage;
     @Unique
     private int bonded$equipmentDamageBeforeBreak;
+    @Unique
+    private boolean bonded$insideDamageApplication;
 
     /*
      * This is deliberately hooked at the equipped-item entry point. On Minecraft 26.1.2 with
@@ -38,6 +40,7 @@ public abstract class ItemStackMixin {
     private void bonded$captureEquipmentStackBeforeBreakDamage(int amount, LivingEntity owner, EquipmentSlot slot,
             CallbackInfo ci) {
         ItemStack stack = (ItemStack) (Object) this;
+        bonded$insideDamageApplication = true;
         bonded$stackBeforeEquipmentBreakDamage = stack.copy();
         bonded$equipmentDamageBeforeBreak = stack.getDamageValue();
     }
@@ -54,8 +57,19 @@ public abstract class ItemStackMixin {
                 && bonded$didBreakOrReachBreakDamage(stack, bonded$equipmentDamageBeforeBreak)) {
             ScrapDrops.dropFromBrokenGear(bonded$stackBeforeEquipmentBreakDamage, player);
         }
+        MaxDamageModifiers.consumeOverRepairIfThresholdReached(stack);
+        bonded$insideDamageApplication = false;
         bonded$stackBeforeEquipmentBreakDamage = null;
         bonded$equipmentDamageBeforeBreak = 0;
+    }
+
+    @Inject(
+            method = "hurtAndBreak(ILnet/minecraft/server/level/ServerLevel;Lnet/minecraft/server/level/ServerPlayer;Ljava/util/function/Consumer;)V",
+            at = @At("HEAD")
+    )
+    private void bonded$captureStackDamageApplication(int amount, ServerLevel level, @Nullable ServerPlayer player,
+            Consumer<Item> onBreak, CallbackInfo ci) {
+        bonded$insideDamageApplication = true;
     }
 
     @Inject(
@@ -66,6 +80,7 @@ public abstract class ItemStackMixin {
             Consumer<Item> onBreak, CallbackInfo ci) {
         ItemStack stack = (ItemStack) (Object) this;
         MaxDamageModifiers.consumeOverRepairIfThresholdReached(stack);
+        bonded$insideDamageApplication = false;
     }
 
     @Unique
@@ -76,6 +91,9 @@ public abstract class ItemStackMixin {
 
     @Inject(method = "setDamageValue(I)V", at = @At("TAIL"))
     private void bonded$consumeOverRepairAfterDamageValueWrite(int damage, CallbackInfo ci) {
+        if (bonded$insideDamageApplication) {
+            return;
+        }
         MaxDamageModifiers.consumeOverRepairIfThresholdReached((ItemStack) (Object) this);
     }
 

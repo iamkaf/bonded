@@ -2,6 +2,7 @@ package com.iamkaf.bonded.mixin;
 
 import com.iamkaf.amber.api.functions.v1.ClientFunctions;
 import com.iamkaf.bonded.Bonded;
+import com.iamkaf.bonded.BondedClient;
 import com.iamkaf.bonded.registry.DataComponents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -27,7 +28,7 @@ public abstract class ItemMixin {
     @Inject(method = "appendHoverText(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/Item$TooltipContext;Lnet/minecraft/world/item/component/TooltipDisplay;Ljava/util/function/Consumer;Lnet/minecraft/world/item/TooltipFlag;)V", at = @At("HEAD"))
     public void bonded$addItemLevelToTooltip(ItemStack stack, Item.TooltipContext context, TooltipDisplay tooltipDisplay,
             Consumer<Component> tooltipAdder, TooltipFlag flag, CallbackInfo ci) {
-        if (!Bonded.CONFIG.enableTooltips.get()) {
+        if (!BondedClient.CONFIG.tooltipsEnabled.get()) {
             return;
         }
         var levelingComponent = stack.get(DataComponents.ITEM_LEVEL_CONTAINER.get());

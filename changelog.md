@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 4.0.1
 
+### Changed
+
+- Backported Bonded 4.0.1 to Minecraft 1.21.11, 26.1, 26.1.1, and 26.1.2.
+- BREAKING: Bonded now requires Konfig on all supported Minecraft 1.21.11+ files.
+  - Get it from [Modrinth](https://modrinth.com/mod/konfig) or [CurseForge](https://www.curseforge.com/minecraft/mc-mods/konfig)
+
 ### Fixed
 
 - Fixed non-damageable body armor, such as horse armor, being treated as Bonded armor when a tag or datapack included it.

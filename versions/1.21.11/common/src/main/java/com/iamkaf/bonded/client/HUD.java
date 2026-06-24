@@ -1,6 +1,7 @@
 package com.iamkaf.bonded.client;
 
 import com.iamkaf.bonded.Bonded;
+import com.iamkaf.bonded.BondedClient;
 import com.iamkaf.bonded.block.RepairBenchBlock;
 import com.iamkaf.bonded.block.ToolBenchBlock;
 import com.iamkaf.bonded.leveling.levelers.GearTypeLeveler;
@@ -38,7 +39,6 @@ import java.util.Optional;
 public class HUD {
     public static final int WHITE = 0xffffffff;
     public static final int OUTLINE_COLOR = 0x00000000;
-    public static boolean enabled = true;
     private static Minecraft mc;
 
     /**
@@ -92,7 +92,11 @@ public class HUD {
      */
     private static boolean shouldRender() {
         return !(mc.getDebugOverlay()
-                .showDebugScreen() || mc.options.hideGui || !enabled || mc.level == null || mc.player == null);
+                .showDebugScreen()
+                || mc.options.hideGui
+                || !BondedClient.CONFIG.benchHudEnabled.get()
+                || mc.level == null
+                || mc.player == null);
     }
 
     /**

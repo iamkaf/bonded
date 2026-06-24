@@ -5,7 +5,6 @@ plugins {
 def minecraftVersion = requiredProp(project, 'project.minecraft')
 def libs = catalogFor(project, minecraftVersion)
 def isModernLine = !minecraftVersion.startsWith('1.')
-def useKonfig = !['1.21.11', '26.1.2'].contains(minecraftVersion)
 
 repositories {
     exclusiveContent {
@@ -27,12 +26,8 @@ dependencies {
         implementation library(libs, 'fabric-api')
         runtimeOnly library(libs, 'modmenu')
         runtimeOnly library(libs, 'amber-fabric')
-        if (useKonfig) {
-            compileOnly library(libs, 'konfig')
-            runtimeOnly library(libs, 'konfig-fabric')
-        } else {
-            implementation library(libs, 'forgeconfigapiport-fabric')
-        }
+        compileOnly library(libs, 'konfig')
+        runtimeOnly library(libs, 'konfig-fabric')
         if (providers.gradleProperty('bonded.withTeaKit').orElse('false').map { it.toBoolean() }.get()) {
             runtimeOnly library(libs, 'teakit-fabric')
         }
@@ -40,11 +35,7 @@ dependencies {
         modImplementation library(libs, 'fabric-api')
         modLocalRuntime library(libs, 'fabric-api')
         modImplementation library(libs, 'amber-fabric')
-        if (useKonfig) {
-            modImplementation library(libs, 'konfig-fabric')
-        } else {
-            modImplementation library(libs, 'forgeconfigapiport-fabric')
-        }
+        modImplementation library(libs, 'konfig-fabric')
         if (providers.gradleProperty('bonded.withTeaKit').orElse('false').map { it.toBoolean() }.get()) {
             modLocalRuntime library(libs, 'teakit-fabric')
         }
@@ -55,9 +46,5 @@ sourceSets {
     main {
         java.exclude 'com/iamkaf/bonded/fabric/BondedDatagen.java'
         java.exclude 'com/iamkaf/bonded/fabric/datagen/**'
-        if (!useKonfig) {
-            java.exclude 'com/iamkaf/bonded/config/BondedClientConfig.java'
-            java.exclude 'com/iamkaf/bonded/network/**'
-        }
     }
 }

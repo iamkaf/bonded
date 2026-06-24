@@ -4,7 +4,6 @@ plugins {
 
 def minecraftVersion = requiredProp(project, 'project.minecraft')
 def libs = catalogFor(project, minecraftVersion)
-def useKonfig = !['1.21.11', '26.1.2'].contains(minecraftVersion)
 
 repositories {
     exclusiveContent {
@@ -22,19 +21,8 @@ repositories {
 
 dependencies {
     implementation library(libs, 'amber-neoforge')
-    if (useKonfig) {
-        implementation library(libs, 'konfig-neoforge')
-    }
+    implementation library(libs, 'konfig-neoforge')
     if (providers.gradleProperty('bonded.withTeaKit').orElse('false').map { it.toBoolean() }.get()) {
         runtimeOnly library(libs, 'teakit-neoforge')
-    }
-}
-
-sourceSets {
-    main {
-        if (!useKonfig) {
-            java.exclude 'com/iamkaf/bonded/config/BondedClientConfig.java'
-            java.exclude 'com/iamkaf/bonded/network/**'
-        }
     }
 }

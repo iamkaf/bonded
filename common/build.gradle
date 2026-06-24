@@ -4,7 +4,6 @@ plugins {
 
 def minecraftVersion = requiredProp(project, 'project.minecraft')
 def libs = catalogFor(project, minecraftVersion)
-def useKonfig = !['1.21.11', '26.1.2'].contains(minecraftVersion)
 
 dependencies {
     compileOnly library(libs, 'mixin')
@@ -12,18 +11,5 @@ dependencies {
     annotationProcessor library(libs, 'mixin-extras')
     implementation library(libs, 'gson')
     implementation library(libs, 'amber')
-    if (useKonfig) {
-        implementation library(libs, 'konfig')
-    } else {
-        implementation library(libs, 'forgeconfigapiport-common-neoforgeapi')
-    }
-}
-
-sourceSets {
-    main {
-        if (!useKonfig) {
-            java.exclude 'com/iamkaf/bonded/config/BondedClientConfig.java'
-            java.exclude 'com/iamkaf/bonded/network/**'
-        }
-    }
+    implementation library(libs, 'konfig')
 }
