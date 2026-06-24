@@ -18,6 +18,10 @@ public interface GearTypeLeveler {
 
     TagKey<Item> tag();
 
+    default boolean supports(ItemStack gear) {
+        return true;
+    }
+
     default int getMaxExperience(ItemStack gear) {
         return TierMap.getExperienceCap(gear.getItem());
     }

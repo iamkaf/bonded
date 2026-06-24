@@ -21,7 +21,12 @@ public class GearTypeLevelerRegistry {
             return null;
         }
 
-        return map.get(BuiltInRegistries.ITEM.getKey(gear.getItem()));
+        GearTypeLeveler leveler = map.get(BuiltInRegistries.ITEM.getKey(gear.getItem()));
+        if (leveler == null || !leveler.supports(gear)) {
+            return null;
+        }
+
+        return leveler;
     }
 
     public GearTypeLeveler register(GearTypeLeveler leveler) {

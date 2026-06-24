@@ -105,7 +105,13 @@ public final class MaxDamageModifiers {
 
     public static void rebaseExisting(ItemStack stack, int baseMaxDamage) {
         MaxDamageModifiersComponent component = stack.get(DataComponents.MAX_DAMAGE_MODIFIERS.get());
-        if (component == null || baseMaxDamage <= 0) {
+        if (component == null) {
+            return;
+        }
+
+        if (baseMaxDamage <= 0) {
+            stack.remove(DataComponents.MAX_DAMAGE_MODIFIERS.get());
+            writeMaxDamage(stack, 0);
             return;
         }
 

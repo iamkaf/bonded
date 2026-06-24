@@ -21,6 +21,29 @@ configureOnDemand = false
 "teakit.worldId" = "bonded_teakit"
 "teakit.worldName" = "Bonded TeaKit"
 
+[nodes."1.21.11-fabric"]
+loader = "fabric"
+minecraft = "1.21.11"
+tasks = [":fabric:1.21.11:runClient"]
+gameDirectory = "fabric/versions/1.21.11/runs/client"
+
+[nodes."1.21.11-forge"]
+loader = "forge"
+minecraft = "1.21.11"
+tasks = [":forge:1.21.11:runClient"]
+gameDirectory = "forge/versions/1.21.11/run"
+
+[nodes."1.21.11-forge".environment]
+GLFW_PLATFORM = "x11"
+XDG_SESSION_TYPE = "x11"
+WAYLAND_DISPLAY = ""
+
+[nodes."1.21.11-neoforge"]
+loader = "neoforge"
+minecraft = "1.21.11"
+tasks = [":neoforge:1.21.11:runClient"]
+gameDirectory = "neoforge/versions/1.21.11/run"
+
 [nodes."26.1.2-fabric"]
 loader = "fabric"
 minecraft = "26.1.2"
