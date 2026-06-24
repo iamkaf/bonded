@@ -4,7 +4,8 @@ plugins {
 
 def minecraftVersion = requiredProp(project, 'project.minecraft')
 def libs = catalogFor(project, minecraftVersion)
-def useKonfig = minecraftVersion != '26.1.2'
+def isModernLine = !minecraftVersion.startsWith('1.')
+def useKonfig = !['1.21.11', '26.1.2'].contains(minecraftVersion)
 
 repositories {
     exclusiveContent {
@@ -21,18 +22,32 @@ repositories {
 }
 
 dependencies {
-    compileOnly library(libs, 'amber')
-    implementation library(libs, 'fabric-api')
-    runtimeOnly library(libs, 'modmenu')
-    runtimeOnly library(libs, 'amber-fabric')
-    if (useKonfig) {
-        compileOnly library(libs, 'konfig')
-        runtimeOnly library(libs, 'konfig-fabric')
+    if (isModernLine) {
+        compileOnly library(libs, 'amber')
+        implementation library(libs, 'fabric-api')
+        runtimeOnly library(libs, 'modmenu')
+        runtimeOnly library(libs, 'amber-fabric')
+        if (useKonfig) {
+            compileOnly library(libs, 'konfig')
+            runtimeOnly library(libs, 'konfig-fabric')
+        } else {
+            implementation library(libs, 'forgeconfigapiport-fabric')
+        }
+        if (providers.gradleProperty('bonded.withTeaKit').orElse('false').map { it.toBoolean() }.get()) {
+            runtimeOnly library(libs, 'teakit-fabric')
+        }
     } else {
-        implementation library(libs, 'forgeconfigapiport-fabric')
-    }
-    if (providers.gradleProperty('bonded.withTeaKit').orElse('false').map { it.toBoolean() }.get()) {
-        runtimeOnly library(libs, 'teakit-fabric')
+        modImplementation library(libs, 'fabric-api')
+        modLocalRuntime library(libs, 'fabric-api')
+        modImplementation library(libs, 'amber-fabric')
+        if (useKonfig) {
+            modImplementation library(libs, 'konfig-fabric')
+        } else {
+            modImplementation library(libs, 'forgeconfigapiport-fabric')
+        }
+        if (providers.gradleProperty('bonded.withTeaKit').orElse('false').map { it.toBoolean() }.get()) {
+            modLocalRuntime library(libs, 'teakit-fabric')
+        }
     }
 }
 
