@@ -62,6 +62,7 @@ public class GearManager {
             items.ifPresent(holders -> {
                 LOGGER.info("Found {} {} [{}]", holders.size(), type.name(), tag.location());
                 holders.stream()
+                        .filter(itemHolder -> type.supports(itemHolder.value().getDefaultInstance()))
                         .forEach(itemHolder -> gearTypeLevelerRegistry.add(itemRegistry.getKey(itemHolder.value()), type));
             });
             if (items.isEmpty()) {
