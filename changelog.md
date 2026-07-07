@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Repair benches can now repair bows with string.
+- Repair benches can now repair bows and crossbows with string.
 
 ## 4.0.1
 

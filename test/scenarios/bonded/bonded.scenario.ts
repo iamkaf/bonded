@@ -1599,6 +1599,32 @@ const bondedScenarios = [
         "itemId": "minecraft:bow",
         "slot": 0,
         "damage": 0
+      },
+      {
+        "action": "command",
+        "command": "/clear @s"
+      },
+      {
+        "action": "command",
+        "command": "/item replace entity @s weapon.mainhand with minecraft:crossbow[minecraft:damage=20]"
+      },
+      {
+        "action": "command",
+        "command": "/item replace entity @s hotbar.1 with minecraft:string 1"
+      },
+      {
+        "action": "use_block_server",
+        "x": 0,
+        "y": 71,
+        "z": 0,
+        "direction": "up",
+        "hand": "main_hand"
+      },
+      {
+        "action": "assert_inventory_item",
+        "itemId": "minecraft:crossbow",
+        "slot": 0,
+        "damage": 0
       }
     ],
     "cleanup": [
