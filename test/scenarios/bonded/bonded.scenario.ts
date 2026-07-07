@@ -1580,11 +1580,15 @@ const bondedScenarios = [
     "steps": [
       {
         "action": "command",
-        "command": "/item replace entity @s weapon.mainhand with minecraft:bow[minecraft:damage=20]"
+        "command": "/item replace entity @s hotbar.0 with minecraft:bow[minecraft:damage=20]"
       },
       {
         "action": "command",
         "command": "/item replace entity @s hotbar.1 with minecraft:string 1"
+      },
+      {
+        "action": "select_hotbar_slot",
+        "slot": 0
       },
       {
         "action": "use_block_server",
@@ -1606,11 +1610,15 @@ const bondedScenarios = [
       },
       {
         "action": "command",
-        "command": "/item replace entity @s weapon.mainhand with minecraft:crossbow[minecraft:damage=20]"
+        "command": "/item replace entity @s hotbar.0 with minecraft:crossbow[minecraft:damage=20]"
       },
       {
         "action": "command",
         "command": "/item replace entity @s hotbar.1 with minecraft:string 1"
+      },
+      {
+        "action": "select_hotbar_slot",
+        "slot": 0
       },
       {
         "action": "use_block_server",

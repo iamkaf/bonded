@@ -6,7 +6,6 @@ import com.iamkaf.bonded.Bonded;
 import com.iamkaf.bonded.api.event.GameEvents;
 import com.iamkaf.bonded.component.ItemLevelContainer;
 import com.iamkaf.bonded.registry.DataComponents;
-import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;

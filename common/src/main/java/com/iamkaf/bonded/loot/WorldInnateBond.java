@@ -40,7 +40,7 @@ public final class WorldInnateBond {
             return;
         }
 
-        applyToCreatedGear(stack, livingEntity.level().getRandom());
+        applyToCreatedGear(stack, livingEntity.getRandom());
     }
 
     public static void applyToLoot(ItemStack stack, ContextKeySet paramSet, LootContext context) {

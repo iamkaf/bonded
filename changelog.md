@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Repair benches can now repair bows and crossbows with string.
 
+### Fixed
+
+- Fixed a crash that could happen when monsters spawned with innate Bonded gear during threaded chunk loading.
+
 ## 4.0.1
 
 ### Changed

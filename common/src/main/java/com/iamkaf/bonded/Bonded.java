@@ -1,7 +1,9 @@
 package com.iamkaf.bonded;
 
 import com.iamkaf.amber.api.core.v2.AmberInitializer;
+import com.iamkaf.amber.api.platform.v1.Platform;
 import com.iamkaf.bonded.bonuses.Bonuses;
+import com.iamkaf.bonded.command.BondedDebugCommands;
 import com.iamkaf.bonded.command.BondedCommands;
 import com.iamkaf.bonded.config.BondedCommonConfig;
 import com.iamkaf.bonded.leveling.GameplayHooks;
@@ -80,6 +82,10 @@ public class Bonded {
         DataComponents.init();
         CreativeModeTabs.init();
         BondedCommands.init();
+        if (Platform.isDevelopmentEnvironment()) {
+            // development commands to verify things work and don't explode
+            BondedDebugCommands.init();
+        }
         BondedNetworking.init();
         GameplayHooks.init();
         WorldInnateBond.init();
