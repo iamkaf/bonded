@@ -1542,6 +1542,81 @@ const bondedScenarios = [
     ]
   },
   {
+    "name": "bonded-bow-repair-bench",
+    "setup": [
+      {
+        "action": "command",
+        "command": "/clear @s"
+      },
+      {
+        "action": "command",
+        "command": "/gamemode survival @s"
+      },
+      {
+        "action": "command",
+        "command": "/tp @s 0 72 0"
+      },
+      {
+        "action": "command",
+        "command": "/fill -3 70 -3 3 70 3 minecraft:stone replace"
+      },
+      {
+        "action": "command",
+        "command": "/fill -3 71 -3 3 76 3 minecraft:air replace"
+      },
+      {
+        "action": "command",
+        "command": "/setblock 0 71 0 bonded:repair_bench"
+      },
+      {
+        "action": "wait_for_block",
+        "x": 0,
+        "y": 71,
+        "z": 0,
+        "blockId": "bonded:repair_bench",
+        "timeoutMs": 3000
+      }
+    ],
+    "steps": [
+      {
+        "action": "command",
+        "command": "/item replace entity @s weapon.mainhand with minecraft:bow[minecraft:damage=20]"
+      },
+      {
+        "action": "command",
+        "command": "/item replace entity @s hotbar.1 with minecraft:string 1"
+      },
+      {
+        "action": "use_block_server",
+        "x": 0,
+        "y": 71,
+        "z": 0,
+        "direction": "up",
+        "hand": "main_hand"
+      },
+      {
+        "action": "assert_inventory_item",
+        "itemId": "minecraft:bow",
+        "slot": 0,
+        "damage": 0
+      }
+    ],
+    "cleanup": [
+      {
+        "action": "command",
+        "command": "/clear @s"
+      },
+      {
+        "action": "command",
+        "command": "/gamemode creative @s"
+      },
+      {
+        "action": "command",
+        "command": "/fill -3 70 -3 3 76 3 minecraft:air replace"
+      }
+    ]
+  },
+  {
     "name": "bonded-scrap-world-sources",
     "setup": [
       {

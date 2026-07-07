@@ -224,6 +224,9 @@ public class TierMap {
         addExperienceCap(Items.FISHING_ROD, 150);
         addRepairMaterial(Items.FISHING_ROD, Items.STRING);
 
+        addExperienceCap(Items.BOW, 150);
+        addRepairMaterial(Items.BOW, Items.STRING);
+
         addExperienceCap(Items.BRUSH, 150);
         addRepairMaterial(Items.BRUSH, Items.FEATHER);
 
