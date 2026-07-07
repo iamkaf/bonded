@@ -29,12 +29,12 @@ public final class BondedDebugCommands {
 
     private static LiteralArgumentBuilder<CommandSourceStack> command() {
         return Commands.literal("bondeddebug")
-                .then(Commands.literal("c2me-random")
-                        .executes(context -> verifyInnateBondRandomIsThreadSafe(context.getSource())));
+                .then(Commands.literal("innate-bond-thread-safety")
+                        .executes(context -> verifyInnateBondThreadSafety(context.getSource())));
     }
 
-    // This verifies Bonded applies innate bond in a thread-safe way.
-    private static int verifyInnateBondRandomIsThreadSafe(CommandSourceStack source) {
+    // This verifies that Bonded applies innate bond in a thread-safe way.
+    private static int verifyInnateBondThreadSafety(CommandSourceStack source) {
         ServerLevel level = source.getLevel();
         Zombie zombie = new Zombie(level);
         ItemStack stack = new ItemStack(Items.IRON_SWORD);
@@ -48,7 +48,7 @@ public final class BondedDebugCommands {
                         failure.set(throwable);
                     }
                 },
-                "Bonded-C2ME-Random-Repro"
+                "Bonded-Innate-Bond-Thread-Safety"
         );
         thread.start();
 
@@ -56,16 +56,16 @@ public final class BondedDebugCommands {
             thread.join(5000L);
         } catch (InterruptedException exception) {
             Thread.currentThread().interrupt();
-            throw new RuntimeException("Interrupted while waiting for Bonded C2ME random repro", exception);
+            throw new RuntimeException("Interrupted while waiting for Bonded innate bond thread-safety probe", exception);
         }
 
         Throwable throwable = failure.get();
         if (throwable != null) {
-            Bonded.LOGGER.error("Bonded debug C2ME random repro captured the off-thread innate bond failure.", throwable);
-            throw new RuntimeException("Bonded debug C2ME random repro captured the off-thread innate bond failure", throwable);
+            Bonded.LOGGER.error("Bonded innate bond thread-safety probe captured an off-thread innate bond failure.", throwable);
+            throw new RuntimeException("Bonded innate bond thread-safety probe captured an off-thread innate bond failure", throwable);
         }
 
-        source.sendSuccess(() -> Component.literal("Bonded C2ME random repro completed without an exception."), false);
+        source.sendSuccess(() -> Component.literal("Bonded innate bond thread-safety probe completed without an exception."), false);
         return Command.SINGLE_SUCCESS;
     }
 }
