@@ -13,6 +13,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Repairable;
 import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -81,12 +82,10 @@ public class GearManager {
         }
 
         // this is to patch items that existed prior to the mod being installed
-        if (TierMap.getRepairMaterialMap()
-                .containsKey(gear.getItem()) && gear.get(net.minecraft.core.component.DataComponents.REPAIRABLE) == null) {
+        Item repairMaterial = TierMap.getRepairMaterialMap().get(gear.getItem());
+        if (repairMaterial != null && gear.get(net.minecraft.core.component.DataComponents.REPAIRABLE) == null) {
             gear.set(net.minecraft.core.component.DataComponents.REPAIRABLE,
-                    gear.getItem()
-                            .getDefaultInstance()
-                            .get(net.minecraft.core.component.DataComponents.REPAIRABLE)
+                    new Repairable(HolderSet.direct(repairMaterial.builtInRegistryHolder()))
             );
         }
 
