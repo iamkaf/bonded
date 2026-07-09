@@ -36,7 +36,7 @@ side = "BOTH"
 [[dependencies.${mod_id}]]
 modId = "konfig"
 type = "required"
-versionRange = "[0.5.0,)"
+versionRange = "*"
 ordering = "BEFORE"
 side = "BOTH"
 
