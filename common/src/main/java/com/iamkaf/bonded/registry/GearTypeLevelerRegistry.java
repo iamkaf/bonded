@@ -22,11 +22,15 @@ public class GearTypeLevelerRegistry {
         }
 
         GearTypeLeveler leveler = map.get(BuiltInRegistries.ITEM.getKey(gear.getItem()));
-        if (leveler == null || !leveler.supports(gear)) {
-            return null;
+        if (leveler != null) {
+            return leveler.supports(gear) ? leveler : null;
         }
 
-        return leveler;
+        return levelers.stream()
+                .filter(candidate -> gear.getItem().builtInRegistryHolder().is(candidate.tag()))
+                .filter(candidate -> candidate.supports(gear))
+                .findFirst()
+                .orElse(null);
     }
 
     public GearTypeLeveler register(GearTypeLeveler leveler) {

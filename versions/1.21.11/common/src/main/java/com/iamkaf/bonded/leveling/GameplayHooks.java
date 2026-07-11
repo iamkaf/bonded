@@ -135,10 +135,10 @@ public class GameplayHooks {
             return;
         }
 
-        emitProgressEvents(handItem, player, getBlockBreakExperienceAmount(level, pos, player));
+        emitProgressEvents(handItem, player, getBlockBreakExperienceAmount(state, player));
     }
 
-    private static int getBlockBreakExperienceAmount(Level level, BlockPos pos, ServerPlayer player) {
+    private static int getBlockBreakExperienceAmount(BlockState state, ServerPlayer player) {
         var hasSilkTouch = ItemFunctions.containsEnchantment(
                 player.getMainHandItem(),
                 Identifier.fromNamespaceAndPath("minecraft", "silk_touch")
@@ -147,7 +147,7 @@ public class GameplayHooks {
             return 1;
         }
 
-        return Bonded.GEAR.getExperienceForBlock(level.getBlockState(pos).getBlock());
+        return Bonded.GEAR.getExperienceForBlock(state.getBlock());
     }
 
     private static void onGenericItemExperience(Player player, ItemStack stack, int experienceAmount) {
