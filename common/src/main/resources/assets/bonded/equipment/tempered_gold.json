@@ -1,0 +1,19 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "bonded:tempered_gold"
+      }
+    ],
+    "humanoid_baby": [
+      {
+        "texture": "bonded:tempered_gold"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "bonded:tempered_gold"
+      }
+    ]
+  }
+}

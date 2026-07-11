@@ -10,20 +10,27 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 
 public class TierMap {
-    private static final Map<Item, Item> upgradeMap = new HashMap<>();
+    private static final Map<Item, Supplier<Item>> upgradeMap = new HashMap<>();
     private static final Map<Item, TagKey<Item>> upgradeMaterialMap = new HashMap<>();
     private static final Map<Item, Item> repairMaterialMap = new HashMap<>();
     private static final Map<Item, Integer> experienceMap = new HashMap<>();
+    private static final Map<Supplier<Item>, Integer> deferredExperienceMap = new HashMap<>();
 
     public static void addUpgrade(Item from, Item to, TagKey<Item> material) {
+        addUpgrade(from, () -> to, material);
+    }
+
+    public static void addUpgrade(Item from, Supplier<Item> to, TagKey<Item> material) {
         upgradeMap.put(from, to);
         upgradeMaterialMap.put(from, material);
     }
 
     public static @Nullable Item getUpgrade(Item from) {
-        return upgradeMap.get(from);
+        Supplier<Item> upgrade = upgradeMap.get(from);
+        return upgrade == null ? null : upgrade.get();
     }
 
     public static @Nullable TagKey<Item> getUpgradeMaterial(Item from) {
@@ -42,8 +49,20 @@ public class TierMap {
         experienceMap.put(gear, maxExperience);
     }
 
+    public static void addExperienceCap(Supplier<Item> gear, Integer maxExperience) {
+        deferredExperienceMap.put(gear, maxExperience);
+    }
+
     public static int getExperienceCap(Item gear) {
-        return experienceMap.getOrDefault(gear, Bonded.CONFIG.defaultMaxExperienceForUnknownItems.get());
+        Integer experience = experienceMap.get(gear);
+        if (experience != null) {
+            return experience;
+        }
+        return deferredExperienceMap.entrySet().stream()
+                .filter(entry -> entry.getKey().get() == gear)
+                .map(Map.Entry::getValue)
+                .findFirst()
+                .orElseGet(Bonded.CONFIG.defaultMaxExperienceForUnknownItems::get);
     }
 
     public static void init() {
@@ -80,6 +99,18 @@ public class TierMap {
         addUpgrade(Items.STONE_SPEAR, Items.COPPER_SPEAR, ToolMaterial.COPPER.repairItems());
         addUpgrade(Items.COPPER_SPEAR, Items.IRON_SPEAR, ToolMaterial.IRON.repairItems());
         addUpgrade(Items.IRON_SPEAR, Items.DIAMOND_SPEAR, ToolMaterial.DIAMOND.repairItems());
+
+        // Gold to Tempered Gold
+        addUpgrade(Items.GOLDEN_AXE, com.iamkaf.bonded.registry.Items.TEMPERED_GOLD_AXE,
+                Tags.TEMPERED_GOLD_TOOL_MATERIALS);
+        addUpgrade(Items.GOLDEN_PICKAXE, com.iamkaf.bonded.registry.Items.TEMPERED_GOLD_PICKAXE,
+                Tags.TEMPERED_GOLD_TOOL_MATERIALS);
+        addUpgrade(Items.GOLDEN_SHOVEL, com.iamkaf.bonded.registry.Items.TEMPERED_GOLD_SHOVEL,
+                Tags.TEMPERED_GOLD_TOOL_MATERIALS);
+        addUpgrade(Items.GOLDEN_HOE, com.iamkaf.bonded.registry.Items.TEMPERED_GOLD_HOE,
+                Tags.TEMPERED_GOLD_TOOL_MATERIALS);
+        addUpgrade(Items.GOLDEN_SWORD, com.iamkaf.bonded.registry.Items.TEMPERED_GOLD_SWORD,
+                Tags.TEMPERED_GOLD_TOOL_MATERIALS);
 
         // Experience
         addExperienceCap(Items.WOODEN_AXE, 30);
@@ -130,6 +161,11 @@ public class TierMap {
         addExperienceCap(Items.GOLDEN_HOE, 300);
         addExperienceCap(Items.GOLDEN_SWORD, 300);
         addExperienceCap(Items.GOLDEN_SPEAR, 300);
+        addExperienceCap(com.iamkaf.bonded.registry.Items.TEMPERED_GOLD_AXE, 1000);
+        addExperienceCap(com.iamkaf.bonded.registry.Items.TEMPERED_GOLD_PICKAXE, 1000);
+        addExperienceCap(com.iamkaf.bonded.registry.Items.TEMPERED_GOLD_SHOVEL, 1000);
+        addExperienceCap(com.iamkaf.bonded.registry.Items.TEMPERED_GOLD_HOE, 1000);
+        addExperienceCap(com.iamkaf.bonded.registry.Items.TEMPERED_GOLD_SWORD, 1000);
 
         // -- Armor
 
@@ -177,6 +213,15 @@ public class TierMap {
         addUpgrade(Items.IRON_LEGGINGS, Items.DIAMOND_LEGGINGS, ArmorMaterials.DIAMOND.repairIngredient());
         addUpgrade(Items.IRON_BOOTS, Items.DIAMOND_BOOTS, ArmorMaterials.DIAMOND.repairIngredient());
 
+        addUpgrade(Items.GOLDEN_HELMET, com.iamkaf.bonded.registry.Items.TEMPERED_GOLD_HELMET,
+                Tags.REPAIRS_TEMPERED_GOLD_ARMOR);
+        addUpgrade(Items.GOLDEN_CHESTPLATE, com.iamkaf.bonded.registry.Items.TEMPERED_GOLD_CHESTPLATE,
+                Tags.REPAIRS_TEMPERED_GOLD_ARMOR);
+        addUpgrade(Items.GOLDEN_LEGGINGS, com.iamkaf.bonded.registry.Items.TEMPERED_GOLD_LEGGINGS,
+                Tags.REPAIRS_TEMPERED_GOLD_ARMOR);
+        addUpgrade(Items.GOLDEN_BOOTS, com.iamkaf.bonded.registry.Items.TEMPERED_GOLD_BOOTS,
+                Tags.REPAIRS_TEMPERED_GOLD_ARMOR);
+
         // Experience
         addExperienceCap(Items.LEATHER_HELMET, 90);
         addExperienceCap(Items.LEATHER_CHESTPLATE, 90);
@@ -212,6 +257,10 @@ public class TierMap {
         addExperienceCap(Items.GOLDEN_CHESTPLATE, 500);
         addExperienceCap(Items.GOLDEN_LEGGINGS, 500);
         addExperienceCap(Items.GOLDEN_BOOTS, 500);
+        addExperienceCap(com.iamkaf.bonded.registry.Items.TEMPERED_GOLD_HELMET, 3000);
+        addExperienceCap(com.iamkaf.bonded.registry.Items.TEMPERED_GOLD_CHESTPLATE, 3000);
+        addExperienceCap(com.iamkaf.bonded.registry.Items.TEMPERED_GOLD_LEGGINGS, 3000);
+        addExperienceCap(com.iamkaf.bonded.registry.Items.TEMPERED_GOLD_BOOTS, 3000);
 
         addExperienceCap(Items.TURTLE_HELMET, 900);
 

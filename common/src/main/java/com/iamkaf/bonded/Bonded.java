@@ -10,6 +10,7 @@ import com.iamkaf.bonded.leveling.GameplayHooks;
 import com.iamkaf.bonded.leveling.GearManager;
 import com.iamkaf.bonded.leveling.levelers.Levelers;
 import com.iamkaf.bonded.loot.ScrapDrops;
+import com.iamkaf.bonded.loot.TemperedGoldDrops;
 import com.iamkaf.bonded.loot.WorldInnateBond;
 import com.iamkaf.bonded.network.BondedNetworking;
 import com.iamkaf.bonded.registry.*;
@@ -90,6 +91,7 @@ public class Bonded {
         GameplayHooks.init();
         WorldInnateBond.init();
         ScrapDrops.init();
+        TemperedGoldDrops.init();
         Levelers.init();
         Bonuses.init();
         TierMap.init();

@@ -17,6 +17,10 @@ public class Tags {
     public static final TagKey<Item> SHEARS = createItemTag("c", "tools/shear");
     public static final TagKey<Item> DIGGING_EQUIPMENT = createItemTag("bonded", "digging_equipment");
     public static final TagKey<Item> UTILITY_EQUIPMENT = createItemTag("bonded", "utility_tool");
+    public static final TagKey<Item> TEMPERED_GOLD_TOOL_MATERIALS =
+            createItemTag("bonded", "tempered_gold_tool_materials");
+    public static final TagKey<Item> REPAIRS_TEMPERED_GOLD_ARMOR =
+            createItemTag("bonded", "repairs_tempered_gold_armor");
     // TODO: shields, shears, fishing rods, flint and steel
 
     public static TagKey<Item> createItemTag(String namespace, String tag) {
