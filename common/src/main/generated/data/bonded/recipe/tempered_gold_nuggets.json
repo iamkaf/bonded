@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "bonded:tempered_gold_ingot"
+  ],
+  "result": {
+    "count": 9,
+    "id": "bonded:tempered_gold_nugget"
+  }
+}
