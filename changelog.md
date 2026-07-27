@@ -5,6 +5,19 @@ All notable changes to Bonded will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 4.2.0
+
+### Added
+
+- Added Tempered Gold tools and armor, created by upgrading fully leveled gold gear at a tool bench.
+- Nether Gold Ore can now drop Tempered Gold Nuggets when mined with the correct tool without Silk Touch.
+- Added German, Brazilian Portuguese, and Simplified Chinese translations.
+
+### Fixed
+
+- Fixed Bonded gear not gaining the correct experience when mining ores.
+- Fixed the bench HUD not recognizing tagged gear registered by addons.
+
 ## 4.1.0
 
 ### Added
