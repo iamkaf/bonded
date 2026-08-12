@@ -1,0 +1,20 @@
+{
+  "name": "Workstations",
+  "icon": "bonded:tool_bench",
+  "category": "bonded:recipes",
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bonded:tool_bench",
+      "title": "Tool Bench",
+      "text": "Upgrades fully leveled equipment."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bonded:repair_bench",
+      "title": "Repair Bench",
+      "text": "Repairs and over-repairs equipment."
+    }
+  ]
+}

@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Cake Destroyer. Train it by breaking cakes, then bonded tools and weapons can make enemies drop sugar.
 - Added Oceanic. Train it by wearing bonded leggings underwater, then move freely while swimming.
 - Added `/bonded augment` commands and an addon API for registering and progressing custom augments.
+- Added an optional Patchouli Field Guide covering Bonded recipes, progression, and augments where Patchouli is available.
 
 ## 4.2.0
 

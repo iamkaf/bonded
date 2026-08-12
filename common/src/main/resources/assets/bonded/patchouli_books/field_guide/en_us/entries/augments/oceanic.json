@@ -1,0 +1,19 @@
+{
+  "name": "Oceanic",
+  "icon": "minecraft:diamond_leggings",
+  "category": "bonded:augments",
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Oceanic",
+      "text": "Leggings train Oceanic while their wearer spends time underwater. Keep the same pair beneath the surface until its augment progress reaches 7,500."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:heart_of_the_sea",
+      "title": "Move Like Water",
+      "text": "Once active, the leggings improve movement efficiency whenever their wearer is swimming. Water stops pushing back so stubbornly."
+    }
+  ]
+}

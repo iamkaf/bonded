@@ -28,7 +28,16 @@ Each version directory follows the same layout:
 
 ## Supported Versions
 
-- 26.1.2 - Active
+- 1.21.11
+- 26.1
+- 26.1.1
+- 26.1.2
+- 26.2
+
+## Optional Integrations
+
+- Liteminer: vein-mined blocks award diminishing Bonded experience and the Liteminer HUD previews the total gain.
+- Patchouli: Fabric and NeoForge players on Minecraft 26.1.x can craft the Bonded Field Guide from a book and Scrap. The guide covers progression, workstation recipes, and augments. Its recipe is absent when Patchouli is not installed. Modern Patchouli does not support Forge.
 
 ## Building
 
