@@ -57,7 +57,7 @@ idea 26.1.2
 
 ## Addon API
 
-Bonded exposes a public addon API under `com.iamkaf.bonded.api` on the active `26.1.2` line.
+Bonded exposes a public addon API under `com.iamkaf.bonded.api` on the active `26.2` line.
 The API is intended for mods that need to register gear compatibility, inspect or mutate Bonded item
 state, react to Bonded progression events, or award Bonded experience from custom gameplay.
 
@@ -172,3 +172,31 @@ import com.iamkaf.bonded.api.event.GameEvents;
 
 GameEvents.AWARD_ITEM_EXPERIENCE.invoker().experience(player, stack, 5);
 ```
+
+### Augments
+
+Augments are independently progressing abilities stored on item stacks. Register an `Augment` during mod
+initialization, then award progress from the gameplay hooks that belong to your addon:
+
+```java
+import com.iamkaf.bonded.api.augment.Augment;
+import com.iamkaf.bonded.api.augment.AugmentApi;
+import net.minecraft.resources.Identifier;
+
+Augment echoing = AugmentApi.register(new Augment(
+        Identifier.fromNamespaceAndPath("examplemod", "echoing"),
+        "augment.examplemod.echoing",
+        250,
+        stack -> stack.is(MyTags.Items.ECHOING_GEAR)
+));
+
+AugmentApi.addProgress(player, stack, echoing, 1);
+if (AugmentApi.isActive(stack, echoing)) {
+    // Apply the active augment's behavior.
+}
+```
+
+Progress is clamped between zero and the augment's activation requirement. Unknown augment ids remain stored
+when an addon is temporarily absent. `AugmentEvents` exposes ordered hooks for modifying gains, observing progress,
+and reacting to activation or deactivation. Mutations are server-only and return an `AugmentProgressResult` with the
+exact previous value, current value, and transition status.

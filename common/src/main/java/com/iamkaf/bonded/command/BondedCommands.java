@@ -53,6 +53,7 @@ public final class BondedCommands {
         LiteralArgumentBuilder<CommandSourceStack> baseCommand = SimpleCommands.createBaseCommand(Bonded.MOD_ID);
         baseCommand.then(createExperienceCommand("experience"));
         baseCommand.then(createExperienceCommand("xp"));
+        baseCommand.then(AugmentCommands.create());
         return baseCommand;
     }
 

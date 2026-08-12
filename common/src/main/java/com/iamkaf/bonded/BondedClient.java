@@ -1,7 +1,9 @@
 package com.iamkaf.bonded;
 
 import com.iamkaf.amber.api.event.v1.events.common.client.HudEvents;
+import com.iamkaf.amber.api.platform.v1.Platform;
 import com.iamkaf.bonded.client.HUD;
+import com.iamkaf.bonded.compat.LiteminerClientCompat;
 import com.iamkaf.bonded.config.BondedClientConfig;
 import com.iamkaf.bonded.network.ProgressionSoundPacket;
 import com.iamkaf.bonded.registry.Sounds;
@@ -36,6 +38,9 @@ public class BondedClient {
     public static void init() {
         HUD.init();
         HudEvents.RENDER_HUD.register(HUD::onRenderHud);
+        if (Platform.isModLoaded("liteminer")) {
+            LiteminerClientCompat.init();
+        }
     }
 
     public static void playProgressionSound(ProgressionSoundPacket.Kind kind) {

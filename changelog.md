@@ -5,6 +5,16 @@ All notable changes to Bonded will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 4.3.0
+
+### Added
+
+- Bonded tools now gain diminishing experience from secondary blocks mined by Liteminer, with a yellow `+<amount> EXP` HUD preview of the total.
+- Added augments, independent abilities that progress and activate on individual pieces of gear.
+- Added Cake Destroyer. Train it by breaking cakes, then bonded tools and weapons can make enemies drop sugar.
+- Added Oceanic. Train it by wearing bonded leggings underwater, then move freely while swimming.
+- Added `/bonded augment` commands and an addon API for registering and progressing custom augments.
+
 ## 4.2.0
 
 ### Added

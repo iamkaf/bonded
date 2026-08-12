@@ -3,6 +3,7 @@ package com.iamkaf.bonded.mixin;
 import com.iamkaf.amber.api.functions.v1.ClientFunctions;
 import com.iamkaf.bonded.Bonded;
 import com.iamkaf.bonded.BondedClient;
+import com.iamkaf.bonded.api.augment.AugmentApi;
 import com.iamkaf.bonded.registry.DataComponents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -17,6 +18,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -32,26 +34,26 @@ public abstract class ItemMixin {
             return;
         }
         var levelingComponent = stack.get(DataComponents.ITEM_LEVEL_CONTAINER.get());
+        if (levelingComponent != null) {
+            List<Component> tooltipComponents = new ArrayList<>();
+            tooltipComponents.add(Component.literal("Lv. " + levelingComponent.getLevel())
+                    .withStyle(ChatFormatting.YELLOW));
+            if (levelingComponent.getLevel() != Bonded.CONFIG.levelsToUpgrade.get()) {
+                tooltipComponents.add(Component.literal(
+                        "Exp. " + levelingComponent.getExperience() + "/" + levelingComponent.getMaxExperience()
+                ).withStyle(ChatFormatting.GREEN));
+            } else {
+                tooltipComponents.add(Component.literal("Exp. MAX").withStyle(ChatFormatting.GREEN));
+            }
 
-        if (levelingComponent == null) {
-            return;
+            tooltipComponents.add(Component.literal("Bond " + levelingComponent.getBond() + "\ueef2")
+                    .withStyle(ChatFormatting.RED));
+            tooltipComponents.forEach(tooltipAdder);
         }
 
-        List<Component> tooltipComponents = new ArrayList<>();
+        addAugmentTooltips(stack, flag, tooltipAdder);
 
-        tooltipComponents.add(Component.literal("Lv. " + levelingComponent.getLevel()).withStyle(ChatFormatting.YELLOW));
-        if (levelingComponent.getLevel() != Bonded.CONFIG.levelsToUpgrade.get()) {
-            tooltipComponents.add(Component.literal("Exp. " + levelingComponent.getExperience() + "/" + levelingComponent.getMaxExperience())
-                    .withStyle(ChatFormatting.GREEN));
-        } else {
-            tooltipComponents.add(Component.literal("Exp. MAX").withStyle(ChatFormatting.GREEN));
-        }
-
-        tooltipComponents.add(Component.literal("Bond " + levelingComponent.getBond() + "\ueef2")
-                .withStyle(ChatFormatting.RED));
-        tooltipComponents.forEach(tooltipAdder);
-
-        if (flag.isAdvanced()) {
+        if (levelingComponent != null && flag.isAdvanced()) {
             var bonuses = stack.get(DataComponents.APPLIED_BONUSES_CONTAINER.get());
             MutableComponent bonusesTooltip =
                     Component.literal(String.format("Bonuses (%s):", bonuses == null ? 0 : bonuses.bonuses().size()));
@@ -62,6 +64,45 @@ public abstract class ItemMixin {
                 }
             }
             smartTooltip.into(tooltipAdder);
+        }
+    }
+
+    private static void addAugmentTooltips(ItemStack stack, TooltipFlag flag, Consumer<Component> tooltipAdder) {
+        var progress = AugmentApi.progress(stack);
+        if (progress.isEmpty()) {
+            return;
+        }
+
+        var knownIds = new HashSet<net.minecraft.resources.Identifier>();
+        for (var augment : AugmentApi.all()) {
+            knownIds.add(augment.id());
+            int current = progress.getOrDefault(augment.id(), 0);
+            if (current <= 0) {
+                continue;
+            }
+            Component line = current >= augment.activationProgress()
+                    ? Component.translatable("tooltip.bonded.augment.active", augment.displayName())
+                    : Component.translatable(
+                            "tooltip.bonded.augment.progress",
+                            augment.displayName(),
+                            current,
+                            augment.activationProgress()
+                    );
+            tooltipAdder.accept(line.copy().withStyle(
+                    current >= augment.activationProgress() ? ChatFormatting.GREEN : ChatFormatting.AQUA
+            ));
+        }
+
+        if (flag.isAdvanced()) {
+            progress.forEach((id, value) -> {
+                if (!knownIds.contains(id)) {
+                    tooltipAdder.accept(Component.translatable(
+                            "tooltip.bonded.augment.unknown",
+                            id,
+                            value
+                    ).withStyle(ChatFormatting.DARK_GRAY));
+                }
+            });
         }
     }
 }

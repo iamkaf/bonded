@@ -23,7 +23,7 @@ loader = "fabric"
 loader_version = "latest"
 sides = ["client", "server"]
 mods = [
-  "./fabric/versions/26.1.2/build/libs/bonded-fabric-4.2.0+26.1.2.jar",
+  "./fabric/versions/26.1.2/build/libs/bonded-fabric-4.3.0+26.1.2.jar",
   "maven:net.fabricmc.fabric-api:fabric-api:0.146.1+26.1.2",
   "maven:fuzs.forgeconfigapiport:forgeconfigapiport-fabric:26.1.3",
   "maven:com.iamkaf.amber:amber-fabric:11.1.3+26.1.2",
@@ -39,7 +39,7 @@ loader = "forge"
 loader_version = "latest"
 sides = ["client", "server"]
 mods = [
-  "./forge/versions/26.1.2/build/libs/bonded-forge-4.2.0+26.1.2.jar",
+  "./forge/versions/26.1.2/build/libs/bonded-forge-4.3.0+26.1.2.jar",
   "maven:fuzs.forgeconfigapiport:forgeconfigapiport-forge:26.1.3",
   "maven:com.iamkaf.amber:amber-forge:11.1.3+26.1.2",
   "maven:com.iamkaf.liteminer:liteminer-forge:3.1.0+26.1.2",
@@ -54,7 +54,7 @@ loader = "neoforge"
 loader_version = "latest"
 sides = ["client", "server"]
 mods = [
-  "./neoforge/versions/26.1.2/build/libs/bonded-neoforge-4.2.0+26.1.2.jar",
+  "./neoforge/versions/26.1.2/build/libs/bonded-neoforge-4.3.0+26.1.2.jar",
   "maven:maven.modrinth:COlSi5iR:0.4.0-alpha.0.91+26.1.2",
   "maven:com.iamkaf.amber:amber-neoforge:11.1.3+26.1.2",
   "maven:com.iamkaf.konfig:konfig-neoforge:0.6.0+26.1.2",

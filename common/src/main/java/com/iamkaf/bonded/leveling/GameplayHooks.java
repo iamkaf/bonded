@@ -146,7 +146,7 @@ public class GameplayHooks {
             return 1;
         }
 
-        return Bonded.GEAR.getExperienceForBlock(state.getBlock());
+        return Bonded.GEAR.getExperienceForBlock(state);
     }
 
     private static void onGenericItemExperience(Player player, ItemStack stack, int experienceAmount) {

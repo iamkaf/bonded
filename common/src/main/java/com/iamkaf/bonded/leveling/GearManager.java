@@ -15,6 +15,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Repairable;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
@@ -172,6 +173,14 @@ public class GearManager {
     public Integer getExperienceForBlock(Block block) {
         var experience = blockExperienceRegistry.blocks.get(block);
         return experience == null ? 1 : experience;
+    }
+
+    public int getExperienceForBlock(BlockState state) {
+        Integer experience = blockExperienceRegistry.blocks.get(state.getBlock());
+        if (experience != null) {
+            return experience;
+        }
+        return state.is(Tags.ORES) ? Bonded.CONFIG.experienceForMiningOres.get() : 1;
     }
 
     public boolean giveItemExperience(ItemStack item, int amount) {

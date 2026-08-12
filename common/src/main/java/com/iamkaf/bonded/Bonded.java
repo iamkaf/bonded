@@ -3,8 +3,10 @@ package com.iamkaf.bonded;
 import com.iamkaf.amber.api.core.v2.AmberInitializer;
 import com.iamkaf.amber.api.platform.v1.Platform;
 import com.iamkaf.bonded.bonuses.Bonuses;
+import com.iamkaf.bonded.augment.Augments;
 import com.iamkaf.bonded.command.BondedDebugCommands;
 import com.iamkaf.bonded.command.BondedCommands;
+import com.iamkaf.bonded.compat.LiteminerCompat;
 import com.iamkaf.bonded.config.BondedCommonConfig;
 import com.iamkaf.bonded.leveling.GameplayHooks;
 import com.iamkaf.bonded.leveling.GearManager;
@@ -89,12 +91,16 @@ public class Bonded {
         }
         BondedNetworking.init();
         GameplayHooks.init();
+        if (Platform.isModLoaded("liteminer")) {
+            LiteminerCompat.init();
+        }
         WorldInnateBond.init();
         ScrapDrops.init();
         TemperedGoldDrops.init();
         Levelers.init();
         Bonuses.init();
         TierMap.init();
+        Augments.init();
         Sounds.init();
     }
 

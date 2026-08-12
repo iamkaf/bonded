@@ -12,9 +12,11 @@ configureOnDemand = false
 
 [defaults.gradleProperties]
 "bonded.withTeaKit" = "true"
+"bonded.withLiteminer" = "true"
 
 [defaults.systemProperties]
 "bonded.withTeaKit" = "true"
+"bonded.withLiteminer" = "true"
 "teakit.enabled" = "true"
 "teakit.autoWorld" = "true"
 "teakit.runtimeApi.required" = "1"

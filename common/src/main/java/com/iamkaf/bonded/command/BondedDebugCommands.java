@@ -5,6 +5,7 @@ import com.iamkaf.bonded.Bonded;
 import com.iamkaf.bonded.loot.WorldInnateBond;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
@@ -30,7 +31,22 @@ public final class BondedDebugCommands {
     private static LiteralArgumentBuilder<CommandSourceStack> command() {
         return Commands.literal("bondeddebug")
                 .then(Commands.literal("innate-bond-thread-safety")
-                        .executes(context -> verifyInnateBondThreadSafety(context.getSource())));
+                        .executes(context -> verifyInnateBondThreadSafety(context.getSource())))
+                .then(Commands.literal("swimming")
+                        .then(Commands.literal("start")
+                                .executes(context -> setSwimming(context.getSource(), true)))
+                        .then(Commands.literal("stop")
+                                .executes(context -> setSwimming(context.getSource(), false))));
+    }
+
+    private static int setSwimming(
+            CommandSourceStack source,
+            boolean swimming
+    ) throws CommandSyntaxException {
+        var player = source.getPlayerOrException();
+        player.setSprinting(swimming);
+        player.setSwimming(swimming);
+        return Command.SINGLE_SUCCESS;
     }
 
     // This verifies that Bonded applies innate bond in a thread-safe way.
