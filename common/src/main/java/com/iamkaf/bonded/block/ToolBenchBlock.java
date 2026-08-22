@@ -114,9 +114,12 @@ public class ToolBenchBlock extends Block {
         BondEvent.ITEM_UPGRADED.invoker().upgrade(oldGear, upgraded, player, component, consumedIngredient.get());
         if (player instanceof ServerPlayer serverPlayer) {
             BondedAdvancements.grant(serverPlayer, BondedAdvancements.UPGRADE);
+            BlockPos storagePos = consumedStorageItem
+                    .map(AdjacentBenchStorage.ConsumedStorageItem::storagePos)
+                    .orElse(null);
+            BenchEffects.play(serverPlayer, pos, consumedIngredient.get(), storagePos);
         }
         ScrapDrops.dropFromUpgrade(level, player);
-        consumedStorageItem.ifPresent(consumed -> AdjacentBenchStorage.emitStorageUseParticles(level, consumed));
         level.playSound(
                 null,
                 player.getX(),
@@ -131,7 +134,7 @@ public class ToolBenchBlock extends Block {
                     pos.getX() + 0.5d,
                     pos.getY() + 1,
                     pos.getZ() + 0.5d,
-                    80,
+                    12,
                     0.01d,
                     0.5d,
                     0.01d,

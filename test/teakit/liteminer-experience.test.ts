@@ -28,6 +28,7 @@ describe("Bonded Liteminer integration", () => {
       { blockCount: 3, expectedExperience: 18 },
       { blockCount: 4, expectedExperience: 21 },
     ];
+    let guiHidden = false;
 
     try {
       await ctx.client.keyState(96, false);
@@ -54,14 +55,28 @@ describe("Bonded Liteminer integration", () => {
         }
 
         await ctx.player.mine({ x: 0, y: 70, z }, { timeoutMs: 5_000 });
-        await ctx.runtime.wait(500);
         await ctx.client.keyState(96, false);
+        if (blockCount === 4) {
+          await ctx.runtime.wait(150);
+          await ctx.client.keyState(290, true);
+          await ctx.client.keyState(290, false);
+          guiHidden = true;
+          await ctx.client.screenshot("bonded-liteminer-experience-popup", { hideOverlay: true });
+          await ctx.client.keyState(290, true);
+          await ctx.client.keyState(290, false);
+          guiHidden = false;
+        }
+        await ctx.runtime.wait(500);
 
         await ctx.commands.assert(
           `/execute if items entity @s weapon.mainhand minecraft:iron_pickaxe[bonded:item_level~{experience:${expectedExperience}}]`,
         );
       }
     } finally {
+      if (guiHidden) {
+        await ctx.client.keyState(290, true);
+        await ctx.client.keyState(290, false);
+      }
       await ctx.client.keyState(96, false);
       await ctx.player.reset({ gameMode: "creative", inventory: "clear" });
       await ctx.world.clear(min, max);

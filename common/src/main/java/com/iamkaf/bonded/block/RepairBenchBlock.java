@@ -133,7 +133,12 @@ public class RepairBenchBlock extends Block {
                 }
             }
         }
-        consumedStorageItem.ifPresent(consumed -> AdjacentBenchStorage.emitStorageUseParticles(level, consumed));
+        if (player instanceof ServerPlayer serverPlayer) {
+            BlockPos storagePos = consumedStorageItem
+                    .map(AdjacentBenchStorage.ConsumedStorageItem::storagePos)
+                    .orElse(null);
+            BenchEffects.play(serverPlayer, pos, material, storagePos);
+        }
         level.playSound(
                 null,
                 player.getX(),
