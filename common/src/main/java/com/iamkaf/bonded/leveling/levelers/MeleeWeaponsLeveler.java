@@ -8,6 +8,11 @@ import net.minecraft.world.item.crafting.Ingredient;
 
 public class MeleeWeaponsLeveler implements GearTypeLeveler {
     @Override
+    public String id() {
+        return "melee_weapon";
+    }
+
+    @Override
     public String name() {
         return "Melee Weapons";
     }

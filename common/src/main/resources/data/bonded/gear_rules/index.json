@@ -1,0 +1,10 @@
+{
+  "profiles": [
+    "builtin.json",
+    "basic_weapons.json",
+    "advanced_netherite.json",
+    "immersive_armors.json",
+    "betterend.json",
+    "betternether.json"
+  ]
+}

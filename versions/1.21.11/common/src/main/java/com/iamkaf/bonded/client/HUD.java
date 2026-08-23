@@ -5,6 +5,7 @@ import com.iamkaf.bonded.BondedClient;
 import com.iamkaf.bonded.block.RepairBenchBlock;
 import com.iamkaf.bonded.block.ToolBenchBlock;
 import com.iamkaf.bonded.leveling.levelers.GearTypeLeveler;
+import com.iamkaf.bonded.rules.BondedRules;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -113,7 +114,7 @@ public class HUD {
         GearTypeLeveler leveler = Bonded.GEAR.getLeveler(stack);
         if (leveler == null) return;
 
-        Repairable repairable = stack.get(DataComponents.REPAIRABLE);
+        Repairable repairable = BondedRules.repairable(stack);
         if (stack.isEmpty() || repairable == null) return;
         Optional<ItemStack> repairIngredient = RepairBenchBlock.getInventoryRepairIngredientPreview(
                 player.getInventory(),
@@ -151,14 +152,12 @@ public class HUD {
         assert mc.level != null;
         var lookup = mc.level.holderLookup(Registries.ITEM);
 
-        TagKey<Item> upgradeIngredientTag = leveler.getUpgradeIngredient(stack);
-        assert upgradeIngredientTag != null;
-        Optional<HolderSet.Named<Item>> holders = lookup.get(upgradeIngredientTag);
-        if (holders.isEmpty()) return;
-        ItemStack upgradeIngredient = holders.get().get(0).value().getDefaultInstance();
-
         Item upgrade = leveler.getUpgrade(stack);
-        if (stack.isEmpty() || upgrade == null) return;
+        TagKey<Item> upgradeIngredientTag = leveler.getUpgradeIngredient(stack);
+        if (stack.isEmpty() || upgrade == null || upgradeIngredientTag == null) return;
+        Optional<HolderSet.Named<Item>> holders = lookup.get(upgradeIngredientTag);
+        if (holders.isEmpty() || holders.get().size() == 0) return;
+        ItemStack upgradeIngredient = holders.get().get(0).value().getDefaultInstance();
 
         text(
                 guiGraphics,

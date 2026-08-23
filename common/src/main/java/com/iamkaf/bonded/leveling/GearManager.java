@@ -4,6 +4,7 @@ import com.iamkaf.bonded.Bonded;
 import com.iamkaf.bonded.component.ItemLevelContainer;
 import com.iamkaf.bonded.leveling.levelers.GearTypeLeveler;
 import com.iamkaf.bonded.registry.*;
+import com.iamkaf.bonded.rules.BondedRules;
 import com.mojang.logging.LogUtils;
 import com.iamkaf.amber.api.event.v1.events.common.WorldEvents;
 import net.minecraft.core.HolderSet;
@@ -13,7 +14,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Repairable;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
@@ -27,7 +27,7 @@ public class GearManager {
     public static GearTypeLevelerRegistry gearTypeLevelerRegistry = new GearTypeLevelerRegistry();
     public static BondBonusRegistry bondBonusRegistry = new BondBonusRegistry();
     public static BlockExperienceRegistry blockExperienceRegistry = new BlockExperienceRegistry();
-    private static boolean READY = false;
+    private static Object loadedServer;
 
     public GearManager() {
         LOGGER.info("Registering WorldEvents.WORLD_LOAD");
@@ -40,9 +40,13 @@ public class GearManager {
     }
 
     private static void loadGearRegistries(ServerLevel serverLevel) {
-        if (READY) return;
+        Object server = serverLevel.getServer();
+        if (loadedServer == server) return;
         LOGGER.info("Now loading leveling registries...");
-        READY = true;
+
+        Registry<Item> itemRegistry = serverLevel.registryAccess().lookupOrThrow(Registries.ITEM);
+        BondedRules.resolve(itemRegistry);
+        gearTypeLevelerRegistry.clear();
 
         Registry<Block> blockRegistry = serverLevel.registryAccess().lookupOrThrow(Registries.BLOCK);
         Optional<HolderSet.Named<Block>> ores = blockRegistry.get(Tags.ORES);
@@ -53,8 +57,6 @@ public class GearManager {
                             Bonded.CONFIG.experienceForMiningOres.get()
                     ));
         });
-
-        Registry<Item> itemRegistry = serverLevel.registryAccess().lookupOrThrow(Registries.ITEM);
 
         LOGGER.info("Processing {} gear type levelers", gearTypeLevelerRegistry.gearTypeLevelers().size());
         for (var type : gearTypeLevelerRegistry.gearTypeLevelers()) {
@@ -71,6 +73,7 @@ public class GearManager {
                 LOGGER.warn("No items found for tag: {} [{}]", type.name(), tag.location());
             }
         }
+        loadedServer = server;
     }
 
     public ItemStack initComponent(ItemStack gear) {
@@ -80,14 +83,6 @@ public class GearManager {
 
         if (!isGear(gear)) {
             return gear;
-        }
-
-        // this is to patch items that existed prior to the mod being installed
-        Item repairMaterial = TierMap.getRepairMaterialMap().get(gear.getItem());
-        if (repairMaterial != null && gear.get(net.minecraft.core.component.DataComponents.REPAIRABLE) == null) {
-            gear.set(net.minecraft.core.component.DataComponents.REPAIRABLE,
-                    new Repairable(HolderSet.direct(repairMaterial.builtInRegistryHolder()))
-            );
         }
 
         ItemLevelContainer container = gear.get(DataComponents.ITEM_LEVEL_CONTAINER.get());

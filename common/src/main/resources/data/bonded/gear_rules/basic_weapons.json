@@ -1,0 +1,17 @@
+{
+  "id": "bonded:basic_weapons",
+  "label": "Basic Weapons",
+  "kind": "compat",
+  "version": 1,
+  "required_mod": "basicweapons",
+  "markers": [
+    "basicweapons:iron_dagger"
+  ],
+  "rules": [
+    {
+      "selector": "#basicweapons:basic_weapon",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    }
+  ]
+}

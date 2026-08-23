@@ -4,7 +4,7 @@ import com.iamkaf.bonded.Bonded;
 import com.iamkaf.bonded.component.AppliedBonusesContainer;
 import com.iamkaf.bonded.component.ItemLevelContainer;
 import com.iamkaf.bonded.registry.DataComponents;
-import com.iamkaf.bonded.registry.TierMap;
+import com.iamkaf.bonded.rules.BondedRules;
 import com.iamkaf.bonded.util.ItemUtils;
 import com.iamkaf.bonded.util.MaxDamageModifiers;
 import net.minecraft.tags.TagKey;
@@ -14,24 +14,26 @@ import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.Nullable;
 
 public interface GearTypeLeveler {
+    String id();
+
     String name();
 
     TagKey<Item> tag();
 
     default boolean supports(ItemStack gear) {
-        return true;
+        return ItemUtils.hasDamageableMaxDamage(gear);
     }
 
     default int getMaxExperience(ItemStack gear) {
-        return TierMap.getExperienceCap(gear.getItem());
+        return BondedRules.experienceCap(gear.getItem());
     }
 
     default boolean isUpgradable(ItemStack gear) {
-        return TierMap.getUpgrade(gear.getItem()) != null;
+        return BondedRules.upgrade(gear.getItem()) != null;
     }
 
     default @Nullable Item getUpgrade(ItemStack gear) {
-        return TierMap.getUpgrade(gear.getItem());
+        return BondedRules.upgrade(gear.getItem());
     }
 
     default @Nullable ItemStack transmuteUpgrade(ItemStack gear) {
@@ -49,7 +51,7 @@ public interface GearTypeLeveler {
         assert container != null;
         upgradedGear.set(
                 DataComponents.ITEM_LEVEL_CONTAINER.get(),
-                ItemLevelContainer.make(TierMap.getExperienceCap(upgrade)).addBond(container.getBond())
+                ItemLevelContainer.make(BondedRules.experienceCap(upgrade)).addBond(container.getBond())
         );
         Bonded.GEAR.bondBonusRegistry.restoreBaseMaxDamage(upgradedGear, previousAppliedBonuses);
         upgradedGear.set(DataComponents.APPLIED_BONUSES_CONTAINER.get(), AppliedBonusesContainer.make());
@@ -58,6 +60,6 @@ public interface GearTypeLeveler {
     }
 
     default @Nullable TagKey<Item> getUpgradeIngredient(ItemStack gear) {
-        return TierMap.getUpgradeMaterial(gear.getItem());
+        return BondedRules.upgradeIngredient(gear.getItem());
     }
 }

@@ -1,0 +1,553 @@
+{
+  "id": "bonded:builtin",
+  "label": "Bonded",
+  "kind": "builtin",
+  "version": 1,
+  "rules": [
+    {
+      "selector": "minecraft:wooden_axe",
+      "type": "mining_tool",
+      "experience_cap": 30,
+      "upgrade_to": "minecraft:stone_axe",
+      "upgrade_ingredient": "minecraft:stone_tool_materials"
+    },
+    {
+      "selector": "minecraft:wooden_pickaxe",
+      "type": "mining_tool",
+      "experience_cap": 30,
+      "upgrade_to": "minecraft:stone_pickaxe",
+      "upgrade_ingredient": "minecraft:stone_tool_materials"
+    },
+    {
+      "selector": "minecraft:wooden_shovel",
+      "type": "mining_tool",
+      "experience_cap": 30,
+      "upgrade_to": "minecraft:stone_shovel",
+      "upgrade_ingredient": "minecraft:stone_tool_materials"
+    },
+    {
+      "selector": "minecraft:wooden_hoe",
+      "type": "mining_tool",
+      "experience_cap": 30,
+      "upgrade_to": "minecraft:stone_hoe",
+      "upgrade_ingredient": "minecraft:stone_tool_materials"
+    },
+    {
+      "selector": "minecraft:wooden_sword",
+      "type": "melee_weapon",
+      "experience_cap": 30,
+      "upgrade_to": "minecraft:stone_sword",
+      "upgrade_ingredient": "minecraft:stone_tool_materials"
+    },
+    {
+      "selector": "minecraft:wooden_spear",
+      "type": "melee_weapon",
+      "experience_cap": 30,
+      "upgrade_to": "minecraft:stone_spear",
+      "upgrade_ingredient": "minecraft:stone_tool_materials"
+    },
+    {
+      "selector": "minecraft:stone_axe",
+      "type": "mining_tool",
+      "experience_cap": 50,
+      "upgrade_to": "minecraft:copper_axe",
+      "upgrade_ingredient": "minecraft:copper_tool_materials"
+    },
+    {
+      "selector": "minecraft:stone_pickaxe",
+      "type": "mining_tool",
+      "experience_cap": 50,
+      "upgrade_to": "minecraft:copper_pickaxe",
+      "upgrade_ingredient": "minecraft:copper_tool_materials"
+    },
+    {
+      "selector": "minecraft:stone_shovel",
+      "type": "mining_tool",
+      "experience_cap": 50,
+      "upgrade_to": "minecraft:copper_shovel",
+      "upgrade_ingredient": "minecraft:copper_tool_materials"
+    },
+    {
+      "selector": "minecraft:stone_hoe",
+      "type": "mining_tool",
+      "experience_cap": 50,
+      "upgrade_to": "minecraft:copper_hoe",
+      "upgrade_ingredient": "minecraft:copper_tool_materials"
+    },
+    {
+      "selector": "minecraft:stone_sword",
+      "type": "melee_weapon",
+      "experience_cap": 50,
+      "upgrade_to": "minecraft:copper_sword",
+      "upgrade_ingredient": "minecraft:copper_tool_materials"
+    },
+    {
+      "selector": "minecraft:stone_spear",
+      "type": "melee_weapon",
+      "experience_cap": 50,
+      "upgrade_to": "minecraft:copper_spear",
+      "upgrade_ingredient": "minecraft:copper_tool_materials"
+    },
+    {
+      "selector": "minecraft:copper_axe",
+      "type": "mining_tool",
+      "experience_cap": 75,
+      "upgrade_to": "minecraft:iron_axe",
+      "upgrade_ingredient": "minecraft:iron_tool_materials"
+    },
+    {
+      "selector": "minecraft:copper_pickaxe",
+      "type": "mining_tool",
+      "experience_cap": 75,
+      "upgrade_to": "minecraft:iron_pickaxe",
+      "upgrade_ingredient": "minecraft:iron_tool_materials"
+    },
+    {
+      "selector": "minecraft:copper_shovel",
+      "type": "mining_tool",
+      "experience_cap": 75,
+      "upgrade_to": "minecraft:iron_shovel",
+      "upgrade_ingredient": "minecraft:iron_tool_materials"
+    },
+    {
+      "selector": "minecraft:copper_hoe",
+      "type": "mining_tool",
+      "experience_cap": 75,
+      "upgrade_to": "minecraft:iron_hoe",
+      "upgrade_ingredient": "minecraft:iron_tool_materials"
+    },
+    {
+      "selector": "minecraft:copper_sword",
+      "type": "melee_weapon",
+      "experience_cap": 75,
+      "upgrade_to": "minecraft:iron_sword",
+      "upgrade_ingredient": "minecraft:iron_tool_materials"
+    },
+    {
+      "selector": "minecraft:copper_spear",
+      "type": "melee_weapon",
+      "experience_cap": 75,
+      "upgrade_to": "minecraft:iron_spear",
+      "upgrade_ingredient": "minecraft:iron_tool_materials"
+    },
+    {
+      "selector": "minecraft:iron_axe",
+      "type": "mining_tool",
+      "experience_cap": 100,
+      "upgrade_to": "minecraft:diamond_axe",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "minecraft:iron_pickaxe",
+      "type": "mining_tool",
+      "experience_cap": 100,
+      "upgrade_to": "minecraft:diamond_pickaxe",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "minecraft:iron_shovel",
+      "type": "mining_tool",
+      "experience_cap": 100,
+      "upgrade_to": "minecraft:diamond_shovel",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "minecraft:iron_hoe",
+      "type": "mining_tool",
+      "experience_cap": 100,
+      "upgrade_to": "minecraft:diamond_hoe",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "minecraft:iron_sword",
+      "type": "melee_weapon",
+      "experience_cap": 100,
+      "upgrade_to": "minecraft:diamond_sword",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "minecraft:iron_spear",
+      "type": "melee_weapon",
+      "experience_cap": 100,
+      "upgrade_to": "minecraft:diamond_spear",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "minecraft:diamond_axe",
+      "type": "mining_tool",
+      "experience_cap": 500
+    },
+    {
+      "selector": "minecraft:diamond_pickaxe",
+      "type": "mining_tool",
+      "experience_cap": 500
+    },
+    {
+      "selector": "minecraft:diamond_shovel",
+      "type": "mining_tool",
+      "experience_cap": 500
+    },
+    {
+      "selector": "minecraft:diamond_hoe",
+      "type": "mining_tool",
+      "experience_cap": 500
+    },
+    {
+      "selector": "minecraft:diamond_sword",
+      "type": "melee_weapon",
+      "experience_cap": 500
+    },
+    {
+      "selector": "minecraft:diamond_spear",
+      "type": "melee_weapon",
+      "experience_cap": 500
+    },
+    {
+      "selector": "minecraft:netherite_axe",
+      "type": "mining_tool",
+      "experience_cap": 1000
+    },
+    {
+      "selector": "minecraft:netherite_pickaxe",
+      "type": "mining_tool",
+      "experience_cap": 1000
+    },
+    {
+      "selector": "minecraft:netherite_shovel",
+      "type": "mining_tool",
+      "experience_cap": 1000
+    },
+    {
+      "selector": "minecraft:netherite_hoe",
+      "type": "mining_tool",
+      "experience_cap": 1000
+    },
+    {
+      "selector": "minecraft:netherite_sword",
+      "type": "melee_weapon",
+      "experience_cap": 1000
+    },
+    {
+      "selector": "minecraft:netherite_spear",
+      "type": "melee_weapon",
+      "experience_cap": 1000
+    },
+    {
+      "selector": "minecraft:golden_axe",
+      "type": "mining_tool",
+      "experience_cap": 300,
+      "upgrade_to": "bonded:tempered_gold_axe",
+      "upgrade_ingredient": "bonded:tempered_gold_tool_materials"
+    },
+    {
+      "selector": "minecraft:golden_pickaxe",
+      "type": "mining_tool",
+      "experience_cap": 300,
+      "upgrade_to": "bonded:tempered_gold_pickaxe",
+      "upgrade_ingredient": "bonded:tempered_gold_tool_materials"
+    },
+    {
+      "selector": "minecraft:golden_shovel",
+      "type": "mining_tool",
+      "experience_cap": 300,
+      "upgrade_to": "bonded:tempered_gold_shovel",
+      "upgrade_ingredient": "bonded:tempered_gold_tool_materials"
+    },
+    {
+      "selector": "minecraft:golden_hoe",
+      "type": "mining_tool",
+      "experience_cap": 300,
+      "upgrade_to": "bonded:tempered_gold_hoe",
+      "upgrade_ingredient": "bonded:tempered_gold_tool_materials"
+    },
+    {
+      "selector": "minecraft:golden_sword",
+      "type": "melee_weapon",
+      "experience_cap": 300,
+      "upgrade_to": "bonded:tempered_gold_sword",
+      "upgrade_ingredient": "bonded:tempered_gold_tool_materials"
+    },
+    {
+      "selector": "minecraft:golden_spear",
+      "type": "melee_weapon",
+      "experience_cap": 300
+    },
+    {
+      "selector": "bonded:tempered_gold_axe",
+      "type": "mining_tool",
+      "experience_cap": 1000
+    },
+    {
+      "selector": "bonded:tempered_gold_pickaxe",
+      "type": "mining_tool",
+      "experience_cap": 1000
+    },
+    {
+      "selector": "bonded:tempered_gold_shovel",
+      "type": "mining_tool",
+      "experience_cap": 1000
+    },
+    {
+      "selector": "bonded:tempered_gold_hoe",
+      "type": "mining_tool",
+      "experience_cap": 1000
+    },
+    {
+      "selector": "bonded:tempered_gold_sword",
+      "type": "melee_weapon",
+      "experience_cap": 1000
+    },
+    {
+      "selector": "minecraft:leather_helmet",
+      "type": "armor",
+      "experience_cap": 90,
+      "upgrade_to": "minecraft:copper_helmet",
+      "upgrade_ingredient": "minecraft:copper_tool_materials"
+    },
+    {
+      "selector": "minecraft:leather_chestplate",
+      "type": "armor",
+      "experience_cap": 90,
+      "upgrade_to": "minecraft:copper_chestplate",
+      "upgrade_ingredient": "minecraft:copper_tool_materials"
+    },
+    {
+      "selector": "minecraft:leather_leggings",
+      "type": "armor",
+      "experience_cap": 90,
+      "upgrade_to": "minecraft:copper_leggings",
+      "upgrade_ingredient": "minecraft:copper_tool_materials"
+    },
+    {
+      "selector": "minecraft:leather_boots",
+      "type": "armor",
+      "experience_cap": 90,
+      "upgrade_to": "minecraft:copper_boots",
+      "upgrade_ingredient": "minecraft:copper_tool_materials"
+    },
+    {
+      "selector": "minecraft:copper_helmet",
+      "type": "armor",
+      "experience_cap": 150,
+      "upgrade_to": "minecraft:chainmail_helmet",
+      "upgrade_ingredient": "minecraft:repairs_chain_armor"
+    },
+    {
+      "selector": "minecraft:copper_chestplate",
+      "type": "armor",
+      "experience_cap": 150,
+      "upgrade_to": "minecraft:chainmail_chestplate",
+      "upgrade_ingredient": "minecraft:repairs_chain_armor"
+    },
+    {
+      "selector": "minecraft:copper_leggings",
+      "type": "armor",
+      "experience_cap": 150,
+      "upgrade_to": "minecraft:chainmail_leggings",
+      "upgrade_ingredient": "minecraft:repairs_chain_armor"
+    },
+    {
+      "selector": "minecraft:copper_boots",
+      "type": "armor",
+      "experience_cap": 150,
+      "upgrade_to": "minecraft:chainmail_boots",
+      "upgrade_ingredient": "minecraft:repairs_chain_armor"
+    },
+    {
+      "selector": "minecraft:chainmail_helmet",
+      "type": "armor",
+      "experience_cap": 225,
+      "upgrade_to": "minecraft:iron_helmet",
+      "upgrade_ingredient": "minecraft:repairs_iron_armor"
+    },
+    {
+      "selector": "minecraft:chainmail_chestplate",
+      "type": "armor",
+      "experience_cap": 225,
+      "upgrade_to": "minecraft:iron_chestplate",
+      "upgrade_ingredient": "minecraft:repairs_iron_armor"
+    },
+    {
+      "selector": "minecraft:chainmail_leggings",
+      "type": "armor",
+      "experience_cap": 225,
+      "upgrade_to": "minecraft:iron_leggings",
+      "upgrade_ingredient": "minecraft:repairs_iron_armor"
+    },
+    {
+      "selector": "minecraft:chainmail_boots",
+      "type": "armor",
+      "experience_cap": 225,
+      "upgrade_to": "minecraft:iron_boots",
+      "upgrade_ingredient": "minecraft:repairs_iron_armor"
+    },
+    {
+      "selector": "minecraft:iron_helmet",
+      "type": "armor",
+      "experience_cap": 300,
+      "upgrade_to": "minecraft:diamond_helmet",
+      "upgrade_ingredient": "minecraft:repairs_diamond_armor"
+    },
+    {
+      "selector": "minecraft:iron_chestplate",
+      "type": "armor",
+      "experience_cap": 300,
+      "upgrade_to": "minecraft:diamond_chestplate",
+      "upgrade_ingredient": "minecraft:repairs_diamond_armor"
+    },
+    {
+      "selector": "minecraft:iron_leggings",
+      "type": "armor",
+      "experience_cap": 300,
+      "upgrade_to": "minecraft:diamond_leggings",
+      "upgrade_ingredient": "minecraft:repairs_diamond_armor"
+    },
+    {
+      "selector": "minecraft:iron_boots",
+      "type": "armor",
+      "experience_cap": 300,
+      "upgrade_to": "minecraft:diamond_boots",
+      "upgrade_ingredient": "minecraft:repairs_diamond_armor"
+    },
+    {
+      "selector": "minecraft:diamond_helmet",
+      "type": "armor",
+      "experience_cap": 1500
+    },
+    {
+      "selector": "minecraft:diamond_chestplate",
+      "type": "armor",
+      "experience_cap": 1500
+    },
+    {
+      "selector": "minecraft:diamond_leggings",
+      "type": "armor",
+      "experience_cap": 1500
+    },
+    {
+      "selector": "minecraft:diamond_boots",
+      "type": "armor",
+      "experience_cap": 1500
+    },
+    {
+      "selector": "minecraft:netherite_helmet",
+      "type": "armor",
+      "experience_cap": 3000
+    },
+    {
+      "selector": "minecraft:netherite_chestplate",
+      "type": "armor",
+      "experience_cap": 3000
+    },
+    {
+      "selector": "minecraft:netherite_leggings",
+      "type": "armor",
+      "experience_cap": 3000
+    },
+    {
+      "selector": "minecraft:netherite_boots",
+      "type": "armor",
+      "experience_cap": 3000
+    },
+    {
+      "selector": "minecraft:golden_helmet",
+      "type": "armor",
+      "experience_cap": 500,
+      "upgrade_to": "bonded:tempered_gold_helmet",
+      "upgrade_ingredient": "bonded:repairs_tempered_gold_armor"
+    },
+    {
+      "selector": "minecraft:golden_chestplate",
+      "type": "armor",
+      "experience_cap": 500,
+      "upgrade_to": "bonded:tempered_gold_chestplate",
+      "upgrade_ingredient": "bonded:repairs_tempered_gold_armor"
+    },
+    {
+      "selector": "minecraft:golden_leggings",
+      "type": "armor",
+      "experience_cap": 500,
+      "upgrade_to": "bonded:tempered_gold_leggings",
+      "upgrade_ingredient": "bonded:repairs_tempered_gold_armor"
+    },
+    {
+      "selector": "minecraft:golden_boots",
+      "type": "armor",
+      "experience_cap": 500,
+      "upgrade_to": "bonded:tempered_gold_boots",
+      "upgrade_ingredient": "bonded:repairs_tempered_gold_armor"
+    },
+    {
+      "selector": "bonded:tempered_gold_helmet",
+      "type": "armor",
+      "experience_cap": 3000
+    },
+    {
+      "selector": "bonded:tempered_gold_chestplate",
+      "type": "armor",
+      "experience_cap": 3000
+    },
+    {
+      "selector": "bonded:tempered_gold_leggings",
+      "type": "armor",
+      "experience_cap": 3000
+    },
+    {
+      "selector": "bonded:tempered_gold_boots",
+      "type": "armor",
+      "experience_cap": 3000
+    },
+    {
+      "selector": "minecraft:turtle_helmet",
+      "type": "armor",
+      "experience_cap": 900
+    },
+    {
+      "selector": "minecraft:elytra",
+      "type": "armor",
+      "experience_cap": 2000
+    },
+    {
+      "selector": "minecraft:shears",
+      "type": "utility",
+      "experience_cap": 200,
+      "repair_mode": "item",
+      "repair": "minecraft:iron_ingot"
+    },
+    {
+      "selector": "minecraft:fishing_rod",
+      "type": "utility",
+      "experience_cap": 150,
+      "repair_mode": "item",
+      "repair": "minecraft:string"
+    },
+    {
+      "selector": "minecraft:bow",
+      "type": "ranged_weapon",
+      "experience_cap": 150,
+      "repair_mode": "item",
+      "repair": "minecraft:string"
+    },
+    {
+      "selector": "minecraft:crossbow",
+      "type": "ranged_weapon",
+      "experience_cap": 150,
+      "repair_mode": "item",
+      "repair": "minecraft:string"
+    },
+    {
+      "selector": "minecraft:brush",
+      "type": "utility",
+      "experience_cap": 150,
+      "repair_mode": "item",
+      "repair": "minecraft:feather"
+    },
+    {
+      "selector": "minecraft:flint_and_steel",
+      "type": "utility",
+      "experience_cap": 150,
+      "repair_mode": "item",
+      "repair": "minecraft:iron_ingot"
+    }
+  ]
+}

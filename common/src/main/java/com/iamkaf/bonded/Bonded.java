@@ -16,6 +16,7 @@ import com.iamkaf.bonded.loot.TemperedGoldDrops;
 import com.iamkaf.bonded.loot.WorldInnateBond;
 import com.iamkaf.bonded.network.BondedNetworking;
 import com.iamkaf.bonded.registry.*;
+import com.iamkaf.bonded.rules.GearRulesConfig;
 import com.mojang.logging.LogUtils;
 import com.iamkaf.konfig.api.v1.ConfigBuilder;
 import com.iamkaf.konfig.api.v1.ConfigHandle;
@@ -31,6 +32,8 @@ public class Bonded {
     public static final Logger LOGGER = LogUtils.getLogger();
     public static final BondedCommonConfig CONFIG;
     public static final ConfigHandle CONFIG_HANDLE;
+    public static final GearRulesConfig GEAR_RULES_CONFIG;
+    public static final ConfigHandle GEAR_RULES_CONFIG_HANDLE;
     public static GearManager GEAR = new GearManager();
 
     static {
@@ -47,6 +50,18 @@ public class Bonded {
                         .urlKey("bonded.config.info.report_issue", "https://github.com/iamkaf/bonded"));
         CONFIG = new BondedCommonConfig(builder);
         CONFIG_HANDLE = builder.build();
+
+        ConfigBuilder gearRulesBuilder = Konfig.builder(MOD_ID, "gear_rules")
+                .scope(ConfigScope.COMMON)
+                .syncMode(SyncMode.NONE)
+                .fileName("gear-rules.toml")
+                .schemaVersion(1)
+                .comment("User-owned Bonded gear rules. Shipped rules remain in the mod jar.")
+                .info(info -> info
+                        .header("Gear Rules")
+                        .inlineText("Copy a shipped rule to replace it, or add a new item or item-tag rule."));
+        GEAR_RULES_CONFIG = new GearRulesConfig(gearRulesBuilder);
+        GEAR_RULES_CONFIG_HANDLE = gearRulesBuilder.build();
     }
 
     private static void migrateFlatConfig(ConfigMigrationContext context) {
@@ -99,7 +114,6 @@ public class Bonded {
         TemperedGoldDrops.init();
         Levelers.init();
         Bonuses.init();
-        TierMap.init();
         Augments.init();
         Sounds.init();
     }

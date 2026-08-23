@@ -10,6 +10,11 @@ import java.util.Objects;
 
 public class RangedWeaponsLeveler implements GearTypeLeveler {
     @Override
+    public String id() {
+        return "ranged_weapon";
+    }
+
+    @Override
     public String name() {
         return "Ranged Weapons";
     }

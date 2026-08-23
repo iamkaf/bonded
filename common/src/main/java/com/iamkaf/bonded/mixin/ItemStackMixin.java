@@ -1,5 +1,7 @@
 package com.iamkaf.bonded.mixin;
 
+import com.iamkaf.bonded.rules.BondedRules;
+import com.iamkaf.bonded.rules.ResolvedGearRule;
 import com.iamkaf.bonded.util.MaxDamageModifiers;
 import com.iamkaf.bonded.loot.ScrapDrops;
 import java.util.function.Consumer;
@@ -16,6 +18,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
@@ -25,6 +28,18 @@ public abstract class ItemStackMixin {
     private int bonded$equipmentDamageBeforeBreak;
     @Unique
     private boolean bonded$insideDamageApplication;
+
+    @Inject(method = "isValidRepairItem", at = @At("HEAD"), cancellable = true)
+    private void bonded$useResolvedRepairRule(ItemStack ingredient, CallbackInfoReturnable<Boolean> cir) {
+        ItemStack stack = (ItemStack) (Object) this;
+        var rule = BondedRules.rule(stack.getItem());
+        if (rule == null || !rule.enabled() || rule.repairMode() == ResolvedGearRule.RepairMode.INHERIT) {
+            return;
+        }
+        var repairable = BondedRules.repairable(stack);
+        cir.setReturnValue(repairable != null
+                && repairable.items().contains(ingredient.getItem().builtInRegistryHolder()));
+    }
 
     /*
      * This is deliberately hooked at the equipped-item entry point. On Minecraft 26.1.2 with

@@ -1,0 +1,258 @@
+{
+  "id": "bonded:betternether",
+  "label": "BetterNether",
+  "kind": "compat",
+  "version": 1,
+  "required_mod": "betternether",
+  "markers": [
+    "betternether:cincinnasite_axe"
+  ],
+  "rules": [
+    {
+      "selector": "betternether:cincinnasite_axe",
+      "type": "mining_tool",
+      "repair_mode": "inherit",
+      "upgrade_to": "betternether:cincinnasite_axe_diamond",
+      "upgrade_ingredient": "betternether:cincinnasite_diamond/repair"
+    },
+    {
+      "selector": "betternether:cincinnasite_axe_diamond",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betternether:cincinnasite_pickaxe",
+      "type": "mining_tool",
+      "repair_mode": "inherit",
+      "upgrade_to": "betternether:cincinnasite_pickaxe_diamond",
+      "upgrade_ingredient": "betternether:cincinnasite_diamond/repair"
+    },
+    {
+      "selector": "betternether:cincinnasite_pickaxe_diamond",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betternether:cincinnasite_shovel",
+      "type": "mining_tool",
+      "repair_mode": "inherit",
+      "upgrade_to": "betternether:cincinnasite_shovel_diamond",
+      "upgrade_ingredient": "betternether:cincinnasite_diamond/repair"
+    },
+    {
+      "selector": "betternether:cincinnasite_shovel_diamond",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betternether:cincinnasite_hoe",
+      "type": "mining_tool",
+      "repair_mode": "inherit",
+      "upgrade_to": "betternether:cincinnasite_hoe_diamond",
+      "upgrade_ingredient": "betternether:cincinnasite_diamond/repair"
+    },
+    {
+      "selector": "betternether:cincinnasite_hoe_diamond",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betternether:cincinnasite_sword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "betternether:cincinnasite_sword_diamond",
+      "upgrade_ingredient": "betternether:cincinnasite_diamond/repair"
+    },
+    {
+      "selector": "betternether:cincinnasite_sword_diamond",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betternether:cincinnasite_spear",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "betternether:cincinnasite_spear_diamond",
+      "upgrade_ingredient": "betternether:cincinnasite_diamond/repair"
+    },
+    {
+      "selector": "betternether:cincinnasite_spear_diamond",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betternether:cincinnasite_hammer",
+      "type": "mining_tool",
+      "repair_mode": "inherit",
+      "upgrade_to": "betternether:cincinnasite_hammer_diamond",
+      "upgrade_ingredient": "betternether:cincinnasite_diamond/repair"
+    },
+    {
+      "selector": "betternether:cincinnasite_hammer_diamond",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betternether:cincinnasite_excavator",
+      "type": "mining_tool",
+      "repair_mode": "inherit",
+      "upgrade_to": "betternether:cincinnasite_excavator_diamond",
+      "upgrade_ingredient": "betternether:cincinnasite_diamond/repair"
+    },
+    {
+      "selector": "betternether:cincinnasite_excavator_diamond",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betternether:cincinnasite_helmet",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betternether:cincinnasite_chestplate",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betternether:cincinnasite_leggings",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betternether:cincinnasite_boots",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betternether:nether_ruby_axe",
+      "type": "mining_tool",
+      "repair_mode": "inherit",
+      "upgrade_to": "betternether:flaming_ruby_axe",
+      "upgrade_ingredient": "betternether:flaming_ruby/repair"
+    },
+    {
+      "selector": "betternether:nether_ruby_pickaxe",
+      "type": "mining_tool",
+      "repair_mode": "inherit",
+      "upgrade_to": "betternether:flaming_ruby_pickaxe",
+      "upgrade_ingredient": "betternether:flaming_ruby/repair"
+    },
+    {
+      "selector": "betternether:nether_ruby_shovel",
+      "type": "mining_tool",
+      "repair_mode": "inherit",
+      "upgrade_to": "betternether:flaming_ruby_shovel",
+      "upgrade_ingredient": "betternether:flaming_ruby/repair"
+    },
+    {
+      "selector": "betternether:nether_ruby_hoe",
+      "type": "mining_tool",
+      "repair_mode": "inherit",
+      "upgrade_to": "betternether:flaming_ruby_hoe",
+      "upgrade_ingredient": "betternether:flaming_ruby/repair"
+    },
+    {
+      "selector": "betternether:nether_ruby_sword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "betternether:flaming_ruby_sword",
+      "upgrade_ingredient": "betternether:flaming_ruby/repair"
+    },
+    {
+      "selector": "betternether:nether_ruby_spear",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "betternether:flaming_ruby_spear",
+      "upgrade_ingredient": "betternether:flaming_ruby/repair"
+    },
+    {
+      "selector": "betternether:nether_ruby_hammer",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betternether:nether_ruby_excavator",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betternether:nether_ruby_helmet",
+      "type": "armor",
+      "repair_mode": "inherit",
+      "upgrade_to": "betternether:flaming_ruby_helmet",
+      "upgrade_ingredient": "betternether:flaming_ruby/repair"
+    },
+    {
+      "selector": "betternether:nether_ruby_chestplate",
+      "type": "armor",
+      "repair_mode": "inherit",
+      "upgrade_to": "betternether:flaming_ruby_chestplate",
+      "upgrade_ingredient": "betternether:flaming_ruby/repair"
+    },
+    {
+      "selector": "betternether:nether_ruby_leggings",
+      "type": "armor",
+      "repair_mode": "inherit",
+      "upgrade_to": "betternether:flaming_ruby_leggings",
+      "upgrade_ingredient": "betternether:flaming_ruby/repair"
+    },
+    {
+      "selector": "betternether:nether_ruby_boots",
+      "type": "armor",
+      "repair_mode": "inherit",
+      "upgrade_to": "betternether:flaming_ruby_boots",
+      "upgrade_ingredient": "betternether:flaming_ruby/repair"
+    },
+    {
+      "selector": "betternether:flaming_ruby_axe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betternether:flaming_ruby_pickaxe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betternether:flaming_ruby_shovel",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betternether:flaming_ruby_hoe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betternether:flaming_ruby_sword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betternether:flaming_ruby_spear",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betternether:flaming_ruby_helmet",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betternether:flaming_ruby_chestplate",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betternether:flaming_ruby_leggings",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betternether:flaming_ruby_boots",
+      "type": "armor",
+      "repair_mode": "inherit"
+    }
+  ]
+}

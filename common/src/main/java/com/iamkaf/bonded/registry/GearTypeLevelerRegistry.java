@@ -2,6 +2,7 @@ package com.iamkaf.bonded.registry;
 
 import com.google.common.collect.ImmutableSet;
 import com.iamkaf.bonded.leveling.levelers.GearTypeLeveler;
+import com.iamkaf.bonded.rules.BondedRules;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
@@ -19,6 +20,18 @@ public class GearTypeLevelerRegistry {
     public @Nullable GearTypeLeveler get(ItemStack gear) {
         if (gear.isEmpty()) {
             return null;
+        }
+
+        var rule = BondedRules.rule(gear.getItem());
+        if (rule != null && !rule.enabled()) {
+            return null;
+        }
+        if (rule != null && !rule.type().equals("inherit")) {
+            return levelers.stream()
+                    .filter(candidate -> candidate.id().equals(rule.type()))
+                    .filter(candidate -> candidate.supports(gear))
+                    .findFirst()
+                    .orElse(null);
         }
 
         GearTypeLeveler leveler = map.get(BuiltInRegistries.ITEM.getKey(gear.getItem()));

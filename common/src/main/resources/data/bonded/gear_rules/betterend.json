@@ -1,0 +1,185 @@
+{
+  "id": "bonded:betterend",
+  "label": "BetterEnd",
+  "kind": "compat",
+  "version": 1,
+  "required_mod": "betterend",
+  "markers": [
+    "betterend:thallasium_sword"
+  ],
+  "rules": [
+    {
+      "selector": "betterend:thallasium_axe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betterend:thallasium_pickaxe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betterend:thallasium_shovel",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betterend:thallasium_hoe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betterend:thallasium_hammer",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betterend:thallasium_sword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betterend:thallasium_spear",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betterend:thallasium_helmet",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betterend:thallasium_chestplate",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betterend:thallasium_leggings",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betterend:thallasium_boots",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betterend:terminite_axe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betterend:terminite_pickaxe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betterend:terminite_shovel",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betterend:terminite_hoe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betterend:terminite_hammer",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betterend:terminite_sword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betterend:terminite_spear",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betterend:terminite_helmet",
+      "type": "armor",
+      "repair_mode": "inherit",
+      "upgrade_to": "betterend:aeternium_helmet",
+      "upgrade_ingredient": "betterend:aeternium/repair"
+    },
+    {
+      "selector": "betterend:terminite_chestplate",
+      "type": "armor",
+      "repair_mode": "inherit",
+      "upgrade_to": "betterend:aeternium_chestplate",
+      "upgrade_ingredient": "betterend:aeternium/repair"
+    },
+    {
+      "selector": "betterend:terminite_leggings",
+      "type": "armor",
+      "repair_mode": "inherit",
+      "upgrade_to": "betterend:aeternium_leggings",
+      "upgrade_ingredient": "betterend:aeternium/repair"
+    },
+    {
+      "selector": "betterend:terminite_boots",
+      "type": "armor",
+      "repair_mode": "inherit",
+      "upgrade_to": "betterend:aeternium_boots",
+      "upgrade_ingredient": "betterend:aeternium/repair"
+    },
+    {
+      "selector": "betterend:aeternium_axe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betterend:aeternium_pickaxe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betterend:aeternium_shovel",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betterend:aeternium_hoe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betterend:aeternium_hammer",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betterend:aeternium_sword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betterend:aeternium_spear",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betterend:aeternium_helmet",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betterend:aeternium_chestplate",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betterend:aeternium_leggings",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "betterend:aeternium_boots",
+      "type": "armor",
+      "repair_mode": "inherit"
+    }
+  ]
+}

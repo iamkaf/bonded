@@ -11,6 +11,11 @@ import net.minecraft.world.item.equipment.Equippable;
 
 public class ArmorLeveler implements GearTypeLeveler {
     @Override
+    public String id() {
+        return "armor";
+    }
+
+    @Override
     public String name() {
         return "Armors";
     }

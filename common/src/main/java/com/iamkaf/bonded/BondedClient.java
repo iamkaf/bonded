@@ -11,6 +11,7 @@ import com.iamkaf.konfig.api.v1.ConfigBuilder;
 import com.iamkaf.konfig.api.v1.ConfigHandle;
 import com.iamkaf.konfig.api.v1.ConfigScope;
 import com.iamkaf.konfig.api.v1.Konfig;
+import com.iamkaf.konfig.api.v1.KonfigClientScreens;
 import com.iamkaf.konfig.api.v1.SyncMode;
 import net.minecraft.client.Minecraft;
 import net.minecraft.sounds.SoundEvent;
@@ -71,5 +72,14 @@ public class BondedClient {
                 1.0F,
                 false
         );
+    }
+
+    public static void openGearRulesConfigScreen() {
+        Minecraft minecraft = Minecraft.getInstance();
+        //? if >=26.2 {
+        minecraft.gui.setScreen(KonfigClientScreens.create(Bonded.MOD_ID, minecraft.gui.screen()));
+        //?} else {
+        /*minecraft.setScreen(KonfigClientScreens.create(Bonded.MOD_ID, minecraft.screen));
+        *///?}
     }
 }
