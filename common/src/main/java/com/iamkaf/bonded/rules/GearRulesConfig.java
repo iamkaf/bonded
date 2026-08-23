@@ -4,13 +4,12 @@ import com.iamkaf.konfig.api.v1.ConfigBuilder;
 import com.iamkaf.konfig.api.v1.ConfigValue;
 import com.iamkaf.konfig.api.v1.RestartRequirement;
 import com.iamkaf.konfig.api.v1.fieldset.FieldsetBuilder;
+import com.iamkaf.konfig.api.v1.fieldset.FieldsetCatalog;
 import com.iamkaf.konfig.api.v1.fieldset.FieldsetEntry;
 import com.iamkaf.konfig.api.v1.fieldset.FieldsetField;
 import com.iamkaf.konfig.api.v1.fieldset.FieldsetValue;
 import com.iamkaf.bonded.Bonded;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -47,7 +46,42 @@ public final class GearRulesConfig {
     private volatile boolean remoteViewAvailable;
 
     public GearRulesConfig(ConfigBuilder builder) {
-        FieldsetBuilder fieldset = FieldsetBuilder.create()
+        FieldsetBuilder fieldset = fieldsetBuilder();
+        for (GearRule rule : BondedRulesLoader.effectiveRules(
+                BondedRulesLoader.visibleProfiles(),
+                Bonded.CONFIG.defaultMaxExperienceForUnknownItems.get()
+        )) {
+            fieldset.entry(toBuiltinEntry(rule, rule.source().label()));
+        }
+
+        value = builder.fieldset("rules", fieldset.build())
+                .comment("Effective gear rules. Built-in and compatibility rows are read-only; copied and added rows are saved here.")
+                .tooltip("Configure Bonded gear types, experience, repair materials, and one-step upgrades.")
+                .info(info -> info
+                        .header("Applied live")
+                        .inlineText("Valid changes save automatically and apply to the running server."))
+                .restart(RestartRequirement.NONE)
+                .sync(true)
+                .remoteScreenView(this::remoteScreenValue, () -> this.remoteViewAvailable)
+                .validate(BondedRules::validCandidate, "One or more gear rules cannot be resolved")
+                .build();
+    }
+
+    private FieldsetBuilder fieldsetBuilder() {
+        FieldsetCatalog catalog = FieldsetCatalog.create()
+                .editableProfile("User Overrides")
+                .newEntryLabel("New Override")
+                .overrideLabel("Override")
+                .duplicateLabel("Duplicate")
+                .deleteLabel("Delete")
+                .filter(TYPE)
+                .section("Rule", SELECTOR, ENABLED)
+                .section("Progression", TYPE, EXPERIENCE_CAP)
+                .section("Repair", REPAIR_MODE, REPAIR)
+                .section("Upgrade", UPGRADE_TO, UPGRADE_INGREDIENT)
+                .warning(entry -> BondedRules.dormantReason(entry, this.remoteViewAvailable))
+                .build();
+        return FieldsetBuilder.create()
                 .field(SELECTOR)
                 .field(TYPE)
                 .field(EXPERIENCE_CAP)
@@ -60,27 +94,10 @@ public final class GearRulesConfig {
                 .icon(SELECTOR)
                 .key(SELECTOR)
                 .summary(TYPE, EXPERIENCE_CAP)
+                .catalog(catalog)
                 .validate(GearRulesConfig::validSelector, "Choose an existing item or enter #namespace:item_tag")
                 .validate(GearRulesConfig::validRepair, "Choose an existing repair item/tag for the selected repair mode")
                 .validate(GearRulesConfig::validUpgrade, "Choose an existing upgrade target and valid ingredient tag, or leave both blank");
-
-        for (GearRule rule : BondedRulesLoader.effectiveRules(
-                BondedRulesLoader.visibleProfiles(),
-                Bonded.CONFIG.defaultMaxExperienceForUnknownItems.get()
-        )) {
-            fieldset.entry(toBuiltinEntry(rule, rule.source().label()));
-        }
-
-        value = builder.fieldset("rules", fieldset.build())
-                .comment("Effective gear rules. Built-in and compatibility rows are read-only; copied and added rows are saved here.")
-                .tooltip("Configure Bonded gear types, experience, repair materials, and one-step upgrades.")
-                .info(info -> info
-                        .header("Restart required")
-                        .inlineText("Changes save automatically and apply after restarting the game or dedicated server."))
-                .restart(RestartRequirement.GAME)
-                .sync(true)
-                .remoteScreenView(this::remoteScreenValue, () -> this.remoteViewAvailable)
-                .build();
     }
 
     /** Installs the server-authoritative resolved rows without touching the persisted user rules. */
@@ -100,26 +117,38 @@ public final class GearRulesConfig {
     }
 
     public List<GearRule> userRules() {
+        return userRules(value.local());
+    }
+
+    static List<GearRule> userRules(FieldsetValue candidate) {
         GearRule.Source source = new GearRule.Source(GearRule.Kind.USER, "bonded:user", "User", 1);
         ArrayList<GearRule> rules = new ArrayList<>();
-        for (FieldsetEntry entry : value.get().entries()) {
+        for (FieldsetEntry entry : candidate.entries()) {
             if (!entry.editable()) {
                 continue;
             }
-            rules.add(new GearRule(
-                    entry.identity(),
-                    entry.value(SELECTOR).trim(),
-                    entry.value(TYPE),
-                    entry.value(EXPERIENCE_CAP),
-                    entry.value(REPAIR_MODE),
-                    normalized(entry.value(REPAIR)),
-                    normalized(entry.value(UPGRADE_TO)),
-                    entry.value(UPGRADE_INGREDIENT).map(GearRulesConfig::normalized).orElse(null),
-                    entry.value(ENABLED),
-                    source
-            ));
+            rules.add(userRule(entry, source));
         }
         return List.copyOf(rules);
+    }
+
+    static GearRule userRule(FieldsetEntry entry) {
+        return userRule(entry, new GearRule.Source(GearRule.Kind.USER, "bonded:user", "User", 1));
+    }
+
+    private static GearRule userRule(FieldsetEntry entry, GearRule.Source source) {
+        return new GearRule(
+                entry.identity(),
+                entry.value(SELECTOR).trim(),
+                entry.value(TYPE),
+                entry.value(EXPERIENCE_CAP),
+                entry.value(REPAIR_MODE),
+                normalized(entry.value(REPAIR)),
+                normalized(entry.value(UPGRADE_TO)),
+                entry.value(UPGRADE_INGREDIENT).map(GearRulesConfig::normalized).orElse(null),
+                entry.value(ENABLED),
+                source
+        );
     }
 
     private static FieldsetEntry toBuiltinEntry(GearRule rule, String source) {
@@ -174,7 +203,7 @@ public final class GearRulesConfig {
         String mode = entry.value(REPAIR_MODE).toLowerCase(Locale.ROOT);
         String repair = entry.value(REPAIR);
         return switch (mode) {
-            case "item" -> !repair.startsWith("#") && validItem(repair);
+            case "item" -> !repair.startsWith("#") && GearRuleReference.validPersistedItem(repair);
             case "tag" -> validTag(repair);
             default -> true;
         };
@@ -189,27 +218,22 @@ public final class GearRulesConfig {
         if (target.isBlank() && ingredient.isEmpty()) {
             return true;
         }
-        return validItem(target) && ingredient.filter(GearRulesConfig::validTag).isPresent();
+        return GearRuleReference.validPersistedItem(target)
+                && ingredient.filter(GearRulesConfig::validTag).isPresent();
     }
 
     private static boolean validItemOrTag(String value) {
-        return value.startsWith("#") ? validTag(value) : validItem(value);
+        return value.startsWith("#") ? validTag(value) : GearRuleReference.validPersistedItem(value);
     }
 
     private static boolean validSelector(FieldsetEntry entry) {
         return !entry.editable() || validItemOrTag(entry.value(SELECTOR));
     }
 
-    private static boolean validItem(String value) {
-        Identifier id = Identifier.tryParse(stripHash(value));
-        return id != null && BuiltInRegistries.ITEM.containsKey(id);
-    }
-
     private static boolean validTag(String value) {
-        Identifier id = Identifier.tryParse(stripHash(value));
         // Config screens can open from the title screen, before authoritative item tags exist.
         // The world-bound resolver performs existence and non-empty validation at restart.
-        return id != null;
+        return GearRuleReference.validIdentifier(stripHash(value));
     }
 
     private static String normalized(String value) {

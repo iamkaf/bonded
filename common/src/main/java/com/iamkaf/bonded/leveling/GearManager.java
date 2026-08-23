@@ -3,6 +3,7 @@ package com.iamkaf.bonded.leveling;
 import com.iamkaf.bonded.Bonded;
 import com.iamkaf.bonded.component.ItemLevelContainer;
 import com.iamkaf.bonded.leveling.levelers.GearTypeLeveler;
+import com.iamkaf.bonded.network.BondedNetworking;
 import com.iamkaf.bonded.registry.*;
 import com.iamkaf.bonded.rules.BondedRules;
 import com.mojang.logging.LogUtils;
@@ -11,9 +12,11 @@ import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
@@ -27,7 +30,7 @@ public class GearManager {
     public static GearTypeLevelerRegistry gearTypeLevelerRegistry = new GearTypeLevelerRegistry();
     public static BondBonusRegistry bondBonusRegistry = new BondBonusRegistry();
     public static BlockExperienceRegistry blockExperienceRegistry = new BlockExperienceRegistry();
-    private static Object loadedServer;
+    private static volatile MinecraftServer loadedServer;
 
     public GearManager() {
         LOGGER.info("Registering WorldEvents.WORLD_LOAD");
@@ -37,10 +40,18 @@ public class GearManager {
                 GearManager.loadGearRegistries(serverLevel);
             }
         });
+        WorldEvents.WORLD_UNLOAD.register((server, level) -> {
+            if (level instanceof ServerLevel serverLevel
+                    && serverLevel.dimension() == Level.OVERWORLD
+                    && loadedServer == server) {
+                loadedServer = null;
+                BondedRules.clearServerState();
+            }
+        });
     }
 
     private static void loadGearRegistries(ServerLevel serverLevel) {
-        Object server = serverLevel.getServer();
+        MinecraftServer server = serverLevel.getServer();
         if (loadedServer == server) return;
         LOGGER.info("Now loading leveling registries...");
 
@@ -74,6 +85,27 @@ public class GearManager {
             }
         }
         loadedServer = server;
+    }
+
+    /** Re-resolves persisted rules on the server thread and refreshes every connected client. */
+    public static void reloadGearRules() {
+        MinecraftServer server = loadedServer;
+        if (server == null) {
+            return;
+        }
+        Runnable reload = () -> {
+            if (loadedServer != server) {
+                return;
+            }
+            Registry<Item> itemRegistry = server.registryAccess().lookupOrThrow(Registries.ITEM);
+            BondedRules.resolve(itemRegistry);
+            BondedNetworking.broadcastGearRules(server);
+        };
+        if (server.isSameThread()) {
+            reload.run();
+        } else {
+            server.execute(reload);
+        }
     }
 
     public ItemStack initComponent(ItemStack gear) {

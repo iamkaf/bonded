@@ -1,0 +1,807 @@
+{
+  "id": "bonded:arcane_armory",
+  "label": "Arcane Armory",
+  "kind": "compat",
+  "version": 1,
+  "required_mod": "arcanearmory",
+  "markers": [
+    "arcanearmory:ruby_sword"
+  ],
+  "rules": [
+    {
+      "selector": "arcanearmory:ruby_sword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:ruby_shovel",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:ruby_pickaxe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:ruby_axe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:ruby_hoe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:ruby_hammer",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:ruby_bow",
+      "type": "ranged_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:ruby_helmet",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:ruby_chestplate",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:ruby_leggings",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:ruby_boots",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:ruby_shield",
+      "type": "utility",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:sapphire_sword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:sapphire_shovel",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:sapphire_pickaxe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:sapphire_axe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:sapphire_hoe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:sapphire_hammer",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:sapphire_bow",
+      "type": "ranged_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:sapphire_helmet",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:sapphire_chestplate",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:sapphire_leggings",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:sapphire_boots",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:black_diamond_sword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:black_diamond_shovel",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:black_diamond_pickaxe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:black_diamond_axe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:black_diamond_hoe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:black_diamond_hammer",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:black_diamond_bow",
+      "type": "ranged_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:black_diamond_helmet",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:black_diamond_chestplate",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:black_diamond_leggings",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:black_diamond_boots",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:topaz_sword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:topaz_shovel",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:topaz_pickaxe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:topaz_axe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:topaz_hoe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:topaz_hammer",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:topaz_bow",
+      "type": "ranged_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:topaz_helmet",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:topaz_chestplate",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:topaz_leggings",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:topaz_boots",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:chrysoberyl_sword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:chrysoberyl_shovel",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:chrysoberyl_pickaxe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:chrysoberyl_axe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:chrysoberyl_hoe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:chrysoberyl_hammer",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:chrysoberyl_bow",
+      "type": "ranged_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:chrysoberyl_helmet",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:chrysoberyl_chestplate",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:chrysoberyl_leggings",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:chrysoberyl_boots",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:aquamarine_sword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:aquamarine_shovel",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:aquamarine_pickaxe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:aquamarine_axe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:aquamarine_hoe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:aquamarine_hammer",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:aquamarine_bow",
+      "type": "ranged_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:aquamarine_helmet",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:aquamarine_chestplate",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:aquamarine_leggings",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:aquamarine_boots",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:star_corundum_sword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:star_corundum_shovel",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:star_corundum_pickaxe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:star_corundum_axe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:star_corundum_hoe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:star_corundum_hammer",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:star_corundum_bow",
+      "type": "ranged_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:star_corundum_helmet",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:star_corundum_chestplate",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:star_corundum_leggings",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:star_corundum_boots",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:bloodfire_garnet_sword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:bloodfire_garnet_shovel",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:bloodfire_garnet_pickaxe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:bloodfire_garnet_axe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:bloodfire_garnet_hoe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:bloodfire_garnet_hammer",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:bloodfire_garnet_bow",
+      "type": "ranged_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:bloodfire_garnet_helmet",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:bloodfire_garnet_chestplate",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:bloodfire_garnet_leggings",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:bloodfire_garnet_boots",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:aetheric_crystal_sword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:aetheric_crystal_shovel",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:aetheric_crystal_pickaxe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:aetheric_crystal_axe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:aetheric_crystal_hoe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:aetheric_crystal_hammer",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:aetheric_crystal_bow",
+      "type": "ranged_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:aetheric_crystal_helmet",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:aetheric_crystal_chestplate",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:aetheric_crystal_leggings",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:aetheric_crystal_boots",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:coolpper_sword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:coolpper_shovel",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:coolpper_pickaxe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:coolpper_axe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:coolpper_hoe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:coolpper_hammer",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:coolpper_bow",
+      "type": "ranged_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:coolpper_helmet",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:coolpper_chestplate",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:coolpper_leggings",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:coolpper_boots",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:coolpper_shield",
+      "type": "utility",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:titanium_sword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:titanium_shovel",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:titanium_pickaxe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:titanium_axe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:titanium_hoe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:titanium_hammer",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:titanium_bow",
+      "type": "ranged_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:titanium_helmet",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:titanium_chestplate",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:titanium_leggings",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:titanium_boots",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:titanium_shield",
+      "type": "utility",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:amber_sword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:amber_shovel",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:amber_pickaxe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:amber_axe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:amber_hoe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:amber_hammer",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:amber_bow",
+      "type": "ranged_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:amber_helmet",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:amber_chestplate",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:amber_leggings",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:amber_boots",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:aristeum_sword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:aristeum_shovel",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:aristeum_pickaxe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:aristeum_axe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:aristeum_hoe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:aristeum_hammer",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:aristeum_bow",
+      "type": "ranged_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:aristeum_helmet",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:aristeum_chestplate",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:aristeum_leggings",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:aristeum_boots",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:aristeum_shield",
+      "type": "utility",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:voidium_sword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:voidium_shovel",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:voidium_pickaxe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:voidium_axe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:voidium_hoe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:voidium_hammer",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:voidium_bow",
+      "type": "ranged_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:voidium_helmet",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:voidium_chestplate",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:voidium_leggings",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:voidium_boots",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "arcanearmory:voidium_shield",
+      "type": "utility",
+      "repair_mode": "inherit"
+    }
+  ]
+}

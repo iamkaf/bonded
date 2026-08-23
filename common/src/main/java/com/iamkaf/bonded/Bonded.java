@@ -20,9 +20,11 @@ import com.iamkaf.bonded.rules.GearRulesConfig;
 import com.mojang.logging.LogUtils;
 import com.iamkaf.konfig.api.v1.ConfigBuilder;
 import com.iamkaf.konfig.api.v1.ConfigHandle;
+import com.iamkaf.konfig.api.v1.ConfigListener;
 import com.iamkaf.konfig.api.v1.ConfigMigrationContext;
 import com.iamkaf.konfig.api.v1.ConfigScope;
 import com.iamkaf.konfig.api.v1.Konfig;
+import com.iamkaf.konfig.api.v1.ReloadCause;
 import com.iamkaf.konfig.api.v1.SyncMode;
 import net.minecraft.resources.Identifier;
 import org.slf4j.Logger;
@@ -62,6 +64,14 @@ public class Bonded {
                         .inlineText("Copy a shipped rule to replace it, or add a new item or item-tag rule."));
         GEAR_RULES_CONFIG = new GearRulesConfig(gearRulesBuilder);
         GEAR_RULES_CONFIG_HANDLE = gearRulesBuilder.build();
+        GEAR_RULES_CONFIG_HANDLE.addListener(new ConfigListener() {
+            @Override
+            public void onReload(ConfigHandle handle, ReloadCause cause) {
+                if (cause != ReloadCause.SERVER_SYNC) {
+                    GearManager.reloadGearRules();
+                }
+            }
+        });
     }
 
     private static void migrateFlatConfig(ConfigMigrationContext context) {

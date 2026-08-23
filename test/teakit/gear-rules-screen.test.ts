@@ -8,6 +8,7 @@ describe.configure({
     Capability.ServerCommands,
     Capability.ClientScreen,
     Capability.ClientScreens,
+    Capability.ClientInput,
     Capability.ClientScreenshot,
     Capability.RuntimeTiming,
   ],
@@ -15,48 +16,58 @@ describe.configure({
 
 describe("Bonded gear-rule screen", () => {
   test("lets an operator add and remove server-owned overrides", async (ctx) => {
-    await ctx.commands.assert("/bondeddebug rules preview-remote-view");
-    let screen = await ctx.client.waitForScreen(
-      "com.iamkaf.konfig.impl.v1.client.screen.KonfigConfigScreen",
-      { timeoutMs: 10_000 },
-    );
-    screen = await waitForEntry(ctx, "Rules");
-    const rules = screen.lists().entries().find((entry) => entry.label.includes("Rules"));
-    if (!rules) throw new Error("Missing Bonded gear rules config entry");
-    await ctx.client.click({
-      x: rules.x + rules.width * 0.75,
-      y: rules.y + rules.height / 2,
-      button: 0,
-    });
+    let created = false;
+    try {
+      await waitForCommand(ctx, "/bondeddebug rules user-count 0");
+      await waitForCommand(ctx, "/bondeddebug rules active-user-count 0");
+      await ctx.commands.assert("/bondeddebug rules preview-remote-view");
+      let screen = await ctx.client.waitForScreen(
+        "com.iamkaf.konfig.impl.v1.client.screen.KonfigConfigScreen",
+        { timeoutMs: 10_000 },
+      );
+      screen = await waitForEntry(ctx, "Rules");
+      const rules = screen.lists().entries().find((entry) => entry.label.includes("Rules"));
+      if (!rules) throw new Error("Missing Bonded gear rules config entry");
+      await ctx.client.click({
+        x: rules.x + rules.width * 0.75,
+        y: rules.y + rules.height / 2,
+        button: 0,
+      });
 
-    screen = await ctx.client.waitForScreen(
-      "com.iamkaf.konfig.impl.v1.client.fieldset.KonfigFieldsetListScreen",
-      { timeoutMs: 10_000 },
-    );
-    assertActive(screen, ["Add", "Copy"]);
-    assertInactive(screen, ["Delete", "Up", "Down"]);
-    const firstRule = screen.lists().entries()[0];
-    if (!firstRule) throw new Error("Remote gear-rule snapshot is empty");
-    await ctx.client.click({
-      x: firstRule.x + firstRule.width / 2,
-      y: firstRule.y + 20,
-      button: 0,
-    });
-    await ctx.runtime.wait(250);
-    screen = await ctx.client.screen();
-    assertActive(screen, ["Add", "Copy"]);
-    assertInactive(screen, ["Delete", "Up", "Down"]);
+      screen = await ctx.client.waitForScreen(
+        "com.iamkaf.konfig.impl.v1.client.fieldset.KonfigFieldsetCatalogScreen",
+        { timeoutMs: 10_000 },
+      );
+      assertActive(screen, ["New Override", "Done"]);
+      assertCatalogProfile(screen, "Bonded");
+      assertCatalogProfile(screen, "User Overrides");
 
-    screen = await screen.widgets().find("Add").click();
-    await ctx.runtime.wait(500);
-    screen = await ctx.client.screen();
-    assertActive(screen, ["Add", "Copy", "Delete"]);
-    await ctx.commands.assert("/bondeddebug rules user-count 1");
-    await ctx.client.screenshot("bonded-gear-rules-remote-editable");
+      await screen.widgets().find("New Override").click();
+      created = true;
+      await waitForCommand(ctx, "/bondeddebug rules user-count 1");
+      await waitForCommand(ctx, "/bondeddebug rules active-user-count 1", ["minecraft:iron_sword"]);
+      await ctx.commands.assert("/item replace entity @s weapon.mainhand with minecraft:iron_sword");
+      await waitForCommand(ctx, "/bondeddebug rules query", ["cap=1000", "source=User"]);
+      screen = await waitForActiveWidget(ctx, "Delete");
+      await ctx.client.screenshot("bonded-gear-rules-catalog-live-override");
 
-    await screen.widgets().find("Delete").click();
-    await ctx.runtime.wait(500);
-    await ctx.commands.assert("/bondeddebug rules user-count 0");
+      await screen.widgets().find("Delete").click();
+      created = false;
+      await waitForCommand(ctx, "/bondeddebug rules user-count 0");
+      await waitForCommand(ctx, "/bondeddebug rules active-user-count 0");
+      await waitForCommand(ctx, "/bondeddebug rules query", ["cap=100", "source=Bonded"]);
+    } finally {
+      if (created) {
+        const screen = await ctx.client.screen();
+        const deleteButton = screen.widgets().all().find((widget) => widget.label === "Delete" && widget.active);
+        if (deleteButton) {
+          await screen.widgets().find("Delete").click();
+          await waitForCommand(ctx, "/bondeddebug rules user-count 0");
+          await waitForCommand(ctx, "/bondeddebug rules active-user-count 0");
+        }
+      }
+      await ctx.commands.run("/clear @s", { requireSuccess: false });
+    }
   });
 });
 
@@ -75,12 +86,22 @@ async function waitForEntry(ctx: TeaKitTestContext, label: string): Promise<Clie
   throw new Error(`Missing Bonded gear rules config entry; observed: ${labels}`);
 }
 
-function assertInactive(screen: ClientScreen, labels: readonly string[]): void {
-  for (const label of labels) {
+async function waitForActiveWidget(ctx: TeaKitTestContext, label: string): Promise<ClientScreen> {
+  const deadline = Date.now() + 10_000;
+  let screen = await ctx.client.screen();
+  while (Date.now() < deadline) {
     const widget = screen.widgets().all().find((candidate) => candidate.label === label);
-    if (!widget || widget.active) {
-      throw new Error(`Expected ${label} to be present and inactive`);
-    }
+    if (widget?.active) return screen;
+    await ctx.runtime.wait(100);
+    screen = await ctx.client.screen();
+  }
+  throw new Error(`Expected ${label} to become active`);
+}
+
+function assertCatalogProfile(screen: ClientScreen, label: string): void {
+  if (!screen.lists().entries().some((entry) => entry.label === label)) {
+    const observed = screen.lists().entries().map((entry) => entry.label).join(", ");
+    throw new Error(`Missing ${label} catalog entry; observed: ${observed}`);
   }
 }
 
@@ -91,4 +112,20 @@ function assertActive(screen: ClientScreen, labels: readonly string[]): void {
       throw new Error(`Expected ${label} to be present and active`);
     }
   }
+}
+
+async function waitForCommand(
+  ctx: TeaKitTestContext,
+  command: string,
+  outputContains: readonly string[] = [],
+): Promise<void> {
+  const deadline = Date.now() + 10_000;
+  let lastOutput = "";
+  while (Date.now() < deadline) {
+    const result = await ctx.commands.run(command, { captureOutput: true, requireSuccess: false });
+    lastOutput = (result.output ?? []).join("\n");
+    if (result.success && outputContains.every((expected) => lastOutput.includes(expected))) return;
+    await ctx.runtime.wait(100);
+  }
+  throw new Error(`Command did not become true: ${command}; output: ${lastOutput}`);
 }

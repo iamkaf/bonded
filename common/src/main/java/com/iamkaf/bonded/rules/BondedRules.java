@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.iamkaf.bonded.Bonded;
 import com.iamkaf.bonded.leveling.GearManager;
+import com.iamkaf.konfig.api.v1.fieldset.FieldsetEntry;
+import com.iamkaf.konfig.api.v1.fieldset.FieldsetValue;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -26,6 +28,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 /** Resolves declarations into the immutable item rules used during one game run. */
@@ -39,11 +42,105 @@ public final class BondedRules {
     private static final List<ApiPatch> API_PATCHES = new ArrayList<>();
     private static volatile Snapshot active = Snapshot.empty();
     private static volatile Snapshot client = Snapshot.empty();
+    private static volatile Registry<Item> activeRegistry;
 
     private BondedRules() {
     }
 
     public static synchronized Snapshot resolve(Registry<Item> registry) {
+        activeRegistry = registry;
+        Snapshot next = resolveSnapshot(registry, Bonded.GEAR_RULES_CONFIG.userRules());
+        active = next;
+        // Integrated servers share this classloader with their client. Keep that view current
+        // until the identical login packet arrives, including when opening a second world.
+        client = next;
+        if (!next.diagnostics().isEmpty()) {
+            next.diagnostics().forEach(message -> Bonded.LOGGER.warn("Gear rule: {}", message));
+        }
+        Bonded.LOGGER.info("Resolved {} concrete Bonded gear rules with {} diagnostic(s)",
+                next.rules().size(), next.diagnostics().size());
+        return next;
+    }
+
+    /** Rejects candidates whose user declarations cannot be resolved in the active world. */
+    public static synchronized boolean validCandidate(FieldsetValue candidate) {
+        if (!candidate.validate().valid()) {
+            return false;
+        }
+        Registry<Item> registry = activeRegistry;
+        if (registry == null) {
+            return true;
+        }
+        return validUserRules(registry, GearRulesConfig.userRules(candidate));
+    }
+
+    static boolean validUserRules(Registry<Item> registry, List<GearRule> userRules) {
+        LinkedHashMap<String, Item> items = registryItems(registry);
+        ArrayList<String> diagnostics = new ArrayList<>();
+        applySource(registry, items, new LinkedHashMap<>(), userRules, true, true, diagnostics);
+        return diagnostics.isEmpty();
+    }
+
+    static Optional<String> dormantReason(FieldsetEntry entry) {
+        return dormantReason(entry, false);
+    }
+
+    static Optional<String> dormantReason(FieldsetEntry entry, boolean remoteRegistryAvailable) {
+        if (!entry.editable()) {
+            return Optional.empty();
+        }
+        GearRule rule = GearRulesConfig.userRule(entry);
+        Registry<Item> registry = activeRegistry;
+        if (registry == null && !remoteRegistryAvailable) {
+            return dormantItemReason(
+                    rule,
+                    id -> {
+                        Identifier parsed = Identifier.tryParse(id);
+                        return parsed != null && BuiltInRegistries.ITEM.containsKey(parsed);
+                    }
+            );
+        }
+        Registry<Item> warningRegistry = registry == null ? BuiltInRegistries.ITEM : registry;
+        RuleIssue issue = validate(
+                warningRegistry,
+                id -> {
+                    Identifier parsed = Identifier.tryParse(id);
+                    return parsed != null && warningRegistry.containsKey(parsed);
+                },
+                rule,
+                true
+        );
+        return issue != null && issue.kind() == RuleIssueKind.DORMANT
+                ? Optional.of(issue.message())
+                : Optional.empty();
+    }
+
+    private static Optional<String> dormantItemReason(GearRule rule, Predicate<String> itemPresent) {
+        if (!rule.selector().startsWith("#")
+                && GearRuleReference.itemMatching(rule.selector(), itemPresent)
+                == GearRuleReference.Availability.DORMANT) {
+            return Optional.of("selector item is missing: " + rule.selector());
+        }
+        if ("item".equals(rule.repairMode()) && rule.repair() != null
+                && GearRuleReference.itemMatching(rule.repair(), itemPresent)
+                == GearRuleReference.Availability.DORMANT) {
+            return Optional.of("repair item is missing: " + rule.repair());
+        }
+        if (rule.upgradeTo() != null
+                && GearRuleReference.itemMatching(rule.upgradeTo(), itemPresent)
+                == GearRuleReference.Availability.DORMANT) {
+            return Optional.of("upgrade target is missing: " + rule.upgradeTo());
+        }
+        return Optional.empty();
+    }
+
+    public static synchronized void clearServerState() {
+        activeRegistry = null;
+        active = Snapshot.empty();
+        client = Snapshot.empty();
+    }
+
+    private static Snapshot resolveSnapshot(Registry<Item> registry, List<GearRule> userRules) {
         ArrayList<String> diagnostics = new ArrayList<>();
         LinkedHashMap<String, Item> items = registryItems(registry);
         EnumMap<GearRule.Kind, List<GearRule>> declarations = new EnumMap<>(GearRule.Kind.class);
@@ -57,7 +154,7 @@ public final class BondedRules {
             }
             declarations.get(profile.kind()).addAll(profile.rules());
         }
-        declarations.get(GearRule.Kind.USER).addAll(Bonded.GEAR_RULES_CONFIG.userRules());
+        declarations.get(GearRule.Kind.USER).addAll(userRules);
 
         LinkedHashMap<String, ResolvedGearRule> resolved = new LinkedHashMap<>();
         applySource(registry, items, resolved, declarations.get(GearRule.Kind.BUILTIN), false, diagnostics);
@@ -65,17 +162,7 @@ public final class BondedRules {
         applySource(registry, items, resolved, declarations.get(GearRule.Kind.USER), true, diagnostics);
         applyApiPatches(registry, items, resolved, diagnostics);
 
-        Snapshot next = new Snapshot(resolved, diagnostics);
-        active = next;
-        // Integrated servers share this classloader with their client. Keep that view current
-        // until the identical login packet arrives, including when opening a second world.
-        client = next;
-        if (!diagnostics.isEmpty()) {
-            diagnostics.forEach(message -> Bonded.LOGGER.warn("Gear rule: {}", message));
-        }
-        Bonded.LOGGER.info("Resolved {} concrete Bonded gear rules with {} diagnostic(s)",
-                resolved.size(), diagnostics.size());
-        return next;
+        return new Snapshot(resolved, diagnostics);
     }
 
     public static Snapshot active() {
@@ -83,7 +170,9 @@ public final class BondedRules {
     }
 
     public static Snapshot view() {
-        return client.rules().isEmpty() ? active : client;
+        // Dedicated and integrated servers own the active snapshot. A remote client has no
+        // active server snapshot and reads the last snapshot received over the network.
+        return active.rules().isEmpty() ? client : active;
     }
 
     public static Snapshot installClientSnapshot(String json) {
@@ -201,13 +290,25 @@ public final class BondedRules {
             boolean fullReplacement,
             List<String> diagnostics
     ) {
+        applySource(registry, items, resolved, declarations, fullReplacement, false, diagnostics);
+    }
+
+    private static void applySource(
+            Registry<Item> registry,
+            Map<String, Item> items,
+            Map<String, ResolvedGearRule> resolved,
+            List<GearRule> declarations,
+            boolean fullReplacement,
+            boolean tolerateDormant,
+            List<String> diagnostics
+    ) {
         ArrayList<GearRule> valid = new ArrayList<>();
         for (GearRule declaration : declarations) {
-            String error = validate(registry, items, declaration, fullReplacement);
-            if (error == null) {
+            RuleIssue issue = validate(registry, items::containsKey, declaration, fullReplacement);
+            if (issue == null) {
                 valid.add(declaration);
-            } else {
-                diagnostics.add(declaration.identity() + ": " + error);
+            } else if (!tolerateDormant || issue.kind() != RuleIssueKind.DORMANT) {
+                diagnostics.add(declaration.identity() + ": " + issue.message());
             }
         }
 
@@ -371,84 +472,107 @@ public final class BondedRules {
         }
     }
 
-    private static @Nullable String validate(
+    private static @Nullable RuleIssue validate(
             Registry<Item> registry,
-            Map<String, Item> items,
+            Predicate<String> itemPresent,
             GearRule rule,
             boolean fullReplacement
     ) {
         if (rule.selector() == null || rule.selector().isBlank()) {
-            return "selector is blank";
+            return invalid("selector is blank");
         }
         Identifier selector = Identifier.tryParse(stripHash(rule.selector()));
         if (selector == null) {
-            return "selector is not a valid identifier: " + rule.selector();
+            return invalid("selector is not a valid identifier: " + rule.selector());
         }
         if (rule.selector().startsWith("#")) {
             Optional<HolderSet.Named<Item>> holders = registry.get(TagKey.create(Registries.ITEM, selector));
             if (holders.isEmpty() || holders.get().size() == 0) {
-                return "selector tag is missing or empty: " + rule.selector();
+                return dormant("selector tag is missing or empty: " + rule.selector());
             }
-        } else if (!items.containsKey(selector.toString())) {
-            return "selector item is missing: " + rule.selector();
+        } else {
+            GearRuleReference.Availability availability = GearRuleReference.itemMatching(rule.selector(), itemPresent);
+            if (availability == GearRuleReference.Availability.INVALID) {
+                return invalid("selector is not a valid identifier: " + rule.selector());
+            }
+            if (availability == GearRuleReference.Availability.DORMANT) {
+                return dormant("selector item is missing: " + rule.selector());
+            }
         }
         if (rule.experienceCap() != null && rule.experienceCap() <= 0) {
-            return "experience cap must be positive";
+            return invalid("experience cap must be positive");
         }
         if (fullReplacement && (rule.type() == null || rule.experienceCap() == null || rule.repairMode() == null)) {
-            return "user replacements must specify type, experience cap, and repair mode";
+            return invalid("user replacements must specify type, experience cap, and repair mode");
         }
         if (rule.type() != null && !Set.of(
                 "inherit", "armor", "melee_weapon", "ranged_weapon", "mining_tool", "utility"
         ).contains(rule.type())) {
-            return "unknown gear type: " + rule.type();
+            return invalid("unknown gear type: " + rule.type());
         }
         if (rule.repairMode() != null) {
             ResolvedGearRule.RepairMode mode;
             try {
                 mode = ResolvedGearRule.RepairMode.parse(rule.repairMode());
             } catch (IllegalArgumentException exception) {
-                return "unknown repair mode: " + rule.repairMode();
+                return invalid("unknown repair mode: " + rule.repairMode());
             }
             if ((mode == ResolvedGearRule.RepairMode.ITEM || mode == ResolvedGearRule.RepairMode.TAG)
                     && (rule.repair() == null || rule.repair().isBlank())) {
-                return "repair selector is required for " + rule.repairMode();
+                return invalid("repair selector is required for " + rule.repairMode());
             }
             if (mode == ResolvedGearRule.RepairMode.ITEM && rule.repair() != null) {
-                Identifier repair = Identifier.tryParse(stripHash(rule.repair()));
-                if (repair == null || !items.containsKey(repair.toString())) {
-                    return "repair item is missing: " + rule.repair();
+                GearRuleReference.Availability availability = GearRuleReference.itemMatching(rule.repair(), itemPresent);
+                if (availability == GearRuleReference.Availability.INVALID) {
+                    return invalid("repair item is not a valid identifier: " + rule.repair());
+                }
+                if (availability == GearRuleReference.Availability.DORMANT) {
+                    return dormant("repair item is missing: " + rule.repair());
                 }
             }
             if (mode == ResolvedGearRule.RepairMode.TAG && rule.repair() != null) {
                 Identifier repair = Identifier.tryParse(stripHash(rule.repair()));
-                Optional<HolderSet.Named<Item>> holders = repair == null
-                        ? Optional.empty()
-                        : registry.get(TagKey.create(Registries.ITEM, repair));
+                if (repair == null) {
+                    return invalid("repair tag is not a valid identifier: " + rule.repair());
+                }
+                Optional<HolderSet.Named<Item>> holders = registry.get(TagKey.create(Registries.ITEM, repair));
                 if (holders.isEmpty() || holders.get().size() == 0) {
-                    return "repair tag is missing or empty: " + rule.repair();
+                    return dormant("repair tag is missing or empty: " + rule.repair());
                 }
             }
         }
         boolean target = rule.upgradeTo() != null && !rule.upgradeTo().isBlank();
         boolean ingredient = rule.upgradeIngredient() != null && !rule.upgradeIngredient().isBlank();
         if (target != ingredient) {
-            return "upgrade target and ingredient must both be set or both be blank";
+            return invalid("upgrade target and ingredient must both be set or both be blank");
         }
         if (target) {
-            Identifier targetId = Identifier.tryParse(rule.upgradeTo());
+            GearRuleReference.Availability targetAvailability =
+                    GearRuleReference.itemMatching(rule.upgradeTo(), itemPresent);
             Identifier ingredientId = Identifier.tryParse(stripHash(rule.upgradeIngredient()));
-            Optional<HolderSet.Named<Item>> holders = ingredientId == null
-                    ? Optional.empty()
-                    : registry.get(TagKey.create(Registries.ITEM, ingredientId));
-            if (targetId == null || !items.containsKey(targetId.toString())) {
-                return "upgrade target is missing: " + rule.upgradeTo();
+            if (targetAvailability == GearRuleReference.Availability.INVALID) {
+                return invalid("upgrade target is not a valid identifier: " + rule.upgradeTo());
+            }
+            if (ingredientId == null) {
+                return invalid("upgrade ingredient is not a valid identifier: " + rule.upgradeIngredient());
+            }
+            Optional<HolderSet.Named<Item>> holders = registry.get(TagKey.create(Registries.ITEM, ingredientId));
+            if (targetAvailability == GearRuleReference.Availability.DORMANT) {
+                return dormant("upgrade target is missing: " + rule.upgradeTo());
             }
             if (holders.isEmpty() || holders.get().size() == 0) {
-                return "upgrade ingredient tag is missing or empty: " + rule.upgradeIngredient();
+                return dormant("upgrade ingredient tag is missing or empty: " + rule.upgradeIngredient());
             }
         }
         return null;
+    }
+
+    private static RuleIssue invalid(String message) {
+        return new RuleIssue(RuleIssueKind.INVALID, message);
+    }
+
+    private static RuleIssue dormant(String message) {
+        return new RuleIssue(RuleIssueKind.DORMANT, message);
     }
 
     private static LinkedHashMap<String, Item> registryItems(Registry<Item> registry) {
@@ -489,6 +613,14 @@ public final class BondedRules {
         public static Snapshot empty() {
             return new Snapshot(Map.of(), List.of());
         }
+    }
+
+    private enum RuleIssueKind {
+        INVALID,
+        DORMANT
+    }
+
+    private record RuleIssue(RuleIssueKind kind, String message) {
     }
 
     private static final class ApiPatch {

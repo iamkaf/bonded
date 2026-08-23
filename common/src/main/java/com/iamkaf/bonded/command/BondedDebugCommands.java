@@ -5,6 +5,7 @@ import com.iamkaf.bonded.Bonded;
 import com.iamkaf.bonded.loot.WorldInnateBond;
 import com.iamkaf.bonded.network.BondedNetworking;
 import com.iamkaf.bonded.rules.BondedRules;
+import com.iamkaf.bonded.rules.GearRule;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -43,6 +44,12 @@ public final class BondedDebugCommands {
                         .then(Commands.literal("user-count")
                                 .then(Commands.argument("expected", IntegerArgumentType.integer(0))
                                         .executes(context -> verifyUserRuleCount(
+                                                context.getSource(),
+                                                IntegerArgumentType.getInteger(context, "expected")
+                                        ))))
+                        .then(Commands.literal("active-user-count")
+                                .then(Commands.argument("expected", IntegerArgumentType.integer(0))
+                                        .executes(context -> verifyActiveUserRuleCount(
                                                 context.getSource(),
                                                 IntegerArgumentType.getInteger(context, "expected")
                                         )))))
@@ -92,6 +99,20 @@ public final class BondedDebugCommands {
     private static int verifyUserRuleCount(CommandSourceStack source, int expected) {
         int actual = Bonded.GEAR_RULES_CONFIG.userRules().size();
         source.sendSuccess(() -> Component.literal("Bonded user gear rules: " + actual), false);
+        return actual == expected ? Command.SINGLE_SUCCESS : 0;
+    }
+
+    private static int verifyActiveUserRuleCount(CommandSourceStack source, int expected) {
+        var items = BondedRules.active().rules().entrySet().stream()
+                .filter(entry -> entry.getValue().source().kind() == GearRule.Kind.USER)
+                .map(java.util.Map.Entry::getKey)
+                .sorted()
+                .toList();
+        int actual = items.size();
+        source.sendSuccess(
+                () -> Component.literal("Bonded active user gear rules: " + actual + " " + items),
+                false
+        );
         return actual == expected ? Command.SINGLE_SUCCESS : 0;
     }
 

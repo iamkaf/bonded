@@ -75,6 +75,7 @@ class BondedRulesProfilesTest {
                 "bonded:builtin",
                 "bonded:basic_weapons",
                 "bonded:advanced_netherite",
+                "bonded:arcane_armory",
                 "bonded:immersive_armors",
                 "bonded:betterend",
                 "bonded:betternether"
@@ -112,6 +113,24 @@ class BondedRulesProfilesTest {
         assertEquals("armor", immersiveArmor.get("type").getAsString());
         assertEquals("inherit", immersiveArmor.get("repair_mode").getAsString());
         assertFalse(immersiveArmor.has("repair"));
+
+        JsonObject arcaneArmory = profiles.get("bonded:arcane_armory");
+        assertEquals(159, arcaneArmory.getAsJsonArray("rules").size());
+        for (JsonElement element : arcaneArmory.getAsJsonArray("rules")) {
+            JsonObject arcaneRule = element.getAsJsonObject();
+            assertEquals("inherit", arcaneRule.get("repair_mode").getAsString());
+            assertFalse(arcaneRule.has("experience_cap"));
+            assertFalse(arcaneRule.has("upgrade_to"));
+        }
+
+        var arcaneHammer = rule(arcaneArmory, "arcanearmory:voidium_hammer");
+        assertEquals("mining_tool", arcaneHammer.get("type").getAsString());
+        assertEquals("inherit", arcaneHammer.get("repair_mode").getAsString());
+        assertFalse(arcaneHammer.has("experience_cap"));
+        assertFalse(arcaneHammer.has("upgrade_to"));
+
+        var arcaneShield = rule(arcaneArmory, "arcanearmory:voidium_shield");
+        assertEquals("utility", arcaneShield.get("type").getAsString());
 
         JsonObject betterNether = profiles.get("bonded:betternether");
         for (JsonElement element : betterNether.getAsJsonArray("rules")) {

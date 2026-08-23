@@ -4,6 +4,7 @@ import com.iamkaf.amber.api.networking.v1.NetworkChannel;
 import com.iamkaf.amber.api.event.v1.events.common.PlayerEvents;
 import com.iamkaf.bonded.Bonded;
 import com.iamkaf.bonded.rules.BondedRules;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.NameAndId;
 
@@ -37,13 +38,7 @@ public final class BondedNetworking {
                 DebugGearRulesScreenPacket.DECODER,
                 DebugGearRulesScreenPacket.HANDLER
         );
-        PlayerEvents.PLAYER_JOIN.register(player -> CHANNEL.sendToPlayer(
-                new GearRulesPacket(
-                        BondedRules.packetJson(),
-                        !player.level().getServer().isSingleplayerOwner(new NameAndId(player.getGameProfile()))
-                ),
-                player
-        ));
+        PlayerEvents.PLAYER_JOIN.register(player -> sendGearRules(player));
         initialized = true;
     }
 
@@ -53,5 +48,26 @@ public final class BondedNetworking {
 
     public static void openDebugGearRulesScreen(ServerPlayer player) {
         CHANNEL.sendToPlayer(new DebugGearRulesScreenPacket(BondedRules.packetJson()), player);
+    }
+
+    public static void broadcastGearRules(MinecraftServer server) {
+        String json = BondedRules.packetJson();
+        for (ServerPlayer player : server.getPlayerList().getPlayers()) {
+            sendGearRules(player, json);
+        }
+    }
+
+    private static void sendGearRules(ServerPlayer player) {
+        sendGearRules(player, BondedRules.packetJson());
+    }
+
+    private static void sendGearRules(ServerPlayer player, String json) {
+        CHANNEL.sendToPlayer(
+                new GearRulesPacket(
+                        json,
+                        !player.level().getServer().isSingleplayerOwner(new NameAndId(player.getGameProfile()))
+                ),
+                player
+        );
     }
 }
