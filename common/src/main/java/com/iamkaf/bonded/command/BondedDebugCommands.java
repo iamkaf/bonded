@@ -6,6 +6,7 @@ import com.iamkaf.bonded.loot.WorldInnateBond;
 import com.iamkaf.bonded.network.BondedNetworking;
 import com.iamkaf.bonded.rules.BondedRules;
 import com.mojang.brigadier.Command;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
@@ -38,7 +39,13 @@ public final class BondedDebugCommands {
                         .then(Commands.literal("query")
                                 .executes(context -> queryHeldRule(context.getSource())))
                         .then(Commands.literal("preview-remote-view")
-                                .executes(context -> previewRemoteRules(context.getSource()))))
+                                .executes(context -> previewRemoteRules(context.getSource())))
+                        .then(Commands.literal("user-count")
+                                .then(Commands.argument("expected", IntegerArgumentType.integer(0))
+                                        .executes(context -> verifyUserRuleCount(
+                                                context.getSource(),
+                                                IntegerArgumentType.getInteger(context, "expected")
+                                        )))))
                 .then(Commands.literal("swimming")
                         .then(Commands.literal("start")
                                 .executes(context -> setSwimming(context.getSource(), true)))
@@ -78,8 +85,14 @@ public final class BondedDebugCommands {
 
     private static int previewRemoteRules(CommandSourceStack source) throws CommandSyntaxException {
         BondedNetworking.openDebugGearRulesScreen(source.getPlayerOrException());
-        source.sendSuccess(() -> Component.literal("Opened the read-only remote gear-rule preview."), false);
+        source.sendSuccess(() -> Component.literal("Opened the remote gear-rule preview."), false);
         return Command.SINGLE_SUCCESS;
+    }
+
+    private static int verifyUserRuleCount(CommandSourceStack source, int expected) {
+        int actual = Bonded.GEAR_RULES_CONFIG.userRules().size();
+        source.sendSuccess(() -> Component.literal("Bonded user gear rules: " + actual), false);
+        return actual == expected ? Command.SINGLE_SUCCESS : 0;
     }
 
     private static int setSwimming(

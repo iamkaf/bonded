@@ -112,6 +112,13 @@ class BondedRulesProfilesTest {
         assertEquals("armor", immersiveArmor.get("type").getAsString());
         assertEquals("inherit", immersiveArmor.get("repair_mode").getAsString());
         assertFalse(immersiveArmor.has("repair"));
+
+        JsonObject betterNether = profiles.get("bonded:betternether");
+        for (JsonElement element : betterNether.getAsJsonArray("rules")) {
+            String selector = element.getAsJsonObject().get("selector").getAsString();
+            assertFalse(selector.endsWith("_hammer") || selector.endsWith("_hammer_diamond"));
+            assertFalse(selector.endsWith("_excavator") || selector.endsWith("_excavator_diamond"));
+        }
     }
 
     @Test

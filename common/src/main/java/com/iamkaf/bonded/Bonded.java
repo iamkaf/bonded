@@ -53,7 +53,7 @@ public class Bonded {
 
         ConfigBuilder gearRulesBuilder = Konfig.builder(MOD_ID, "gear_rules")
                 .scope(ConfigScope.COMMON)
-                .syncMode(SyncMode.NONE)
+                .syncMode(SyncMode.LOGIN_AND_RELOAD)
                 .fileName("gear-rules.toml")
                 .schemaVersion(1)
                 .comment("User-owned Bonded gear rules. Shipped rules remain in the mod jar.")

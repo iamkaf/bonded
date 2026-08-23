@@ -14,7 +14,7 @@ describe.configure({
 });
 
 describe("Bonded gear-rule screen", () => {
-  test("shows the remote snapshot without editable controls", async (ctx) => {
+  test("lets an operator add and remove server-owned overrides", async (ctx) => {
     await ctx.commands.assert("/bondeddebug rules preview-remote-view");
     let screen = await ctx.client.waitForScreen(
       "com.iamkaf.konfig.impl.v1.client.screen.KonfigConfigScreen",
@@ -33,7 +33,8 @@ describe("Bonded gear-rule screen", () => {
       "com.iamkaf.konfig.impl.v1.client.fieldset.KonfigFieldsetListScreen",
       { timeoutMs: 10_000 },
     );
-    assertInactive(screen, ["Add", "Copy", "Delete", "Up", "Down"]);
+    assertActive(screen, ["Add", "Copy"]);
+    assertInactive(screen, ["Delete", "Up", "Down"]);
     const firstRule = screen.lists().entries()[0];
     if (!firstRule) throw new Error("Remote gear-rule snapshot is empty");
     await ctx.client.click({
@@ -43,8 +44,19 @@ describe("Bonded gear-rule screen", () => {
     });
     await ctx.runtime.wait(250);
     screen = await ctx.client.screen();
-    assertInactive(screen, ["Add", "Copy", "Delete", "Up", "Down"]);
-    await ctx.client.screenshot("bonded-gear-rules-remote-read-only");
+    assertActive(screen, ["Add", "Copy"]);
+    assertInactive(screen, ["Delete", "Up", "Down"]);
+
+    screen = await screen.widgets().find("Add").click();
+    await ctx.runtime.wait(500);
+    screen = await ctx.client.screen();
+    assertActive(screen, ["Add", "Copy", "Delete"]);
+    await ctx.commands.assert("/bondeddebug rules user-count 1");
+    await ctx.client.screenshot("bonded-gear-rules-remote-editable");
+
+    await screen.widgets().find("Delete").click();
+    await ctx.runtime.wait(500);
+    await ctx.commands.assert("/bondeddebug rules user-count 0");
   });
 });
 
@@ -68,6 +80,15 @@ function assertInactive(screen: ClientScreen, labels: readonly string[]): void {
     const widget = screen.widgets().all().find((candidate) => candidate.label === label);
     if (!widget || widget.active) {
       throw new Error(`Expected ${label} to be present and inactive`);
+    }
+  }
+}
+
+function assertActive(screen: ClientScreen, labels: readonly string[]): void {
+  for (const label of labels) {
+    const widget = screen.widgets().all().find((candidate) => candidate.label === label);
+    if (!widget || !widget.active) {
+      throw new Error(`Expected ${label} to be present and active`);
     }
   }
 }

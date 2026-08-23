@@ -78,12 +78,12 @@ public final class GearRulesConfig {
                         .header("Restart required")
                         .inlineText("Changes save automatically and apply after restarting the game or dedicated server."))
                 .restart(RestartRequirement.GAME)
-                .sync(false)
+                .sync(true)
                 .remoteScreenView(this::remoteScreenValue, () -> this.remoteViewAvailable)
                 .build();
     }
 
-    /** Installs the server-authoritative read-only view without touching the local config file. */
+    /** Installs the server-authoritative resolved rows without touching the persisted user rules. */
     public void installRemoteView(Collection<ResolvedGearRule> rules) {
         ArrayList<FieldsetEntry> entries = new ArrayList<>();
         for (ResolvedGearRule rule : rules) {
@@ -151,7 +151,20 @@ public final class GearRulesConfig {
 
     private FieldsetValue remoteScreenValue() {
         FieldsetValue current = this.remoteView;
-        return current == null ? this.value.get() : current;
+        return current == null ? this.value.get() : mergeRemoteView(current, this.value.get());
+    }
+
+    private static FieldsetValue mergeRemoteView(FieldsetValue remote, FieldsetValue configured) {
+        if (remote.schema() != configured.schema()) {
+            throw new IllegalArgumentException("Remote gear rules use a different schema");
+        }
+        ArrayList<FieldsetEntry> entries = new ArrayList<>(remote.entries());
+        for (FieldsetEntry entry : configured.entries()) {
+            if (entry.editable()) {
+                entries.add(entry);
+            }
+        }
+        return FieldsetValue.of(remote.schema(), entries);
     }
 
     private static boolean validRepair(FieldsetEntry entry) {

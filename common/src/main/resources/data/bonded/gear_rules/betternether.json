@@ -81,30 +81,6 @@
       "repair_mode": "inherit"
     },
     {
-      "selector": "betternether:cincinnasite_hammer",
-      "type": "mining_tool",
-      "repair_mode": "inherit",
-      "upgrade_to": "betternether:cincinnasite_hammer_diamond",
-      "upgrade_ingredient": "betternether:cincinnasite_diamond/repair"
-    },
-    {
-      "selector": "betternether:cincinnasite_hammer_diamond",
-      "type": "mining_tool",
-      "repair_mode": "inherit"
-    },
-    {
-      "selector": "betternether:cincinnasite_excavator",
-      "type": "mining_tool",
-      "repair_mode": "inherit",
-      "upgrade_to": "betternether:cincinnasite_excavator_diamond",
-      "upgrade_ingredient": "betternether:cincinnasite_diamond/repair"
-    },
-    {
-      "selector": "betternether:cincinnasite_excavator_diamond",
-      "type": "mining_tool",
-      "repair_mode": "inherit"
-    },
-    {
       "selector": "betternether:cincinnasite_helmet",
       "type": "armor",
       "repair_mode": "inherit"
@@ -165,16 +141,6 @@
       "repair_mode": "inherit",
       "upgrade_to": "betternether:flaming_ruby_spear",
       "upgrade_ingredient": "betternether:flaming_ruby/repair"
-    },
-    {
-      "selector": "betternether:nether_ruby_hammer",
-      "type": "mining_tool",
-      "repair_mode": "inherit"
-    },
-    {
-      "selector": "betternether:nether_ruby_excavator",
-      "type": "mining_tool",
-      "repair_mode": "inherit"
     },
     {
       "selector": "betternether:nether_ruby_helmet",
