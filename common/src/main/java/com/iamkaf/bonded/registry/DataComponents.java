@@ -2,6 +2,7 @@ package com.iamkaf.bonded.registry;
 
 import com.iamkaf.bonded.Bonded;
 import com.iamkaf.bonded.component.AppliedBonusesContainer;
+import com.iamkaf.bonded.component.AugmentProgressContainer;
 import com.iamkaf.bonded.component.ItemLevelContainer;
 import com.iamkaf.bonded.component.MaxDamageModifiersComponent;
 import com.iamkaf.amber.api.registry.v1.DeferredRegister;
@@ -25,6 +26,13 @@ public class DataComponents {
                     Bonded.resource("applied_bonuses"),
                     () -> DataComponentType.<AppliedBonusesContainer>builder()
                             .persistent(AppliedBonusesContainer.CODEC)
+                            .build()
+            );
+    public static final RegistrySupplier<DataComponentType<AugmentProgressContainer>> AUGMENT_PROGRESS =
+            DATA_COMPONENT_TYPES.register(
+                    Bonded.resource("augment_progress"),
+                    () -> DataComponentType.<AugmentProgressContainer>builder()
+                            .persistent(AugmentProgressContainer.CODEC)
                             .build()
             );
     public static final RegistrySupplier<DataComponentType<MaxDamageModifiersComponent>> MAX_DAMAGE_MODIFIERS =

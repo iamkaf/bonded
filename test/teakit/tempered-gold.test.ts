@@ -26,6 +26,7 @@ describe.configure({
 describe("Bonded Tempered Gold", () => {
   test("upgrades every golden tool and armor piece", async ({ commands, player, world }) => {
     try {
+      await player.inventory().selectHotbar(0);
       await commands.batch([
         "/clear @s",
         "/gamemode survival @s",
@@ -38,19 +39,28 @@ describe("Bonded Tempered Gold", () => {
         .toEventuallyEqual("bonded:tool_bench", { timeout: "3s" });
 
       for (const [gold, tempered] of upgrades) {
+        await player.inventory().selectHotbar(0);
         await commands.batch([
           "/clear @s",
-          `/item replace entity @s weapon.mainhand with minecraft:${gold}`,
+          `/item replace entity @s hotbar.0 with minecraft:${gold}`,
           "/item replace entity @s hotbar.1 with bonded:tempered_gold_ingot",
         ]);
+        await expect(async () => {
+          try {
+            await commands.assert(`/execute if items entity @s weapon.mainhand minecraft:${gold}`);
+            return true;
+          } catch {
+            return false;
+          }
+        }).toEventuallyEqual(true, { timeout: "5s", interval: "100ms" });
         await commands.assert("/bonded xp set @s 10 levels");
         await player.useBlockServer(
           { x: 0, y: 71, z: 0 },
           { face: "up", hand: "main_hand" },
         );
-        await expect(player.inventory()).toContainItem(`bonded:${tempered}`, {
+        await player.inventory().waitForItem(`bonded:${tempered}`, {
           slot: 0,
-          count: 1,
+          timeout: "5s",
         });
       }
     } finally {

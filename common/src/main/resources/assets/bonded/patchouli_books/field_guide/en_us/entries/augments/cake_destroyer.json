@@ -1,0 +1,19 @@
+{
+  "name": "Cake Destroyer",
+  "icon": "minecraft:cake",
+  "category": "bonded:augments",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Cake Destroyer",
+      "text": "A melee weapon or mining tool begins training Cake Destroyer when it breaks cakes, including cakes with candles. Break 100 cakes with the same item to awaken it."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:sugar",
+      "title": "A Sweet Victory",
+      "text": "Once active, direct melee hits dealing more than two damage have a small chance to shake sugar loose from the target. Sensible? No. Memorable? Absolutely."
+    }
+  ]
+}

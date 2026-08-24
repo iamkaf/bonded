@@ -1,0 +1,6 @@
+{
+  "name": "Recipes",
+  "description": "Workstations and materials used to maintain bonded equipment.",
+  "icon": "bonded:repair_bench",
+  "sortnum": 1
+}

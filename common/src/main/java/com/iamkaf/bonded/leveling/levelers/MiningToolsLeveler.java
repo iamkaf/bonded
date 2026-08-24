@@ -8,6 +8,11 @@ import net.minecraft.world.item.crafting.Ingredient;
 
 public class MiningToolsLeveler implements GearTypeLeveler {
     @Override
+    public String id() {
+        return "mining_tool";
+    }
+
+    @Override
     public String name() {
         return "Mining Tools";
     }

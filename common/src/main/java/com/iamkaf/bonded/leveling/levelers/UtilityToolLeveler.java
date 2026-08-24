@@ -10,6 +10,11 @@ import java.util.Objects;
 
 public class UtilityToolLeveler implements GearTypeLeveler {
     @Override
+    public String id() {
+        return "utility";
+    }
+
+    @Override
     public String name() {
         return "Utility Tools";
     }

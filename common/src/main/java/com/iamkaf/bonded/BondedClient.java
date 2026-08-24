@@ -1,7 +1,9 @@
 package com.iamkaf.bonded;
 
 import com.iamkaf.amber.api.event.v1.events.common.client.HudEvents;
+import com.iamkaf.amber.api.platform.v1.Platform;
 import com.iamkaf.bonded.client.HUD;
+import com.iamkaf.bonded.compat.LiteminerClientCompat;
 import com.iamkaf.bonded.config.BondedClientConfig;
 import com.iamkaf.bonded.network.ProgressionSoundPacket;
 import com.iamkaf.bonded.registry.Sounds;
@@ -9,6 +11,7 @@ import com.iamkaf.konfig.api.v1.ConfigBuilder;
 import com.iamkaf.konfig.api.v1.ConfigHandle;
 import com.iamkaf.konfig.api.v1.ConfigScope;
 import com.iamkaf.konfig.api.v1.Konfig;
+import com.iamkaf.konfig.api.v1.KonfigClientScreens;
 import com.iamkaf.konfig.api.v1.SyncMode;
 import net.minecraft.client.Minecraft;
 import net.minecraft.sounds.SoundEvent;
@@ -36,6 +39,9 @@ public class BondedClient {
     public static void init() {
         HUD.init();
         HudEvents.RENDER_HUD.register(HUD::onRenderHud);
+        if (Platform.isModLoaded("liteminer")) {
+            LiteminerClientCompat.init();
+        }
     }
 
     public static void playProgressionSound(ProgressionSoundPacket.Kind kind) {
@@ -66,5 +72,14 @@ public class BondedClient {
                 1.0F,
                 false
         );
+    }
+
+    public static void openGearRulesConfigScreen() {
+        Minecraft minecraft = Minecraft.getInstance();
+        //? if >=26.2 {
+        minecraft.gui.setScreen(KonfigClientScreens.create(Bonded.MOD_ID, minecraft.gui.screen()));
+        //?} else {
+        /*minecraft.setScreen(KonfigClientScreens.create(Bonded.MOD_ID, minecraft.screen));
+        *///?}
     }
 }

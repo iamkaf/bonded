@@ -10,6 +10,7 @@
   "mixins": [
     "ItemStackMixin",
     "LivingEntityMixin",
+    "ServerPlayerMixin",
     "AxeItemMixin",
     "ShovelItemMixin",
     "SmithingMenuMixin",

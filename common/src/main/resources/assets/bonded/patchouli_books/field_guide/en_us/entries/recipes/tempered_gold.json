@@ -1,0 +1,18 @@
+{
+  "name": "Tempered Gold",
+  "icon": "bonded:tempered_gold_ingot",
+  "category": "bonded:recipes",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Tempered Gold",
+      "text": "Gold equipment that reaches its maximum level can be upgraded into Tempered Gold at a Tool Bench. Tempered Gold Nuggets can also be recovered while mining Nether Gold Ore with the right tool."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bonded:tempered_gold_ingot",
+      "recipe2": "bonded:tempered_gold_nuggets"
+    }
+  ]
+}

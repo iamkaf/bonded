@@ -3,8 +3,10 @@ package com.iamkaf.bonded;
 import com.iamkaf.amber.api.core.v2.AmberInitializer;
 import com.iamkaf.amber.api.platform.v1.Platform;
 import com.iamkaf.bonded.bonuses.Bonuses;
+import com.iamkaf.bonded.augment.Augments;
 import com.iamkaf.bonded.command.BondedDebugCommands;
 import com.iamkaf.bonded.command.BondedCommands;
+import com.iamkaf.bonded.compat.LiteminerCompat;
 import com.iamkaf.bonded.config.BondedCommonConfig;
 import com.iamkaf.bonded.leveling.GameplayHooks;
 import com.iamkaf.bonded.leveling.GearManager;
@@ -14,12 +16,15 @@ import com.iamkaf.bonded.loot.TemperedGoldDrops;
 import com.iamkaf.bonded.loot.WorldInnateBond;
 import com.iamkaf.bonded.network.BondedNetworking;
 import com.iamkaf.bonded.registry.*;
+import com.iamkaf.bonded.rules.GearRulesConfig;
 import com.mojang.logging.LogUtils;
 import com.iamkaf.konfig.api.v1.ConfigBuilder;
 import com.iamkaf.konfig.api.v1.ConfigHandle;
+import com.iamkaf.konfig.api.v1.ConfigListener;
 import com.iamkaf.konfig.api.v1.ConfigMigrationContext;
 import com.iamkaf.konfig.api.v1.ConfigScope;
 import com.iamkaf.konfig.api.v1.Konfig;
+import com.iamkaf.konfig.api.v1.ReloadCause;
 import com.iamkaf.konfig.api.v1.SyncMode;
 import net.minecraft.resources.Identifier;
 import org.slf4j.Logger;
@@ -29,6 +34,8 @@ public class Bonded {
     public static final Logger LOGGER = LogUtils.getLogger();
     public static final BondedCommonConfig CONFIG;
     public static final ConfigHandle CONFIG_HANDLE;
+    public static final GearRulesConfig GEAR_RULES_CONFIG;
+    public static final ConfigHandle GEAR_RULES_CONFIG_HANDLE;
     public static GearManager GEAR = new GearManager();
 
     static {
@@ -45,6 +52,26 @@ public class Bonded {
                         .urlKey("bonded.config.info.report_issue", "https://github.com/iamkaf/bonded"));
         CONFIG = new BondedCommonConfig(builder);
         CONFIG_HANDLE = builder.build();
+
+        ConfigBuilder gearRulesBuilder = Konfig.builder(MOD_ID, "gear_rules")
+                .scope(ConfigScope.COMMON)
+                .syncMode(SyncMode.LOGIN_AND_RELOAD)
+                .fileName("gear-rules.toml")
+                .schemaVersion(1)
+                .comment("User-owned Bonded gear rules. Shipped rules remain in the mod jar.")
+                .info(info -> info
+                        .header("Gear Rules")
+                        .inlineText("Copy a shipped rule to replace it, or add a new item or item-tag rule."));
+        GEAR_RULES_CONFIG = new GearRulesConfig(gearRulesBuilder);
+        GEAR_RULES_CONFIG_HANDLE = gearRulesBuilder.build();
+        GEAR_RULES_CONFIG_HANDLE.addListener(new ConfigListener() {
+            @Override
+            public void onReload(ConfigHandle handle, ReloadCause cause) {
+                if (cause != ReloadCause.SERVER_SYNC) {
+                    GearManager.reloadGearRules();
+                }
+            }
+        });
     }
 
     private static void migrateFlatConfig(ConfigMigrationContext context) {
@@ -89,12 +116,15 @@ public class Bonded {
         }
         BondedNetworking.init();
         GameplayHooks.init();
+        if (Platform.isModLoaded("liteminer")) {
+            LiteminerCompat.init();
+        }
         WorldInnateBond.init();
         ScrapDrops.init();
         TemperedGoldDrops.init();
         Levelers.init();
         Bonuses.init();
-        TierMap.init();
+        Augments.init();
         Sounds.init();
     }
 

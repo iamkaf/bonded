@@ -1,0 +1,12 @@
+{
+  "name": "Bonded Field Guide",
+  "landing_text": "Equipment remembers what you do with it. Use this guide to learn how Bond grows, how the benches work, and which unusual habits can awaken an augment.",
+  "subtitle": "Notes on familiar gear",
+  "model": "bonded:bonded_field_guide",
+  "creative_tab": "minecraft:tools_and_utilities",
+  "version": 1,
+  "use_resource_pack": true,
+  "show_progress": false,
+  "show_toasts": false,
+  "pause_game": false
+}

@@ -1,0 +1,212 @@
+{
+  "id": "bonded:immersive_armors",
+  "label": "Immersive Armors",
+  "kind": "compat",
+  "version": 1,
+  "required_mod": "immersive_armors",
+  "markers": [
+    "immersive_armors:bone_helmet"
+  ],
+  "rules": [
+    {
+      "selector": "immersive_armors:bone_helmet",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:bone_chestplate",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:bone_leggings",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:bone_boots",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:wither_helmet",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:wither_chestplate",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:wither_leggings",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:wither_boots",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:warrior_helmet",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:warrior_chestplate",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:warrior_leggings",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:warrior_boots",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:heavy_helmet",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:heavy_chestplate",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:heavy_leggings",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:heavy_boots",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:robe_helmet",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:robe_chestplate",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:robe_leggings",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:robe_boots",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:slime_helmet",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:slime_chestplate",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:slime_leggings",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:slime_boots",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:divine_helmet",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:divine_chestplate",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:divine_leggings",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:divine_boots",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:prismarine_helmet",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:prismarine_chestplate",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:prismarine_leggings",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:prismarine_boots",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:wooden_helmet",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:wooden_chestplate",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:wooden_leggings",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:wooden_boots",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:steampunk_helmet",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:steampunk_chestplate",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:steampunk_leggings",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "immersive_armors:steampunk_boots",
+      "type": "armor",
+      "repair_mode": "inherit"
+    }
+  ]
+}

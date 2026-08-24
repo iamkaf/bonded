@@ -1,0 +1,322 @@
+{
+  "id": "bonded:advanced_netherite",
+  "label": "Advanced Netherite",
+  "kind": "compat",
+  "version": 1,
+  "required_mod": "advancednetherite",
+  "markers": [
+    "advancednetherite:netherite_iron_sword"
+  ],
+  "rules": [
+    {
+      "selector": "advancednetherite:netherite_iron_axe",
+      "type": "mining_tool",
+      "repair_mode": "inherit",
+      "upgrade_to": "advancednetherite:netherite_gold_axe",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_gold"
+    },
+    {
+      "selector": "advancednetherite:netherite_iron_hoe",
+      "type": "mining_tool",
+      "repair_mode": "inherit",
+      "upgrade_to": "advancednetherite:netherite_gold_hoe",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_gold"
+    },
+    {
+      "selector": "advancednetherite:netherite_iron_pickaxe",
+      "type": "mining_tool",
+      "repair_mode": "inherit",
+      "upgrade_to": "advancednetherite:netherite_gold_pickaxe",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_gold"
+    },
+    {
+      "selector": "advancednetherite:netherite_iron_shovel",
+      "type": "mining_tool",
+      "repair_mode": "inherit",
+      "upgrade_to": "advancednetherite:netherite_gold_shovel",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_gold"
+    },
+    {
+      "selector": "advancednetherite:netherite_iron_sword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "advancednetherite:netherite_gold_sword",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_gold"
+    },
+    {
+      "selector": "advancednetherite:netherite_iron_spear",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "advancednetherite:netherite_gold_spear",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_gold"
+    },
+    {
+      "selector": "advancednetherite:netherite_iron_helmet",
+      "type": "armor",
+      "repair_mode": "inherit",
+      "upgrade_to": "advancednetherite:netherite_gold_helmet",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_gold"
+    },
+    {
+      "selector": "advancednetherite:netherite_iron_chestplate",
+      "type": "armor",
+      "repair_mode": "inherit",
+      "upgrade_to": "advancednetherite:netherite_gold_chestplate",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_gold"
+    },
+    {
+      "selector": "advancednetherite:netherite_iron_leggings",
+      "type": "armor",
+      "repair_mode": "inherit",
+      "upgrade_to": "advancednetherite:netherite_gold_leggings",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_gold"
+    },
+    {
+      "selector": "advancednetherite:netherite_iron_boots",
+      "type": "armor",
+      "repair_mode": "inherit",
+      "upgrade_to": "advancednetherite:netherite_gold_boots",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_gold"
+    },
+    {
+      "selector": "advancednetherite:netherite_gold_axe",
+      "type": "mining_tool",
+      "repair_mode": "inherit",
+      "upgrade_to": "advancednetherite:netherite_emerald_axe",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_emerald"
+    },
+    {
+      "selector": "advancednetherite:netherite_gold_hoe",
+      "type": "mining_tool",
+      "repair_mode": "inherit",
+      "upgrade_to": "advancednetherite:netherite_emerald_hoe",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_emerald"
+    },
+    {
+      "selector": "advancednetherite:netherite_gold_pickaxe",
+      "type": "mining_tool",
+      "repair_mode": "inherit",
+      "upgrade_to": "advancednetherite:netherite_emerald_pickaxe",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_emerald"
+    },
+    {
+      "selector": "advancednetherite:netherite_gold_shovel",
+      "type": "mining_tool",
+      "repair_mode": "inherit",
+      "upgrade_to": "advancednetherite:netherite_emerald_shovel",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_emerald"
+    },
+    {
+      "selector": "advancednetherite:netherite_gold_sword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "advancednetherite:netherite_emerald_sword",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_emerald"
+    },
+    {
+      "selector": "advancednetherite:netherite_gold_spear",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "advancednetherite:netherite_emerald_spear",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_emerald"
+    },
+    {
+      "selector": "advancednetherite:netherite_gold_helmet",
+      "type": "armor",
+      "repair_mode": "inherit",
+      "upgrade_to": "advancednetherite:netherite_emerald_helmet",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_emerald"
+    },
+    {
+      "selector": "advancednetherite:netherite_gold_chestplate",
+      "type": "armor",
+      "repair_mode": "inherit",
+      "upgrade_to": "advancednetherite:netherite_emerald_chestplate",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_emerald"
+    },
+    {
+      "selector": "advancednetherite:netherite_gold_leggings",
+      "type": "armor",
+      "repair_mode": "inherit",
+      "upgrade_to": "advancednetherite:netherite_emerald_leggings",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_emerald"
+    },
+    {
+      "selector": "advancednetherite:netherite_gold_boots",
+      "type": "armor",
+      "repair_mode": "inherit",
+      "upgrade_to": "advancednetherite:netherite_emerald_boots",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_emerald"
+    },
+    {
+      "selector": "advancednetherite:netherite_emerald_axe",
+      "type": "mining_tool",
+      "repair_mode": "inherit",
+      "upgrade_to": "advancednetherite:netherite_diamond_axe",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_diamond"
+    },
+    {
+      "selector": "advancednetherite:netherite_emerald_hoe",
+      "type": "mining_tool",
+      "repair_mode": "inherit",
+      "upgrade_to": "advancednetherite:netherite_diamond_hoe",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_diamond"
+    },
+    {
+      "selector": "advancednetherite:netherite_emerald_pickaxe",
+      "type": "mining_tool",
+      "repair_mode": "inherit",
+      "upgrade_to": "advancednetherite:netherite_diamond_pickaxe",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_diamond"
+    },
+    {
+      "selector": "advancednetherite:netherite_emerald_shovel",
+      "type": "mining_tool",
+      "repair_mode": "inherit",
+      "upgrade_to": "advancednetherite:netherite_diamond_shovel",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_diamond"
+    },
+    {
+      "selector": "advancednetherite:netherite_emerald_sword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "advancednetherite:netherite_diamond_sword",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_diamond"
+    },
+    {
+      "selector": "advancednetherite:netherite_emerald_spear",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "advancednetherite:netherite_diamond_spear",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_diamond"
+    },
+    {
+      "selector": "advancednetherite:netherite_emerald_helmet",
+      "type": "armor",
+      "repair_mode": "inherit",
+      "upgrade_to": "advancednetherite:netherite_diamond_helmet",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_diamond"
+    },
+    {
+      "selector": "advancednetherite:netherite_emerald_chestplate",
+      "type": "armor",
+      "repair_mode": "inherit",
+      "upgrade_to": "advancednetherite:netherite_diamond_chestplate",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_diamond"
+    },
+    {
+      "selector": "advancednetherite:netherite_emerald_leggings",
+      "type": "armor",
+      "repair_mode": "inherit",
+      "upgrade_to": "advancednetherite:netherite_diamond_leggings",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_diamond"
+    },
+    {
+      "selector": "advancednetherite:netherite_emerald_boots",
+      "type": "armor",
+      "repair_mode": "inherit",
+      "upgrade_to": "advancednetherite:netherite_diamond_boots",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_diamond"
+    },
+    {
+      "selector": "advancednetherite:netherite_diamond_axe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "advancednetherite:netherite_diamond_hoe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "advancednetherite:netherite_diamond_pickaxe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "advancednetherite:netherite_diamond_shovel",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "advancednetherite:netherite_diamond_sword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "advancednetherite:netherite_diamond_spear",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "advancednetherite:netherite_diamond_helmet",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "advancednetherite:netherite_diamond_chestplate",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "advancednetherite:netherite_diamond_leggings",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "advancednetherite:netherite_diamond_boots",
+      "type": "armor",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "minecraft:netherite_axe",
+      "upgrade_to": "advancednetherite:netherite_iron_axe",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_iron"
+    },
+    {
+      "selector": "minecraft:netherite_hoe",
+      "upgrade_to": "advancednetherite:netherite_iron_hoe",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_iron"
+    },
+    {
+      "selector": "minecraft:netherite_pickaxe",
+      "upgrade_to": "advancednetherite:netherite_iron_pickaxe",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_iron"
+    },
+    {
+      "selector": "minecraft:netherite_shovel",
+      "upgrade_to": "advancednetherite:netherite_iron_shovel",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_iron"
+    },
+    {
+      "selector": "minecraft:netherite_sword",
+      "upgrade_to": "advancednetherite:netherite_iron_sword",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_iron"
+    },
+    {
+      "selector": "minecraft:netherite_spear",
+      "upgrade_to": "advancednetherite:netherite_iron_spear",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_iron"
+    },
+    {
+      "selector": "minecraft:netherite_helmet",
+      "upgrade_to": "advancednetherite:netherite_iron_helmet",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_iron"
+    },
+    {
+      "selector": "minecraft:netherite_chestplate",
+      "upgrade_to": "advancednetherite:netherite_iron_chestplate",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_iron"
+    },
+    {
+      "selector": "minecraft:netherite_leggings",
+      "upgrade_to": "advancednetherite:netherite_iron_leggings",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_iron"
+    },
+    {
+      "selector": "minecraft:netherite_boots",
+      "upgrade_to": "advancednetherite:netherite_iron_boots",
+      "upgrade_ingredient": "advancednetherite:upgrade_to_netherite_iron"
+    }
+  ]
+}

@@ -15,7 +15,7 @@ import com.iamkaf.bonded.leveling.levelers.MeleeWeaponsLeveler;
 import com.iamkaf.bonded.network.BondedNetworking;
 import com.iamkaf.bonded.network.ProgressionSoundPacket;
 import com.iamkaf.bonded.registry.DataComponents;
-import com.iamkaf.bonded.registry.TierMap;
+import com.iamkaf.bonded.rules.BondedRules;
 import com.iamkaf.bonded.util.ItemUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -60,7 +60,6 @@ public class GameplayHooks {
         PlayerEvents.SHIELD_BLOCK.register(GameplayHooks::onShieldBlock);
         EntityEvent.AFTER_DAMAGE.register(GameplayHooks::onEntityHurt);
         BondEvent.ITEM_LEVELED_UP.register(GameplayHooks::onItemLeveledUp);
-        ItemEvents.MODIFY_DEFAULT_COMPONENTS.register(GameplayHooks::onModifyDefaultComponents);
     }
 
     private static void onItemLeveledUp(ItemStack stack, Player player, ItemLevelContainer container, Integer integer) {
@@ -175,7 +174,7 @@ public class GameplayHooks {
 
         if (container != null && (isNetheriteUpgrade || isCompat)) {
             stack.set(component,
-                    ItemLevelContainer.make(TierMap.getExperienceCap(stack.getItem()))
+                    ItemLevelContainer.make(BondedRules.experienceCap(stack.getItem()))
                             .addBond(container.getBond()));
         }
     }
@@ -293,10 +292,4 @@ public class GameplayHooks {
         }
     }
 
-    private static void onModifyDefaultComponents(ItemEvents.ComponentModificationContext context) {
-        TierMap.getRepairMaterialMap().forEach((item, material) -> context.modify(item, builder -> builder.set(
-                REPAIRABLE,
-                new Repairable(HolderSet.direct(material.builtInRegistryHolder()))
-        )));
-    }
 }

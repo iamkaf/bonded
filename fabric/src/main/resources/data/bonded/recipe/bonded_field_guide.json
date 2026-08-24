@@ -1,0 +1,23 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "patchouli"
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:book",
+    "bonded:scrap"
+  ],
+  "result": {
+    "components": {
+      "patchouli:book": "bonded:field_guide"
+    },
+    "count": 1,
+    "id": "patchouli:guide_book"
+  }
+}

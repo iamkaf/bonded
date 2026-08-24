@@ -23,12 +23,12 @@ loader = "fabric"
 loader_version = "latest"
 sides = ["client", "server"]
 mods = [
-  "./fabric/versions/26.1.2/build/libs/bonded-fabric-4.2.0+26.1.2.jar",
+  "./fabric/versions/26.1.2/build/libs/bonded-fabric-4.3.0+26.1.2.jar",
   "maven:net.fabricmc.fabric-api:fabric-api:0.146.1+26.1.2",
   "maven:fuzs.forgeconfigapiport:forgeconfigapiport-fabric:26.1.3",
-  "maven:com.iamkaf.amber:amber-fabric:11.1.3+26.1.2",
+  "maven:com.iamkaf.amber:amber-fabric:11.2.1+26.1.2",
   "maven:com.iamkaf.liteminer:liteminer-fabric:3.1.0+26.1.2",
-  "maven:com.iamkaf.teakit:teakit-fabric:0.13.2+26.1.2",
+  "maven:com.iamkaf.teakit:teakit-fabric:0.14.0+26.1.2",
 ]
 
 [[instance]]
@@ -39,11 +39,11 @@ loader = "forge"
 loader_version = "latest"
 sides = ["client", "server"]
 mods = [
-  "./forge/versions/26.1.2/build/libs/bonded-forge-4.2.0+26.1.2.jar",
+  "./forge/versions/26.1.2/build/libs/bonded-forge-4.3.0+26.1.2.jar",
   "maven:fuzs.forgeconfigapiport:forgeconfigapiport-forge:26.1.3",
-  "maven:com.iamkaf.amber:amber-forge:11.1.3+26.1.2",
+  "maven:com.iamkaf.amber:amber-forge:11.2.1+26.1.2",
   "maven:com.iamkaf.liteminer:liteminer-forge:3.1.0+26.1.2",
-  "maven:com.iamkaf.teakit:teakit-forge:0.13.2+26.1.2",
+  "maven:com.iamkaf.teakit:teakit-forge:0.14.0+26.1.2",
 ]
 
 [[instance]]
@@ -54,9 +54,31 @@ loader = "neoforge"
 loader_version = "latest"
 sides = ["client", "server"]
 mods = [
-  "./neoforge/versions/26.1.2/build/libs/bonded-neoforge-4.2.0+26.1.2.jar",
+  "./neoforge/versions/26.1.2/build/libs/bonded-neoforge-4.3.0+26.1.2.jar",
   "maven:maven.modrinth:COlSi5iR:0.4.0-alpha.0.91+26.1.2",
-  "maven:com.iamkaf.amber:amber-neoforge:11.1.3+26.1.2",
-  "maven:com.iamkaf.konfig:konfig-neoforge:0.6.0+26.1.2",
-  "maven:com.iamkaf.teakit:teakit-neoforge:0.13.2+26.1.2",
+  "maven:com.iamkaf.amber:amber-neoforge:11.2.1+26.1.2",
+  "maven:com.iamkaf.konfig:konfig-neoforge:0.7.0+26.1.2",
+  "maven:com.iamkaf.teakit:teakit-neoforge:0.14.0+26.1.2",
+]
+
+[[instance]]
+name = "bonded-integrations-fabric-26.1.2"
+minecraft = "26.1.2"
+loader = "fabric"
+loader_version = "0.19.3"
+sides = ["client", "server"]
+server_properties = { online-mode = "false", enforce-secure-profile = "false" }
+mods = [
+  "./fabric/versions/26.1.2/build/libs/bonded-fabric-4.3.0+26.1.2.jar",
+  "../liteminer/fabric/versions/26.1.2/build/libs/liteminer-fabric-3.1.4+26.1.2.jar",
+  "../kaf-hud/fabric/versions/26.1.2/build/libs/kafhud-fabric-6.1.0+26.1.2.jar",
+  "maven:fuzs.forgeconfigapiport:forgeconfigapiport-fabric:26.1.3",
+  "maven:com.iamkaf.amber:amber-fabric:11.2.1+26.1.2",
+  "maven:com.iamkaf.konfig:konfig-fabric:0.7.0+26.1.2",
+  "modrinth:modmenu:18.0.0-alpha.8",
+  "modrinth:basicweapons:BONRhyAx",
+  "modrinth:advanced-netherite:vudH2Rjv",
+  "modrinth:immersive-armors:okhAYWJv",
+  "modrinth:betterend:tBdZGZeX",
+  "modrinth:betternether:gDLNJy17",
 ]

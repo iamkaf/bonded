@@ -9,9 +9,6 @@ import java.util.Set;
 import java.util.function.Predicate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ItemParticleOption;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -79,34 +76,6 @@ final class AdjacentBenchStorage {
         }
 
         return Optional.empty();
-    }
-
-    static void emitStorageUseParticles(Level level, ConsumedStorageItem consumed) {
-        if (level instanceof ServerLevel serverLevel) {
-            BlockPos pos = consumed.storagePos();
-            serverLevel.sendParticles(
-                    new ItemParticleOption(ParticleTypes.ITEM, consumed.stack().getItem()),
-                    pos.getX() + 0.5d,
-                    pos.getY() + 0.8d,
-                    pos.getZ() + 0.5d,
-                    18,
-                    0.25d,
-                    0.25d,
-                    0.25d,
-                    0.05d
-            );
-            serverLevel.sendParticles(
-                    ParticleTypes.HAPPY_VILLAGER,
-                    pos.getX() + 0.5d,
-                    pos.getY() + 1.0d,
-                    pos.getZ() + 0.5d,
-                    8,
-                    0.25d,
-                    0.25d,
-                    0.25d,
-                    0.02d
-            );
-        }
     }
 
     private static Set<BlockPos> findStorageBlocks(Level level, BlockPos startPos) {

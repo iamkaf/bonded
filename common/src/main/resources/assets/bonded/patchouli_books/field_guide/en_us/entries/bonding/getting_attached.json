@@ -1,0 +1,18 @@
+{
+  "name": "Getting Attached",
+  "icon": "minecraft:iron_pickaxe",
+  "category": "bonded:bonding",
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Getting Attached",
+      "text": "Tools, weapons, armor, shields, bows, fishing rods, and other useful equipment gain $(thing)Bond$() as you use them. The useful action depends on the item: mine with a pickaxe, fight with a weapon, block with a shield, or wear armor while it protects you."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Learning by Doing",
+      "text": "Bond belongs to the individual item. As its level rises, the item can gain ordinary improvements such as durability or damage. Its tooltip records its current level, experience, bonuses, and augment progress."
+    }
+  ]
+}

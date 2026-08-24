@@ -6,6 +6,7 @@ import com.iamkaf.bonded.advancement.BondedAdvancements;
 import com.iamkaf.bonded.api.event.BondEvent;
 import com.iamkaf.bonded.component.ItemLevelContainer;
 import com.iamkaf.bonded.registry.Items;
+import com.iamkaf.bonded.rules.BondedRules;
 import com.iamkaf.bonded.util.MaxDamageModifiers;
 import java.util.Optional;
 import net.minecraft.ChatFormatting;
@@ -53,7 +54,7 @@ public class RepairBenchBlock extends Block {
 
         var leveler = Bonded.GEAR.getLeveler(handItem);
         assert leveler != null;
-        Repairable repairable = handItem.get(DataComponents.REPAIRABLE);
+        Repairable repairable = BondedRules.repairable(handItem);
 
         if (repairable == null) {
             return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
@@ -133,7 +134,12 @@ public class RepairBenchBlock extends Block {
                 }
             }
         }
-        consumedStorageItem.ifPresent(consumed -> AdjacentBenchStorage.emitStorageUseParticles(level, consumed));
+        if (player instanceof ServerPlayer serverPlayer) {
+            BlockPos storagePos = consumedStorageItem
+                    .map(AdjacentBenchStorage.ConsumedStorageItem::storagePos)
+                    .orElse(null);
+            BenchEffects.play(serverPlayer, pos, material, storagePos);
+        }
         level.playSound(
                 null,
                 player.getX(),
@@ -213,6 +219,9 @@ public class RepairBenchBlock extends Block {
             return Optional.of(Items.SCRAP.get().getDefaultInstance());
         }
 
+        if (repairable.items().size() == 0) {
+            return Optional.empty();
+        }
         return Optional.of(repairable.items().get(0).value().getDefaultInstance());
     }
 

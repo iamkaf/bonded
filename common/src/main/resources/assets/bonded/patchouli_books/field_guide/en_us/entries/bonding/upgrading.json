@@ -1,0 +1,20 @@
+{
+  "name": "Growing Together",
+  "icon": "bonded:tool_bench",
+  "category": "bonded:bonding",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "bonded:tool_bench",
+      "title": "Tool Bench",
+      "text": "When equipment reaches its maximum level, use it on a Tool Bench with the material shown by the bench. The item keeps its identity while moving to its next material tier."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "bonded:repair_bench",
+      "title": "Repair Bench",
+      "text": "Use damaged equipment on a Repair Bench with a matching repair material or Scrap. Excess repair can become temporary over-repair instead of being wasted. Nearby containers can supply materials to either bench."
+    }
+  ]
+}

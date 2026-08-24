@@ -1,0 +1,18 @@
+{
+  "name": "About Augments",
+  "icon": "minecraft:amethyst_shard",
+  "category": "bonded:augments",
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "title": "Augments",
+      "text": "Some equipment remembers more than ordinary use. Repeating an unusual, fitting action with one particular item trains an $(thing)augment$(). Its progress is separate from Bond levels and belongs to that item alone."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Something Special",
+      "text": "An augment awakens when its training is complete. Each one changes behavior rather than merely adding another level bonus. Inspect the item's tooltip to see what it has begun learning."
+    }
+  ]
+}

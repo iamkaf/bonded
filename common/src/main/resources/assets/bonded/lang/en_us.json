@@ -154,5 +154,20 @@
   "advancements.bonded.heirloom.description": "Reach 5,000 Bond on one item.",
 
   "tag.item.bonded.digging_equipment": "Digging Equipment",
-  "tag.item.bonded.utility_tool": "Utility Tool"
+  "tag.item.bonded.utility_tool": "Utility Tool",
+
+  "augment.bonded.cake_destroyer": "Cake Destroyer",
+  "augment.bonded.oceanic": "Oceanic",
+  "commands.bonded.augment.add.success": "%3$s: %4$s/%5$s (%2$s, %1$s)",
+  "commands.bonded.augment.ineligible": "%s cannot use that augment.",
+  "commands.bonded.augment.no_change": "The augment progress did not change.",
+  "commands.bonded.augment.no_item": "%s is not holding an item.",
+  "commands.bonded.augment.query.success": "%3$s: %4$s/%5$s (%2$s, %1$s)",
+  "commands.bonded.augment.set.success": "%3$s: %4$s/%5$s (%2$s, %1$s)",
+  "commands.bonded.augment.unknown": "Unknown augment: %s",
+  "hud.bonded.liteminer_experience": "+%s EXP",
+  "message.bonded.augment.activated": "%1$s activated on %2$s!",
+  "tooltip.bonded.augment.active": "%s — Active",
+  "tooltip.bonded.augment.progress": "%1$s: %2$s/%3$s",
+  "tooltip.bonded.augment.unknown": "Unknown augment %1$s: %2$s"
 }
