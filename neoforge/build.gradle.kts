@@ -10,6 +10,7 @@ plugins {
 val multiloader = MultiloaderProjectContext.of(project)
 val catalog = mcCatalog()
 val patchouli = catalog.findLibrary("patchouli-neoforge")
+val modonomicon = multiloader.optionalProperty("dependencies.modonomicon-neoforge")
 val withLiteminer = providers.systemProperty("bonded.withLiteminer")
         .orElse(providers.gradleProperty("bonded.withLiteminer"))
         .map { it.toBoolean() }
@@ -18,6 +19,10 @@ val withPatchouli = providers.systemProperty("bonded.withPatchouli")
         .orElse(providers.gradleProperty("bonded.withPatchouli"))
         .map { it.toBoolean() }
         .orElse(true)
+val withModonomicon = providers.systemProperty("bonded.withModonomicon")
+        .orElse(providers.gradleProperty("bonded.withModonomicon"))
+        .map { it.toBoolean() }
+        .orElse(false)
 val compatFixtures = providers.systemProperty("bonded.compatFixtures")
         .orElse(providers.gradleProperty("bonded.compatFixtures"))
         .orElse("")
@@ -65,6 +70,10 @@ dependencies {
 
     if (withPatchouli.get() && patchouli.isPresent) {
         runtimeOnly(patchouli.get())
+    }
+
+    if (withModonomicon.get() && modonomicon != null) {
+        runtimeOnly("maven.modrinth:modonomicon:$modonomicon")
     }
 
     if ("basic-weapons" in compatFixtures) {

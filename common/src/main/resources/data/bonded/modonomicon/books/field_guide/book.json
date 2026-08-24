@@ -1,0 +1,14 @@
+{
+  "allow_open_book_with_invalid_links": false,
+  "creative_tab": "modonomicon:modonomicon",
+  "description": "book.bonded.field_guide.description",
+  "display_mode": "index",
+  "font": "modonomicon:default",
+  "generate_book_item": true,
+  "model": "bonded:bonded_field_guide",
+  "name": "book.bonded.field_guide.name",
+  "page_display_mode": "double_page",
+  "show_recently_unlocked": false,
+  "tooltip": "book.bonded.field_guide.tooltip",
+  "turn_page_sound": "modonomicon:turn_page"
+}

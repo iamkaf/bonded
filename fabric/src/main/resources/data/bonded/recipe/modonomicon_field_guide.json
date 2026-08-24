@@ -1,0 +1,23 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "modonomicon"
+      ]
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:writable_book",
+    "bonded:scrap"
+  ],
+  "result": {
+    "components": {
+      "modonomicon:book_id": "bonded:field_guide"
+    },
+    "count": 1,
+    "id": "modonomicon:modonomicon"
+  }
+}

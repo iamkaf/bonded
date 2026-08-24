@@ -1,0 +1,40 @@
+{
+  "type": "modonomicon:content",
+  "background": {
+    "height": 26,
+    "sprite": "modonomicon:modonomicon/themes/default/node/entry_backgrounds/square_gold",
+    "width": 26
+  },
+  "category": "bonded:recipes",
+  "condition": {
+    "type": "modonomicon:none"
+  },
+  "description": "book.bonded.field_guide.recipes.tempered_gold.description",
+  "icon": "bonded:tempered_gold_ingot",
+  "id": "bonded:recipes/tempered_gold",
+  "name": "book.bonded.field_guide.recipes.tempered_gold.name",
+  "pages": [
+    {
+      "type": "modonomicon:text",
+      "condition": {
+        "type": "modonomicon:none"
+      },
+      "id": "about",
+      "show_title_separator": true,
+      "text": "book.bonded.field_guide.recipes.tempered_gold.about.text",
+      "title": "book.bonded.field_guide.recipes.tempered_gold.about.title"
+    },
+    {
+      "type": "modonomicon:crafting_recipe",
+      "condition": {
+        "type": "modonomicon:none"
+      },
+      "id": "recipes",
+      "recipe_id_1": "bonded:tempered_gold_ingot",
+      "recipe_id_2": "bonded:tempered_gold_nuggets"
+    }
+  ],
+  "sort_number": 1,
+  "x": 0,
+  "y": 0
+}
