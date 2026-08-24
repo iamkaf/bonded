@@ -13,10 +13,6 @@ public record AugmentProgressResult(
         return previousProgress != currentProgress;
     }
 
-    public boolean active() {
-        return currentProgress >= augment.activationProgress();
-    }
-
     public enum Status {
         INELIGIBLE,
         UNCHANGED,

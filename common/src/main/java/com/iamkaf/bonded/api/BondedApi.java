@@ -6,6 +6,9 @@ import net.minecraft.world.item.Item;
 
 /**
  * Public entry point for registering Bonded gear behavior.
+ *
+ * <p>Register addon defaults during mod initialization. Server-owned Gear Rule overrides take precedence when
+ * Bonded resolves rules for a world or reload.</p>
  */
 public final class BondedApi {
     private BondedApi() {

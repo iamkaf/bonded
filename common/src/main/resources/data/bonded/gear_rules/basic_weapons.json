@@ -12,6 +12,300 @@
       "selector": "#basicweapons:basic_weapon",
       "type": "melee_weapon",
       "repair_mode": "inherit"
+    },
+    {
+      "selector": "basicweapons:wooden_club",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:stone_club",
+      "upgrade_ingredient": "minecraft:stone_tool_materials"
+    },
+    {
+      "selector": "basicweapons:wooden_dagger",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:stone_dagger",
+      "upgrade_ingredient": "minecraft:stone_tool_materials"
+    },
+    {
+      "selector": "basicweapons:wooden_glaive",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:stone_glaive",
+      "upgrade_ingredient": "minecraft:stone_tool_materials"
+    },
+    {
+      "selector": "basicweapons:wooden_hammer",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:stone_hammer",
+      "upgrade_ingredient": "minecraft:stone_tool_materials"
+    },
+    {
+      "selector": "basicweapons:wooden_pike",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:stone_pike",
+      "upgrade_ingredient": "minecraft:stone_tool_materials"
+    },
+    {
+      "selector": "basicweapons:wooden_quarterstaff",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:stone_quarterstaff",
+      "upgrade_ingredient": "minecraft:stone_tool_materials"
+    },
+    {
+      "selector": "basicweapons:wooden_spear",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:stone_spear",
+      "upgrade_ingredient": "minecraft:stone_tool_materials"
+    },
+    {
+      "selector": "basicweapons:stone_club",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:copper_club",
+      "upgrade_ingredient": "minecraft:copper_tool_materials"
+    },
+    {
+      "selector": "basicweapons:stone_dagger",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:copper_dagger",
+      "upgrade_ingredient": "minecraft:copper_tool_materials"
+    },
+    {
+      "selector": "basicweapons:stone_glaive",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:copper_glaive",
+      "upgrade_ingredient": "minecraft:copper_tool_materials"
+    },
+    {
+      "selector": "basicweapons:stone_hammer",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:copper_hammer",
+      "upgrade_ingredient": "minecraft:copper_tool_materials"
+    },
+    {
+      "selector": "basicweapons:stone_pike",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:copper_pike",
+      "upgrade_ingredient": "minecraft:copper_tool_materials"
+    },
+    {
+      "selector": "basicweapons:stone_quarterstaff",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:copper_quarterstaff",
+      "upgrade_ingredient": "minecraft:copper_tool_materials"
+    },
+    {
+      "selector": "basicweapons:stone_spear",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:copper_spear",
+      "upgrade_ingredient": "minecraft:copper_tool_materials"
+    },
+    {
+      "selector": "basicweapons:copper_club",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:iron_club",
+      "upgrade_ingredient": "minecraft:iron_tool_materials"
+    },
+    {
+      "selector": "basicweapons:copper_dagger",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:iron_dagger",
+      "upgrade_ingredient": "minecraft:iron_tool_materials"
+    },
+    {
+      "selector": "basicweapons:copper_glaive",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:iron_glaive",
+      "upgrade_ingredient": "minecraft:iron_tool_materials"
+    },
+    {
+      "selector": "basicweapons:copper_hammer",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:iron_hammer",
+      "upgrade_ingredient": "minecraft:iron_tool_materials"
+    },
+    {
+      "selector": "basicweapons:copper_pike",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:iron_pike",
+      "upgrade_ingredient": "minecraft:iron_tool_materials"
+    },
+    {
+      "selector": "basicweapons:copper_quarterstaff",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:iron_quarterstaff",
+      "upgrade_ingredient": "minecraft:iron_tool_materials"
+    },
+    {
+      "selector": "basicweapons:copper_spear",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:iron_spear",
+      "upgrade_ingredient": "minecraft:iron_tool_materials"
+    },
+    {
+      "selector": "basicweapons:iron_club",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:diamond_club",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "basicweapons:iron_dagger",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:diamond_dagger",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "basicweapons:iron_glaive",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:diamond_glaive",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "basicweapons:iron_hammer",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:diamond_hammer",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "basicweapons:iron_pike",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:diamond_pike",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "basicweapons:iron_quarterstaff",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:diamond_quarterstaff",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "basicweapons:iron_spear",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:diamond_spear",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "basicweapons:golden_club",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:diamond_club",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "basicweapons:golden_dagger",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:diamond_dagger",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "basicweapons:golden_glaive",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:diamond_glaive",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "basicweapons:golden_hammer",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:diamond_hammer",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "basicweapons:golden_pike",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:diamond_pike",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "basicweapons:golden_quarterstaff",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:diamond_quarterstaff",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "basicweapons:golden_spear",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:diamond_spear",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "basicweapons:diamond_club",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:netherite_club",
+      "upgrade_ingredient": "bonded:compat/basic_weapons/netherite"
+    },
+    {
+      "selector": "basicweapons:diamond_dagger",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:netherite_dagger",
+      "upgrade_ingredient": "bonded:compat/basic_weapons/netherite"
+    },
+    {
+      "selector": "basicweapons:diamond_glaive",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:netherite_glaive",
+      "upgrade_ingredient": "bonded:compat/basic_weapons/netherite"
+    },
+    {
+      "selector": "basicweapons:diamond_hammer",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:netherite_hammer",
+      "upgrade_ingredient": "bonded:compat/basic_weapons/netherite"
+    },
+    {
+      "selector": "basicweapons:diamond_pike",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:netherite_pike",
+      "upgrade_ingredient": "bonded:compat/basic_weapons/netherite"
+    },
+    {
+      "selector": "basicweapons:diamond_quarterstaff",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:netherite_quarterstaff",
+      "upgrade_ingredient": "bonded:compat/basic_weapons/netherite"
+    },
+    {
+      "selector": "basicweapons:diamond_spear",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "basicweapons:netherite_spear",
+      "upgrade_ingredient": "bonded:compat/basic_weapons/netherite"
     }
   ]
 }

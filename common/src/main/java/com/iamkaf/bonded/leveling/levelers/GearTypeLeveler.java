@@ -1,11 +1,11 @@
 package com.iamkaf.bonded.leveling.levelers;
 
+import com.iamkaf.amber.api.functions.v1.ItemFunctions;
 import com.iamkaf.bonded.Bonded;
 import com.iamkaf.bonded.component.AppliedBonusesContainer;
 import com.iamkaf.bonded.component.ItemLevelContainer;
 import com.iamkaf.bonded.registry.DataComponents;
 import com.iamkaf.bonded.rules.BondedRules;
-import com.iamkaf.bonded.util.ItemUtils;
 import com.iamkaf.bonded.util.MaxDamageModifiers;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -21,7 +21,7 @@ public interface GearTypeLeveler {
     TagKey<Item> tag();
 
     default boolean supports(ItemStack gear) {
-        return ItemUtils.hasDamageableMaxDamage(gear);
+        return gear.isDamageableItem();
     }
 
     default int getMaxExperience(ItemStack gear) {
@@ -46,7 +46,7 @@ public interface GearTypeLeveler {
         var upgradedGear = new ItemStack(upgrade.builtInRegistryHolder(), 1, gear.getComponentsPatch());
         AppliedBonusesContainer previousAppliedBonuses =
                 upgradedGear.getOrDefault(DataComponents.APPLIED_BONUSES_CONTAINER.get(), AppliedBonusesContainer.make());
-        ItemUtils.reapplyDefaultAttributeModifiers(upgradedGear);
+        ItemFunctions.restoreDefaultAttributeModifiers(upgradedGear);
         var container = upgradedGear.get(DataComponents.ITEM_LEVEL_CONTAINER.get());
         assert container != null;
         upgradedGear.set(

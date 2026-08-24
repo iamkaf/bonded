@@ -52,8 +52,16 @@ public final class AugmentApi {
         ).get(augment.id());
     }
 
+    /**
+     * Returns whether a registered augment supports this stack and has reached its activation requirement.
+     */
     public static boolean isActive(ItemStack stack, Augment augment) {
-        return progress(stack, augment) >= augment.activationProgress();
+        Objects.requireNonNull(stack, "stack");
+        Objects.requireNonNull(augment, "augment");
+        return !stack.isEmpty()
+                && isRegistered(augment)
+                && augment.supports().test(stack)
+                && progress(stack, augment) >= augment.activationProgress();
     }
 
     public static AugmentProgressResult addProgress(Player player, ItemStack stack, Augment augment, int amount) {
@@ -81,6 +89,9 @@ public final class AugmentApi {
         return setProgress(context, previous + Math.min(modifiedAmount, remaining));
     }
 
+    /**
+     * Sets augment progress. Setting zero clears stale progress even when the augment no longer supports the stack.
+     */
     public static AugmentProgressResult setProgress(Player player, ItemStack stack, Augment augment, int progress) {
         Objects.requireNonNull(player, "player");
         Objects.requireNonNull(stack, "stack");
@@ -89,10 +100,11 @@ public final class AugmentApi {
         ensureRegistered(augment);
 
         int previous = progress(stack, augment);
-        if (stack.isEmpty() || !augment.supports().test(stack)) {
+        int requested = Math.max(0, Math.min(progress, augment.activationProgress()));
+        if (stack.isEmpty() || (requested > 0 && !augment.supports().test(stack))) {
             return result(AugmentProgressResult.Status.INELIGIBLE, augment, previous, previous);
         }
-        return setProgress(new AugmentEvents.ProgressContext(player, stack, augment), progress);
+        return setProgress(new AugmentEvents.ProgressContext(player, stack, augment), requested);
     }
 
     private static AugmentProgressResult setProgress(AugmentEvents.ProgressContext context, int requestedProgress) {
@@ -132,13 +144,13 @@ public final class AugmentApi {
     }
 
     private static void ensureRegistered(Augment augment) {
-        Augment registered;
-        synchronized (AugmentApi.class) {
-            registered = AUGMENTS.get(augment.id());
-        }
-        if (registered != augment) {
+        if (!isRegistered(augment)) {
             throw new IllegalArgumentException("Augment is not registered: " + augment.id());
         }
+    }
+
+    private static synchronized boolean isRegistered(Augment augment) {
+        return AUGMENTS.get(augment.id()) == augment;
     }
 
     private static void ensureServer(Player player) {

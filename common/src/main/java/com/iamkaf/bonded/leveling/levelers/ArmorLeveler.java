@@ -1,7 +1,6 @@
 package com.iamkaf.bonded.leveling.levelers;
 
 import com.iamkaf.bonded.registry.Tags;
-import com.iamkaf.bonded.util.ItemUtils;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -34,6 +33,6 @@ public class ArmorLeveler implements GearTypeLeveler {
 
         EquipmentSlot slot = equippable.slot();
         return slot.getType() == EquipmentSlot.Type.HUMANOID_ARMOR
-                || (slot == EquipmentSlot.BODY && ItemUtils.hasDamageableMaxDamage(gear));
+                || (slot == EquipmentSlot.BODY && gear.isDamageableItem());
     }
 }

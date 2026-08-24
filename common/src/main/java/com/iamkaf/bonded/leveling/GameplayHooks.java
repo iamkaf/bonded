@@ -16,7 +16,6 @@ import com.iamkaf.bonded.network.BondedNetworking;
 import com.iamkaf.bonded.network.ProgressionSoundPacket;
 import com.iamkaf.bonded.registry.DataComponents;
 import com.iamkaf.bonded.rules.BondedRules;
-import com.iamkaf.bonded.util.ItemUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderSet;
@@ -32,7 +31,9 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.FireworkRocketEntity;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ProjectileWeaponItem;
@@ -237,7 +238,7 @@ public class GameplayHooks {
             handItem = player.getWeaponItem();
         }
         if (handItem == null || handItem.isEmpty()) {
-            handItem = ItemUtils.checkForRocketCrossbow(player, source);
+            handItem = findRocketCrossbow(player, source);
         }
         if (handItem == null || handItem.isEmpty()) {
             return;
@@ -255,7 +256,7 @@ public class GameplayHooks {
         boolean isRangedWeapon = handItem.getItem() instanceof ProjectileWeaponItem;
         boolean isProjectile = source.getDirectEntity() instanceof Projectile;
         if (isRangedWeapon && isProjectile) {
-            ItemStack foundBow = ItemUtils.tryToFindStack(player, handItem);
+            ItemStack foundBow = findOwnedStack(player, handItem.getItem());
             emitProgressEvents(
                     foundBow,
                     player,
@@ -290,6 +291,28 @@ public class GameplayHooks {
                     Bonded.CONFIG.armorDamageTakenExperienceGainedMultiplier.get().intValue()
             );
         }
+    }
+
+    private static ItemStack findRocketCrossbow(Player player, DamageSource source) {
+        if (!(source.getDirectEntity() instanceof FireworkRocketEntity)) {
+            return ItemStack.EMPTY;
+        }
+        return findOwnedStack(player, Items.CROSSBOW);
+    }
+
+    private static ItemStack findOwnedStack(Player player, Item item) {
+        if (player.getMainHandItem().is(item)) {
+            return player.getMainHandItem();
+        }
+        if (player.getOffhandItem().is(item)) {
+            return player.getOffhandItem();
+        }
+        for (var stack : ItemFunctions.getInventoryItems(player.getInventory())) {
+            if (stack.is(item)) {
+                return stack;
+            }
+        }
+        return ItemStack.EMPTY;
     }
 
 }
