@@ -11,737 +11,1031 @@
     {
       "selector": "arcanearmory:ruby_sword",
       "type": "melee_weapon",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:black_diamond_sword",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/black_diamond"
     },
     {
       "selector": "arcanearmory:ruby_shovel",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:black_diamond_shovel",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/black_diamond"
     },
     {
       "selector": "arcanearmory:ruby_pickaxe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:black_diamond_pickaxe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/black_diamond"
     },
     {
       "selector": "arcanearmory:ruby_axe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:black_diamond_axe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/black_diamond"
     },
     {
       "selector": "arcanearmory:ruby_hoe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:black_diamond_hoe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/black_diamond"
     },
     {
       "selector": "arcanearmory:ruby_hammer",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:black_diamond_hammer",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/black_diamond"
     },
     {
       "selector": "arcanearmory:ruby_bow",
       "type": "ranged_weapon",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:black_diamond_bow",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/black_diamond"
     },
     {
       "selector": "arcanearmory:ruby_helmet",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:black_diamond_helmet",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/black_diamond"
     },
     {
       "selector": "arcanearmory:ruby_chestplate",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:black_diamond_chestplate",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/black_diamond"
     },
     {
       "selector": "arcanearmory:ruby_leggings",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:black_diamond_leggings",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/black_diamond"
     },
     {
       "selector": "arcanearmory:ruby_boots",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:black_diamond_boots",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/black_diamond"
     },
     {
       "selector": "arcanearmory:ruby_shield",
       "type": "utility",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:aristeum_shield",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/aristeum"
     },
     {
       "selector": "arcanearmory:sapphire_sword",
       "type": "melee_weapon",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:black_diamond_sword",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/black_diamond"
     },
     {
       "selector": "arcanearmory:sapphire_shovel",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:black_diamond_shovel",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/black_diamond"
     },
     {
       "selector": "arcanearmory:sapphire_pickaxe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:black_diamond_pickaxe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/black_diamond"
     },
     {
       "selector": "arcanearmory:sapphire_axe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:black_diamond_axe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/black_diamond"
     },
     {
       "selector": "arcanearmory:sapphire_hoe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:black_diamond_hoe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/black_diamond"
     },
     {
       "selector": "arcanearmory:sapphire_hammer",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:black_diamond_hammer",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/black_diamond"
     },
     {
       "selector": "arcanearmory:sapphire_bow",
       "type": "ranged_weapon",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:black_diamond_bow",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/black_diamond"
     },
     {
       "selector": "arcanearmory:sapphire_helmet",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:black_diamond_helmet",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/black_diamond"
     },
     {
       "selector": "arcanearmory:sapphire_chestplate",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:black_diamond_chestplate",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/black_diamond"
     },
     {
       "selector": "arcanearmory:sapphire_leggings",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:black_diamond_leggings",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/black_diamond"
     },
     {
       "selector": "arcanearmory:sapphire_boots",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:black_diamond_boots",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/black_diamond"
     },
     {
       "selector": "arcanearmory:black_diamond_sword",
       "type": "melee_weapon",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:star_corundum_sword",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/star_corundum"
     },
     {
       "selector": "arcanearmory:black_diamond_shovel",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:star_corundum_shovel",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/star_corundum"
     },
     {
       "selector": "arcanearmory:black_diamond_pickaxe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:star_corundum_pickaxe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/star_corundum"
     },
     {
       "selector": "arcanearmory:black_diamond_axe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:star_corundum_axe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/star_corundum"
     },
     {
       "selector": "arcanearmory:black_diamond_hoe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:star_corundum_hoe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/star_corundum"
     },
     {
       "selector": "arcanearmory:black_diamond_hammer",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:star_corundum_hammer",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/star_corundum"
     },
     {
       "selector": "arcanearmory:black_diamond_bow",
       "type": "ranged_weapon",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:star_corundum_bow",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/star_corundum"
     },
     {
       "selector": "arcanearmory:black_diamond_helmet",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:star_corundum_helmet",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/star_corundum"
     },
     {
       "selector": "arcanearmory:black_diamond_chestplate",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:star_corundum_chestplate",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/star_corundum"
     },
     {
       "selector": "arcanearmory:black_diamond_leggings",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:star_corundum_leggings",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/star_corundum"
     },
     {
       "selector": "arcanearmory:black_diamond_boots",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:star_corundum_boots",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/star_corundum"
     },
     {
       "selector": "arcanearmory:topaz_sword",
       "type": "melee_weapon",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:ruby_sword",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/ruby"
     },
     {
       "selector": "arcanearmory:topaz_shovel",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:ruby_shovel",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/ruby"
     },
     {
       "selector": "arcanearmory:topaz_pickaxe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:ruby_pickaxe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/ruby"
     },
     {
       "selector": "arcanearmory:topaz_axe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:ruby_axe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/ruby"
     },
     {
       "selector": "arcanearmory:topaz_hoe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:ruby_hoe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/ruby"
     },
     {
       "selector": "arcanearmory:topaz_hammer",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:ruby_hammer",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/ruby"
     },
     {
       "selector": "arcanearmory:topaz_bow",
       "type": "ranged_weapon",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:ruby_bow",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/ruby"
     },
     {
       "selector": "arcanearmory:topaz_helmet",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:ruby_helmet",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/ruby"
     },
     {
       "selector": "arcanearmory:topaz_chestplate",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:ruby_chestplate",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/ruby"
     },
     {
       "selector": "arcanearmory:topaz_leggings",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:ruby_leggings",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/ruby"
     },
     {
       "selector": "arcanearmory:topaz_boots",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:ruby_boots",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/ruby"
     },
     {
       "selector": "arcanearmory:chrysoberyl_sword",
       "type": "melee_weapon",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:titanium_sword",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/titanium"
     },
     {
       "selector": "arcanearmory:chrysoberyl_shovel",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:titanium_shovel",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/titanium"
     },
     {
       "selector": "arcanearmory:chrysoberyl_pickaxe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:titanium_pickaxe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/titanium"
     },
     {
       "selector": "arcanearmory:chrysoberyl_axe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:titanium_axe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/titanium"
     },
     {
       "selector": "arcanearmory:chrysoberyl_hoe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:titanium_hoe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/titanium"
     },
     {
       "selector": "arcanearmory:chrysoberyl_hammer",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:titanium_hammer",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/titanium"
     },
     {
       "selector": "arcanearmory:chrysoberyl_bow",
       "type": "ranged_weapon",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:titanium_bow",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/titanium"
     },
     {
       "selector": "arcanearmory:chrysoberyl_helmet",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:titanium_helmet",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/titanium"
     },
     {
       "selector": "arcanearmory:chrysoberyl_chestplate",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:titanium_chestplate",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/titanium"
     },
     {
       "selector": "arcanearmory:chrysoberyl_leggings",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:titanium_leggings",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/titanium"
     },
     {
       "selector": "arcanearmory:chrysoberyl_boots",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:titanium_boots",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/titanium"
     },
     {
       "selector": "arcanearmory:aquamarine_sword",
       "type": "melee_weapon",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:chrysoberyl_sword",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/chrysoberyl"
     },
     {
       "selector": "arcanearmory:aquamarine_shovel",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:chrysoberyl_shovel",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/chrysoberyl"
     },
     {
       "selector": "arcanearmory:aquamarine_pickaxe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:chrysoberyl_pickaxe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/chrysoberyl"
     },
     {
       "selector": "arcanearmory:aquamarine_axe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:chrysoberyl_axe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/chrysoberyl"
     },
     {
       "selector": "arcanearmory:aquamarine_hoe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:chrysoberyl_hoe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/chrysoberyl"
     },
     {
       "selector": "arcanearmory:aquamarine_hammer",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:chrysoberyl_hammer",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/chrysoberyl"
     },
     {
       "selector": "arcanearmory:aquamarine_bow",
       "type": "ranged_weapon",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:chrysoberyl_bow",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/chrysoberyl"
     },
     {
       "selector": "arcanearmory:aquamarine_helmet",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:chrysoberyl_helmet",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/chrysoberyl"
     },
     {
       "selector": "arcanearmory:aquamarine_chestplate",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:chrysoberyl_chestplate",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/chrysoberyl"
     },
     {
       "selector": "arcanearmory:aquamarine_leggings",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:chrysoberyl_leggings",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/chrysoberyl"
     },
     {
       "selector": "arcanearmory:aquamarine_boots",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:chrysoberyl_boots",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/chrysoberyl"
     },
     {
       "selector": "arcanearmory:star_corundum_sword",
       "type": "melee_weapon",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:bloodfire_garnet_sword",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/bloodfire_garnet"
     },
     {
       "selector": "arcanearmory:star_corundum_shovel",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:bloodfire_garnet_shovel",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/bloodfire_garnet"
     },
     {
       "selector": "arcanearmory:star_corundum_pickaxe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:bloodfire_garnet_pickaxe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/bloodfire_garnet"
     },
     {
       "selector": "arcanearmory:star_corundum_axe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:bloodfire_garnet_axe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/bloodfire_garnet"
     },
     {
       "selector": "arcanearmory:star_corundum_hoe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:bloodfire_garnet_hoe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/bloodfire_garnet"
     },
     {
       "selector": "arcanearmory:star_corundum_hammer",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:bloodfire_garnet_hammer",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/bloodfire_garnet"
     },
     {
       "selector": "arcanearmory:star_corundum_bow",
       "type": "ranged_weapon",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:bloodfire_garnet_bow",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/bloodfire_garnet"
     },
     {
       "selector": "arcanearmory:star_corundum_helmet",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:bloodfire_garnet_helmet",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/bloodfire_garnet"
     },
     {
       "selector": "arcanearmory:star_corundum_chestplate",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:bloodfire_garnet_chestplate",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/bloodfire_garnet"
     },
     {
       "selector": "arcanearmory:star_corundum_leggings",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:bloodfire_garnet_leggings",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/bloodfire_garnet"
     },
     {
       "selector": "arcanearmory:star_corundum_boots",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:bloodfire_garnet_boots",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/bloodfire_garnet"
     },
     {
       "selector": "arcanearmory:bloodfire_garnet_sword",
       "type": "melee_weapon",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:voidium_sword",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/voidium"
     },
     {
       "selector": "arcanearmory:bloodfire_garnet_shovel",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:voidium_shovel",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/voidium"
     },
     {
       "selector": "arcanearmory:bloodfire_garnet_pickaxe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:voidium_pickaxe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/voidium"
     },
     {
       "selector": "arcanearmory:bloodfire_garnet_axe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:voidium_axe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/voidium"
     },
     {
       "selector": "arcanearmory:bloodfire_garnet_hoe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:voidium_hoe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/voidium"
     },
     {
       "selector": "arcanearmory:bloodfire_garnet_hammer",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:voidium_hammer",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/voidium"
     },
     {
       "selector": "arcanearmory:bloodfire_garnet_bow",
       "type": "ranged_weapon",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:voidium_bow",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/voidium"
     },
     {
       "selector": "arcanearmory:bloodfire_garnet_helmet",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:voidium_helmet",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/voidium"
     },
     {
       "selector": "arcanearmory:bloodfire_garnet_chestplate",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:voidium_chestplate",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/voidium"
     },
     {
       "selector": "arcanearmory:bloodfire_garnet_leggings",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:voidium_leggings",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/voidium"
     },
     {
       "selector": "arcanearmory:bloodfire_garnet_boots",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:voidium_boots",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/voidium"
     },
     {
       "selector": "arcanearmory:aetheric_crystal_sword",
       "type": "melee_weapon",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:aristeum_sword",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/aristeum"
     },
     {
       "selector": "arcanearmory:aetheric_crystal_shovel",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:aristeum_shovel",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/aristeum"
     },
     {
       "selector": "arcanearmory:aetheric_crystal_pickaxe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:aristeum_pickaxe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/aristeum"
     },
     {
       "selector": "arcanearmory:aetheric_crystal_axe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:aristeum_axe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/aristeum"
     },
     {
       "selector": "arcanearmory:aetheric_crystal_hoe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:aristeum_hoe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/aristeum"
     },
     {
       "selector": "arcanearmory:aetheric_crystal_hammer",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:aristeum_hammer",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/aristeum"
     },
     {
       "selector": "arcanearmory:aetheric_crystal_bow",
       "type": "ranged_weapon",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:aristeum_bow",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/aristeum"
     },
     {
       "selector": "arcanearmory:aetheric_crystal_helmet",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:aristeum_helmet",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/aristeum"
     },
     {
       "selector": "arcanearmory:aetheric_crystal_chestplate",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:aristeum_chestplate",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/aristeum"
     },
     {
       "selector": "arcanearmory:aetheric_crystal_leggings",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:aristeum_leggings",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/aristeum"
     },
     {
       "selector": "arcanearmory:aetheric_crystal_boots",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:aristeum_boots",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/aristeum"
     },
     {
       "selector": "arcanearmory:coolpper_sword",
       "type": "melee_weapon",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:titanium_sword",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/titanium"
     },
     {
       "selector": "arcanearmory:coolpper_shovel",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:titanium_shovel",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/titanium"
     },
     {
       "selector": "arcanearmory:coolpper_pickaxe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:titanium_pickaxe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/titanium"
     },
     {
       "selector": "arcanearmory:coolpper_axe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:titanium_axe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/titanium"
     },
     {
       "selector": "arcanearmory:coolpper_hoe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:titanium_hoe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/titanium"
     },
     {
       "selector": "arcanearmory:coolpper_hammer",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:titanium_hammer",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/titanium"
     },
     {
       "selector": "arcanearmory:coolpper_bow",
       "type": "ranged_weapon",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:titanium_bow",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/titanium"
     },
     {
       "selector": "arcanearmory:coolpper_helmet",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:titanium_helmet",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/titanium"
     },
     {
       "selector": "arcanearmory:coolpper_chestplate",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:titanium_chestplate",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/titanium"
     },
     {
       "selector": "arcanearmory:coolpper_leggings",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:titanium_leggings",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/titanium"
     },
     {
       "selector": "arcanearmory:coolpper_boots",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:titanium_boots",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/titanium"
     },
     {
       "selector": "arcanearmory:coolpper_shield",
       "type": "utility",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:titanium_shield",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/titanium"
     },
     {
       "selector": "arcanearmory:titanium_sword",
       "type": "melee_weapon",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:aristeum_sword",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/aristeum"
     },
     {
       "selector": "arcanearmory:titanium_shovel",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:aristeum_shovel",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/aristeum"
     },
     {
       "selector": "arcanearmory:titanium_pickaxe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:aristeum_pickaxe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/aristeum"
     },
     {
       "selector": "arcanearmory:titanium_axe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:aristeum_axe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/aristeum"
     },
     {
       "selector": "arcanearmory:titanium_hoe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:aristeum_hoe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/aristeum"
     },
     {
       "selector": "arcanearmory:titanium_hammer",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:aristeum_hammer",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/aristeum"
     },
     {
       "selector": "arcanearmory:titanium_bow",
       "type": "ranged_weapon",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:aristeum_bow",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/aristeum"
     },
     {
       "selector": "arcanearmory:titanium_helmet",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:aristeum_helmet",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/aristeum"
     },
     {
       "selector": "arcanearmory:titanium_chestplate",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:aristeum_chestplate",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/aristeum"
     },
     {
       "selector": "arcanearmory:titanium_leggings",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:aristeum_leggings",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/aristeum"
     },
     {
       "selector": "arcanearmory:titanium_boots",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:aristeum_boots",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/aristeum"
     },
     {
       "selector": "arcanearmory:titanium_shield",
       "type": "utility",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:aristeum_shield",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/aristeum"
     },
     {
       "selector": "arcanearmory:amber_sword",
       "type": "melee_weapon",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:aristeum_sword",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/aristeum"
     },
     {
       "selector": "arcanearmory:amber_shovel",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:aristeum_shovel",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/aristeum"
     },
     {
       "selector": "arcanearmory:amber_pickaxe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:aristeum_pickaxe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/aristeum"
     },
     {
       "selector": "arcanearmory:amber_axe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:aristeum_axe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/aristeum"
     },
     {
       "selector": "arcanearmory:amber_hoe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:aristeum_hoe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/aristeum"
     },
     {
       "selector": "arcanearmory:amber_hammer",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:aristeum_hammer",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/aristeum"
     },
     {
       "selector": "arcanearmory:amber_bow",
       "type": "ranged_weapon",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:aristeum_bow",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/aristeum"
     },
     {
       "selector": "arcanearmory:amber_helmet",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:aristeum_helmet",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/aristeum"
     },
     {
       "selector": "arcanearmory:amber_chestplate",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:aristeum_chestplate",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/aristeum"
     },
     {
       "selector": "arcanearmory:amber_leggings",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:aristeum_leggings",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/aristeum"
     },
     {
       "selector": "arcanearmory:amber_boots",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:aristeum_boots",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/aristeum"
     },
     {
       "selector": "arcanearmory:aristeum_sword",
       "type": "melee_weapon",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:bloodfire_garnet_sword",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/bloodfire_garnet"
     },
     {
       "selector": "arcanearmory:aristeum_shovel",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:bloodfire_garnet_shovel",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/bloodfire_garnet"
     },
     {
       "selector": "arcanearmory:aristeum_pickaxe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:bloodfire_garnet_pickaxe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/bloodfire_garnet"
     },
     {
       "selector": "arcanearmory:aristeum_axe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:bloodfire_garnet_axe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/bloodfire_garnet"
     },
     {
       "selector": "arcanearmory:aristeum_hoe",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:bloodfire_garnet_hoe",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/bloodfire_garnet"
     },
     {
       "selector": "arcanearmory:aristeum_hammer",
       "type": "mining_tool",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:bloodfire_garnet_hammer",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/bloodfire_garnet"
     },
     {
       "selector": "arcanearmory:aristeum_bow",
       "type": "ranged_weapon",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:bloodfire_garnet_bow",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/bloodfire_garnet"
     },
     {
       "selector": "arcanearmory:aristeum_helmet",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:bloodfire_garnet_helmet",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/bloodfire_garnet"
     },
     {
       "selector": "arcanearmory:aristeum_chestplate",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:bloodfire_garnet_chestplate",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/bloodfire_garnet"
     },
     {
       "selector": "arcanearmory:aristeum_leggings",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:bloodfire_garnet_leggings",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/bloodfire_garnet"
     },
     {
       "selector": "arcanearmory:aristeum_boots",
       "type": "armor",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:bloodfire_garnet_boots",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/bloodfire_garnet"
     },
     {
       "selector": "arcanearmory:aristeum_shield",
       "type": "utility",
-      "repair_mode": "inherit"
+      "repair_mode": "inherit",
+      "upgrade_to": "arcanearmory:voidium_shield",
+      "upgrade_ingredient": "bonded:compat/arcane_armory/voidium"
     },
     {
       "selector": "arcanearmory:voidium_sword",

@@ -27,6 +27,7 @@ describe("Bonded compatibility gear rules", () => {
         "Bonded rule basicweapons:iron_dagger",
         "type=melee_weapon",
         "repair=inherit",
+        "upgrade=basicweapons:diamond_dagger",
         "source=Basic Weapons",
       ]);
       await expectHeldRule(ctx, "basicweapons:copper_hammer", [
@@ -37,6 +38,12 @@ describe("Bonded compatibility gear rules", () => {
       await expectHeldRule(ctx, "basicweapons:netherite_pike", [
         "Bonded rule basicweapons:netherite_pike",
         "type=melee_weapon",
+        "source=Basic Weapons",
+      ]);
+      await expectHeldRule(ctx, "basicweapons:diamond_dagger", [
+        "Bonded rule basicweapons:diamond_dagger",
+        "type=melee_weapon",
+        "upgrade=basicweapons:netherite_dagger",
         "source=Basic Weapons",
       ]);
 
@@ -53,6 +60,47 @@ describe("Bonded compatibility gear rules", () => {
       );
       await ctx.commands.assert(
         "/execute unless items entity @s inventory.* minecraft:iron_ingot",
+      );
+
+      await ctx.commands.batch([
+        "/clear @s",
+        '/item replace entity @s weapon.mainhand with basicweapons:iron_dagger[minecraft:damage=20,minecraft:enchantments={"minecraft:sharpness":2},minecraft:custom_data={basic_weapons_sentinel:1b},bonded:item_level={experience:0,maxExperience:1000,level:10,bond:314}]',
+        "/item replace entity @s hotbar.1 with minecraft:diamond 1",
+      ]);
+      await ctx.player.teleport({ x: 2, y: 72, z: -1 });
+      await ctx.player.useBlockServer(TOOL_BENCH, { face: "up", hand: "main_hand" });
+
+      await expectPreservedUpgrade(
+        ctx,
+        "basicweapons:diamond_dagger",
+        20,
+        "basic_weapons_sentinel",
+        "minecraft:sharpness",
+        2,
+        314,
+      );
+      await ctx.commands.assert(
+        "/execute unless items entity @s inventory.* minecraft:diamond",
+      );
+
+      await ctx.commands.batch([
+        "/clear @s",
+        '/item replace entity @s weapon.mainhand with basicweapons:diamond_dagger[minecraft:damage=12,minecraft:enchantments={"minecraft:sharpness":3},minecraft:custom_data={netherite_sentinel:1b},bonded:item_level={experience:0,maxExperience:1000,level:10,bond:271}]',
+        "/item replace entity @s hotbar.1 with minecraft:netherite_ingot 1",
+      ]);
+      await ctx.player.useBlockServer(TOOL_BENCH, { face: "up", hand: "main_hand" });
+
+      await expectPreservedUpgrade(
+        ctx,
+        "basicweapons:netherite_dagger",
+        12,
+        "netherite_sentinel",
+        "minecraft:sharpness",
+        3,
+        271,
+      );
+      await ctx.commands.assert(
+        "/execute unless items entity @s inventory.* minecraft:netherite_ingot",
       );
     } finally {
       await cleanupArena(ctx);

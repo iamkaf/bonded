@@ -95,6 +95,19 @@ class BondedRulesProfilesTest {
         var basicWeapons = rule(profiles.get("bonded:basic_weapons"), "#basicweapons:basic_weapon");
         assertEquals("melee_weapon", basicWeapons.get("type").getAsString());
         assertEquals("inherit", basicWeapons.get("repair_mode").getAsString());
+        assertEquals(43, profiles.get("bonded:basic_weapons").getAsJsonArray("rules").size());
+
+        var woodenDagger = rule(profiles.get("bonded:basic_weapons"), "basicweapons:wooden_dagger");
+        assertEquals("basicweapons:stone_dagger", woodenDagger.get("upgrade_to").getAsString());
+        assertEquals("minecraft:stone_tool_materials", woodenDagger.get("upgrade_ingredient").getAsString());
+
+        var goldenHammer = rule(profiles.get("bonded:basic_weapons"), "basicweapons:golden_hammer");
+        assertEquals("basicweapons:diamond_hammer", goldenHammer.get("upgrade_to").getAsString());
+        assertEquals("minecraft:diamond_tool_materials", goldenHammer.get("upgrade_ingredient").getAsString());
+
+        var diamondPike = rule(profiles.get("bonded:basic_weapons"), "basicweapons:diamond_pike");
+        assertEquals("basicweapons:netherite_pike", diamondPike.get("upgrade_to").getAsString());
+        assertEquals("bonded:compat/basic_weapons/netherite", diamondPike.get("upgrade_ingredient").getAsString());
 
         var advancedNetherite = rule(
                 profiles.get("bonded:advanced_netherite"),
@@ -116,12 +129,31 @@ class BondedRulesProfilesTest {
 
         JsonObject arcaneArmory = profiles.get("bonded:arcane_armory");
         assertEquals(159, arcaneArmory.getAsJsonArray("rules").size());
+        int arcaneUpgradeCount = 0;
         for (JsonElement element : arcaneArmory.getAsJsonArray("rules")) {
             JsonObject arcaneRule = element.getAsJsonObject();
             assertEquals("inherit", arcaneRule.get("repair_mode").getAsString());
             assertFalse(arcaneRule.has("experience_cap"));
-            assertFalse(arcaneRule.has("upgrade_to"));
+            if (arcaneRule.has("upgrade_to")) {
+                arcaneUpgradeCount++;
+                assertTrue(arcaneRule.has("upgrade_ingredient"));
+            } else {
+                assertTrue(arcaneRule.get("selector").getAsString().startsWith("arcanearmory:voidium_"));
+            }
         }
+        assertEquals(147, arcaneUpgradeCount);
+
+        var aquamarineSword = rule(arcaneArmory, "arcanearmory:aquamarine_sword");
+        assertEquals("arcanearmory:chrysoberyl_sword", aquamarineSword.get("upgrade_to").getAsString());
+        assertEquals("bonded:compat/arcane_armory/chrysoberyl", aquamarineSword.get("upgrade_ingredient").getAsString());
+
+        var starCorundumPickaxe = rule(arcaneArmory, "arcanearmory:star_corundum_pickaxe");
+        assertEquals("arcanearmory:bloodfire_garnet_pickaxe", starCorundumPickaxe.get("upgrade_to").getAsString());
+        assertEquals("bonded:compat/arcane_armory/bloodfire_garnet", starCorundumPickaxe.get("upgrade_ingredient").getAsString());
+
+        var bloodfireChestplate = rule(arcaneArmory, "arcanearmory:bloodfire_garnet_chestplate");
+        assertEquals("arcanearmory:voidium_chestplate", bloodfireChestplate.get("upgrade_to").getAsString());
+        assertEquals("bonded:compat/arcane_armory/voidium", bloodfireChestplate.get("upgrade_ingredient").getAsString());
 
         var arcaneHammer = rule(arcaneArmory, "arcanearmory:voidium_hammer");
         assertEquals("mining_tool", arcaneHammer.get("type").getAsString());
