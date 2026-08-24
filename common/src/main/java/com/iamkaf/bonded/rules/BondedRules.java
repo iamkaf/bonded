@@ -159,8 +159,8 @@ public final class BondedRules {
         LinkedHashMap<String, ResolvedGearRule> resolved = new LinkedHashMap<>();
         applySource(registry, items, resolved, declarations.get(GearRule.Kind.BUILTIN), false, diagnostics);
         applySource(registry, items, resolved, declarations.get(GearRule.Kind.COMPAT), false, diagnostics);
-        applySource(registry, items, resolved, declarations.get(GearRule.Kind.USER), true, diagnostics);
         applyApiPatches(registry, items, resolved, diagnostics);
+        applySource(registry, items, resolved, declarations.get(GearRule.Kind.USER), true, diagnostics);
 
         return new Snapshot(resolved, diagnostics);
     }

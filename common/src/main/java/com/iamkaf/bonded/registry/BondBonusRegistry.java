@@ -9,7 +9,6 @@ import com.iamkaf.bonded.component.AppliedBonusesContainer;
 import com.iamkaf.bonded.component.ItemLevelContainer;
 import com.iamkaf.bonded.leveling.levelers.GearTypeLeveler;
 import com.iamkaf.bonded.util.CombinedModifier;
-import com.iamkaf.bonded.util.ItemUtils;
 import com.iamkaf.bonded.util.MaxDamageModifiers;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.Identifier;
@@ -52,7 +51,7 @@ public class BondBonusRegistry {
                 .toList();
 
         stripManagedBondedAttributeModifiers(gear);
-        ItemUtils.reapplyDefaultAttributeModifiers(gear);
+        ItemFunctions.restoreDefaultAttributeModifiers(gear);
 
         for (var combinedModifier : combineAttributeModifiers(attributeModifierHolders)) {
             ItemFunctions.addModifier(
@@ -83,11 +82,15 @@ public class BondBonusRegistry {
     }
 
     public void restoreBaseMaxDamage(ItemStack gear, AppliedBonusesContainer appliedBonuses) {
-        ItemUtils.restoreBaseMaxDamage(gear, getBaseMaxDamage(gear, appliedBonuses));
+        restoreBaseMaxDamage(gear, getBaseMaxDamage(gear, appliedBonuses));
     }
 
     private void restoreBaseMaxDamage(ItemStack gear, int baseMaxDamage) {
-        ItemUtils.restoreBaseMaxDamage(gear, baseMaxDamage);
+        if (baseMaxDamage > 0) {
+            gear.set(net.minecraft.core.component.DataComponents.MAX_DAMAGE, baseMaxDamage);
+            return;
+        }
+        gear.remove(net.minecraft.core.component.DataComponents.MAX_DAMAGE);
     }
 
     public boolean hasLegacyManagedAttributeModifiers(ItemStack gear) {
@@ -154,7 +157,7 @@ public class BondBonusRegistry {
 
         for (var modifier : existingModifiers.modifiers()) {
             if (!isManagedBondedModifier(modifier.modifier(), defaultModifierIds)) {
-                builder.add(modifier.attribute(), modifier.modifier(), modifier.slot());
+                builder.add(modifier.attribute(), modifier.modifier(), modifier.slot(), modifier.display());
             }
         }
 
@@ -185,7 +188,7 @@ public class BondBonusRegistry {
     }
 
     private int getBaseMaxDamage(ItemStack gear, AppliedBonusesContainer appliedBonuses) {
-        int defaultMaxDamage = ItemUtils.getDefaultMaxDamage(gear);
+        int defaultMaxDamage = gear.getItem().getDefaultInstance().getMaxDamage();
         if (defaultMaxDamage > 0) {
             return defaultMaxDamage;
         }
@@ -194,7 +197,7 @@ public class BondBonusRegistry {
             return MaxDamageModifiers.getIntrinsicMaxDamage(gear);
         }
 
-        int stackMaxDamage = ItemUtils.getStackMaxDamage(gear);
+        int stackMaxDamage = gear.getMaxDamage();
         if (stackMaxDamage <= 0) {
             return 0;
         }

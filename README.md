@@ -110,6 +110,9 @@ BondedApi.addRepairMaterial(MyItems.STEEL_PICKAXE.get(), Items.IRON_INGOT);
 BondedApi.addExperienceCap(MyItems.STEEL_PICKAXE.get(), 250);
 ```
 
+Register addon defaults during mod initialization. Server-owned Gear Rule overrides take precedence when Bonded
+resolves rules for a world or reload.
+
 Available methods:
 
 - `addUpgrade(Item from, Item to, TagKey<Item> material)`: lets the Tool Bench upgrade one item into another once the gear meets Bonded's level requirement. The material is an item tag because the bench accepts any matching stack.

@@ -3,10 +3,10 @@ package com.iamkaf.bonded.bonuses;
 import com.iamkaf.bonded.Bonded;
 import com.iamkaf.bonded.component.ItemLevelContainer;
 import com.iamkaf.bonded.leveling.levelers.GearTypeLeveler;
-import com.iamkaf.bonded.util.ItemUtils;
 import com.iamkaf.amber.api.functions.v1.ItemFunctions;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
@@ -48,7 +48,7 @@ public class ArmorHealthBonus implements BondBonus {
                         bonus,
                         AttributeModifier.Operation.ADD_VALUE
                 ),
-                ItemUtils.slotToSlotGroup(slot)
+                EquipmentSlotGroup.bySlot(slot)
         );
     }
 }
