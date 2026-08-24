@@ -3,6 +3,7 @@ import type { TeaKitTestContext } from "@teakit/test";
 
 const SCOREBOARD = "bonded_aug_cmd";
 const CHEST = { x: 0, y: 71, z: 0 };
+const RESTORED_CHEST = { x: 1, y: 71, z: 0 };
 
 describe.configure({
   timeout: "2m",
@@ -84,14 +85,13 @@ describe("Bonded augment commands", () => {
     try {
       await prepare(ctx);
       await ctx.commands.batch([
-        "/setblock 0 71 0 minecraft:chest",
+        `/setblock ${CHEST.x} ${CHEST.y} ${CHEST.z} minecraft:chest`,
         "/item replace entity @s weapon.mainhand with minecraft:iron_sword[bonded:augment_progress={progress:{\"example:unknown\":7}}]",
         "/bonded augment set @s bonded:cake_destroyer 63",
-        "/item replace block 0 71 0 container.0 from entity @s weapon.mainhand",
-        "/data modify storage bonded:augment_test item set from block 0 71 0 Items[0]",
-        "/item replace block 0 71 0 container.0 with minecraft:air",
-        "/data modify block 0 71 0 Items append from storage bonded:augment_test item",
-        "/item replace entity @s weapon.mainhand from block 0 71 0 container.0",
+        `/item replace block ${CHEST.x} ${CHEST.y} ${CHEST.z} container.0 from entity @s weapon.mainhand`,
+        `/clone ${CHEST.x} ${CHEST.y} ${CHEST.z} ${CHEST.x} ${CHEST.y} ${CHEST.z} ${RESTORED_CHEST.x} ${RESTORED_CHEST.y} ${RESTORED_CHEST.z} replace`,
+        "/clear @s",
+        `/item replace entity @s weapon.mainhand from block ${RESTORED_CHEST.x} ${RESTORED_CHEST.y} ${RESTORED_CHEST.z} container.0`,
       ]);
 
       await expectProgress(ctx, "bonded:cake_destroyer", 63);
@@ -115,7 +115,6 @@ async function prepare(ctx: TeaKitTestContext): Promise<void> {
 async function cleanup(ctx: TeaKitTestContext): Promise<void> {
   await ctx.player.reset({ gameMode: "creative", inventory: "clear" });
   await ctx.world.clear({ x: -2, y: 69, z: -2 }, { x: 2, y: 74, z: 2 });
-  await ctx.commands.run("/data remove storage bonded:augment_test item", { requireSuccess: false });
   await ctx.commands.run(`/scoreboard objectives remove ${SCOREBOARD}`, { requireSuccess: false });
 }
 

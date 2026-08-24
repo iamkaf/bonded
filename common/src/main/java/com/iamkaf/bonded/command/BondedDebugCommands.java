@@ -57,7 +57,9 @@ public final class BondedDebugCommands {
                         .then(Commands.literal("start")
                                 .executes(context -> setSwimming(context.getSource(), true)))
                         .then(Commands.literal("stop")
-                                .executes(context -> setSwimming(context.getSource(), false))));
+                                .executes(context -> setSwimming(context.getSource(), false))))
+                .then(Commands.literal("attack-one-health-target")
+                        .executes(context -> attackOneHealthTarget(context.getSource())));
     }
 
     private static int queryHeldRule(CommandSourceStack source) throws CommandSyntaxException {
@@ -124,6 +126,34 @@ public final class BondedDebugCommands {
         player.setSprinting(swimming);
         player.setSwimming(swimming);
         return Command.SINGLE_SUCCESS;
+    }
+
+    private static int attackOneHealthTarget(CommandSourceStack source) throws CommandSyntaxException {
+        var player = source.getPlayerOrException();
+        float attackStrength = player.getAttackStrengthScale(0.5F);
+        if (attackStrength <= 0.9F) {
+            source.sendSuccess(() -> Component.literal("Waiting for attack strength: " + attackStrength), false);
+            return 0;
+        }
+
+        Zombie target = new Zombie(source.getLevel());
+        target.setPos(player.getX(), player.getY(), player.getZ() + 1.5D);
+        target.setHealth(1.0F);
+        if (!source.getLevel().addFreshEntity(target)) {
+            return 0;
+        }
+
+        float healthBefore = target.getHealth();
+        player.attack(target);
+        float healthAfter = target.getHealth();
+        target.discard();
+        source.sendSuccess(
+                () -> Component.literal(
+                        "Attacked target: health=" + healthBefore + "->" + healthAfter
+                ),
+                false
+        );
+        return healthAfter <= 0.0F ? Command.SINGLE_SUCCESS : 0;
     }
 
     // This verifies that Bonded applies innate bond in a thread-safe way.

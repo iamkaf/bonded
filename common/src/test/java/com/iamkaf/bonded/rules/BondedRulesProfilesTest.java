@@ -133,11 +133,22 @@ class BondedRulesProfilesTest {
         assertEquals("utility", arcaneShield.get("type").getAsString());
 
         JsonObject betterNether = profiles.get("bonded:betternether");
-        for (JsonElement element : betterNether.getAsJsonArray("rules")) {
-            String selector = element.getAsJsonObject().get("selector").getAsString();
-            assertFalse(selector.endsWith("_hammer") || selector.endsWith("_hammer_diamond"));
-            assertFalse(selector.endsWith("_excavator") || selector.endsWith("_excavator_diamond"));
-        }
+        var cincinnasiteHammer = rule(betterNether, "betternether:cincinnasite_hammer");
+        assertEquals("mining_tool", cincinnasiteHammer.get("type").getAsString());
+        assertEquals("betternether:cincinnasite_hammer_diamond", cincinnasiteHammer.get("upgrade_to").getAsString());
+        assertEquals("betternether:cincinnasite_diamond/repair", cincinnasiteHammer.get("upgrade_ingredient").getAsString());
+
+        var cincinnasiteExcavator = rule(betterNether, "betternether:cincinnasite_excavator");
+        assertEquals("mining_tool", cincinnasiteExcavator.get("type").getAsString());
+        assertEquals("betternether:cincinnasite_excavator_diamond", cincinnasiteExcavator.get("upgrade_to").getAsString());
+
+        var rubyHammer = rule(betterNether, "betternether:nether_ruby_hammer");
+        assertEquals("mining_tool", rubyHammer.get("type").getAsString());
+        assertFalse(rubyHammer.has("upgrade_to"));
+
+        var rubyExcavator = rule(betterNether, "betternether:nether_ruby_excavator");
+        assertEquals("mining_tool", rubyExcavator.get("type").getAsString());
+        assertFalse(rubyExcavator.has("upgrade_to"));
     }
 
     @Test

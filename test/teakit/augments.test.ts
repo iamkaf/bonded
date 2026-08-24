@@ -23,7 +23,8 @@ describe.configure({
 
 describe("Bonded augments", () => {
   test("activates Cake Destroyer from cake blocks and drops sugar on melee damage", async (ctx) => {
-    const mobCount = 300;
+    const mobsPerAttempt = 30;
+    const attempts = 10;
 
     try {
       await prepare(ctx);
@@ -41,19 +42,26 @@ describe("Bonded augments", () => {
       await ctx.player.mine({ x: 1, y: 71, z: 0 }, { timeoutMs: 5_000 });
       await expectAugmentProgress(ctx, "bonded:cake_destroyer", 100);
 
-      await ctx.commands.batch(
-        Array.from(
-          { length: mobCount },
-          () => "/summon minecraft:zombie 4 71 0 {NoAI:1b,Silent:1b}",
-        ),
-      );
-      await ctx.commands.assert(
-        "/execute as @e[type=minecraft:zombie,distance=..16] run damage @s 3 minecraft:player_attack by @p",
-      );
-      await expect(async () => !await commandFails(
-        ctx,
-        "/execute if items entity @e[type=minecraft:item,distance=..16] contents minecraft:sugar",
-      )).toEventuallyEqual(true, { timeout: "5s", interval: "100ms" });
+      let sugarDropped = false;
+      for (let attempt = 0; attempt < attempts && !sugarDropped; attempt++) {
+        await ctx.commands.batch(
+          Array.from(
+            { length: mobsPerAttempt },
+            () => "/summon minecraft:zombie 4 71 0 {NoAI:1b,Silent:1b}",
+          ),
+        );
+        await ctx.commands.assert(
+          "/execute as @e[type=minecraft:zombie,distance=..16] run damage @s 3 minecraft:player_attack by @p",
+        );
+        sugarDropped = !await commandFails(
+          ctx,
+          "/execute if items entity @e[type=minecraft:item,distance=..16] contents minecraft:sugar",
+        );
+        await ctx.commands.run("/kill @e[type=minecraft:zombie,distance=..16]", {
+          requireSuccess: false,
+        });
+      }
+      expect(sugarDropped).toEqual(true);
     } finally {
       await ctx.commands.run("/kill @e[type=minecraft:zombie,distance=..32]", { requireSuccess: false });
       await ctx.commands.run("/kill @e[type=minecraft:item,distance=..32]", { requireSuccess: false });

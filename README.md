@@ -1,53 +1,76 @@
 # Bonded
 
-A gear leveling mod for modern Minecraft.
+A gear leveling mod for Fabric, Forge, and NeoForge.
 
 ## About
 
-Bonded adds progression and item growth systems for tools, weapons, and armor.
-It uses a multiloader setup built on Amber and supports Fabric, Forge, and NeoForge from the same codebase.
+Bonded makes tools, weapons, and armor grow with use. Gear earns Bond from normal play, gains bonuses as it
+levels, and can be repaired, over-repaired, or upgraded at dedicated benches.
 
-## Monorepo Structure
+Standard gear from other mods works through Minecraft's item tags. Bonded also ships detailed Gear Rule
+profiles for mods with nonstandard equipment or upgrade paths, and server owners can add their own rules
+without making an addon.
+
+## Requirements
+
+- [Amber](https://modrinth.com/mod/amber)
+- [Konfig](https://modrinth.com/mod/konfig)
+- Fabric API on Fabric
+
+Fabric players can optionally install [Mod Menu](https://modrinth.com/mod/modmenu) to open Bonded's
+configuration from the Mods screen.
+
+## Gear rules
+
+Gear Rules decide how Bonded treats an item or item tag:
+
+- gear type and experience cap
+- repair behavior and repair material
+- Tool Bench upgrade target and ingredient
+- whether the rule is enabled
+
+Bonded includes profiles for vanilla and Bonded gear, Basic Weapons, Advanced Netherite, Immersive Armors,
+BetterEnd, BetterNether, and Arcane Armory. Shipped rules are read-only. Copy one into User Overrides to
+change it, or add a rule for another item or item tag. Valid changes save automatically and apply live.
+
+If a configured item belongs to a mod that is later removed, Bonded keeps the rule dormant instead of
+deleting it. The rule becomes active again when the item returns.
+
+In multiplayer, the server owns common settings and Gear Rules. Connected players see the effective server
+rules, and operators can edit them when the server permits remote config changes.
+
+Configuration lives in `bonded-common.toml`, `bonded-client.toml`, and `gear-rules.toml`.
+
+## Optional integrations
+
+- Liteminer: vein-mined blocks award diminishing Bonded experience and the Liteminer HUD previews the total gain.
+- Patchouli: adds a craftable Bonded Field Guide covering progression, workstation recipes, and augments. Its recipe is absent when Patchouli is not installed.
+
+## Repository structure
 
 This repository contains Bonded's Minecraft-versioned projects:
 
 ```text
 bonded/
-├── 26.1.2/           # Active Minecraft 26.1.2 project
+├── common/           # Shared code and resources
+├── fabric/           # Fabric loader code
+├── forge/            # Forge loader code
+├── neoforge/         # NeoForge loader code
+├── versions/         # Per-Minecraft-version configuration and overlays
 ├── changelog.md      # Shared changelog used by publishing tasks
 ├── LICENSE
 └── README.md
 ```
-
-Each version directory follows the same layout:
-
-- `common/` - shared code across loaders
-- `fabric/` - Fabric implementation
-- `forge/` - Forge implementation
-- `neoforge/` - NeoForge implementation
-
-## Supported Versions
-
-- 1.21.11
-- 26.1
-- 26.1.1
-- 26.1.2
-- 26.2
-
-## Optional Integrations
-
-- Liteminer: vein-mined blocks award diminishing Bonded experience and the Liteminer HUD previews the total gain.
-- Patchouli: Fabric and NeoForge players on Minecraft 26.1.x can craft the Bonded Field Guide from a book and Scrap. The guide covers progression, workstation recipes, and augments. Its recipe is absent when Patchouli is not installed. Modern Patchouli does not support Forge.
 
 ## Building
 
 Use `just` from the repo root.
 
 ```bash
-just build 26.1.2
-just run 26.1.2 :fabric:runClient
-just run 26.1.2 :forge:runClient
-just run 26.1.2 :neoforge:runClient
+just build 26.2
+just run 26.2 :fabric:runClient
+just run 26.2 :forge:runClient
+just run 26.2 :neoforge:runClient
 ```
 
 Build outputs are written to `<version>/<loader>/build/libs/`.
@@ -61,12 +84,12 @@ Build outputs are written to `<version>/<loader>/build/libs/`.
 Open the version directory in your IDE:
 
 ```bash
-idea 26.1.2
+idea 26.2
 ```
 
 ## Addon API
 
-Bonded exposes a public addon API under `com.iamkaf.bonded.api` on the active `26.2` line.
+Bonded exposes a public addon API under `com.iamkaf.bonded.api`.
 The API is intended for mods that need to register gear compatibility, inspect or mutate Bonded item
 state, react to Bonded progression events, or award Bonded experience from custom gameplay.
 

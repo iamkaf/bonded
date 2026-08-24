@@ -1,5 +1,5 @@
 import { Capability, Readiness, describe, test } from "@teakit/test";
-import type { ClientScreen, TeaKitTestContext } from "@teakit/test";
+import type { ClientScreen, ScreenListEntrySnapshot, TeaKitTestContext } from "@teakit/test";
 
 describe.configure({
   timeout: "2m",
@@ -20,24 +20,7 @@ describe("Bonded gear-rule screen", () => {
     try {
       await waitForCommand(ctx, "/bondeddebug rules user-count 0");
       await waitForCommand(ctx, "/bondeddebug rules active-user-count 0");
-      await ctx.commands.assert("/bondeddebug rules preview-remote-view");
-      let screen = await ctx.client.waitForScreen(
-        "com.iamkaf.konfig.impl.v1.client.screen.KonfigConfigScreen",
-        { timeoutMs: 10_000 },
-      );
-      screen = await waitForEntry(ctx, "Rules");
-      const rules = screen.lists().entries().find((entry) => entry.label.includes("Rules"));
-      if (!rules) throw new Error("Missing Bonded gear rules config entry");
-      await ctx.client.click({
-        x: rules.x + rules.width * 0.75,
-        y: rules.y + rules.height / 2,
-        button: 0,
-      });
-
-      screen = await ctx.client.waitForScreen(
-        "com.iamkaf.konfig.impl.v1.client.fieldset.KonfigFieldsetCatalogScreen",
-        { timeoutMs: 10_000 },
-      );
+      let screen = await openCatalog(ctx);
       assertActive(screen, ["New Override", "Done"]);
       assertCatalogProfile(screen, "Bonded");
       assertCatalogProfile(screen, "User Overrides");
@@ -52,24 +35,110 @@ describe("Bonded gear-rule screen", () => {
       await ctx.client.screenshot("bonded-gear-rules-catalog-live-override");
 
       await screen.widgets().find("Delete").click();
-      created = false;
       await waitForCommand(ctx, "/bondeddebug rules user-count 0");
       await waitForCommand(ctx, "/bondeddebug rules active-user-count 0");
+      created = false;
       await waitForCommand(ctx, "/bondeddebug rules query", ["cap=100", "source=Bonded"]);
     } finally {
       if (created) {
-        const screen = await ctx.client.screen();
-        const deleteButton = screen.widgets().all().find((widget) => widget.label === "Delete" && widget.active);
-        if (deleteButton) {
-          await screen.widgets().find("Delete").click();
-          await waitForCommand(ctx, "/bondeddebug rules user-count 0");
-          await waitForCommand(ctx, "/bondeddebug rules active-user-count 0");
-        }
+        await deleteCreatedOverride(ctx);
       }
+      await closeScreenStack(ctx);
       await ctx.commands.run("/clear @s", { requireSuccess: false });
     }
   });
 });
+
+async function openCatalog(ctx: TeaKitTestContext): Promise<ClientScreen> {
+  await ctx.commands.assert("/bondeddebug rules preview-remote-view");
+  const configScreen = "com.iamkaf.konfig.impl.v1.client.screen.KonfigConfigScreen";
+  const catalogScreen = "com.iamkaf.konfig.impl.v1.client.fieldset.KonfigFieldsetCatalogScreen";
+  const deadline = Date.now() + 10_000;
+  let screen = await ctx.client.screen();
+  while (Date.now() < deadline) {
+    if (screen.screenClass === catalogScreen) return screen;
+    if (screen.screenClass === configScreen) break;
+    await ctx.runtime.wait(100);
+    screen = await ctx.client.screen();
+  }
+  if (screen.screenClass !== configScreen) {
+    throw new Error(`Expected the Bonded config or Gear Rules catalog; observed: ${screen.screenClass}`);
+  }
+  screen = await waitForEntry(ctx, "Rules");
+  const rules = screen.lists().entries().find((entry) => entry.label.includes("Rules"));
+  if (!rules) throw new Error("Missing Bonded gear rules config entry");
+  await clickEntry(ctx, rules, 0.75);
+  const catalogDeadline = Date.now() + 10_000;
+  let lastScreenClass = screen.screenClass;
+  while (Date.now() < catalogDeadline) {
+    screen = await ctx.client.screen();
+    lastScreenClass = screen.screenClass;
+    if (screen.screenClass === catalogScreen) return screen;
+    if (screen.screenClass === configScreen) {
+      const currentRules = screen.lists().entries().find((entry) => entry.label.includes("Rules"));
+      if (currentRules) await clickEntry(ctx, currentRules, 0.75);
+    }
+    await ctx.runtime.wait(250);
+  }
+  throw new Error(`Gear Rules catalog did not open; observed: ${lastScreenClass}`);
+}
+
+async function deleteCreatedOverride(ctx: TeaKitTestContext): Promise<void> {
+  let screen = await ctx.client.screen();
+  let deleteButton = screen.widgets().all().find((widget) => widget.label === "Delete" && widget.active);
+  if (!deleteButton) {
+    await closeScreenStack(ctx);
+    screen = await openCatalog(ctx);
+    const profile = await waitForListEntry(ctx, "User Overrides");
+    await clickEntry(ctx, profile);
+    const override = await waitForListEntry(ctx, "minecraft:iron_sword");
+    await clickEntry(ctx, override);
+    screen = await waitForActiveWidget(ctx, "Delete");
+    deleteButton = screen.widgets().all().find((widget) => widget.label === "Delete" && widget.active);
+  }
+  if (!deleteButton) throw new Error("Could not recover the test Gear Rules override for cleanup");
+  await screen.widgets().find("Delete").click();
+  await waitForCommand(ctx, "/bondeddebug rules user-count 0");
+  await waitForCommand(ctx, "/bondeddebug rules active-user-count 0");
+}
+
+async function waitForListEntry(
+  ctx: TeaKitTestContext,
+  label: string,
+): Promise<ScreenListEntrySnapshot> {
+  const deadline = Date.now() + 10_000;
+  while (Date.now() < deadline) {
+    const screen = await ctx.client.screen();
+    const entry = screen.lists().entries().find((candidate) => candidate.label === label);
+    if (entry) return entry;
+    await ctx.runtime.wait(100);
+  }
+  throw new Error(`Missing ${label} while recovering the Gear Rules test override`);
+}
+
+async function clickEntry(
+  ctx: TeaKitTestContext,
+  entry: { x: number; y: number; width: number; height: number },
+  horizontalPosition = 0.5,
+): Promise<void> {
+  await ctx.client.click({
+    x: entry.x + entry.width * horizontalPosition,
+    y: entry.y + entry.height / 2,
+    button: 0,
+  });
+}
+
+async function closeScreenStack(ctx: TeaKitTestContext): Promise<void> {
+  for (let attempt = 0; attempt < 6; attempt++) {
+    const screen = await ctx.client.screen();
+    if (!screen.open) return;
+    await ctx.client.key(256, { release: true });
+    await ctx.runtime.wait(100);
+  }
+
+  const screen = await ctx.client.screen();
+  throw new Error(`Gear Rules screen did not close during cleanup: ${screen.screenClass}`);
+}
 
 async function waitForEntry(ctx: TeaKitTestContext, label: string): Promise<ClientScreen> {
   const startedAt = Date.now();

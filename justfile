@@ -31,3 +31,6 @@ run-client node:
 
 test-check node timeout="240":
   @./teakitw check --node "{{node}}" --timeout "{{timeout}}"
+
+test-compat timeout="1200":
+  @./teakitw check --background --config teakit-compat.toml --node 26.1.2-fabric --node 26.1.2-neoforge --test-dir test/teakit-compat --timeout "{{timeout}}" --report build/reports/teakit-compat.json

@@ -1,4 +1,4 @@
-import { Capability, Readiness, describe, expect, test } from "@teakit/test";
+import { beforeEach, Capability, Readiness, describe, expect, test } from "@teakit/test";
 import type { BlockId, BlockPos, ItemId, ItemStack, TeaKitTestContext } from "@teakit/test";
 
 interface ExpectedPlayerItem {
@@ -24,6 +24,10 @@ describe.configure({
     Capability.WorldBlock,
     Capability.WorldEntities,
   ],
+});
+
+beforeEach(async (ctx) => {
+  await ctx.player.inventory().selectHotbar(0);
 });
 
 describe("Bonded gameplay", () => {
