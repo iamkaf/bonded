@@ -16,6 +16,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `/bonded augment` commands and an addon API for registering and progressing custom augments.
 - Added an optional Patchouli Field Guide covering Bonded recipes, progression, and augments where Patchouli is available.
 
+### Fixed
+
+- Fixed Bonded weapons not gaining experience when an attack killed the target.
+- Fixed Bonded bonus updates removing third-party attribute modifiers when they shared an identifier with a vanilla modifier.
+
 ## 4.2.0
 
 ### Added
