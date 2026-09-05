@@ -22,8 +22,12 @@ import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
+//? if >=26.3 {
+/*import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
+*///?} else {
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+//?}
 
 public final class ScrapDrops {
     private ScrapDrops() {
@@ -78,9 +82,15 @@ public final class ScrapDrops {
 
     private static LootPool.Builder scrapChestPool() {
         return LootPool.lootPool()
+                //? if >=26.3
+                /*.setRolls(ContextIntProviders.exactly(1))*/
+                //? if <26.3
                 .setRolls(ConstantValue.exactly(1))
                 .when(LootItemRandomChanceCondition.randomChance(Bonded.CONFIG.chestScrapChance.get().floatValue()))
                 .add(LootItem.lootTableItem(Items.SCRAP.get()))
+                //? if >=26.3
+                /*.apply(SetItemCountFunction.setCount(ContextIntProviders.between(1, 2)));*/
+                //? if <26.3
                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 2.0f)));
     }
 
