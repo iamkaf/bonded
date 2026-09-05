@@ -1,0 +1,39 @@
+{
+  "type": "modonomicon:content",
+  "background": {
+    "height": 26,
+    "sprite": "modonomicon:modonomicon/themes/default/node/entry_backgrounds/square_gold",
+    "width": 26
+  },
+  "category": "bonded:recipes",
+  "condition": {
+    "type": "modonomicon:none"
+  },
+  "description": "book.bonded.field_guide.recipes.workstations.description",
+  "icon": "bonded:tool_bench",
+  "id": "bonded:recipes/workstations",
+  "name": "book.bonded.field_guide.recipes.workstations.name",
+  "pages": [
+    {
+      "type": "modonomicon:crafting_recipe",
+      "condition": {
+        "type": "modonomicon:none"
+      },
+      "id": "tool_bench",
+      "recipe_id_1": "bonded:tool_bench",
+      "text": "book.bonded.field_guide.recipes.workstations.tool_bench.text"
+    },
+    {
+      "type": "modonomicon:crafting_recipe",
+      "condition": {
+        "type": "modonomicon:none"
+      },
+      "id": "repair_bench",
+      "recipe_id_1": "bonded:repair_bench",
+      "text": "book.bonded.field_guide.recipes.workstations.repair_bench.text"
+    }
+  ],
+  "sort_number": 0,
+  "x": 0,
+  "y": 0
+}

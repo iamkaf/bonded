@@ -1,0 +1,41 @@
+{
+  "type": "modonomicon:content",
+  "background": {
+    "height": 26,
+    "sprite": "modonomicon:modonomicon/themes/default/node/entry_backgrounds/square_gold",
+    "width": 26
+  },
+  "category": "bonded:bonding",
+  "condition": {
+    "type": "modonomicon:none"
+  },
+  "description": "book.bonded.field_guide.bonding.getting_attached.description",
+  "icon": "minecraft:iron_pickaxe",
+  "id": "bonded:bonding/getting_attached",
+  "name": "book.bonded.field_guide.bonding.getting_attached.name",
+  "pages": [
+    {
+      "type": "modonomicon:text",
+      "condition": {
+        "type": "modonomicon:none"
+      },
+      "id": "bond",
+      "show_title_separator": true,
+      "text": "book.bonded.field_guide.bonding.getting_attached.bond.text",
+      "title": "book.bonded.field_guide.bonding.getting_attached.bond.title"
+    },
+    {
+      "type": "modonomicon:text",
+      "condition": {
+        "type": "modonomicon:none"
+      },
+      "id": "levels",
+      "show_title_separator": true,
+      "text": "book.bonded.field_guide.bonding.getting_attached.levels.text",
+      "title": "book.bonded.field_guide.bonding.getting_attached.levels.title"
+    }
+  ],
+  "sort_number": 0,
+  "x": 0,
+  "y": 0
+}

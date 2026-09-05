@@ -44,6 +44,7 @@ Configuration lives in `bonded-common.toml`, `bonded-client.toml`, and `gear-rul
 ## Optional integrations
 
 - Liteminer: vein-mined blocks award diminishing Bonded experience and the Liteminer HUD previews the total gain.
+- Modonomicon: adds a craftable Bonded Field Guide covering progression, workstation recipes, and augments on Minecraft 1.21.11 and newer.
 - Patchouli: adds a craftable Bonded Field Guide covering progression, workstation recipes, and augments. Its recipe is absent when Patchouli is not installed.
 
 ## Repository structure
