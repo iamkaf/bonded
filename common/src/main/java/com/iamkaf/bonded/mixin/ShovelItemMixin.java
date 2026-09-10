@@ -8,7 +8,13 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+//? if >=26.3 {
+/*import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.component.BlockTransformers;
+*///?} else {
 import net.minecraft.world.item.ShovelItem;
+//?}
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -17,6 +23,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+//? if >=26.3
+/*@Mixin(Item.class)*/
+//? if <26.3
 @Mixin(ShovelItem.class)
 public abstract class ShovelItemMixin {
     @Inject(method = "useOn", at = @At("HEAD"))
@@ -25,6 +34,13 @@ public abstract class ShovelItemMixin {
         Player player = context.getPlayer();
         Level level = context.getLevel();
         BlockPos clickedPos = context.getClickedPos();
+
+        //? if >=26.3 {
+        /*var transformer = context.getItemInHand().get(DataComponents.BLOCK_TRANSFORMER);
+        if (transformer == null || !transformer.is(BlockTransformers.SHOVEL)) {
+            return;
+        }
+        *///?}
 
         boolean isGrassPathCandidate = player != null
                 && !level.isClientSide()

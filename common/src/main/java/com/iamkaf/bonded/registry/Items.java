@@ -6,9 +6,11 @@ import com.iamkaf.amber.api.registry.v1.RegistrySupplier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
+//? if <26.3 {
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.ShovelItem;
+//?}
 import net.minecraft.world.item.equipment.ArmorType;
 
 public class Items {
@@ -32,14 +34,23 @@ public class Items {
     );
     public static final RegistrySupplier<Item> TEMPERED_GOLD_SHOVEL = ITEMS.register(
             "tempered_gold_shovel",
+            //? if >=26.3
+            /*() -> new Item(properties("tempered_gold_shovel").shovel(TemperedGold.TOOL_MATERIAL, 1.5F, -3.0F))*/
+            //? if <26.3
             () -> new ShovelItem(TemperedGold.TOOL_MATERIAL, 1.5F, -3.0F, properties("tempered_gold_shovel"))
     );
     public static final RegistrySupplier<Item> TEMPERED_GOLD_AXE = ITEMS.register(
             "tempered_gold_axe",
+            //? if >=26.3
+            /*() -> new Item(properties("tempered_gold_axe").axe(TemperedGold.TOOL_MATERIAL, 7.0F, -3.0F))*/
+            //? if <26.3
             () -> new AxeItem(TemperedGold.TOOL_MATERIAL, 7.0F, -3.0F, properties("tempered_gold_axe"))
     );
     public static final RegistrySupplier<Item> TEMPERED_GOLD_HOE = ITEMS.register(
             "tempered_gold_hoe",
+            //? if >=26.3
+            /*() -> new Item(properties("tempered_gold_hoe").hoe(TemperedGold.TOOL_MATERIAL, -1.0F, -1.0F))*/
+            //? if <26.3
             () -> new HoeItem(TemperedGold.TOOL_MATERIAL, -1.0F, -1.0F, properties("tempered_gold_hoe"))
     );
     public static final RegistrySupplier<Item> TEMPERED_GOLD_HELMET = armor("tempered_gold_helmet", ArmorType.HELMET);
