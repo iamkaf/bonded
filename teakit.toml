@@ -8,7 +8,7 @@ gradleWrapper = "./gradlew"
 noDaemon = true
 console = "plain"
 maxWorkers = 1
-configureOnDemand = false
+configureOnDemand = true
 
 [defaults.gradleProperties]
 "bonded.withTeaKit" = "true"
@@ -39,6 +39,12 @@ gameDirectory = "forge/versions/1.21.11/run"
 GLFW_PLATFORM = "x11"
 XDG_SESSION_TYPE = "x11"
 WAYLAND_DISPLAY = ""
+
+[nodes."1.21.11-forge".gradleProperties]
+"bonded.withLiteminer" = "false"
+
+[nodes."1.21.11-forge".systemProperties]
+"bonded.withLiteminer" = "false"
 
 [nodes."1.21.11-neoforge"]
 loader = "neoforge"
@@ -87,6 +93,12 @@ GLFW_PLATFORM = "x11"
 XDG_SESSION_TYPE = "x11"
 WAYLAND_DISPLAY = ""
 
+[nodes."26.2-forge".gradleProperties]
+"bonded.withLiteminer" = "false"
+
+[nodes."26.2-forge".systemProperties]
+"bonded.withLiteminer" = "false"
+
 [nodes."26.1.2-forge"]
 loader = "forge"
 minecraft = "26.1.2"
@@ -97,6 +109,12 @@ gameDirectory = "forge/versions/26.1.2/run"
 GLFW_PLATFORM = "x11"
 XDG_SESSION_TYPE = "x11"
 WAYLAND_DISPLAY = ""
+
+[nodes."26.1.2-forge".gradleProperties]
+"bonded.withLiteminer" = "false"
+
+[nodes."26.1.2-forge".systemProperties]
+"bonded.withLiteminer" = "false"
 
 [nodes."26.1-forge"]
 loader = "forge"
@@ -109,6 +127,12 @@ GLFW_PLATFORM = "x11"
 XDG_SESSION_TYPE = "x11"
 WAYLAND_DISPLAY = ""
 
+[nodes."26.1-forge".gradleProperties]
+"bonded.withLiteminer" = "false"
+
+[nodes."26.1-forge".systemProperties]
+"bonded.withLiteminer" = "false"
+
 [nodes."26.1.1-forge"]
 loader = "forge"
 minecraft = "26.1.1"
@@ -119,6 +143,12 @@ gameDirectory = "forge/versions/26.1.1/run"
 GLFW_PLATFORM = "x11"
 XDG_SESSION_TYPE = "x11"
 WAYLAND_DISPLAY = ""
+
+[nodes."26.1.1-forge".gradleProperties]
+"bonded.withLiteminer" = "false"
+
+[nodes."26.1.1-forge".systemProperties]
+"bonded.withLiteminer" = "false"
 
 [nodes."26.1.2-neoforge"]
 loader = "neoforge"

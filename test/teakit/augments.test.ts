@@ -34,6 +34,7 @@ describe("Bonded augments", () => {
         "/bonded augment set @s bonded:cake_destroyer 98",
         "/setblock 0 71 0 minecraft:cake",
         "/setblock 1 71 0 minecraft:candle_cake",
+        "/setblock 4 73 0 minecraft:stone",
         "/tp @s 0 72 -1",
       ]);
 
@@ -47,24 +48,25 @@ describe("Bonded augments", () => {
         await ctx.commands.batch(
           Array.from(
             { length: mobsPerAttempt },
-            () => "/summon minecraft:zombie 4 71 0 {NoAI:1b,Silent:1b}",
+            () => "/summon minecraft:zombie 4 71 0 {Tags:[\"bonded_cake_destroyer_test\"],NoAI:1b,Silent:1b}",
           ),
         );
-        await ctx.commands.assert(
-          "/execute as @e[type=minecraft:zombie,distance=..16] run damage @s 3 minecraft:player_attack by @p",
+        await ctx.commands.run(
+          "/execute as @e[type=minecraft:zombie,tag=bonded_cake_destroyer_test] run damage @s 3 minecraft:player_attack by @p",
+          { requireSuccess: false },
         );
         sugarDropped = !await commandFails(
           ctx,
-          "/execute if items entity @e[type=minecraft:item,distance=..16] contents minecraft:sugar",
+          "/execute at @s if items entity @e[type=minecraft:item,distance=..16] contents minecraft:sugar",
         );
-        await ctx.commands.run("/kill @e[type=minecraft:zombie,distance=..16]", {
+        await ctx.commands.run("/kill @e[type=minecraft:zombie,tag=bonded_cake_destroyer_test]", {
           requireSuccess: false,
         });
       }
       expect(sugarDropped).toEqual(true);
     } finally {
-      await ctx.commands.run("/kill @e[type=minecraft:zombie,distance=..32]", { requireSuccess: false });
-      await ctx.commands.run("/kill @e[type=minecraft:item,distance=..32]", { requireSuccess: false });
+      await ctx.commands.run("/kill @e[type=minecraft:zombie,tag=bonded_cake_destroyer_test]", { requireSuccess: false });
+      await ctx.commands.run("/execute at @s run kill @e[type=minecraft:item,distance=..32]", { requireSuccess: false });
       await ctx.commands.run("/gamerule maxEntityCramming 24", { requireSuccess: false });
       await cleanup(ctx);
     }

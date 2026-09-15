@@ -54,6 +54,9 @@ public final class WorldInnateBond {
             return false;
         }
 
+        //? if >=26.3
+        /*Entity entity = context.getOptional(LootContextParams.THIS_ENTITY);*/
+        //? if <26.3
         Entity entity = context.getOptionalParameter(LootContextParams.THIS_ENTITY);
         return entity instanceof Enemy && !(entity instanceof Player);
     }

@@ -5,16 +5,22 @@ All notable changes to Bonded will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 4.3.0
+## 5.0.0
 
 ### Added
 
-- Bonded tools now gain diminishing experience from secondary blocks mined by Liteminer, with a yellow `+<amount> EXP` HUD preview of the total.
-- Added augments, independent abilities that progress and activate on individual pieces of gear.
-- Added Cake Destroyer. Train it by breaking cakes, then bonded tools and weapons can make enemies drop sugar.
-- Added Oceanic. Train it by wearing bonded leggings underwater, then move freely while swimming.
-- Added `/bonded augment` commands and an addon API for registering and progressing custom augments.
-- Added an optional Patchouli Field Guide covering Bonded recipes, progression, and augments where Patchouli is available.
+- BREAKING: Gear compatibility is now managed through the new Gear Rules config screen. Server owners can configure which items and tags work with Bonded, including their gear type, experience cap, repair material, and upgrade path. Changes apply immediately and sync to players.
+  - Includes built-in support for Advanced Netherite, Arcane Armory, Basic Weapons, BetterEnd, BetterNether, and Immersive Armors.
+- Added augments, a new progression system that gives individual pieces of gear their own trainable abilities.
+- Added the Cake Destroyer augment. Train it by breaking cakes, then bonded tools and weapons can make enemies drop sugar.
+- Added the Oceanic augment. Train it by wearing bonded leggings underwater, then move freely while swimming.
+- Added `/bonded augment` commands and an addon API for creating and progressing custom augments.
+- Added an optional Patchouli Field Guide covering Bonded recipes, progression, and augments. Craft it with a book and Scrap when Patchouli is installed.
+
+### Changed
+
+- Ported to Minecraft 26.3.
+- Added Liteminer integration. Bonded tools gain reduced experience from extra blocks mined by Liteminer, and the HUD shows the total in yellow.
 
 ## 4.2.0
 
