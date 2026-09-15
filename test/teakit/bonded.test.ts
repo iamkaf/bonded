@@ -114,6 +114,7 @@ describe("Bonded gameplay", () => {
       await ctx.commands.batch([
         "/clear @s",
         "/gamemode survival @s",
+        "/gamerule fallDamage false",
         "/tp @s 0 72 0",
         "/fill -3 70 -3 4 70 3 minecraft:stone replace",
         "/fill -3 71 -3 4 76 3 minecraft:air replace",
@@ -138,6 +139,7 @@ describe("Bonded gameplay", () => {
       await ctx.commands.batch([
         "/clear @s",
         "/gamemode creative @s",
+        "/gamerule fallDamage true",
         "/fill -3 70 -3 4 76 3 minecraft:air replace",
       ]);
     }
