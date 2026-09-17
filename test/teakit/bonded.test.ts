@@ -13,11 +13,14 @@ describe.configure({
   timeout: "20m",
   readiness: [Readiness.World, Readiness.Player],
   capabilities: [
+    Capability.ClientScreen,
+    Capability.ClientScreens,
     Capability.ClientScreenshot,
     Capability.PlayerInteractions,
     Capability.PlayerDriver,
     Capability.PlayerInventory,
     Capability.PlayerPosition,
+    Capability.PlayerReset,
     Capability.PlayerTeleport,
     Capability.RuntimeTiming,
     Capability.ServerCommands,
@@ -27,6 +30,21 @@ describe.configure({
 });
 
 beforeEach(async (ctx) => {
+  const screen = await ctx.client.screen();
+  if (screen.screenClass === "net.minecraft.client.gui.screens.DeathScreen") {
+    await screen.widgets().activate({ label: "Respawn" });
+    await expect(async () => (await ctx.client.screen()).screenClass === "net.minecraft.client.gui.screens.DeathScreen")
+      .toEventuallyEqual(false, { timeout: "10s" });
+  }
+  await ctx.player.reset({ gameMode: "creative", health: 20 });
+  await ctx.commands.batch([
+    "/fill -3 70 -3 9 70 3 minecraft:stone replace",
+    "/fill -3 71 -3 9 76 3 minecraft:air replace",
+  ]);
+  await expectBlock(ctx, { x: 0, y: 70, z: -1 }, "minecraft:stone", 3000);
+  await expectBlock(ctx, { x: 0, y: 71, z: -1 }, "minecraft:air", 3000);
+  await expectBlock(ctx, { x: 0, y: 72, z: -1 }, "minecraft:air", 3000);
+  await ctx.player.teleport({ x: 0.5, y: 71, z: -0.5 });
   await ctx.player.inventory().selectHotbar(0);
 });
 
@@ -77,7 +95,7 @@ describe("Bonded gameplay", () => {
     } finally {
       await ctx.commands.batch([
         "/clear @s",
-        "/fill -3 70 -3 9 76 3 minecraft:air replace",
+        "/fill -3 71 -3 9 76 3 minecraft:air replace",
       ]);
     }
   });
@@ -114,7 +132,6 @@ describe("Bonded gameplay", () => {
       await ctx.commands.batch([
         "/clear @s",
         "/gamemode survival @s",
-        "/gamerule fallDamage false",
         "/tp @s 0 72 0",
         "/fill -3 70 -3 4 70 3 minecraft:stone replace",
         "/fill -3 71 -3 4 76 3 minecraft:air replace",
@@ -139,8 +156,7 @@ describe("Bonded gameplay", () => {
       await ctx.commands.batch([
         "/clear @s",
         "/gamemode creative @s",
-        "/gamerule fallDamage true",
-        "/fill -3 70 -3 4 76 3 minecraft:air replace",
+        "/fill -3 71 -3 4 76 3 minecraft:air replace",
       ]);
     }
   });
@@ -173,7 +189,7 @@ describe("Bonded gameplay", () => {
       await ctx.commands.batch([
         "/clear @s",
         "/gamemode creative @s",
-        "/fill -3 70 -3 3 76 3 minecraft:air replace",
+        "/fill -3 71 -3 3 76 3 minecraft:air replace",
       ]);
     }
   });
@@ -210,7 +226,7 @@ describe("Bonded gameplay", () => {
       await ctx.commands.batch([
         "/clear @s",
         "/gamemode creative @s",
-        "/fill -3 70 -3 4 76 3 minecraft:air replace",
+        "/fill -3 71 -3 4 76 3 minecraft:air replace",
       ]);
     }
   });
@@ -240,7 +256,7 @@ describe("Bonded gameplay", () => {
       await ctx.commands.batch([
         "/clear @s",
         "/gamemode creative @s",
-        "/fill -3 70 -3 3 76 3 minecraft:air replace",
+        "/fill -3 71 -3 3 76 3 minecraft:air replace",
       ]);
     }
   });
@@ -271,7 +287,7 @@ describe("Bonded gameplay", () => {
       await ctx.commands.batch([
         "/clear @s",
         "/gamemode creative @s",
-        "/fill -3 70 -3 4 76 3 minecraft:air replace",
+        "/fill -3 71 -3 4 76 3 minecraft:air replace",
       ]);
     }
   });
@@ -282,7 +298,7 @@ describe("Bonded gameplay", () => {
         "/clear @s",
         "/gamemode survival @s",
         "/tp @s 0 72 0",
-        "/fill -2 70 -2 4 75 2 minecraft:air replace",
+        "/fill -2 71 -2 4 75 2 minecraft:air replace",
         "/fill -2 70 -2 4 70 2 minecraft:stone replace",
         "/item replace entity @s weapon.mainhand with minecraft:iron_shovel[minecraft:damage=299,minecraft:max_damage=650,bonded:item_level={level:4,maxExperience:100,experience:96,bond:1116},bonded:applied_bonuses={bonuses:[\"bonded:durability_500\",\"bonded:durability_1000\"]},bonded:max_damage_modifiers={base_max_damage:250,modifiers:[{amount:50.0d,id:\"bonded:durability_500\",operation:\"add_value\"},{amount:50.0d,id:\"bonded:durability_1000\",operation:\"add_value\"},{amount:300.0d,id:\"bonded:over_repair\",operation:\"add_value\"}]}]",
       ]);
@@ -303,7 +319,7 @@ describe("Bonded gameplay", () => {
       await ctx.commands.batch([
         "/clear @s",
         "/gamemode creative @s",
-        "/fill -2 70 -2 4 75 2 minecraft:air replace",
+        "/fill -2 71 -2 4 75 2 minecraft:air replace",
       ]);
     }
   });
@@ -348,7 +364,7 @@ describe("Bonded gameplay", () => {
       await ctx.commands.batch([
         "/clear @s",
         "/gamemode creative @s",
-        "/fill -2 70 -2 2 74 2 minecraft:air replace",
+        "/fill -2 71 -2 2 74 2 minecraft:air replace",
       ]);
     }
   });
@@ -430,7 +446,7 @@ describe("Bonded gameplay", () => {
       await ctx.commands.batch([
         "/clear @s",
         "/gamemode creative @s",
-        "/fill -3 70 -3 8 76 3 minecraft:air replace",
+        "/fill -3 71 -3 8 76 3 minecraft:air replace",
       ]);
     }
   });
@@ -481,7 +497,7 @@ describe("Bonded gameplay", () => {
       await ctx.commands.batch([
         "/clear @s",
         "/gamemode creative @s",
-        "/fill -3 70 -3 3 76 3 minecraft:air replace",
+        "/fill -3 71 -3 3 76 3 minecraft:air replace",
       ]);
     }
   });
@@ -516,7 +532,7 @@ describe("Bonded gameplay", () => {
       await ctx.commands.batch([
         "/clear @s",
         "/gamemode creative @s",
-        "/fill -3 70 -3 3 76 3 minecraft:air replace",
+        "/fill -3 71 -3 3 76 3 minecraft:air replace",
       ]);
     }
   });
@@ -553,7 +569,7 @@ describe("Bonded gameplay", () => {
         "/clear @s",
         "/kill @e[type=minecraft:item,distance=..16]",
         "/gamemode creative @s",
-        "/fill -3 70 -3 6 76 3 minecraft:air replace",
+        "/fill -3 71 -3 6 76 3 minecraft:air replace",
       ]);
     }
   });
