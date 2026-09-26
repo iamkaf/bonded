@@ -5,6 +5,16 @@ All notable changes to Bonded will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 5.1.0
+
+### Added
+
+- Gear Rules can now use an item or an item tag as an upgrade material. Enter an item ID directly, or prefix a tag ID with `#` to get tag suggestions and previews.
+
+### Fixed
+
+- Axes now gain Bonded experience from hitting mobs.
+
 ## 5.0.0
 
 ### Added
