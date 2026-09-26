@@ -31,6 +31,19 @@ final class GearRuleReference {
         return validIdentifier(value);
     }
 
+    static boolean validUpgradePair(String target, String ingredient) {
+        boolean hasTarget = target != null && !target.isBlank();
+        boolean hasIngredient = ingredient != null && !ingredient.isBlank();
+        if (hasTarget != hasIngredient) {
+            return false;
+        }
+        if (!hasTarget) {
+            return true;
+        }
+        String ingredientId = ingredient.startsWith("#") ? ingredient.substring(1) : ingredient;
+        return validPersistedItem(target) && validIdentifier(ingredientId);
+    }
+
     static UpgradeMaterial upgradeMaterial(String value, boolean tagPresent, boolean itemPresent) {
         String id = value != null && value.startsWith("#") ? value.substring(1) : value;
         if (!validIdentifier(id)) {

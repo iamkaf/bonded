@@ -34,8 +34,9 @@ BetterEnd, BetterNether, and Arcane Armory. Shipped rules are read-only. Copy on
 change it, or add a rule for another item or item tag. Valid changes save automatically and apply live.
 
 For a Tool Bench upgrade, set both **Upgrade To** and **Upgrade Ingredient**. The ingredient can be one item,
-such as `minecraft:diamond`, or an item tag, such as `minecraft:diamond_tool_materials`. Leave both fields
-blank when the item has no upgrade path.
+such as `minecraft:diamond`, or an item tag, such as `#minecraft:diamond_tool_materials`. Type `#` to see
+tag suggestions and a matching item preview. Older tag entries without `#` still work. Leave both fields blank
+when the item has no upgrade path.
 
 If a configured item belongs to a mod that is later removed, Bonded keeps the rule dormant instead of
 deleting it. The rule becomes active again when the item returns.
