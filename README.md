@@ -33,6 +33,10 @@ Bonded includes profiles for vanilla and Bonded gear, Basic Weapons, Advanced Ne
 BetterEnd, BetterNether, and Arcane Armory. Shipped rules are read-only. Copy one into User Overrides to
 change it, or add a rule for another item or item tag. Valid changes save automatically and apply live.
 
+For a Tool Bench upgrade, set both **Upgrade To** and **Upgrade Ingredient**. The ingredient can be one item,
+such as `minecraft:diamond`, or an item tag, such as `minecraft:diamond_tool_materials`. Leave both fields
+blank when the item has no upgrade path.
+
 If a configured item belongs to a mod that is later removed, Bonded keeps the rule dormant instead of
 deleting it. The rule becomes active again when the item returns.
 

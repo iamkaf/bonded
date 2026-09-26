@@ -97,7 +97,7 @@ public final class GearRulesConfig {
                 .catalog(catalog)
                 .validate(GearRulesConfig::validSelector, "Choose an existing item or enter #namespace:item_tag")
                 .validate(GearRulesConfig::validRepair, "Choose an existing repair item/tag for the selected repair mode")
-                .validate(GearRulesConfig::validUpgrade, "Choose an existing upgrade target and valid ingredient tag, or leave both blank");
+                .validate(GearRulesConfig::validUpgrade, "Choose an upgrade target and ingredient item or tag, or leave both blank");
     }
 
     /** Installs the server-authoritative resolved rows without touching the persisted user rules. */

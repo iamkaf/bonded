@@ -6,6 +6,7 @@ import com.iamkaf.bonded.Bonded;
 import com.iamkaf.bonded.leveling.GearManager;
 import com.iamkaf.konfig.api.v1.fieldset.FieldsetEntry;
 import com.iamkaf.konfig.api.v1.fieldset.FieldsetValue;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -14,6 +15,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.Repairable;
 import org.jetbrains.annotations.Nullable;
 
@@ -224,7 +226,37 @@ public final class BondedRules {
             return null;
         }
         Identifier id = Identifier.tryParse(stripHash(rule.upgradeIngredient()));
-        return id == null ? null : TagKey.create(Registries.ITEM, id);
+        if (id == null) {
+            return null;
+        }
+        TagKey<Item> tag = TagKey.create(Registries.ITEM, id);
+        Registry<Item> registry = activeRegistry == null ? BuiltInRegistries.ITEM : activeRegistry;
+        boolean tagPresent = registry.get(tag).filter(holders -> holders.size() > 0).isPresent();
+        if (GearRuleReference.upgradeMaterial(rule.upgradeIngredient(), tagPresent, registry.containsKey(id))
+                == GearRuleReference.UpgradeMaterial.ITEM) {
+            return null;
+        }
+        return tag;
+    }
+
+    /** Resolves an upgrade material as a loaded tag or a single item. Existing tag IDs take precedence. */
+    public static @Nullable Ingredient upgradeMaterial(Item item, HolderLookup<Item> registry) {
+        ResolvedGearRule rule = rule(item);
+        if (rule == null || !rule.enabled() || rule.upgradeIngredient() == null) {
+            return null;
+        }
+        String reference = rule.upgradeIngredient();
+        Identifier id = Identifier.tryParse(stripHash(reference));
+        if (id == null) {
+            return null;
+        }
+        Optional<HolderSet.Named<Item>> holders = registry.get(TagKey.create(Registries.ITEM, id));
+        boolean tagPresent = holders.filter(value -> value.size() > 0).isPresent();
+        return switch (GearRuleReference.upgradeMaterial(reference, tagPresent, BuiltInRegistries.ITEM.containsKey(id))) {
+            case TAG -> Ingredient.of(holders.orElseThrow());
+            case ITEM -> Ingredient.of(BuiltInRegistries.ITEM.getValue(id));
+            case DORMANT, INVALID -> null;
+        };
     }
 
     /** Uses native repair data unless the active rule explicitly replaces or disables it. */
@@ -560,8 +592,16 @@ public final class BondedRules {
             if (targetAvailability == GearRuleReference.Availability.DORMANT) {
                 return dormant("upgrade target is missing: " + rule.upgradeTo());
             }
-            if (holders.isEmpty() || holders.get().size() == 0) {
-                return dormant("upgrade ingredient tag is missing or empty: " + rule.upgradeIngredient());
+            GearRuleReference.UpgradeMaterial material = GearRuleReference.upgradeMaterial(
+                    rule.upgradeIngredient(),
+                    holders.filter(value -> value.size() > 0).isPresent(),
+                    itemPresent.test(ingredientId.toString())
+            );
+            if (material == GearRuleReference.UpgradeMaterial.INVALID) {
+                return invalid("upgrade ingredient is not a valid item or tag: " + rule.upgradeIngredient());
+            }
+            if (material == GearRuleReference.UpgradeMaterial.DORMANT) {
+                return dormant("upgrade ingredient item or tag is missing: " + rule.upgradeIngredient());
             }
         }
         return null;

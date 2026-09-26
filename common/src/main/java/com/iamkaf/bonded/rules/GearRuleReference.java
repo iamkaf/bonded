@@ -31,6 +31,30 @@ final class GearRuleReference {
         return validIdentifier(value);
     }
 
+    static UpgradeMaterial upgradeMaterial(String value, boolean tagPresent, boolean itemPresent) {
+        String id = value != null && value.startsWith("#") ? value.substring(1) : value;
+        if (!validIdentifier(id)) {
+            return UpgradeMaterial.INVALID;
+        }
+        if (tagPresent) {
+            return UpgradeMaterial.TAG;
+        }
+        if (!value.startsWith("#") && itemPresent) {
+            if (id.equals("minecraft:air")) {
+                return UpgradeMaterial.INVALID;
+            }
+            return UpgradeMaterial.ITEM;
+        }
+        return UpgradeMaterial.DORMANT;
+    }
+
+    enum UpgradeMaterial {
+        ITEM,
+        TAG,
+        DORMANT,
+        INVALID
+    }
+
     enum Availability {
         INVALID,
         DORMANT,

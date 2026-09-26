@@ -16,13 +16,12 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -66,15 +65,15 @@ public class ToolBenchBlock extends Block {
             return InteractionResult.SUCCESS_SERVER;
         }
 
-        TagKey<Item> upgradeItemTag = leveler.getUpgradeIngredient(handItem);
+        Ingredient upgradeMaterial = leveler.getUpgradeMaterial(handItem, level);
 
-        if (upgradeItemTag == null || !leveler.isUpgradable(handItem)) {
+        if (upgradeMaterial == null || !leveler.isUpgradable(handItem)) {
             errorFeedback(level, player, Component.translatable("bonded.tool_bench.no_upgrade_path"));
             return InteractionResult.SUCCESS_SERVER;
         }
 
-        boolean hasIngredient = ItemFunctions.has(player.getInventory(), upgradeItemTag)
-                || AdjacentBenchStorage.has(level, pos, item -> item.is(upgradeItemTag));
+        boolean hasIngredient = ItemFunctions.has(player.getInventory(), upgradeMaterial)
+                || AdjacentBenchStorage.has(level, pos, upgradeMaterial::test);
         if (!hasIngredient) {
             errorFeedback(
                     level,
@@ -94,9 +93,9 @@ public class ToolBenchBlock extends Block {
         }
 
         Optional<AdjacentBenchStorage.ConsumedStorageItem> consumedStorageItem = Optional.empty();
-        Optional<ItemStack> consumedIngredient = consumeUpgradeIngredient(player, upgradeItemTag);
+        Optional<ItemStack> consumedIngredient = consumeUpgradeIngredient(player, upgradeMaterial);
         if (consumedIngredient.isEmpty()) {
-            consumedStorageItem = AdjacentBenchStorage.consume(level, pos, item -> item.is(upgradeItemTag));
+            consumedStorageItem = AdjacentBenchStorage.consume(level, pos, upgradeMaterial::test);
             consumedIngredient = consumedStorageItem.map(AdjacentBenchStorage.ConsumedStorageItem::stack);
             if (consumedStorageItem.isEmpty()) {
                 errorFeedback(
@@ -162,10 +161,10 @@ public class ToolBenchBlock extends Block {
         return true;
     }
 
-    private Optional<ItemStack> consumeUpgradeIngredient(Player player, TagKey<Item> upgradeItemTag) {
+    private Optional<ItemStack> consumeUpgradeIngredient(Player player, Ingredient upgradeMaterial) {
         for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
             ItemStack stack = player.getInventory().getItem(i);
-            if (!stack.isEmpty() && stack.is(upgradeItemTag)) {
+            if (upgradeMaterial.test(stack)) {
                 ItemStack consumed = stack.copyWithCount(1);
                 stack.shrink(1);
                 return Optional.of(consumed);
