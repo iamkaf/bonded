@@ -26,6 +26,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -246,7 +247,10 @@ public class GameplayHooks {
         }
 
         GearTypeLeveler leveler = Bonded.GEAR.getLeveler(handItem);
-        if (leveler instanceof MeleeWeaponsLeveler) {
+        boolean isAxeAttack = leveler != null
+                && handItem.is(ItemTags.AXES)
+                && source.getDirectEntity() == player;
+        if (leveler instanceof MeleeWeaponsLeveler || isAxeAttack) {
             emitProgressEvents(
                     handItem,
                     player,
