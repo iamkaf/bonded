@@ -28,4 +28,31 @@ class GearRuleReferenceTest {
         );
     }
 
+    @Test
+    void upgradeMaterialAcceptsItemsAndPreservesExistingTags() {
+        assertEquals(GearRuleReference.UpgradeMaterial.ITEM,
+                GearRuleReference.upgradeMaterial("minecraft:diamond", false, true));
+        assertEquals(GearRuleReference.UpgradeMaterial.TAG,
+                GearRuleReference.upgradeMaterial("minecraft:diamond_tool_materials", true, false));
+        assertEquals(GearRuleReference.UpgradeMaterial.TAG,
+                GearRuleReference.upgradeMaterial("minecraft:diamond", true, true));
+        assertEquals(GearRuleReference.UpgradeMaterial.DORMANT,
+                GearRuleReference.upgradeMaterial("#minecraft:diamond", false, true));
+        assertEquals(GearRuleReference.UpgradeMaterial.INVALID,
+                GearRuleReference.upgradeMaterial("minecraft:air", false, true));
+    }
+
+    @Test
+    void upgradeFieldsRequirePairAndAcceptItemsAndHashTags() {
+        assertTrue(GearRuleReference.validUpgradePair("", ""));
+        assertTrue(GearRuleReference.validUpgradePair("minecraft:diamond_sword", "minecraft:diamond"));
+        assertTrue(GearRuleReference.validUpgradePair(
+                "minecraft:diamond_sword", "#minecraft:diamond_tool_materials"));
+        assertTrue(GearRuleReference.validUpgradePair(
+                "minecraft:diamond_sword", "minecraft:diamond_tool_materials"));
+        assertFalse(GearRuleReference.validUpgradePair("minecraft:diamond_sword", ""));
+        assertFalse(GearRuleReference.validUpgradePair("", "minecraft:diamond"));
+        assertFalse(GearRuleReference.validUpgradePair("minecraft:diamond_sword", "#bad tag"));
+    }
+
 }

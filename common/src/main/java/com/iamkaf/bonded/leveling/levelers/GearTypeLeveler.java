@@ -7,10 +7,12 @@ import com.iamkaf.bonded.component.ItemLevelContainer;
 import com.iamkaf.bonded.registry.DataComponents;
 import com.iamkaf.bonded.rules.BondedRules;
 import com.iamkaf.bonded.util.MaxDamageModifiers;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 public interface GearTypeLeveler {
@@ -61,5 +63,17 @@ public interface GearTypeLeveler {
 
     default @Nullable TagKey<Item> getUpgradeIngredient(ItemStack gear) {
         return BondedRules.upgradeIngredient(gear.getItem());
+    }
+
+    default @Nullable Ingredient getUpgradeMaterial(ItemStack gear, Level level) {
+        var registry = level.holderLookup(Registries.ITEM);
+        TagKey<Item> tag = getUpgradeIngredient(gear);
+        if (tag != null) {
+            var holders = registry.get(tag);
+            if (holders.isPresent() && holders.get().size() > 0) {
+                return Ingredient.of(holders.get());
+            }
+        }
+        return BondedRules.upgradeMaterial(gear.getItem(), registry);
     }
 }

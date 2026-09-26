@@ -15,15 +15,13 @@ import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent
 import net.minecraft.client.gui.screens.inventory.tooltip.DefaultTooltipPositioner;
 import net.minecraft.client.gui.screens.inventory.tooltip.TooltipRenderUtil;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.core.HolderSet;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.Repairable;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -150,14 +148,13 @@ public class HUD {
         if (leveler == null) return;
 
         assert mc.level != null;
-        var lookup = mc.level.holderLookup(Registries.ITEM);
-
         Item upgrade = leveler.getUpgrade(stack);
-        TagKey<Item> upgradeIngredientTag = leveler.getUpgradeIngredient(stack);
-        if (stack.isEmpty() || upgrade == null || upgradeIngredientTag == null) return;
-        Optional<HolderSet.Named<Item>> holders = lookup.get(upgradeIngredientTag);
-        if (holders.isEmpty() || holders.get().size() == 0) return;
-        ItemStack upgradeIngredient = holders.get().get(0).value().getDefaultInstance();
+        Ingredient material = leveler.getUpgradeMaterial(stack, mc.level);
+        if (stack.isEmpty() || upgrade == null || material == null) return;
+        ItemStack upgradeIngredient = material.items().findFirst()
+                .map(holder -> holder.value().getDefaultInstance())
+                .orElse(ItemStack.EMPTY);
+        if (upgradeIngredient.isEmpty()) return;
 
         text(
                 guiGraphics,
