@@ -36,6 +36,7 @@ describe("Bonded Liteminer integration", () => {
       await ctx.world.clear(min, max);
       await ctx.world.fill({ x: -2, y: 69, z: -2 }, { x: 5, y: 69, z: 8 }, "minecraft:stone");
       await ctx.client.command("/liteminer shape set 0");
+      await ctx.commands.assert("/bondeddebug critical-chance 0");
 
       for (let index = 0; index < cases.length; index++) {
         const { blockCount, expectedExperience } = cases[index];

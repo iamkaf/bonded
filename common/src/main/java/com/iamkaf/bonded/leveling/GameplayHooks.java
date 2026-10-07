@@ -5,6 +5,7 @@ import com.iamkaf.amber.api.event.v1.events.common.EntityEvent;
 import com.iamkaf.amber.api.event.v1.events.common.ItemEvents;
 import com.iamkaf.amber.api.event.v1.events.common.PlayerEvents;
 import com.iamkaf.amber.api.functions.v1.ItemFunctions;
+import com.iamkaf.amber.api.functions.v1.PlayerFunctions;
 import com.iamkaf.bonded.Bonded;
 import com.iamkaf.bonded.advancement.BondedAdvancements;
 import com.iamkaf.bonded.api.event.BondEvent;
@@ -48,6 +49,8 @@ import java.util.List;
 import static net.minecraft.core.component.DataComponents.REPAIRABLE;
 
 public class GameplayHooks {
+    private static final int CRITICAL_MULTIPLIER = 3;
+
     public static void init() {
         BlockEvents.BLOCK_BREAK_AFTER.register((level, player, pos, state, blockEntity) -> {
             if (player instanceof ServerPlayer serverPlayer) {
@@ -102,13 +105,18 @@ public class GameplayHooks {
             return;
         }
 
+        // The server owns the roll; local() skips the synced overlay a singleplayer client also holds.
+        boolean critical = experienceAmount > 0
+                && player.getRandom().nextDouble() < Bonded.CONFIG.criticalBondChance.local();
+        int amount = critical ? experienceAmount * CRITICAL_MULTIPLIER : experienceAmount;
+
         InteractionResult result = BondEvent.ITEM_EXPERIENCE_GAINED.invoker()
-                .experience(gear, player, container, experienceAmount);
+                .experience(gear, player, container, amount);
         if (result != InteractionResult.PASS) {
             return;
         }
 
-        boolean hasLeveled = Bonded.GEAR.giveItemExperience(gear, experienceAmount);
+        boolean hasLeveled = Bonded.GEAR.giveItemExperience(gear, amount);
         ItemLevelContainer updatedContainer = gear.get(DataComponents.ITEM_LEVEL_CONTAINER.get());
         if (updatedContainer != null) {
             Bonded.GEAR.bondBonusRegistry.applyBonuses(gear, Bonded.GEAR.getLeveler(gear), updatedContainer);
@@ -116,6 +124,14 @@ public class GameplayHooks {
         if (player instanceof ServerPlayer serverPlayer) {
             if (updatedContainer != null) {
                 BondedAdvancements.grantBondMilestones(serverPlayer, updatedContainer.getBond());
+            }
+            // Fully leveled gear gains nothing, so only announce criticals that landed.
+            if (critical && updatedContainer != null && updatedContainer.getBond() > container.getBond()) {
+                PlayerFunctions.sendActionBar(
+                        serverPlayer,
+                        Component.translatable("bonded.gameplay.critical", gear.getHoverName(), amount)
+                );
+                BondedNetworking.sendProgressionSound(serverPlayer, ProgressionSoundPacket.Kind.CRITICAL);
             }
         }
         if (hasLeveled) {
