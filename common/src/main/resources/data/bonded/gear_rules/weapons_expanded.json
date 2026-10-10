@@ -1,0 +1,494 @@
+{
+  "id": "bonded:weapons_expanded",
+  "label": "Weapons Expanded",
+  "kind": "compat",
+  "version": 1,
+  "required_mod": "weaponsexpanded",
+  "markers": [
+    "weaponsexpanded:iron_longsword"
+  ],
+  "rules": [
+    {
+      "selector": "weaponsexpanded:wooden_battleaxe",
+      "type": "mining_tool",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:stone_battleaxe",
+      "upgrade_ingredient": "minecraft:stone_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:wooden_broadsword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:stone_broadsword",
+      "upgrade_ingredient": "minecraft:stone_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:wooden_greatsword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:stone_greatsword",
+      "upgrade_ingredient": "minecraft:stone_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:wooden_hammer",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:stone_hammer",
+      "upgrade_ingredient": "minecraft:stone_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:wooden_hatchet",
+      "type": "mining_tool",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:stone_hatchet",
+      "upgrade_ingredient": "minecraft:stone_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:wooden_katana",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:stone_katana",
+      "upgrade_ingredient": "minecraft:stone_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:wooden_longsword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:stone_longsword",
+      "upgrade_ingredient": "minecraft:stone_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:wooden_scythe",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:stone_scythe",
+      "upgrade_ingredient": "minecraft:stone_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:wooden_sickle",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:stone_sickle",
+      "upgrade_ingredient": "minecraft:stone_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:wooden_warhammer",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:stone_warhammer",
+      "upgrade_ingredient": "minecraft:stone_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:stone_battleaxe",
+      "type": "mining_tool",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:copper_battleaxe",
+      "upgrade_ingredient": "minecraft:copper_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:stone_broadsword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:copper_broadsword",
+      "upgrade_ingredient": "minecraft:copper_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:stone_greatsword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:copper_greatsword",
+      "upgrade_ingredient": "minecraft:copper_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:stone_hammer",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:copper_hammer",
+      "upgrade_ingredient": "minecraft:copper_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:stone_hatchet",
+      "type": "mining_tool",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:copper_hatchet",
+      "upgrade_ingredient": "minecraft:copper_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:stone_katana",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:copper_katana",
+      "upgrade_ingredient": "minecraft:copper_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:stone_longsword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:copper_longsword",
+      "upgrade_ingredient": "minecraft:copper_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:stone_scythe",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:copper_scythe",
+      "upgrade_ingredient": "minecraft:copper_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:stone_sickle",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:copper_sickle",
+      "upgrade_ingredient": "minecraft:copper_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:stone_warhammer",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:copper_warhammer",
+      "upgrade_ingredient": "minecraft:copper_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:copper_battleaxe",
+      "type": "mining_tool",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:iron_battleaxe",
+      "upgrade_ingredient": "minecraft:iron_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:copper_broadsword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:iron_broadsword",
+      "upgrade_ingredient": "minecraft:iron_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:copper_greatsword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:iron_greatsword",
+      "upgrade_ingredient": "minecraft:iron_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:copper_hammer",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:iron_hammer",
+      "upgrade_ingredient": "minecraft:iron_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:copper_hatchet",
+      "type": "mining_tool",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:iron_hatchet",
+      "upgrade_ingredient": "minecraft:iron_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:copper_katana",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:iron_katana",
+      "upgrade_ingredient": "minecraft:iron_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:copper_longsword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:iron_longsword",
+      "upgrade_ingredient": "minecraft:iron_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:copper_scythe",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:iron_scythe",
+      "upgrade_ingredient": "minecraft:iron_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:copper_sickle",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:iron_sickle",
+      "upgrade_ingredient": "minecraft:iron_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:copper_warhammer",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:iron_warhammer",
+      "upgrade_ingredient": "minecraft:iron_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:iron_battleaxe",
+      "type": "mining_tool",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:diamond_battleaxe",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:iron_broadsword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:diamond_broadsword",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:iron_greatsword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:diamond_greatsword",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:iron_hammer",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:diamond_hammer",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:iron_hatchet",
+      "type": "mining_tool",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:diamond_hatchet",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:iron_katana",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:diamond_katana",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:iron_longsword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:diamond_longsword",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:iron_scythe",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:diamond_scythe",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:iron_sickle",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:diamond_sickle",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:iron_warhammer",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:diamond_warhammer",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:golden_battleaxe",
+      "type": "mining_tool",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:diamond_battleaxe",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:golden_broadsword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:diamond_broadsword",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:golden_greatsword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:diamond_greatsword",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:golden_hammer",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:diamond_hammer",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:golden_hatchet",
+      "type": "mining_tool",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:diamond_hatchet",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:golden_katana",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:diamond_katana",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:golden_longsword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:diamond_longsword",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:golden_scythe",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:diamond_scythe",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:golden_sickle",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:diamond_sickle",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:golden_warhammer",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:diamond_warhammer",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:diamond_battleaxe",
+      "type": "mining_tool",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:netherite_battleaxe",
+      "upgrade_ingredient": "minecraft:netherite_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:diamond_broadsword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:netherite_broadsword",
+      "upgrade_ingredient": "minecraft:netherite_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:diamond_greatsword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:netherite_greatsword",
+      "upgrade_ingredient": "minecraft:netherite_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:diamond_hammer",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:netherite_hammer",
+      "upgrade_ingredient": "minecraft:netherite_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:diamond_hatchet",
+      "type": "mining_tool",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:netherite_hatchet",
+      "upgrade_ingredient": "minecraft:netherite_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:diamond_katana",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:netherite_katana",
+      "upgrade_ingredient": "minecraft:netherite_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:diamond_longsword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:netherite_longsword",
+      "upgrade_ingredient": "minecraft:netherite_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:diamond_scythe",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:netherite_scythe",
+      "upgrade_ingredient": "minecraft:netherite_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:diamond_sickle",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:netherite_sickle",
+      "upgrade_ingredient": "minecraft:netherite_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:diamond_warhammer",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:netherite_warhammer",
+      "upgrade_ingredient": "minecraft:netherite_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:netherite_battleaxe",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "weaponsexpanded:netherite_broadsword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "weaponsexpanded:netherite_greatsword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "weaponsexpanded:netherite_hammer",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "weaponsexpanded:netherite_hatchet",
+      "type": "mining_tool",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "weaponsexpanded:netherite_katana",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "weaponsexpanded:netherite_longsword",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "weaponsexpanded:netherite_scythe",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "weaponsexpanded:netherite_sickle",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "weaponsexpanded:netherite_warhammer",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "weaponsexpanded:longbow",
+      "type": "ranged_weapon",
+      "repair_mode": "item",
+      "repair": "minecraft:string"
+    },
+    {
+      "selector": "weaponsexpanded:chain_crossbow",
+      "type": "ranged_weapon",
+      "repair_mode": "item",
+      "repair": "minecraft:iron_ingot"
+    }
+  ]
+}

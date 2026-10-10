@@ -78,7 +78,9 @@ class BondedRulesProfilesTest {
                 "bonded:arcane_armory",
                 "bonded:immersive_armors",
                 "bonded:betterend",
-                "bonded:betternether"
+                "bonded:betternether",
+                "bonded:weapons_expanded",
+                "bonded:weapons_expanded_2"
         )));
 
         var ironSword = rule(profiles.get("bonded:builtin"), "minecraft:iron_sword");

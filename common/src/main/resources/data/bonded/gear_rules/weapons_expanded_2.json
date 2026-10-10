@@ -1,0 +1,205 @@
+{
+  "id": "bonded:weapons_expanded_2",
+  "label": "Weapons Expanded",
+  "kind": "compat",
+  "version": 1,
+  "required_mod": "weaponsexpanded",
+  "markers": [
+    "weaponsexpanded:iron_rapier"
+  ],
+  "rules": [
+    {
+      "selector": "weaponsexpanded:wooden_glaive",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:stone_glaive",
+      "upgrade_ingredient": "minecraft:stone_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:wooden_halberd",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:stone_halberd",
+      "upgrade_ingredient": "minecraft:stone_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:wooden_morningstar",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:stone_morningstar",
+      "upgrade_ingredient": "minecraft:stone_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:wooden_rapier",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:stone_rapier",
+      "upgrade_ingredient": "minecraft:stone_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:stone_glaive",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:copper_glaive",
+      "upgrade_ingredient": "minecraft:copper_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:stone_halberd",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:copper_halberd",
+      "upgrade_ingredient": "minecraft:copper_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:stone_morningstar",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:copper_morningstar",
+      "upgrade_ingredient": "minecraft:copper_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:stone_rapier",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:copper_rapier",
+      "upgrade_ingredient": "minecraft:copper_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:copper_glaive",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:iron_glaive",
+      "upgrade_ingredient": "minecraft:iron_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:copper_halberd",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:iron_halberd",
+      "upgrade_ingredient": "minecraft:iron_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:copper_morningstar",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:iron_morningstar",
+      "upgrade_ingredient": "minecraft:iron_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:copper_rapier",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:iron_rapier",
+      "upgrade_ingredient": "minecraft:iron_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:iron_glaive",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:diamond_glaive",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:iron_halberd",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:diamond_halberd",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:iron_morningstar",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:diamond_morningstar",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:iron_rapier",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:diamond_rapier",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:golden_glaive",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:diamond_glaive",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:golden_halberd",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:diamond_halberd",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:golden_morningstar",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:diamond_morningstar",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:golden_rapier",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:diamond_rapier",
+      "upgrade_ingredient": "minecraft:diamond_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:diamond_glaive",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:netherite_glaive",
+      "upgrade_ingredient": "minecraft:netherite_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:diamond_halberd",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:netherite_halberd",
+      "upgrade_ingredient": "minecraft:netherite_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:diamond_morningstar",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:netherite_morningstar",
+      "upgrade_ingredient": "minecraft:netherite_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:diamond_rapier",
+      "type": "melee_weapon",
+      "repair_mode": "inherit",
+      "upgrade_to": "weaponsexpanded:netherite_rapier",
+      "upgrade_ingredient": "minecraft:netherite_tool_materials"
+    },
+    {
+      "selector": "weaponsexpanded:netherite_glaive",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "weaponsexpanded:netherite_halberd",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "weaponsexpanded:netherite_morningstar",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "weaponsexpanded:netherite_rapier",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    },
+    {
+      "selector": "weaponsexpanded:ritual_dagger",
+      "type": "melee_weapon",
+      "repair_mode": "inherit"
+    }
+  ]
+}

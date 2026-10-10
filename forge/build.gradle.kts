@@ -29,6 +29,7 @@ val knownCompatFixtures = setOf(
         "immersive-armors",
         "betterend",
         "betternether",
+        "weapons-expanded",
 )
 val unknownCompatFixtures = compatFixtures - knownCompatFixtures
 if (unknownCompatFixtures.isNotEmpty()) {
@@ -48,6 +49,13 @@ dependencies {
     fun addAvailableFixture(alias: String) {
         if (multiloader.versionOrNull(catalog, alias) != null) {
             runtimeOnly(catalog.findLibrary(alias).get())
+        }
+    }
+
+    // Fixtures missing from the shared catalogs pin their Modrinth version in versions/*/gradle.properties.
+    fun addPropertyFixture(alias: String, modrinthProject: String) {
+        multiloader.optionalProperty("fixtures.$alias")?.let { version ->
+            runtimeOnly("maven.modrinth:$modrinthProject:$version")
         }
     }
 
@@ -82,5 +90,8 @@ dependencies {
     }
     if ("betternether" in compatFixtures) {
         addAvailableFixture("betternether-forge")
+    }
+    if ("weapons-expanded" in compatFixtures) {
+        addPropertyFixture("weapons-expanded-forge", "weaponsexpanded")
     }
 }

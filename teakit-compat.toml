@@ -30,7 +30,7 @@ tasks = [":fabric:26.1.2:runClient"]
 gameDirectory = "fabric/versions/26.1.2/runs/client"
 
 [nodes."26.1.2-fabric".gradleProperties]
-"bonded.compatFixtures" = "basic-weapons,advanced-netherite,immersive-armors,betterend,betternether"
+"bonded.compatFixtures" = "basic-weapons,advanced-netherite,immersive-armors,betterend,betternether,weapons-expanded"
 
 [nodes."26.1.2-neoforge"]
 loader = "neoforge"
@@ -39,4 +39,4 @@ tasks = [":neoforge:26.1.2:runClient"]
 gameDirectory = "neoforge/versions/26.1.2/run"
 
 [nodes."26.1.2-neoforge".gradleProperties]
-"bonded.compatFixtures" = "basic-weapons,advanced-netherite,immersive-armors"
+"bonded.compatFixtures" = "basic-weapons,advanced-netherite,immersive-armors,weapons-expanded"

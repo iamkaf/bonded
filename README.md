@@ -30,7 +30,7 @@ Gear Rules decide how Bonded treats an item or item tag:
 - whether the rule is enabled
 
 Bonded includes profiles for vanilla and Bonded gear, Basic Weapons, Advanced Netherite, Immersive Armors,
-BetterEnd, BetterNether, and Arcane Armory. Shipped rules are read-only. Copy one into User Overrides to
+BetterEnd, BetterNether, Arcane Armory, and Weapons Expanded. Shipped rules are read-only. Copy one into User Overrides to
 change it, or add a rule for another item or item tag. Valid changes save automatically and apply live.
 
 For a Tool Bench upgrade, set both **Upgrade To** and **Upgrade Ingredient**. The ingredient can be one item,
