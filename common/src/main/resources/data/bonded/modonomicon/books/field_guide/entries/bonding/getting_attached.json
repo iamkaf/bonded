@@ -33,6 +33,16 @@
       "show_title_separator": true,
       "text": "book.bonded.field_guide.bonding.getting_attached.levels.text",
       "title": "book.bonded.field_guide.bonding.getting_attached.levels.title"
+    },
+    {
+      "type": "modonomicon:text",
+      "condition": {
+        "type": "modonomicon:none"
+      },
+      "id": "critical",
+      "show_title_separator": true,
+      "text": "book.bonded.field_guide.bonding.getting_attached.critical.text",
+      "title": "book.bonded.field_guide.bonding.getting_attached.critical.title"
     }
   ],
   "sort_number": 0,

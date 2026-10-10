@@ -189,6 +189,8 @@
   "book.bonded.field_guide.bonding.getting_attached.bond.text": "Tools, weapons, armor, shields, bows, fishing rods, and other useful equipment gain **Bond** as you use them. The useful action depends on the item: mine with a pickaxe, fight with a weapon, block with a shield, or wear armor while it protects you.",
   "book.bonded.field_guide.bonding.getting_attached.levels.title": "Learning by Doing",
   "book.bonded.field_guide.bonding.getting_attached.levels.text": "Bond belongs to the individual item. As its level rises, the item can gain ordinary improvements such as durability or damage. Its tooltip records its current level, experience, bonuses, and augment progress.",
+  "book.bonded.field_guide.bonding.getting_attached.critical.title": "Critical Bonds",
+  "book.bonded.field_guide.bonding.getting_attached.critical.text": "Now and then, a **Critical Bond** triples the experience from one action. A chime and a note above the hotbar announce it.",
   "book.bonded.field_guide.bonding.upgrading.name": "Growing Together",
   "book.bonded.field_guide.bonding.upgrading.description": "Upgrade and repair equipment without replacing it.",
   "book.bonded.field_guide.bonding.upgrading.tool_bench.title": "Tool Bench",
