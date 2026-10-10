@@ -13,6 +13,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
   ![A Critical Bond on a Diamond Pickaxe after mining iron ore](https://i.kaf.sh/i/5d88f0ba-8780-4429-8021-550e3cf6fc23.png)
 
+### Changed
+
+- Redesigned the Tool Bench and Repair Bench.
+
+  ![Two Tool Benches and a Repair Bench](https://i.kaf.sh/i/d5a4bc17-3a9a-42ff-9352-ada48f0d0055.png)
+
+- The Tool Bench has a rainbow inlay as a nod to the original bench.
+
+### Fixed
+
+- Fixed client settings sometimes falling back to their defaults on Forge and NeoForge.
+
 ## 5.1.0
 
 ### Added
