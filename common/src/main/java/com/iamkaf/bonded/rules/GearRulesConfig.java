@@ -38,7 +38,7 @@ public final class GearRulesConfig {
     private static final FieldsetField<String> UPGRADE_TO =
             FieldsetField.registryString("upgrade_to", "", Registries.ITEM);
     private static final FieldsetField<Optional<String>> UPGRADE_INGREDIENT =
-            FieldsetField.optionalString("upgrade_ingredient");
+            FieldsetField.optionalRegistryString("upgrade_ingredient", Registries.ITEM);
     private static final FieldsetField<Boolean> ENABLED = FieldsetField.bool("enabled", true);
 
     private final ConfigValue<FieldsetValue> value;
@@ -97,7 +97,7 @@ public final class GearRulesConfig {
                 .catalog(catalog)
                 .validate(GearRulesConfig::validSelector, "Choose an existing item or enter #namespace:item_tag")
                 .validate(GearRulesConfig::validRepair, "Choose an existing repair item/tag for the selected repair mode")
-                .validate(GearRulesConfig::validUpgrade, "Choose an existing upgrade target and valid ingredient tag, or leave both blank");
+                .validate(GearRulesConfig::validUpgrade, "Choose an upgrade target and ingredient item or tag, or leave both blank");
     }
 
     /** Installs the server-authoritative resolved rows without touching the persisted user rules. */
@@ -213,13 +213,10 @@ public final class GearRulesConfig {
         if (!entry.editable()) {
             return true;
         }
-        String target = entry.value(UPGRADE_TO);
-        Optional<String> ingredient = entry.value(UPGRADE_INGREDIENT).filter(value -> !value.isBlank());
-        if (target.isBlank() && ingredient.isEmpty()) {
-            return true;
-        }
-        return GearRuleReference.validPersistedItem(target)
-                && ingredient.filter(GearRulesConfig::validTag).isPresent();
+        return GearRuleReference.validUpgradePair(
+                entry.value(UPGRADE_TO),
+                entry.value(UPGRADE_INGREDIENT).orElse("")
+        );
     }
 
     private static boolean validItemOrTag(String value) {

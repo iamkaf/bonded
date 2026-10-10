@@ -63,10 +63,12 @@ describe("Bonded augment commands", () => {
       await ctx.commands.assert(
         "/item replace entity @s weapon.mainhand with minecraft:iron_sword",
       );
-      expect(await commandFails(
-        ctx,
+      const unknownAugment = await ctx.commands.run(
         "/bonded augment set @s bonded:missing 1",
-      )).toBe(true);
+        { captureOutput: true, requireSuccess: false },
+      );
+      expect(unknownAugment.result).toBe(0);
+      expect((unknownAugment.output ?? []).join("\n")).toContain("Unknown augment: bonded:missing");
       expect(await commandFails(
         ctx,
         "/bonded augment add @s bonded:cake_destroyer -1",

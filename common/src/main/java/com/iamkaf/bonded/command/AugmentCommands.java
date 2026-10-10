@@ -123,6 +123,6 @@ final class AugmentCommands {
     }
 
     private static Augment resolve(Identifier id) throws CommandSyntaxException {
-        return AugmentApi.get(id).orElseThrow(() -> ERROR_UNKNOWN_AUGMENT.create(id));
+        return AugmentApi.get(id).orElseThrow(() -> ERROR_UNKNOWN_AUGMENT.create(id.toString()));
     }
 }

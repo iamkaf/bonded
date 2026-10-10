@@ -12,6 +12,7 @@ public class BondedCommonConfig {
     public final ConfigValue<Double> weaponDamageDealtExperienceGainedMultiplier;
     public final ConfigValue<Double> armorDamageTakenExperienceGainedMultiplier;
     public final ConfigValue<Integer> experienceForMiningOres;
+    public final ConfigValue<Double> criticalBondChance;
     public final ConfigValue<Boolean> sendChatMessages;
     public final ConfigValue<Boolean> enableInnateLootBond;
     public final ConfigValue<Integer> innateLootBondMin;
@@ -86,6 +87,11 @@ public class BondedCommonConfig {
         experienceForMiningOres = builder.intRange("experience_for_mining_ores", 10, 1, 10)
                 .comment("Experience gained when mining ore blocks.")
                 .info(info -> info.inlineTextKey("bonded.config.experience_for_mining_ores.info"))
+                .sync(true)
+                .build();
+        criticalBondChance = builder.doubleRange("critical_bond_chance", 0.05d, 0.0d, 1.0d)
+                .comment("Chance for an experience gain to be a critical that triples it. Set to 0 to turn criticals off.")
+                .info(info -> info.inlineTextKey("bonded.config.critical_bond_chance.info"))
                 .sync(true)
                 .build();
         builder.pop();

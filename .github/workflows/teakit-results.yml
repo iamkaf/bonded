@@ -1,0 +1,15 @@
+name: Comment TeaKit results
+
+on:
+  workflow_run:
+    workflows: [Build]
+    types: [completed]
+
+permissions:
+  actions: read
+  pull-requests: write
+
+jobs:
+  comment:
+    if: github.event.workflow_run.event == 'pull_request'
+    uses: iamkaf/multiloader-conventions/.github/workflows/comment-teakit.yml@caa106bb70622445a272d16105246cd82ccd5003
