@@ -97,6 +97,9 @@ public final class GearRulesConfig {
                 .catalog(catalog)
                 .validate(GearRulesConfig::validSelector, "Choose an existing item or enter #namespace:item_tag")
                 .validate(GearRulesConfig::validRepair, "Choose an existing repair item/tag for the selected repair mode")
+                // Konfig shows the first failing rule, so the half-filled cases come before the general one.
+                .validate(GearRulesConfig::upgradeHasIngredient, "Choose an upgrade ingredient")
+                .validate(GearRulesConfig::upgradeHasTarget, "Choose an upgrade target")
                 .validate(GearRulesConfig::validUpgrade, "Choose an upgrade target and ingredient item or tag, or leave both blank");
     }
 
@@ -217,6 +220,22 @@ public final class GearRulesConfig {
                 entry.value(UPGRADE_TO),
                 entry.value(UPGRADE_INGREDIENT).orElse("")
         );
+    }
+
+    private static boolean upgradeHasIngredient(FieldsetEntry entry) {
+        return !entry.editable() || !hasUpgradeTarget(entry) || hasUpgradeIngredient(entry);
+    }
+
+    private static boolean upgradeHasTarget(FieldsetEntry entry) {
+        return !entry.editable() || !hasUpgradeIngredient(entry) || hasUpgradeTarget(entry);
+    }
+
+    private static boolean hasUpgradeTarget(FieldsetEntry entry) {
+        return !entry.value(UPGRADE_TO).isBlank();
+    }
+
+    private static boolean hasUpgradeIngredient(FieldsetEntry entry) {
+        return entry.value(UPGRADE_INGREDIENT).filter(value -> !value.isBlank()).isPresent();
     }
 
     private static boolean validItemOrTag(String value) {

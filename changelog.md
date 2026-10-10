@@ -22,10 +22,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   ![Two Tool Benches and a Repair Bench](https://i.kaf.sh/i/d5a4bc17-3a9a-42ff-9352-ada48f0d0055.png)
 
 - The Tool Bench has a rainbow inlay as a nod to the original bench.
+- Requires Konfig 0.10.1 or newer.
+- Gear Rules now say which half of an upgrade is missing.
 
 ### Fixed
 
 - Fixed client settings sometimes falling back to their defaults on Forge and NeoForge.
+- Fixed Gear Rules upgrades that could not be entered with an older Konfig.
 
 ## 5.1.0
 

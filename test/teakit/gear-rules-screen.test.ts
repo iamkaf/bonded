@@ -11,6 +11,7 @@ describe.configure({
     Capability.ClientInput,
     Capability.ClientScreenshot,
     Capability.RuntimeTiming,
+    Capability.SpyInstrumentation,
   ],
 });
 
@@ -18,8 +19,8 @@ describe("Bonded gear-rule screen", () => {
   test("lets an operator add and remove server-owned overrides", async (ctx) => {
     let created = false;
     try {
-      await waitForCommand(ctx, "/bondeddebug rules user-count 0");
-      await waitForCommand(ctx, "/bondeddebug rules active-user-count 0");
+      await waitForCommand(ctx, "/bondeddebug rules user-count 0", ["rules: 0"]);
+      await waitForCommand(ctx, "/bondeddebug rules active-user-count 0", ["rules: 0"]);
       let screen = await openCatalog(ctx);
       assertActive(screen, ["New Override", "Done"]);
       assertCatalogProfile(screen, "Bonded");
@@ -27,16 +28,16 @@ describe("Bonded gear-rule screen", () => {
 
       await screen.widgets().find("New Override").click();
       created = true;
-      await waitForCommand(ctx, "/bondeddebug rules user-count 1");
-      await waitForCommand(ctx, "/bondeddebug rules active-user-count 1", ["minecraft:iron_sword"]);
+      await waitForCommand(ctx, "/bondeddebug rules user-count 1", ["rules: 1"]);
+      await waitForCommand(ctx, "/bondeddebug rules active-user-count 1", ["rules: 1", "minecraft:iron_sword"]);
       await ctx.commands.assert("/item replace entity @s weapon.mainhand with minecraft:iron_sword");
       await waitForCommand(ctx, "/bondeddebug rules query", ["cap=1000", "source=User"]);
       screen = await waitForActiveWidget(ctx, "Delete");
       await ctx.client.screenshot("bonded-gear-rules-catalog-live-override");
 
       await screen.widgets().find("Delete").click();
-      await waitForCommand(ctx, "/bondeddebug rules user-count 0");
-      await waitForCommand(ctx, "/bondeddebug rules active-user-count 0");
+      await waitForCommand(ctx, "/bondeddebug rules user-count 0", ["rules: 0"]);
+      await waitForCommand(ctx, "/bondeddebug rules active-user-count 0", ["rules: 0"]);
       created = false;
       await waitForCommand(ctx, "/bondeddebug rules query", ["cap=100", "source=Bonded"]);
     } finally {
@@ -47,7 +48,87 @@ describe("Bonded gear-rule screen", () => {
       await ctx.commands.run("/clear @s", { requireSuccess: false });
     }
   });
+
+  test("asks for the missing upgrade ingredient and saves the upgrade once both are chosen", async (ctx) => {
+    let created = false;
+    try {
+      await waitForCommand(ctx, "/bondeddebug rules user-count 0", ["rules: 0"]);
+      await ctx.commands.assert("/item replace entity @s weapon.mainhand with minecraft:iron_sword");
+      const screen = await openCatalog(ctx);
+      await screen.widgets().find("New Override").click();
+      created = true;
+      await waitForActiveWidget(ctx, "Delete");
+      await waitForCommand(ctx, "/bondeddebug rules query", ["source=User", "upgrade=none"]);
+
+      // The catalog status line shows the first issue from validating the edited draft.
+      const validation = await ctx.spy.method(
+        "bonded.gearRules.validate",
+        "com.iamkaf.konfig.api.v1.fieldset.FieldsetValue#validate",
+      );
+      await chooseFirstSuggestion(ctx, "Upgrade To");
+      const shown = (await validation.$calls()).map((call) => firstIssue(call.returned));
+      await ctx.spy.detach(validation);
+      await ctx.client.waitForFrames(3);
+      await ctx.client.screenshot("bonded-gear-rules-upgrade-missing-ingredient");
+      if (!shown.includes("Choose an upgrade ingredient")) {
+        throw new Error(`Expected a target without an ingredient to ask for the ingredient; validation showed ${JSON.stringify(shown)}`);
+      }
+      await waitForCommand(ctx, "/bondeddebug rules query", ["source=User", "upgrade=none"]);
+
+      await chooseFirstSuggestion(ctx, "Upgrade Ingredient");
+      await waitForCommand(ctx, "/bondeddebug rules query", ["source=User", "upgrade="], (output) => !output.includes("upgrade=none"));
+      await ctx.client.waitForFrames(3);
+      await ctx.client.screenshot("bonded-gear-rules-upgrade-saved");
+    } finally {
+      if (created) {
+        await deleteCreatedOverride(ctx);
+      }
+      await closeScreenStack(ctx);
+      await ctx.commands.run("/clear @s", { requireSuccess: false });
+    }
+  });
 });
+
+/**
+ * Focuses an empty registry field in the Upgrade section and accepts its first suggestion with Tab. TeaKit cannot type
+ * characters, so the suggestion list stands in for typing.
+ */
+async function chooseFirstSuggestion(ctx: TeaKitTestContext, label: "Upgrade To" | "Upgrade Ingredient"): Promise<void> {
+  const row = await upgradeRow(ctx, label);
+  await ctx.client.click({ x: row.x + row.width * 0.75, y: row.y + 14, button: 0 });
+  await ctx.runtime.wait(200);
+  await ctx.client.key(258, { release: true });
+  await ctx.runtime.wait(300);
+}
+
+function firstIssue(validation: unknown): string | undefined {
+  if (typeof validation !== "object" || validation === null || !("issues" in validation)) return undefined;
+  const issues = validation.issues;
+  if (!Array.isArray(issues)) return undefined;
+  const first: unknown = issues[0];
+  return typeof first === "object" && first !== null && "message" in first && typeof first.message === "string"
+    ? first.message
+    : undefined;
+}
+
+/** Catalog fields are detail-list rows labeled by class, so find the two rows after the Upgrade section header. */
+async function upgradeRow(
+  ctx: TeaKitTestContext,
+  label: "Upgrade To" | "Upgrade Ingredient",
+): Promise<ScreenListEntrySnapshot> {
+  const anchor = (await ctx.client.screen()).lists().entries()[0];
+  if (!anchor) throw new Error("The Gear Rules detail list is empty");
+  // The Upgrade section is last, so scrolling to the bottom shows both of its fields.
+  await ctx.client.scroll({ x: anchor.x + 20, y: anchor.y + 20, verticalAmount: -30 });
+  await ctx.runtime.wait(200);
+  const entries = (await ctx.client.screen()).lists().entries();
+  const section = entries.findIndex((entry) => entry.label === "Upgrade" && entry.entryClass?.endsWith("$SectionRow"));
+  const row = section < 0 ? undefined : entries[section + (label === "Upgrade To" ? 1 : 2)];
+  if (!row?.entryClass?.endsWith("$TextFieldRow")) {
+    throw new Error(`Missing the ${label} field; observed: ${entries.map((entry) => entry.label).join(", ")}`);
+  }
+  return row;
+}
 
 async function openCatalog(ctx: TeaKitTestContext): Promise<ClientScreen> {
   await ctx.commands.assert("/bondeddebug rules preview-remote-view");
@@ -98,8 +179,8 @@ async function deleteCreatedOverride(ctx: TeaKitTestContext): Promise<void> {
   }
   if (!deleteButton) throw new Error("Could not recover the test Gear Rules override for cleanup");
   await screen.widgets().find("Delete").click();
-  await waitForCommand(ctx, "/bondeddebug rules user-count 0");
-  await waitForCommand(ctx, "/bondeddebug rules active-user-count 0");
+  await waitForCommand(ctx, "/bondeddebug rules user-count 0", ["rules: 0"]);
+  await waitForCommand(ctx, "/bondeddebug rules active-user-count 0", ["rules: 0"]);
 }
 
 async function waitForListEntry(
@@ -183,17 +264,19 @@ function assertActive(screen: ClientScreen, labels: readonly string[]): void {
   }
 }
 
+// A count mismatch still counts as a successful command, so callers match the count in the output.
 async function waitForCommand(
   ctx: TeaKitTestContext,
   command: string,
   outputContains: readonly string[] = [],
+  accepts: (output: string) => boolean = () => true,
 ): Promise<void> {
   const deadline = Date.now() + 10_000;
   let lastOutput = "";
   while (Date.now() < deadline) {
     const result = await ctx.commands.run(command, { captureOutput: true, requireSuccess: false });
     lastOutput = (result.output ?? []).join("\n");
-    if (result.success && outputContains.every((expected) => lastOutput.includes(expected))) return;
+    if (result.success && outputContains.every((expected) => lastOutput.includes(expected)) && accepts(lastOutput)) return;
     await ctx.runtime.wait(100);
   }
   throw new Error(`Command did not become true: ${command}; output: ${lastOutput}`);
