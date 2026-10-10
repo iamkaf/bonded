@@ -15,6 +15,7 @@ import com.iamkaf.konfig.api.v1.KonfigClientScreens;
 import com.iamkaf.konfig.api.v1.SyncMode;
 import net.minecraft.client.Minecraft;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 
 public class BondedClient {
@@ -59,9 +60,11 @@ public class BondedClient {
             return;
         }
 
-        SoundEvent sound = kind == ProgressionSoundPacket.Kind.MAX_LEVEL
-                ? Sounds.ITEM_MAX_LEVEL.get()
-                : Sounds.ITEM_LEVEL.get();
+        SoundEvent sound = switch (kind) {
+            case LEVEL_UP -> Sounds.ITEM_LEVEL.get();
+            case MAX_LEVEL -> Sounds.ITEM_MAX_LEVEL.get();
+            case CRITICAL -> SoundEvents.AMETHYST_BLOCK_CHIME;
+        };
         minecraft.level.playLocalSound(
                 minecraft.player.getX(),
                 minecraft.player.getY(),

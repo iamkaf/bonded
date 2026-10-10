@@ -16,7 +16,8 @@ public record ProgressionSoundPacket(Kind kind) implements Packet<ProgressionSou
 
     public enum Kind {
         LEVEL_UP,
-        MAX_LEVEL
+        MAX_LEVEL,
+        CRITICAL
     }
 
     private static void handle(ProgressionSoundPacket packet, PacketContext context) {

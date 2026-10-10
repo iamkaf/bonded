@@ -7,6 +7,7 @@ import com.iamkaf.bonded.network.BondedNetworking;
 import com.iamkaf.bonded.rules.BondedRules;
 import com.iamkaf.bonded.rules.GearRule;
 import com.mojang.brigadier.Command;
+import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -59,7 +60,20 @@ public final class BondedDebugCommands {
                         .then(Commands.literal("stop")
                                 .executes(context -> setSwimming(context.getSource(), false))))
                 .then(Commands.literal("attack-one-health-target")
-                        .executes(context -> attackOneHealthTarget(context.getSource())));
+                        .executes(context -> attackOneHealthTarget(context.getSource())))
+                .then(Commands.literal("critical-chance")
+                        .then(Commands.argument("chance", DoubleArgumentType.doubleArg(0.0D, 1.0D))
+                                .executes(context -> setCriticalChance(
+                                        context.getSource(),
+                                        DoubleArgumentType.getDouble(context, "chance")
+                                ))));
+    }
+
+    /** Pins the critical roll so tests can expect exact experience. Not saved to the config file. */
+    private static int setCriticalChance(CommandSourceStack source, double chance) {
+        Bonded.CONFIG.criticalBondChance.set(chance);
+        source.sendSuccess(() -> Component.literal("Bonded critical chance: " + chance), false);
+        return Command.SINGLE_SUCCESS;
     }
 
     private static int queryHeldRule(CommandSourceStack source) throws CommandSyntaxException {
