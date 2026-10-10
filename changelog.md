@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
   ![A Critical Bond on a Diamond Pickaxe after mining iron ore](https://i.kaf.sh/i/5d88f0ba-8780-4429-8021-550e3cf6fc23.png)
 
+- Added a Modonomicon version of the Field Guide, crafted from a book and quill and Scrap.
+
 ## 5.1.0
 
 ### Added
@@ -39,11 +41,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Ported to Minecraft 26.3.
 - Added Liteminer integration. Bonded tools gain reduced experience from extra blocks mined by Liteminer, and the HUD shows the total in yellow.
-
-### Fixed
-
-- Fixed Bonded weapons not gaining experience when an attack killed the target.
-- Fixed Bonded bonus updates removing third-party attribute modifiers when they shared an identifier with a vanilla modifier.
 
 ## 4.2.0
 
