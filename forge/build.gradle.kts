@@ -9,8 +9,13 @@ plugins {
 
 val multiloader = MultiloaderProjectContext.of(project)
 val catalog = mcCatalog()
+val modonomicon = multiloader.optionalProperty("dependencies.modonomicon-forge")
 val withLiteminer = providers.systemProperty("bonded.withLiteminer")
         .orElse(providers.gradleProperty("bonded.withLiteminer"))
+        .map { it.toBoolean() }
+        .orElse(false)
+val withModonomicon = providers.systemProperty("bonded.withModonomicon")
+        .orElse(providers.gradleProperty("bonded.withModonomicon"))
         .map { it.toBoolean() }
         .orElse(false)
 val compatFixtures = providers.systemProperty("bonded.compatFixtures")
@@ -56,6 +61,10 @@ dependencies {
         runtimeOnly(
                 "com.iamkaf.liteminer:liteminer-forge:${multiloader.requiredProperty("dependencies.liteminer")}"
         )
+    }
+
+    if (withModonomicon.get() && modonomicon != null) {
+        runtimeOnly("maven.modrinth:modonomicon:$modonomicon")
     }
 
     if ("basic-weapons" in compatFixtures) {

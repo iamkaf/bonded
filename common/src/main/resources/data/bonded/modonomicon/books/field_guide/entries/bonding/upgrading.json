@@ -1,0 +1,41 @@
+{
+  "type": "modonomicon:content",
+  "background": {
+    "height": 26,
+    "sprite": "modonomicon:modonomicon/themes/default/node/entry_backgrounds/square_gold",
+    "width": 26
+  },
+  "category": "bonded:bonding",
+  "condition": {
+    "type": "modonomicon:none"
+  },
+  "description": "book.bonded.field_guide.bonding.upgrading.description",
+  "icon": "bonded:tool_bench",
+  "id": "bonded:bonding/upgrading",
+  "name": "book.bonded.field_guide.bonding.upgrading.name",
+  "pages": [
+    {
+      "type": "modonomicon:spotlight",
+      "condition": {
+        "type": "modonomicon:none"
+      },
+      "id": "tool_bench",
+      "item": "bonded:tool_bench",
+      "text": "book.bonded.field_guide.bonding.upgrading.tool_bench.text",
+      "title": "book.bonded.field_guide.bonding.upgrading.tool_bench.title"
+    },
+    {
+      "type": "modonomicon:spotlight",
+      "condition": {
+        "type": "modonomicon:none"
+      },
+      "id": "repair_bench",
+      "item": "bonded:repair_bench",
+      "text": "book.bonded.field_guide.bonding.upgrading.repair_bench.text",
+      "title": "book.bonded.field_guide.bonding.upgrading.repair_bench.title"
+    }
+  ],
+  "sort_number": 1,
+  "x": 0,
+  "y": 0
+}

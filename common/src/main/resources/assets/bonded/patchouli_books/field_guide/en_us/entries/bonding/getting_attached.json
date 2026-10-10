@@ -13,6 +13,11 @@
       "type": "patchouli:text",
       "title": "Learning by Doing",
       "text": "Bond belongs to the individual item. As its level rises, the item can gain ordinary improvements such as durability or damage. Its tooltip records its current level, experience, bonuses, and augment progress."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Critical Bonds",
+      "text": "Now and then, a $(thing)Critical Bond$() triples the experience from one action. A chime and a note above the hotbar announce it."
     }
   ]
 }

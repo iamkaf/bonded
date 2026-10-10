@@ -10,6 +10,9 @@ plugins {
 val multiloader = MultiloaderProjectContext.of(project)
 val catalog = mcCatalog()
 val patchouli = catalog.findLibrary("patchouli-fabric")
+val modonomicon = multiloader.optionalProperty("dependencies.modonomicon-fabric")
+val modonomiconFiber = multiloader.optionalProperty("dependencies.modonomicon-fiber")
+val modonomiconCommonmark = multiloader.optionalProperty("dependencies.modonomicon-commonmark")
 val withLiteminer = providers.systemProperty("bonded.withLiteminer")
         .orElse(providers.gradleProperty("bonded.withLiteminer"))
         .map { it.toBoolean() }
@@ -18,6 +21,10 @@ val withPatchouli = providers.systemProperty("bonded.withPatchouli")
         .orElse(providers.gradleProperty("bonded.withPatchouli"))
         .map { it.toBoolean() }
         .orElse(true)
+val withModonomicon = providers.systemProperty("bonded.withModonomicon")
+        .orElse(providers.gradleProperty("bonded.withModonomicon"))
+        .map { it.toBoolean() }
+        .orElse(false)
 val compatFixtures = providers.systemProperty("bonded.compatFixtures")
         .orElse(providers.gradleProperty("bonded.compatFixtures"))
         .orElse("")
@@ -44,6 +51,15 @@ fun mcCatalog(): VersionCatalog {
     return catalogs.named(name)
 }
 
+repositories {
+    maven("https://maven.modmuss50.me/") {
+        name = "FiberConfig"
+        content {
+            includeGroup("me.zeroeightsix")
+        }
+    }
+}
+
 dependencies {
     val runtimeConfiguration = if (multiloader.useUnobfuscatedMinecraft()) "runtimeOnly" else "modLocalRuntime"
 
@@ -68,6 +84,18 @@ dependencies {
 
     if (withPatchouli.get() && patchouli.isPresent) {
         runtimeOnly(patchouli.get())
+    }
+
+    if (withModonomicon.get() && modonomicon != null) {
+        add(runtimeConfiguration, "maven.modrinth:modonomicon:$modonomicon")
+        if (modonomiconFiber != null) {
+            add(runtimeConfiguration, "me.zeroeightsix:fiber:$modonomiconFiber")
+        }
+        if (modonomiconCommonmark != null) {
+            add(runtimeConfiguration, "org.commonmark:commonmark:$modonomiconCommonmark")
+            add(runtimeConfiguration, "org.commonmark:commonmark-ext-gfm-strikethrough:$modonomiconCommonmark")
+            add(runtimeConfiguration, "org.commonmark:commonmark-ext-ins:$modonomiconCommonmark")
+        }
     }
 
     if ("basic-weapons" in compatFixtures) {

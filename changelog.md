@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
   ![A Critical Bond on a Diamond Pickaxe after mining iron ore](https://i.kaf.sh/i/5d88f0ba-8780-4429-8021-550e3cf6fc23.png)
 
+- Added a Modonomicon version of the Field Guide, crafted from a book and quill and Scrap.
+
 ### Changed
 
 - Redesigned the Tool Bench and Repair Bench.

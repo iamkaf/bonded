@@ -1,0 +1,41 @@
+{
+  "type": "modonomicon:content",
+  "background": {
+    "height": 26,
+    "sprite": "modonomicon:modonomicon/themes/default/node/entry_backgrounds/square_gold",
+    "width": 26
+  },
+  "category": "bonded:augments",
+  "condition": {
+    "type": "modonomicon:none"
+  },
+  "description": "book.bonded.field_guide.augments.oceanic.description",
+  "icon": "minecraft:diamond_leggings",
+  "id": "bonded:augments/oceanic",
+  "name": "book.bonded.field_guide.augments.oceanic.name",
+  "pages": [
+    {
+      "type": "modonomicon:text",
+      "condition": {
+        "type": "modonomicon:none"
+      },
+      "id": "training",
+      "show_title_separator": true,
+      "text": "book.bonded.field_guide.augments.oceanic.training.text",
+      "title": "book.bonded.field_guide.augments.oceanic.training.title"
+    },
+    {
+      "type": "modonomicon:spotlight",
+      "condition": {
+        "type": "modonomicon:none"
+      },
+      "id": "active",
+      "item": "minecraft:heart_of_the_sea",
+      "text": "book.bonded.field_guide.augments.oceanic.active.text",
+      "title": "book.bonded.field_guide.augments.oceanic.active.title"
+    }
+  ],
+  "sort_number": 2,
+  "x": 0,
+  "y": 0
+}

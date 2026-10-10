@@ -1,0 +1,19 @@
+{
+  "forge:condition": {
+    "type": "forge:mod_loaded",
+    "modid": "modonomicon"
+  },
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:writable_book",
+    "bonded:scrap"
+  ],
+  "result": {
+    "components": {
+      "modonomicon:book_id": "bonded:field_guide"
+    },
+    "count": 1,
+    "id": "modonomicon:modonomicon"
+  }
+}
