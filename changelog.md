@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed client settings sometimes falling back to their defaults on Forge and NeoForge.
 - Fixed Gear Rules upgrades that could not be entered with an older Konfig.
+- Fixed a Gear Rule turning off entirely when its upgrade target is missing. Only the upgrade is skipped now.
 
 ## 5.1.0
 

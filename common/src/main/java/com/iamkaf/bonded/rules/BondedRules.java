@@ -337,6 +337,18 @@ public final class BondedRules {
         ArrayList<GearRule> valid = new ArrayList<>();
         for (GearRule declaration : declarations) {
             RuleIssue issue = validate(registry, items::containsKey, declaration, fullReplacement);
+            if (issue != null && issue.kind() == RuleIssueKind.DORMANT) {
+                // A missing upgrade mod turns off only the upgrade, not the rest of the rule.
+                GearRule withoutUpgrade = withoutUpgrade(declaration);
+                if (withoutUpgrade != declaration
+                        && validate(registry, items::containsKey, withoutUpgrade, fullReplacement) == null) {
+                    valid.add(withoutUpgrade);
+                    if (!tolerateDormant) {
+                        diagnostics.add(declaration.identity() + ": " + issue.message());
+                    }
+                    continue;
+                }
+            }
             if (issue == null) {
                 valid.add(declaration);
             } else if (!tolerateDormant || issue.kind() != RuleIssueKind.DORMANT) {
@@ -605,6 +617,24 @@ public final class BondedRules {
             }
         }
         return null;
+    }
+
+    private static GearRule withoutUpgrade(GearRule rule) {
+        if (rule.upgradeTo() == null && rule.upgradeIngredient() == null) {
+            return rule;
+        }
+        return new GearRule(
+                rule.identity(),
+                rule.selector(),
+                rule.type(),
+                rule.experienceCap(),
+                rule.repairMode(),
+                rule.repair(),
+                null,
+                null,
+                rule.enabled(),
+                rule.source()
+        );
     }
 
     private static RuleIssue invalid(String message) {

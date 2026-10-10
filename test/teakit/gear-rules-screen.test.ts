@@ -49,7 +49,7 @@ describe("Bonded gear-rule screen", () => {
     }
   });
 
-  test("asks for the missing upgrade ingredient and saves the upgrade once both are chosen", async (ctx) => {
+  test("asks for the missing upgrade ingredient, saves the upgrade, and keeps the rule when the target is missing", async (ctx) => {
     let created = false;
     try {
       await waitForCommand(ctx, "/bondeddebug rules user-count 0", ["rules: 0"]);
@@ -79,6 +79,10 @@ describe("Bonded gear-rule screen", () => {
       await waitForCommand(ctx, "/bondeddebug rules query", ["source=User", "upgrade="], (output) => !output.includes("upgrade=none"));
       await ctx.client.waitForFrames(3);
       await ctx.client.screenshot("bonded-gear-rules-upgrade-saved");
+
+      // Trimming the saved target stands in for an item from a mod that is not installed.
+      await trimLastCharacter(ctx, "Upgrade To");
+      await waitForCommand(ctx, "/bondeddebug rules query", ["source=User", "upgrade=none"]);
     } finally {
       if (created) {
         await deleteCreatedOverride(ctx);
@@ -98,6 +102,25 @@ async function chooseFirstSuggestion(ctx: TeaKitTestContext, label: "Upgrade To"
   await ctx.client.click({ x: row.x + row.width * 0.75, y: row.y + 14, button: 0 });
   await ctx.runtime.wait(200);
   await ctx.client.key(258, { release: true });
+  await ctx.runtime.wait(300);
+}
+
+/** Removes the last character of an Upgrade section field, then clicks away to commit it. */
+async function trimLastCharacter(ctx: TeaKitTestContext, label: "Upgrade To" | "Upgrade Ingredient"): Promise<void> {
+  const row = await upgradeRow(ctx, label);
+  // Clicking past the text puts the cursor after it.
+  await ctx.client.click({ x: row.x + row.width * 0.75, y: row.y + 14, button: 0 });
+  await ctx.runtime.wait(200);
+  // From 26.3 Minecraft expects the SDL keycode and scancode a real Backspace carries.
+  const version = (await ctx.runtime.health()).minecraftVersion ?? "";
+  const [major = 0, minor = 0] = version.split(".").map((part) => Number.parseInt(part, 10) || 0);
+  if (major > 26 || (major === 26 && minor >= 3)) {
+    await ctx.client.key(8, { scancode: 42, release: true });
+  } else {
+    await ctx.client.key(259, { release: true });
+  }
+  await ctx.runtime.wait(200);
+  await ctx.client.click({ x: row.x + 10, y: row.y + 14, button: 0 });
   await ctx.runtime.wait(300);
 }
 
