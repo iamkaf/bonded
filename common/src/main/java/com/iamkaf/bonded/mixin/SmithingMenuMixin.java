@@ -15,10 +15,17 @@ import java.util.List;
 
 @Mixin(SmithingMenu.class)
 public abstract class SmithingMenuMixin extends ItemCombinerMenu {
+    //? if >=1.21.2 {
     public SmithingMenuMixin(@Nullable MenuType<?> menuType, int i, Inventory inventory,
             ContainerLevelAccess containerLevelAccess, ItemCombinerMenuSlotDefinition itemCombinerMenuSlotDefinition) {
         super(menuType, i, inventory, containerLevelAccess, itemCombinerMenuSlotDefinition);
     }
+    //?} else {
+    /*public SmithingMenuMixin(@Nullable MenuType<?> menuType, int i, Inventory inventory,
+            ContainerLevelAccess containerLevelAccess) {
+        super(menuType, i, inventory, containerLevelAccess);
+    }
+    *///?}
 
     @Shadow
     protected abstract List<ItemStack> getRelevantItems();

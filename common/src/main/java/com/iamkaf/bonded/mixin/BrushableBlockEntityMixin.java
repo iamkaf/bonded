@@ -13,10 +13,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(BrushableBlockEntity.class)
 public abstract class BrushableBlockEntityMixin {
+    //? if >=1.21.2 {
     @Inject(method = "brushingCompleted", at = @At("TAIL"))
     private void bonded$brushingCompleted(ServerLevel level, LivingEntity brusher, ItemStack stack, CallbackInfo ci) {
         if (brusher instanceof Player player) {
             GameEvents.AWARD_ITEM_EXPERIENCE.invoker().experience(player, stack, 25);
         }
     }
+    //?} else {
+    /*@Inject(method = "brushingCompleted", at = @At("TAIL"))
+    private void bonded$brushingCompleted(Player player, CallbackInfo ci) {
+        GameEvents.AWARD_ITEM_EXPERIENCE.invoker().experience(player, player.getUseItem(), 25);
+    }
+    *///?}
 }

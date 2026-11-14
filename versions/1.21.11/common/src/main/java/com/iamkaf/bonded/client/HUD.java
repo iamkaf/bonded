@@ -22,7 +22,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.enchantment.Repairable;
+import com.iamkaf.bonded.rules.RepairMaterial;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -112,7 +112,7 @@ public class HUD {
         GearTypeLeveler leveler = Bonded.GEAR.getLeveler(stack);
         if (leveler == null) return;
 
-        Repairable repairable = BondedRules.repairable(stack);
+        RepairMaterial repairable = BondedRules.repairable(stack);
         if (stack.isEmpty() || repairable == null) return;
         Optional<ItemStack> repairIngredient = RepairBenchBlock.getInventoryRepairIngredientPreview(
                 player.getInventory(),

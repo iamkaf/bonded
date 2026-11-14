@@ -20,7 +20,9 @@ public class Blocks {
     public static Supplier<Block> TOOL_BENCH = register("tool_bench",
             () -> new ToolBenchBlock(BlockBehaviour.Properties.ofFullCopy(net.minecraft.world.level.block.Blocks.CRAFTING_TABLE)
                     .noOcclusion()
-                    .setId(id2("tool_bench")))
+                    //? if >=1.21.2
+                    .setId(id2("tool_bench"))
+            )
     );
     public static Supplier<Item> TOOL_BENCH_ITEM =
             thisShouldBeDoneAutomaticallyAndInternallyByArchitectury("tool_bench", TOOL_BENCH);
@@ -28,7 +30,9 @@ public class Blocks {
     public static Supplier<Block> REPAIR_BENCH = register("repair_bench",
             () -> new RepairBenchBlock(BlockBehaviour.Properties.ofFullCopy(net.minecraft.world.level.block.Blocks.COBBLESTONE)
                     .noOcclusion()
-                    .setId(id2("repair_bench")))
+                    //? if >=1.21.2
+                    .setId(id2("repair_bench"))
+            )
     );
     public static Supplier<Item> REPAIR_BENCH_ITEM =
             thisShouldBeDoneAutomaticallyAndInternallyByArchitectury("repair_bench", REPAIR_BENCH);
@@ -40,7 +44,9 @@ public class Blocks {
     private static Supplier<Item> thisShouldBeDoneAutomaticallyAndInternallyByArchitectury(String id, Supplier<Block> block) {
         Supplier<Item> item = Items.ITEMS.register(id,
                 () -> new BlockItem(block.get(),
-                        new Item.Properties().setId(id(id))
+                        new Item.Properties()
+                                //? if >=1.21.2
+                                .setId(id(id))
                 )
         );
         // Add item to creative tab manually

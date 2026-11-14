@@ -1,5 +1,6 @@
 package com.iamkaf.bonded.augment;
 
+import com.iamkaf.bonded.util.EquipmentCompat;
 import com.iamkaf.bonded.Bonded;
 import com.iamkaf.bonded.api.augment.Augment;
 import com.iamkaf.bonded.api.augment.AugmentApi;
@@ -8,10 +9,8 @@ import com.iamkaf.amber.api.functions.v1.PlayerFunctions;
 import com.iamkaf.bonded.leveling.levelers.ArmorLeveler;
 import com.iamkaf.bonded.leveling.levelers.MeleeWeaponsLeveler;
 import com.iamkaf.bonded.leveling.levelers.MiningToolsLeveler;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.equipment.Equippable;
 
 public final class Augments {
     public static final Augment CAKE_DESTROYER = new Augment(
@@ -61,7 +60,6 @@ public final class Augments {
         if (!(Bonded.GEAR.getLeveler(stack) instanceof ArmorLeveler)) {
             return false;
         }
-        Equippable equippable = stack.get(DataComponents.EQUIPPABLE);
-        return equippable != null && equippable.slot() == EquipmentSlot.LEGS;
+        return EquipmentCompat.slot(stack) == EquipmentSlot.LEGS;
     }
 }

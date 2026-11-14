@@ -70,6 +70,7 @@ public final class CombinedModifier {
         if (slotGroup == EquipmentSlotGroup.HEAD) return "head";
         if (slotGroup == EquipmentSlotGroup.ARMOR) return "armor";
         if (slotGroup == EquipmentSlotGroup.BODY) return "body";
+        //? if >=1.21.2
         if (slotGroup == EquipmentSlotGroup.SADDLE) return "saddle";
         if (slotGroup == EquipmentSlotGroup.ANY) return "any";
         return slotGroup.toString()

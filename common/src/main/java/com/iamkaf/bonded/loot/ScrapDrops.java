@@ -12,7 +12,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
@@ -53,14 +53,14 @@ public final class ScrapDrops {
 
         RandomSource random = entity.getRandom();
         if (random.nextFloat() < Bonded.CONFIG.armoredEnemyScrapChance.get()) {
-            entity.spawnAtLocation(level, new ItemStack(Items.SCRAP.get()));
+            spawn(entity, level, new ItemStack(Items.SCRAP.get()));
         }
     }
 
     public static void dropFromBrokenGear(ItemStack stack, ServerPlayer player) {
         int count = getBrokenGearScrapCount(stack);
         if (count > 0) {
-            player.spawnAtLocation(player.level(), new ItemStack(Items.SCRAP.get(), count));
+            spawn(player, player.level(), new ItemStack(Items.SCRAP.get(), count));
             BondedAdvancements.grant(player, BondedAdvancements.BROKEN_GEAR_SCRAP);
         }
     }
@@ -72,7 +72,7 @@ public final class ScrapDrops {
 
         int count = level.getRandom().nextInt(3);
         if (count > 0) {
-            player.spawnAtLocation(serverLevel, new ItemStack(Items.SCRAP.get(), count));
+            spawn(player, serverLevel, new ItemStack(Items.SCRAP.get(), count));
         }
     }
 
@@ -94,8 +94,15 @@ public final class ScrapDrops {
                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 2.0f)));
     }
 
+    private static void spawn(Entity entity, Level level, ItemStack stack) {
+        //? if >=1.21.2
+        entity.spawnAtLocation((ServerLevel) level, stack);
+        //? if <1.21.2
+        /*entity.spawnAtLocation(stack);*/
+    }
+
     private static boolean hasArmor(LivingEntity entity) {
-        for (EquipmentSlot slot : EquipmentSlotGroup.ARMOR) {
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
             if (slot.getType() == EquipmentSlot.Type.HUMANOID_ARMOR && !entity.getItemBySlot(slot).isEmpty()) {
                 return true;
             }

@@ -5,8 +5,13 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Shearable;
+//? if >=1.21.2 {
 import net.minecraft.world.entity.animal.golem.AbstractGolem;
 import net.minecraft.world.entity.animal.golem.SnowGolem;
+//?} else {
+/*import net.minecraft.world.entity.animal.AbstractGolem;
+import net.minecraft.world.entity.animal.SnowGolem;
+*///?}
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShearsItem;

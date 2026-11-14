@@ -6,3 +6,10 @@ plugins {
 }
 
 stonecutter active "26.1.2".let { multiloaderStonecutter.active(it) }
+
+stonecutter parameters {
+    // 1.21.11 renamed ResourceLocation to Identifier; the shared source uses Identifier.
+    replacements.string(eval(current.version, "<1.21.11")) {
+        replace("Identifier", "ResourceLocation")
+    }
+}

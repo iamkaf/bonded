@@ -15,7 +15,10 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+//? if >=1.21.2
 import net.minecraft.world.entity.monster.zombie.Zombie;
+//? if <1.21.2
+/*import net.minecraft.world.entity.monster.Zombie;*/
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
@@ -86,9 +89,11 @@ public final class BondedDebugCommands {
                 && rule.repair() != null) {
             var repairId = net.minecraft.resources.Identifier.tryParse(rule.repair());
             if (repairId != null && net.minecraft.core.registries.BuiltInRegistries.ITEM.containsKey(repairId)) {
-                anvilRepair = stack.isValidRepairItem(new ItemStack(
-                        net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(repairId)
-                ));
+                ItemStack repairStack = new ItemStack(com.iamkaf.bonded.util.RegistryCompat.item(repairId));
+                //? if >=1.21.2
+                anvilRepair = stack.isValidRepairItem(repairStack);
+                //? if <1.21.2
+                /*anvilRepair = stack.getItem().isValidRepairItem(stack, repairStack);*/
             }
         }
         String answer = rule == null

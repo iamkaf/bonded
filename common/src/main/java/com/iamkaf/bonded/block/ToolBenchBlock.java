@@ -34,14 +34,17 @@ public class ToolBenchBlock extends Block {
     }
 
     @Override
+    //? if >=1.21.2
     protected @NotNull InteractionResult useItemOn(ItemStack stack, BlockState state, Level level,
+    //? if <1.21.2
+    /*protected @NotNull net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level,*/
             BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (!level.isClientSide() && hand.equals(InteractionHand.MAIN_HAND) && !Bonded.CONFIG.enableUpgrading.get()) {
             PlayerFunctions.sendActionBarMessage(
                     player,
                     Component.translatable("bonded.tool_bench.disabled").withStyle(ChatFormatting.RED)
             );
-            return InteractionResult.SUCCESS_SERVER;
+            return BenchInteraction.handledByServer();
         }
 
         if (!shouldHandle(level, player, hand)) {
@@ -62,14 +65,14 @@ public class ToolBenchBlock extends Block {
                     Component.translatable("bonded.tool_bench.item_not_max_level")
                             .withStyle(ChatFormatting.RED)
             );
-            return InteractionResult.SUCCESS_SERVER;
+            return BenchInteraction.handledByServer();
         }
 
         Ingredient upgradeMaterial = leveler.getUpgradeMaterial(handItem, level);
 
         if (upgradeMaterial == null || !leveler.isUpgradable(handItem)) {
             errorFeedback(level, player, Component.translatable("bonded.tool_bench.no_upgrade_path"));
-            return InteractionResult.SUCCESS_SERVER;
+            return BenchInteraction.handledByServer();
         }
 
         boolean hasIngredient = ItemFunctions.has(player.getInventory(), upgradeMaterial)
@@ -81,7 +84,7 @@ public class ToolBenchBlock extends Block {
                     Component.translatable("bonded.tool_bench.missing_ingredient")
                             .withStyle(ChatFormatting.RED)
             );
-            return InteractionResult.SUCCESS_SERVER;
+            return BenchInteraction.handledByServer();
         }
 
         ItemStack oldGear = handItem.copy();
@@ -89,7 +92,7 @@ public class ToolBenchBlock extends Block {
         var upgraded = leveler.transmuteUpgrade(handItem);
 
         if (upgraded == null || upgraded.isEmpty()) {
-            return InteractionResult.SUCCESS_SERVER;
+            return BenchInteraction.handledByServer();
         }
 
         Optional<AdjacentBenchStorage.ConsumedStorageItem> consumedStorageItem = Optional.empty();
@@ -104,7 +107,7 @@ public class ToolBenchBlock extends Block {
                         Component.translatable("bonded.tool_bench.missing_ingredient")
                                 .withStyle(ChatFormatting.RED)
                 );
-                return InteractionResult.SUCCESS_SERVER;
+                return BenchInteraction.handledByServer();
             }
         }
 
@@ -140,7 +143,7 @@ public class ToolBenchBlock extends Block {
                     0.05d
             );
         }
-        return InteractionResult.SUCCESS;
+        return BenchInteraction.succeeded();
     }
 
     private boolean shouldHandle(Level level, Player player, InteractionHand hand) {

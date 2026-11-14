@@ -4,7 +4,10 @@ import com.iamkaf.amber.api.event.v1.events.common.EntityEvent;
 import com.iamkaf.bonded.Bonded;
 import com.iamkaf.bonded.registry.DataComponents;
 import net.minecraft.util.RandomSource;
+//? if >=1.21.2
 import net.minecraft.util.context.ContextKeySet;
+//? if <1.21.2
+/*import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;*/
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -29,7 +32,7 @@ public final class WorldInnateBond {
             return;
         }
 
-        for (EquipmentSlot slot : EquipmentSlot.VALUES) {
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
             ItemStack stack = livingEntity.getItemBySlot(slot);
             applyToMonsterEquipment(livingEntity, stack);
         }
@@ -43,21 +46,29 @@ public final class WorldInnateBond {
         applyToCreatedGear(stack, livingEntity.getRandom());
     }
 
+    //? if >=1.21.2
     public static void applyToLoot(ItemStack stack, ContextKeySet paramSet, LootContext context) {
+    //? if <1.21.2
+    /*public static void applyToLoot(ItemStack stack, LootContextParamSet paramSet, LootContext context) {*/
         if (paramSet == LootContextParamSets.CHEST || isEnemyEntityLoot(paramSet, context)) {
             applyToCreatedGear(stack, context.getRandom());
         }
     }
 
+    //? if >=1.21.2
     private static boolean isEnemyEntityLoot(ContextKeySet paramSet, LootContext context) {
+    //? if <1.21.2
+    /*private static boolean isEnemyEntityLoot(LootContextParamSet paramSet, LootContext context) {*/
         if (paramSet != LootContextParamSets.ENTITY) {
             return false;
         }
 
         //? if >=26.3
         /*Entity entity = context.getOptional(LootContextParams.THIS_ENTITY);*/
-        //? if <26.3
+        //? if >=1.21.2 && <26.3
         Entity entity = context.getOptionalParameter(LootContextParams.THIS_ENTITY);
+        //? if <1.21.2
+        /*Entity entity = context.getParamOrNull(LootContextParams.THIS_ENTITY);*/
         return entity instanceof Enemy && !(entity instanceof Player);
     }
 

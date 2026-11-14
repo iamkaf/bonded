@@ -1,5 +1,6 @@
 package com.iamkaf.bonded.rules;
 
+import com.iamkaf.bonded.util.RegistryCompat;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.iamkaf.bonded.Bonded;
@@ -16,7 +17,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.enchantment.Repairable;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Type;
@@ -217,7 +217,7 @@ public final class BondedRules {
             return null;
         }
         Identifier id = Identifier.tryParse(rule.upgradeTo());
-        return id == null ? null : BuiltInRegistries.ITEM.getValue(id);
+        return id == null ? null : RegistryCompat.item(id);
     }
 
     public static @Nullable TagKey<Item> upgradeIngredient(Item item) {
@@ -231,7 +231,7 @@ public final class BondedRules {
         }
         TagKey<Item> tag = TagKey.create(Registries.ITEM, id);
         Registry<Item> registry = activeRegistry == null ? BuiltInRegistries.ITEM : activeRegistry;
-        boolean tagPresent = registry.get(tag).filter(holders -> holders.size() > 0).isPresent();
+        boolean tagPresent = RegistryCompat.tag(registry, tag).filter(holders -> holders.size() > 0).isPresent();
         if (GearRuleReference.upgradeMaterial(rule.upgradeIngredient(), tagPresent, registry.containsKey(id))
                 == GearRuleReference.UpgradeMaterial.ITEM) {
             return null;
@@ -250,20 +250,20 @@ public final class BondedRules {
         if (id == null) {
             return null;
         }
-        Optional<HolderSet.Named<Item>> holders = registry.get(TagKey.create(Registries.ITEM, id));
+        Optional<HolderSet.Named<Item>> holders = RegistryCompat.tag(registry, TagKey.create(Registries.ITEM, id));
         boolean tagPresent = holders.filter(value -> value.size() > 0).isPresent();
         return switch (GearRuleReference.upgradeMaterial(reference, tagPresent, BuiltInRegistries.ITEM.containsKey(id))) {
-            case TAG -> Ingredient.of(holders.orElseThrow());
-            case ITEM -> Ingredient.of(BuiltInRegistries.ITEM.getValue(id));
+            case TAG -> RegistryCompat.ingredient(holders.orElseThrow());
+            case ITEM -> Ingredient.of(RegistryCompat.item(id));
             case DORMANT, INVALID -> null;
         };
     }
 
     /** Uses native repair data unless the active rule explicitly replaces or disables it. */
-    public static @Nullable Repairable repairable(ItemStack stack) {
+    public static @Nullable RepairMaterial repairable(ItemStack stack) {
         ResolvedGearRule rule = rule(stack.getItem());
         if (rule == null || !rule.enabled() || rule.repairMode() == ResolvedGearRule.RepairMode.INHERIT) {
-            return stack.get(net.minecraft.core.component.DataComponents.REPAIRABLE);
+            return RepairMaterial.ofNative(stack);
         }
         if (rule.repairMode() == ResolvedGearRule.RepairMode.NONE || rule.repair() == null) {
             return null;
@@ -273,11 +273,11 @@ public final class BondedRules {
             return null;
         }
         if (rule.repairMode() == ResolvedGearRule.RepairMode.ITEM) {
-            Item item = BuiltInRegistries.ITEM.getValue(id);
-            return item == null ? null : new Repairable(HolderSet.direct(item.builtInRegistryHolder()));
+            Item item = RegistryCompat.item(id);
+            return item == null ? null : new RepairMaterial(HolderSet.direct(item.builtInRegistryHolder()));
         }
-        Optional<HolderSet.Named<Item>> holders = BuiltInRegistries.ITEM.get(TagKey.create(Registries.ITEM, id));
-        return holders.<Repairable>map(Repairable::new).orElse(null);
+        Optional<HolderSet.Named<Item>> holders = RegistryCompat.itemTag(TagKey.create(Registries.ITEM, id));
+        return holders.<RepairMaterial>map(RepairMaterial::new).orElse(null);
     }
 
     public static synchronized void addApiUpgrade(Item from, Item to, TagKey<Item> ingredient) {
@@ -476,7 +476,7 @@ public final class BondedRules {
                     continue;
                 }
                 String target = registryId(registry, targetItem);
-                Optional<HolderSet.Named<Item>> holders = registry.get(patch.upgradeIngredient);
+                Optional<HolderSet.Named<Item>> holders = RegistryCompat.tag(registry, patch.upgradeIngredient);
                 if (target == null || !items.containsKey(target) || holders.isEmpty() || holders.get().size() == 0) {
                     diagnostics.add("Invalid API upgrade rule for " + itemId);
                 } else {
@@ -530,7 +530,7 @@ public final class BondedRules {
             return invalid("selector is not a valid identifier: " + rule.selector());
         }
         if (rule.selector().startsWith("#")) {
-            Optional<HolderSet.Named<Item>> holders = registry.get(TagKey.create(Registries.ITEM, selector));
+            Optional<HolderSet.Named<Item>> holders = RegistryCompat.tag(registry, TagKey.create(Registries.ITEM, selector));
             if (holders.isEmpty() || holders.get().size() == 0) {
                 return dormant("selector tag is missing or empty: " + rule.selector());
             }
@@ -579,7 +579,7 @@ public final class BondedRules {
                 if (repair == null) {
                     return invalid("repair tag is not a valid identifier: " + rule.repair());
                 }
-                Optional<HolderSet.Named<Item>> holders = registry.get(TagKey.create(Registries.ITEM, repair));
+                Optional<HolderSet.Named<Item>> holders = RegistryCompat.tag(registry, TagKey.create(Registries.ITEM, repair));
                 if (holders.isEmpty() || holders.get().size() == 0) {
                     return dormant("repair tag is missing or empty: " + rule.repair());
                 }
@@ -600,7 +600,7 @@ public final class BondedRules {
             if (ingredientId == null) {
                 return invalid("upgrade ingredient is not a valid identifier: " + rule.upgradeIngredient());
             }
-            Optional<HolderSet.Named<Item>> holders = registry.get(TagKey.create(Registries.ITEM, ingredientId));
+            Optional<HolderSet.Named<Item>> holders = RegistryCompat.tag(registry, TagKey.create(Registries.ITEM, ingredientId));
             if (targetAvailability == GearRuleReference.Availability.DORMANT) {
                 return dormant("upgrade target is missing: " + rule.upgradeTo());
             }
