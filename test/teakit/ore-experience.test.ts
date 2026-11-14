@@ -54,7 +54,7 @@ describe("Bonded ore experience", () => {
       await runtime.wait(300);
       await client.screenshot("bonded-critical-experience", { hideOverlay: false });
       await commands.assert(
-        "/execute if items entity @s weapon.mainhand minecraft:iron_pickaxe[bonded:item_level~{experience:30,bond:30}]",
+        '/execute if data entity @s SelectedItem{id:"minecraft:iron_pickaxe",components:{"bonded:item_level":{experience:30,bond:30}}}',
       );
     } finally {
       await commands.run("/bondeddebug critical-chance 0", { requireSuccess: false });

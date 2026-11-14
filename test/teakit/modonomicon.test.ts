@@ -21,7 +21,7 @@ describe("Modonomicon field guide", () => {
     "does not expose the guide recipe without Modonomicon",
     {
       target: {
-        minecraft: ">=1.21.11",
+        minecraft: ">=1.21.1",
         loader: ["forge", "neoforge"],
       },
     },
@@ -39,7 +39,7 @@ describe("Modonomicon field guide", () => {
     "crafts and opens the Bonded field guide with Modonomicon 1.x",
     {
       target: {
-        minecraft: "1.21.11",
+        minecraft: ">=1.21.1 <1.22",
         loader: ["fabric"],
       },
     },

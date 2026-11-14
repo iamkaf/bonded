@@ -81,12 +81,6 @@ GLFW_PLATFORM = "x11"
 XDG_SESSION_TYPE = "x11"
 WAYLAND_DISPLAY = ""
 
-[nodes."1.21.1-forge".gradleProperties]
-"bonded.withLiteminer" = "false"
-
-[nodes."1.21.1-forge".systemProperties]
-"bonded.withLiteminer" = "false"
-
 [nodes."1.21.1-neoforge"]
 loader = "neoforge"
 minecraft = "1.21.1"

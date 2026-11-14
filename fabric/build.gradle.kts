@@ -84,10 +84,15 @@ dependencies {
     }
 
     if (withLiteminer.get()) {
-        add(
+        val liteminer = add(
                 runtimeConfiguration,
                 "com.iamkaf.liteminer:liteminer-fabric:${multiloader.requiredProperty("dependencies.liteminer")}"
         )
+        // Open Parties and Claims is optional for Liteminer, and it needs a Forge Config API Port that
+        // the obfuscated development runtime does not provide.
+        if (liteminer is ExternalModuleDependency && multiloader.optionalProperty("dependencies.liteminer-without-opac") != null) {
+            liteminer.exclude(mapOf("group" to "xaero.pac"))
+        }
     }
 
     if (withPatchouli.get() && patchouli.isPresent) {

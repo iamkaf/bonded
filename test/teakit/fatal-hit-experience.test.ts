@@ -55,7 +55,7 @@ describe("Bonded combat experience", () => {
             await commands.assert("/execute if score @s bonded_fatal_xp matches 1..");
           } else {
             await commands.assert(
-              `/execute if items entity @s weapon.mainhand minecraft:${weapon}[bonded:item_level~{experience:0}]`,
+              `/execute if data entity @s SelectedItem{id:"minecraft:${weapon}",components:{"bonded:item_level":{experience:0}}}`,
             );
           }
         } finally {

@@ -90,10 +90,12 @@ public final class BondedDebugCommands {
             var repairId = net.minecraft.resources.Identifier.tryParse(rule.repair());
             if (repairId != null && net.minecraft.core.registries.BuiltInRegistries.ITEM.containsKey(repairId)) {
                 ItemStack repairStack = new ItemStack(com.iamkaf.bonded.util.RegistryCompat.item(repairId));
-                //? if >=1.21.2
+                //? if >=1.21.2 {
                 anvilRepair = stack.isValidRepairItem(repairStack);
-                //? if <1.21.2
-                /*anvilRepair = stack.getItem().isValidRepairItem(stack, repairStack);*/
+                //?} else {
+                /*var repairable = BondedRules.repairable(stack);
+                anvilRepair = repairable != null && repairable.isValidRepairItem(repairStack);
+                *///?}
             }
         }
         String answer = rule == null

@@ -11,8 +11,8 @@
   },
   "pattern": [
     "AAA",
-    "AA",
-    "BB"
+    "AA ",
+    "BB "
   ],
   "result": {
     "id": "bonded:tool_bench"
