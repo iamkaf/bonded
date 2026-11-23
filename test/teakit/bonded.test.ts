@@ -598,9 +598,9 @@ function versionAtLeast(version: string, major: number, minor: number, patch = 0
 async function stoneUpgrade(ctx: TeaKitTestContext) {
   const version = (await ctx.runtime.health()).minecraftVersion ?? "";
   if (versionAtLeast(version, 1, 21, 9)) {
-    return { copper: true, ingot: "minecraft:copper_ingot", pickaxe: "minecraft:copper_pickaxe", shovel: "minecraft:copper_shovel", pickaxeMaxDamage: 240, chest: "minecraft:copper_chest" };
+    return { copper: true, ingot: "minecraft:copper_ingot", pickaxe: "minecraft:copper_pickaxe", shovel: "minecraft:copper_shovel", pickaxeMaxDamage: 240, chest: "minecraft:copper_chest" } as const;
   }
-  return { copper: false, ingot: "minecraft:iron_ingot", pickaxe: "minecraft:iron_pickaxe", shovel: "minecraft:iron_shovel", pickaxeMaxDamage: 300, chest: "minecraft:trapped_chest" };
+  return { copper: false, ingot: "minecraft:iron_ingot", pickaxe: "minecraft:iron_pickaxe", shovel: "minecraft:iron_shovel", pickaxeMaxDamage: 300, chest: "minecraft:trapped_chest" } as const;
 }
 
 async function expectBlock(ctx: TeaKitTestContext, position: BlockPos, blockId: BlockId, timeout: number) {
