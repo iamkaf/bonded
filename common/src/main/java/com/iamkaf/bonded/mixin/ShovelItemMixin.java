@@ -1,6 +1,7 @@
 package com.iamkaf.bonded.mixin;
 
 import com.iamkaf.bonded.api.event.GameEvents;
+import com.iamkaf.bonded.util.InteractionCompat;
 //? if >=1.21.2 {
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
@@ -73,7 +74,7 @@ public abstract class ShovelItemMixin {
     @Inject(method = "useOn", at = @At("RETURN"))
     private void bonded$useOnReturn(UseOnContext context, CallbackInfoReturnable<InteractionResult> cir,
             @Share("bonded$awardPathXp") LocalBooleanRef awardPathXp) {
-        if (!awardPathXp.get() || cir.getReturnValue() != InteractionResult.SUCCESS) {
+        if (!awardPathXp.get() || !InteractionCompat.succeeded(cir.getReturnValue())) {
             return;
         }
     //?} else {
@@ -81,7 +82,7 @@ public abstract class ShovelItemMixin {
     private void bonded$useOnReturn(UseOnContext context, CallbackInfoReturnable<InteractionResult> cir) {
         boolean awardPathXp = bonded$awardPathXp.get();
         bonded$awardPathXp.set(false);
-        if (!awardPathXp || cir.getReturnValue() != InteractionResult.SUCCESS) {
+        if (!awardPathXp || !InteractionCompat.succeeded(cir.getReturnValue())) {
             return;
         }
     *///?}
