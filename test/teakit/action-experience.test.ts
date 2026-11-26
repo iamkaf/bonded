@@ -48,6 +48,18 @@ describe("Bonded action experience", () => {
         },
       },
       {
+        name: "axe strips a log",
+        item: "minecraft:iron_axe",
+        experience: 1,
+        run: async ({ commands, player }) => {
+          await commands.assert(`/setblock ${TARGET.x} ${TARGET.y} ${TARGET.z} minecraft:oak_log`);
+          await player.useBlockServer(TARGET, { face: "up", hand: "main_hand" });
+          await commands.assert(
+            `/execute if block ${TARGET.x} ${TARGET.y} ${TARGET.z} minecraft:stripped_oak_log`,
+          );
+        },
+      },
+      {
         name: "flint and steel lights a fire",
         item: "minecraft:flint_and_steel",
         experience: 1,

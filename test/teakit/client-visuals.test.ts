@@ -50,19 +50,20 @@ describe("Bonded client visuals", () => {
       await ctx.world.fill({ x: -3, y: 71, z: -3 }, { x: 5, y: 76, z: 5 }, "minecraft:air");
       await ctx.player.teleport({ x: 2.5, y: 71, z: -1.5 });
       await ctx.world.setBlock({ x: 0, y: 71, z: 0 }, "bonded:repair_bench");
-      await ctx.commands.assert("/item replace entity @s weapon.mainhand with minecraft:iron_shovel[minecraft:damage=49]");
-      await ctx.commands.assert("/item replace entity @s hotbar.1 with minecraft:iron_ingot 3");
-      await ctx.player.useBlockServer({ x: 0, y: 71, z: 0 }, { face: "up", hand: "main_hand" });
-      await ctx.commands.assert(
-        "/execute if items entity @s weapon.mainhand minecraft:iron_shovel[minecraft:damage=0]",
-      );
-      // Wear the shovel down to half, keeping the over-repair it just gained.
-      await ctx.commands.assert(
-        '/item modify entity @s weapon.mainhand {"function":"minecraft:set_damage","damage":0.5}',
-      );
-      await ctx.commands.assert(
-        "/execute unless items entity @s weapon.mainhand minecraft:iron_shovel[minecraft:damage=0]",
-      );
+      await ctx.world.setBlock({ x: 1, y: 71, z: 0 }, "minecraft:barrel");
+      await ctx.commands.assert("/item replace block 1 71 0 container.0 with minecraft:iron_ingot 8");
+      await ctx.commands.assert("/item replace entity @s weapon.mainhand with minecraft:iron_shovel[minecraft:damage=1]");
+      // Spare ingots at the Repair Bench become over-repair, as they do for players.
+      for (let use = 0; use < 4; use++) {
+        await ctx.player.useBlockServer({ x: 0, y: 71, z: 0 }, { face: "up", hand: "main_hand" });
+      }
+      await ctx.commands.assert("/execute if items entity @s weapon.mainhand minecraft:iron_shovel[minecraft:damage=0]");
+      // Taking damage now leaves a worn, over-repaired shovel.
+      await ctx.player.teleport({ x: 2.5, y: 72, z: -1 });
+      await ctx.world.setBlock({ x: 2, y: 71, z: 0 }, "minecraft:dirt");
+      await ctx.runtime.wait(500);
+      await ctx.player.mine({ x: 2, y: 71, z: 0 }, { timeoutMs: 5_000 });
+      await ctx.commands.assert("/execute if items entity @s weapon.mainhand minecraft:iron_shovel[minecraft:damage=1]");
 
       await ctx.client.openInventory();
       await ctx.client.waitForFrames(5);
@@ -115,6 +116,16 @@ async function hoverHotbarSlot(ctx: TeaKitTestContext, hotbarIndex: number): Pro
   if (!slot || slot.x === undefined || slot.y === undefined) {
     throw new Error(`Expected hotbar slot ${hotbarIndex} in the inventory: ${JSON.stringify(screen.menu().slots())}`);
   }
-  await ctx.client.scroll({ x: slot.x + 8, y: slot.y + 8, verticalAmount: 0 });
+  // Slot positions are relative to the 176x166 inventory panel, which is centred on the scaled screen.
+  const scaled = await guiSize(ctx);
+  const left = Math.floor((scaled.width - 176) / 2);
+  const top = Math.floor((scaled.height - 166) / 2);
+  await ctx.client.scroll({ x: left + slot.x + 8, y: top + slot.y + 8, verticalAmount: 0 });
   await ctx.client.waitForFrames(5);
+}
+
+async function guiSize(ctx: TeaKitTestContext): Promise<{ width: number; height: number }> {
+  // The exit-less inventory has no widget to measure, so use the default 2x scale of the 854x480 window.
+  void ctx;
+  return { width: 427, height: 240 };
 }
