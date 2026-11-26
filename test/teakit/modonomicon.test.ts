@@ -18,20 +18,26 @@ describe.configure({
 
 describe("Modonomicon field guide", () => {
   test(
-    "does not expose the guide recipe without Modonomicon",
+    "exposes the guide recipe only when Modonomicon is loaded",
     {
       target: {
         minecraft: ">=1.21.1",
-        loader: ["forge", "neoforge"],
+        loader: ["fabric", "forge", "neoforge"],
       },
     },
-    async ({ commands }) => {
-      await expect(
-        commands.run("/recipe give @s bonded:modonomicon_field_guide", {
-          captureOutput: true,
-          requireSuccess: true,
-        }),
-      ).rejects.toThrow();
+    async ({ commands, runtime }) => {
+      // Crafting in an earlier run may have unlocked it already.
+      await commands.run("/recipe take @s bonded:modonomicon_field_guide", { requireSuccess: false });
+      const recipe = commands.run("/recipe give @s bonded:modonomicon_field_guide", {
+        captureOutput: true,
+        requireSuccess: true,
+      });
+      if (await runtime.mods.isLoaded("modonomicon")) {
+        await recipe;
+        await commands.run("/recipe take @s bonded:modonomicon_field_guide");
+      } else {
+        await expect(recipe).rejects.toThrow();
+      }
     },
   );
 
@@ -40,7 +46,8 @@ describe("Modonomicon field guide", () => {
     {
       target: {
         minecraft: ">=1.21.1 <1.22",
-        loader: ["fabric"],
+        loader: ["fabric", "forge", "neoforge"],
+        mods: "modonomicon",
       },
     },
     async (ctx) => {
@@ -61,30 +68,85 @@ describe("Modonomicon field guide", () => {
       await ctx.commands.assert(
         '/give @s modonomicon:modonomicon[modonomicon:book_id="bonded:field_guide"]',
       );
-      const inventory = await ctx.player.inventory();
-      const guide = inventory.items.find((item) => menuItemId(item) === "modonomicon:modonomicon");
-      if (!guide || guide.slot === undefined || guide.slot < 0 || guide.slot > 8) {
-        throw new Error(`Expected the Bonded Field Guide in the hotbar: ${JSON.stringify(inventory)}`);
-      }
+      const guide = await heldGuide(ctx);
 
-      await ctx.player.inventory().selectHotbar(guide.slot);
       try {
+        await ctx.player.inventory().selectHotbar(guide);
         await ctx.player.useItem({ hand: "main_hand" });
-
+        await waitForBook(ctx);
+        // The book reopens where it was left, so step back to the index first.
+        await showIndex(ctx);
         let book = await ctx.client.screen();
-        await expect(async () => {
-          book = await ctx.client.screen();
-          return book.screenClass?.startsWith("com.klikli_dev.modonomicon.client.gui.book") ?? false;
-        }).toEventuallyEqual(true, { timeout: "10s" });
         await expect(book).toHaveTitleLike(/bonded field guide/i);
 
-        await ctx.runtime.wait(2_000);
+        await ctx.runtime.wait(1_000);
         book = await ctx.client.screen();
         const controls = book.widgets().all().map((widget) => widget.label);
         expect(controls).toEqual(
           expect.arrayContaining(["Bonding", "Recipes", "Augments", "Previous Page", "Next Page", "Exit"]),
         );
         await ctx.client.screenshot("bonded-modonomicon-field-guide-1x");
+      } finally {
+        await closeScreenStack(ctx);
+      }
+    },
+  );
+
+  // The 1.21.1 line replaces these entries, so each one has to load and open on its own.
+  test(
+    "opens the entries the 1.21.1 field guide overrides",
+    {
+      target: {
+        minecraft: ">=1.21.1 <1.22",
+        loader: ["fabric", "forge", "neoforge"],
+        mods: "modonomicon",
+      },
+    },
+    async (ctx) => {
+      await closeScreenStack(ctx);
+      await ctx.commands.run("/gamemode creative");
+      await ctx.commands.run("/clear @s");
+      await ctx.commands.assert(
+        '/give @s modonomicon:modonomicon[modonomicon:book_id="bonded:field_guide"]',
+      );
+      const guide = await heldGuide(ctx);
+
+      try {
+        await ctx.player.inventory().selectHotbar(guide);
+        await ctx.player.useItem({ hand: "main_hand" });
+        await waitForBook(ctx);
+        await ctx.runtime.wait(1_500);
+
+        for (const [category, entry] of [
+          ["Bonding", "Growing Together"],
+          ["Augments", "Cake Destroyer"],
+          ["Augments", "Oceanic"],
+        ] as const) {
+          // A right click steps back one screen: entry, category, then the index with the categories.
+          for (let attempt = 0; attempt < 4 && !(await labels(ctx)).includes(category); attempt++) {
+            await ctx.client.click({ x: 200, y: 120, button: 1 });
+            await ctx.runtime.wait(400);
+          }
+          let book = await ctx.client.screen();
+          if (!(await labels(ctx)).includes(category)) {
+            throw new Error(
+              `Expected the ${category} category; the screen is ${book.screenClass}: ${(await labels(ctx)).join(", ")}`,
+            );
+          }
+          await book.widgets().find(category).click();
+          await ctx.runtime.wait(300);
+          expect(await labels(ctx)).toContain(entry);
+
+          book = await ctx.client.screen();
+          await book.widgets().find(entry).click();
+          await ctx.runtime.wait(300);
+          // An entry page has its page arrows and no entry list; the category list names every entry.
+          const controls = await labels(ctx);
+          if (!controls.includes("Next Page") || controls.includes(entry)) {
+            throw new Error(`Expected the ${entry} entry page; saw ${controls.join(", ")}`);
+          }
+          await ctx.client.screenshot(`bonded-modonomicon-${entry.toLowerCase().replaceAll(" ", "-")}`);
+        }
       } finally {
         await closeScreenStack(ctx);
       }
@@ -163,6 +225,44 @@ describe("Modonomicon field guide", () => {
     },
   );
 });
+
+async function heldGuide(ctx: TeaKitTestContext): Promise<number> {
+  await ctx.runtime.wait(500);
+  const inventory = await ctx.player.inventory();
+  const guide = inventory.items.find((item) => menuItemId(item) === "modonomicon:modonomicon");
+  if (!guide || guide.slot === undefined || guide.slot < 0 || guide.slot > 8) {
+    throw new Error(`Expected the Bonded Field Guide in the hotbar: ${JSON.stringify(inventory)}`);
+  }
+  return guide.slot;
+}
+
+/** Steps back with right clicks until the category index shows, reopening the book if it closed. */
+async function showIndex(ctx: TeaKitTestContext): Promise<void> {
+  await ctx.runtime.wait(1_000);
+  for (let attempt = 0; attempt < 5 && !(await labels(ctx)).includes("Bonding"); attempt++) {
+    if ((await ctx.client.screen()).open) {
+      await ctx.client.click({ x: 200, y: 120, button: 1 });
+    } else {
+      await ctx.player.useItem({ hand: "main_hand" });
+    }
+    await ctx.runtime.wait(500);
+  }
+}
+
+async function labels(ctx: TeaKitTestContext): Promise<string[]> {
+  return (await ctx.client.screen()).widgets().all().map((widget) => widget.label);
+}
+
+async function waitForBook(ctx: TeaKitTestContext) {
+  let book = await ctx.client.screen();
+  await expect(async () => {
+    book = await ctx.client.screen();
+    return book.screenClass?.startsWith("com.klikli_dev.modonomicon.") ?? false;
+  }).toEventuallyEqual(true, { timeout: "10s" }).catch((error: unknown) => {
+    throw new Error(`Expected the field guide to open; the screen is ${book.screenClass}: ${String(error)}`);
+  });
+  return book;
+}
 
 async function closeScreenStack(ctx: TeaKitTestContext): Promise<void> {
   for (let attempt = 0; attempt < 6; attempt++) {

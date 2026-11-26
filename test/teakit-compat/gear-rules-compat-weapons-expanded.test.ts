@@ -33,9 +33,10 @@ const NEWER_EXTRAS: ExpectedRule[] = [
   { item: "weaponsexpanded:ritual_dagger", type: "melee_weapon" },
 ];
 
-function weaponRules(families: readonly string[]): ExpectedRule[] {
-  return TIERS.flatMap((tier) => families.map((family) => {
-    const next = NEXT_TIER[tier];
+function weaponRules(families: readonly string[], copperTier: boolean): ExpectedRule[] {
+  return TIERS.filter((tier) => copperTier || tier !== "copper").flatMap((tier) => families.map((family) => {
+    // Releases without copper weapons send stone weapons straight to iron.
+    const next = tier === "stone" && !copperTier ? "iron" : NEXT_TIER[tier];
     return {
       item: `weaponsexpanded:${tier}_${family}`,
       type: AXE_FAMILIES.has(family) ? "mining_tool" : "melee_weapon",
@@ -58,18 +59,23 @@ describe.configure({
 
 describe("Bonded Weapons Expanded gear rules", () => {
   test("resolves every Weapons Expanded rule on the installed release", {
-    target: { minecraft: "26.1.2", loader: ["fabric", "neoforge"], mods: "weaponsexpanded" },
+    target: { minecraft: ">=1.21.1", loader: ["fabric", "neoforge"], mods: "weaponsexpanded" },
   }, async (ctx) => {
     try {
       // A dormant or invalid rule leaves its item unclaimed, so each item proves its rule resolved.
-      const expectations = [...weaponRules(CORE_FAMILIES), ...CORE_EXTRAS];
+      const copperTier = (
+        await ctx.commands.run("/item replace entity @s weapon.mainhand with weaponsexpanded:copper_battleaxe", {
+          requireSuccess: false,
+        })
+      ).success;
+      const expectations = [...weaponRules(CORE_FAMILIES, copperTier), ...CORE_EXTRAS];
       // Older ports lack the 2.0 weapons, and the second profile's marker keeps it out there.
       const newerWeapons = await ctx.commands.run(
         "/item replace entity @s weapon.mainhand with weaponsexpanded:iron_rapier",
         { requireSuccess: false },
       );
       if (newerWeapons.success) {
-        expectations.push(...weaponRules(NEWER_FAMILIES), ...NEWER_EXTRAS);
+        expectations.push(...weaponRules(NEWER_FAMILIES, copperTier), ...NEWER_EXTRAS);
       }
       for (const rule of expectations) {
         await expectHeldRule(ctx, rule.item, [
@@ -84,7 +90,7 @@ describe("Bonded Weapons Expanded gear rules", () => {
   });
 
   test("upgrades a Weapons Expanded weapon at the Tool Bench without discarding item data", {
-    target: { minecraft: "26.1.2", loader: ["fabric", "neoforge"], mods: "weaponsexpanded" },
+    target: { minecraft: ">=1.21.1", loader: ["fabric", "neoforge"], mods: "weaponsexpanded" },
   }, async (ctx) => {
     try {
       await ctx.player.reset({ gameMode: "survival", inventory: "clear" });
@@ -103,8 +109,9 @@ describe("Bonded Weapons Expanded gear rules", () => {
         `/execute if items entity @s weapon.mainhand ${upgraded}[minecraft:damage=23,minecraft:custom_data~{weapons_expanded_sentinel:1b}]`,
       );
       await ctx.commands.assert(
-        `/execute if items entity @s weapon.mainhand ${upgraded}[minecraft:enchantments={"minecraft:sharpness":2},bonded:item_level~{level:1,bond:512}]`,
+        `/execute if items entity @s weapon.mainhand ${upgraded}[minecraft:enchantments={"minecraft:sharpness":2}]`,
       );
+      await expectHeldItemLevel(ctx, { level: 1, bond: 512 });
       await ctx.commands.assert("/execute unless items entity @s inventory.* minecraft:diamond");
     } finally {
       await ctx.player.reset({ gameMode: "creative", inventory: "clear" });
@@ -126,4 +133,18 @@ async function expectHeldRule(
     expectOutputContains: [`Bonded rule ${item}`, ...expectedOutput],
     requireSuccess: true,
   });
+}
+
+/** Checks the held item's Bonded state; 1.21.1 item predicates cannot match modded components partially. */
+async function expectHeldItemLevel(
+  ctx: TeaKitTestContext,
+  expected: { bond: number; level?: number },
+): Promise<void> {
+  await ctx.commands.run("/scoreboard objectives add bonded_compat_check dummy", { requireSuccess: false });
+  for (const [field, value] of Object.entries(expected)) {
+    await ctx.commands.assert(
+      `/execute store result score @s bonded_compat_check run data get entity @s SelectedItem.components."bonded:item_level".${field}`,
+    );
+    await ctx.commands.assert(`/execute if score @s bonded_compat_check matches ${value}`);
+  }
 }

@@ -18,7 +18,7 @@ describe.configure({
 
 describe("Bonded compatibility gear rules", () => {
   test("expands the Basic Weapons tag and inherits native repair materials", {
-    target: { minecraft: "26.1.2", loader: ["fabric", "neoforge"] },
+    target: { minecraft: ">=1.21.1", loader: ["fabric", "neoforge"], mods: "basicweapons" },
   }, async (ctx) => {
     try {
       await prepareArena(ctx);
@@ -30,16 +30,26 @@ describe("Bonded compatibility gear rules", () => {
         "upgrade=basicweapons:diamond_dagger",
         "source=Basic Weapons",
       ]);
-      await expectHeldRule(ctx, "basicweapons:copper_hammer", [
-        "Bonded rule basicweapons:copper_hammer",
-        "type=melee_weapon",
+      // Releases without a copper tier send stone weapons straight to iron.
+      const copperTier = (
+        await ctx.commands.run("/item replace entity @s weapon.mainhand with basicweapons:copper_dagger", {
+          requireSuccess: false,
+        })
+      ).success;
+      await expectHeldRule(ctx, "basicweapons:stone_dagger", [
+        "Bonded rule basicweapons:stone_dagger",
+        `upgrade=basicweapons:${copperTier ? "copper" : "iron"}_dagger`,
         "source=Basic Weapons",
       ]);
-      await expectHeldRule(ctx, "basicweapons:netherite_pike", [
-        "Bonded rule basicweapons:netherite_pike",
-        "type=melee_weapon",
-        "source=Basic Weapons",
-      ]);
+      // Older releases lack the copper hammer and the netherite pike.
+      for (const item of ["basicweapons:copper_hammer", "basicweapons:netherite_pike"] as const) {
+        const exists = await ctx.commands.run(`/item replace entity @s weapon.mainhand with ${item}`, {
+          requireSuccess: false,
+        });
+        if (exists.success) {
+          await expectHeldRule(ctx, item, [`Bonded rule ${item}`, "type=melee_weapon", "source=Basic Weapons"]);
+        }
+      }
       await expectHeldRule(ctx, "basicweapons:diamond_dagger", [
         "Bonded rule basicweapons:diamond_dagger",
         "type=melee_weapon",
@@ -108,7 +118,7 @@ describe("Bonded compatibility gear rules", () => {
   });
 
   test("upgrades Advanced Netherite gear without discarding item data", {
-    target: { minecraft: "26.1.2", loader: ["fabric", "neoforge"] },
+    target: { minecraft: ">=1.21.1", loader: ["fabric", "forge", "neoforge"], mods: "advancednetherite" },
   }, async (ctx) => {
     try {
       await prepareArena(ctx);
@@ -160,8 +170,9 @@ describe("Bonded compatibility gear rules", () => {
       await ctx.player.teleport({ x: 0, y: 72, z: -1 });
       await ctx.player.useBlockServer(REPAIR_BENCH, { face: "up", hand: "main_hand" });
       await ctx.commands.assert(
-        "/execute if items entity @s weapon.mainhand advancednetherite:netherite_gold_sword[minecraft:damage=0,minecraft:custom_data~{compat_sentinel:1b},bonded:item_level~{bond:777}]",
+        "/execute if items entity @s weapon.mainhand advancednetherite:netherite_gold_sword[minecraft:damage=0,minecraft:custom_data~{compat_sentinel:1b}]",
       );
+      await expectHeldItemLevel(ctx, { bond: 777 });
       await ctx.commands.assert(
         "/execute unless items entity @s inventory.* advancednetherite:netherite_gold_ingot",
       );
@@ -243,7 +254,19 @@ async function expectPreservedUpgrade(
   await ctx.commands.assert(
     `/execute if items entity @s weapon.mainhand ${item}[minecraft:enchantments={"${enchantment}":${enchantmentLevel}}]`,
   );
-  await ctx.commands.assert(
-    `/execute if items entity @s weapon.mainhand ${item}[bonded:item_level~{level:1,bond:${bond}}]`,
-  );
+  await expectHeldItemLevel(ctx, { level: 1, bond });
+}
+
+/** Checks the held item's Bonded state; 1.21.1 item predicates cannot match modded components partially. */
+async function expectHeldItemLevel(
+  ctx: TeaKitTestContext,
+  expected: { bond: number; level?: number },
+): Promise<void> {
+  await ctx.commands.run("/scoreboard objectives add bonded_compat_check dummy", { requireSuccess: false });
+  for (const [field, value] of Object.entries(expected)) {
+    await ctx.commands.assert(
+      `/execute store result score @s bonded_compat_check run data get entity @s SelectedItem.components."bonded:item_level".${field}`,
+    );
+    await ctx.commands.assert(`/execute if score @s bonded_compat_check matches ${value}`);
+  }
 }
