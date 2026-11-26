@@ -85,3 +85,36 @@ mods = [
   "modrinth:betterend:tBdZGZeX",
   "modrinth:betternether:gDLNJy17",
 ]
+
+[[instance]]
+name = "bonded-integrations-fabric-1.21.1"
+minecraft = "1.21.1"
+loader = "fabric"
+loader_version = "latest"
+sides = ["client", "server"]
+server_properties = { online-mode = "false", enforce-secure-profile = "false" }
+mods = [
+  "./fabric/versions/1.21.1/build/libs/bonded-fabric-5.3.0+1.21.1.jar",
+  "maven:net.fabricmc.fabric-api:fabric-api:0.107.0+1.21.1",
+  "maven:com.iamkaf.amber:amber-fabric:11.7.1+1.21.1",
+  "maven:com.iamkaf.konfig:konfig-fabric:0.10.3+1.21.1",
+  "modrinth:betterend:4qhBEg6J",
+  "modrinth:betternether:M1o6hR2m",
+  "modrinth:bclib:TxWM7AW8",
+  "modrinth:worldweaver:mPmeykPR",
+  "modrinth:wunderlib:NWOZ9B7R",
+]
+
+[[instance]]
+name = "bonded-control-fabric-1.21.1"
+minecraft = "1.21.1"
+loader = "fabric"
+loader_version = "latest"
+sides = ["client", "server"]
+server_properties = { online-mode = "false", enforce-secure-profile = "false" }
+mods = [
+  "./fabric/versions/1.21.1/build/libs/bonded-fabric-5.3.0+1.21.1.jar",
+  "maven:net.fabricmc.fabric-api:fabric-api:0.107.0+1.21.1",
+  "maven:com.iamkaf.amber:amber-fabric:11.7.1+1.21.1",
+  "maven:com.iamkaf.konfig:konfig-fabric:0.10.3+1.21.1",
+]
