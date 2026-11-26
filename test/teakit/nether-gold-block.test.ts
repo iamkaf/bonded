@@ -25,6 +25,8 @@ describe("Bonded Nether block breaking", () => {
 
       await commands.assert("/execute if dimension minecraft:the_nether");
       await waitForBlock(ctx, "minecraft:gold_block", true);
+      // The client needs a moment to receive the Nether chunks before the driver can route through them.
+      await ctx.runtime.wait(2_000);
       await player.mine({ x: 0, y: 120, z: 0 }, { timeoutMs: 5_000 });
       await commands.assert("/execute if dimension minecraft:the_nether run say Bonded server responsive");
       await waitForBlock(ctx, "minecraft:air", false);

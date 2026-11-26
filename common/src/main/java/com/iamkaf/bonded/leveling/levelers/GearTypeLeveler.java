@@ -1,5 +1,6 @@
 package com.iamkaf.bonded.leveling.levelers;
 
+import com.iamkaf.bonded.util.RegistryCompat;
 import com.iamkaf.amber.api.functions.v1.ItemFunctions;
 import com.iamkaf.bonded.Bonded;
 import com.iamkaf.bonded.component.AppliedBonusesContainer;
@@ -66,12 +67,12 @@ public interface GearTypeLeveler {
     }
 
     default @Nullable Ingredient getUpgradeMaterial(ItemStack gear, Level level) {
-        var registry = level.holderLookup(Registries.ITEM);
+        var registry = level.registryAccess().lookupOrThrow(Registries.ITEM);
         TagKey<Item> tag = getUpgradeIngredient(gear);
         if (tag != null) {
             var holders = registry.get(tag);
             if (holders.isPresent() && holders.get().size() > 0) {
-                return Ingredient.of(holders.get());
+                return RegistryCompat.ingredient(holders.get());
             }
         }
         return BondedRules.upgradeMaterial(gear.getItem(), registry);

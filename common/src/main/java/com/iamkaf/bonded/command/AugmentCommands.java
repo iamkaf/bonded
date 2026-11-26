@@ -39,7 +39,10 @@ final class AugmentCommands {
 
     static LiteralArgumentBuilder<CommandSourceStack> create() {
         return Commands.literal("augment")
+                //? if >=1.21.2
                 .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
+                //? if <1.21.2
+                /*.requires(source -> source.hasPermission(2))*/
                 .then(createQuery())
                 .then(createChange("add", false, 1))
                 .then(createChange("set", true, 0));

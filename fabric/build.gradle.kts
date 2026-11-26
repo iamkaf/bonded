@@ -64,16 +64,18 @@ repositories {
 dependencies {
     val runtimeConfiguration = if (multiloader.useUnobfuscatedMinecraft()) "runtimeOnly" else "modLocalRuntime"
 
-    fun addAvailableFixture(alias: String) {
-        if (multiloader.versionOrNull(catalog, alias) != null) {
-            add(runtimeConfiguration, catalog.findLibrary(alias).get())
-        }
-    }
-
     // Fixtures missing from the shared catalogs pin their Modrinth version in versions/*/gradle.properties.
     fun addPropertyFixture(alias: String, modrinthProject: String) {
         multiloader.optionalProperty("fixtures.$alias")?.let { version ->
             add(runtimeConfiguration, "maven.modrinth:$modrinthProject:$version")
+        }
+    }
+
+    fun addAvailableFixture(alias: String, modrinthProject: String) {
+        if (multiloader.versionOrNull(catalog, alias) != null) {
+            add(runtimeConfiguration, catalog.findLibrary(alias).get())
+        } else {
+            addPropertyFixture(alias, modrinthProject)
         }
     }
 
@@ -84,14 +86,23 @@ dependencies {
     }
 
     if (withLiteminer.get()) {
-        add(
+        val liteminer = add(
                 runtimeConfiguration,
                 "com.iamkaf.liteminer:liteminer-fabric:${multiloader.requiredProperty("dependencies.liteminer")}"
         )
+        // Open Parties and Claims is optional for Liteminer, and it needs a Forge Config API Port that
+        // the obfuscated development runtime does not provide.
+        if (liteminer is ExternalModuleDependency && multiloader.optionalProperty("dependencies.liteminer-without-opac") != null) {
+            liteminer.exclude(mapOf("group" to "xaero.pac"))
+        }
     }
 
     if (withPatchouli.get() && patchouli.isPresent) {
-        runtimeOnly(patchouli.get())
+        add(runtimeConfiguration, patchouli.get())
+        // The development runtime does not unpack Patchouli's bundled Fiber.
+        if (modonomiconFiber != null && !withModonomicon.get()) {
+            add(runtimeConfiguration, "me.zeroeightsix:fiber:$modonomiconFiber")
+        }
     }
 
     if (withModonomicon.get() && modonomicon != null) {
@@ -107,27 +118,27 @@ dependencies {
     }
 
     if ("basic-weapons" in compatFixtures) {
-        addAvailableFixture("basic-weapons-fabric")
-        addAvailableFixture("khazodacore-fabric")
+        addAvailableFixture("basic-weapons-fabric", "basicweapons")
+        addAvailableFixture("khazodacore-fabric", "khazodacore")
     }
     if ("advanced-netherite" in compatFixtures) {
-        addAvailableFixture("advanced-netherite-fabric")
+        addAvailableFixture("advanced-netherite-fabric", "advanced-netherite")
     }
     if ("immersive-armors" in compatFixtures) {
-        addAvailableFixture("immersive-armors-fabric")
+        addAvailableFixture("immersive-armors-fabric", "immersive-armors")
     }
     if ("betterend" in compatFixtures) {
-        addAvailableFixture("betterend-fabric")
+        addAvailableFixture("betterend-fabric", "betterend")
     }
     if ("betternether" in compatFixtures) {
-        addAvailableFixture("betternether-fabric")
+        addAvailableFixture("betternether-fabric", "betternether")
     }
     if ("weapons-expanded" in compatFixtures) {
         addPropertyFixture("weapons-expanded-fabric", "weaponsexpanded")
     }
     if ("betterend" in compatFixtures || "betternether" in compatFixtures) {
-        addAvailableFixture("bclib-fabric")
-        addAvailableFixture("worldweaver-fabric")
+        addAvailableFixture("bclib-fabric", "bclib")
+        addAvailableFixture("worldweaver-fabric", "worldweaver")
     }
 }
 

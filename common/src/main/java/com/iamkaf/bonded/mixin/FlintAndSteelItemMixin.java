@@ -1,6 +1,7 @@
 package com.iamkaf.bonded.mixin;
 
 import com.iamkaf.bonded.api.event.GameEvents;
+import com.iamkaf.bonded.util.InteractionCompat;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.FlintAndSteelItem;
@@ -15,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class FlintAndSteelItemMixin {
     @Inject(method = "useOn", at = @At("RETURN"))
     private void bonded$useOn(UseOnContext context, CallbackInfoReturnable<InteractionResult> cir) {
-        if (cir.getReturnValue().equals(InteractionResult.SUCCESS)) {
+        if (InteractionCompat.succeeded(cir.getReturnValue())) {
             Player player = context.getPlayer();
             ItemStack stack = context.getItemInHand();
             if (!player.level().isClientSide()) {

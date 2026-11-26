@@ -139,9 +139,17 @@ async function expectAugmentProgress(
   );
 }
 
+/** Before 1.21.2 attribute ids carry a generic. prefix. */
+async function waterMovementEfficiency(ctx: TeaKitTestContext): Promise<string> {
+  const version = (await ctx.runtime.health()).minecraftVersion ?? "";
+  const [major = 0, minor = 0, patch = 0] = version.split(".").map((part) => Number.parseInt(part, 10) || 0);
+  const prefixed = major === 1 && (minor < 21 || (minor === 21 && patch < 2));
+  return prefixed ? "minecraft:generic.water_movement_efficiency" : "minecraft:water_movement_efficiency";
+}
+
 async function attributeValue(ctx: TeaKitTestContext): Promise<number> {
   await ctx.commands.assert(
-    `/execute store result score #attribute ${SCOREBOARD} run attribute @s minecraft:water_movement_efficiency get 1000`,
+    `/execute store result score #attribute ${SCOREBOARD} run attribute @s ${await waterMovementEfficiency(ctx)} get 1000`,
   );
   const active = !await commandFails(
     ctx,

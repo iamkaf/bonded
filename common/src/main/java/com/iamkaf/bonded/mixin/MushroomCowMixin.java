@@ -6,7 +6,10 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Shearable;
 import net.minecraft.world.entity.animal.Animal;
+//? if >=1.21.2
 import net.minecraft.world.entity.animal.cow.MushroomCow;
+//? if <1.21.2
+/*import net.minecraft.world.entity.animal.MushroomCow;*/
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShearsItem;

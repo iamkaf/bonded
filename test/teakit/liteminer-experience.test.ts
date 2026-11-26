@@ -70,7 +70,7 @@ describe("Bonded Liteminer integration", () => {
         await ctx.runtime.wait(500);
 
         await ctx.commands.assert(
-          `/execute if items entity @s weapon.mainhand minecraft:iron_pickaxe[bonded:item_level~{experience:${expectedExperience}}]`,
+          `/execute if data entity @s SelectedItem{id:"minecraft:iron_pickaxe",components:{"bonded:item_level":{experience:${expectedExperience}}}}`,
         );
       }
     } finally {

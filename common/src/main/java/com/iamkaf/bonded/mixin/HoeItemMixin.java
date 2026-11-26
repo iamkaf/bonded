@@ -1,6 +1,7 @@
 package com.iamkaf.bonded.mixin;
 
 import com.iamkaf.bonded.api.event.GameEvents;
+import com.iamkaf.bonded.util.InteractionCompat;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 //? if >=26.3 {
@@ -33,7 +34,7 @@ public abstract class HoeItemMixin {
         }
         *///?}
 
-        if (player != null && !player.level().isClientSide() && cir.getReturnValue() == InteractionResult.SUCCESS) {
+        if (player != null && !player.level().isClientSide() && InteractionCompat.succeeded(cir.getReturnValue())) {
             GameEvents.AWARD_ITEM_EXPERIENCE.invoker().experience(player, stack, 1);
         }
     }

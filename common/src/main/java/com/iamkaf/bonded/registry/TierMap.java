@@ -43,8 +43,8 @@ public class TierMap {
                     var repairId = net.minecraft.resources.Identifier.tryParse(rule.repair());
                     if (itemId != null && repairId != null) {
                         repairs.put(
-                                net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(itemId),
-                                net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(repairId)
+                                com.iamkaf.bonded.util.RegistryCompat.item(itemId),
+                                com.iamkaf.bonded.util.RegistryCompat.item(repairId)
                         );
                     }
                 });

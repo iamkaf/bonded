@@ -1,6 +1,7 @@
 package com.iamkaf.bonded.registry;
 
 import com.iamkaf.amber.api.functions.v1.ItemFunctions;
+import com.iamkaf.bonded.util.AttributeModifierCompat;
 import com.iamkaf.bonded.Bonded;
 import com.iamkaf.bonded.bonuses.AttributeModifierHolder;
 import com.iamkaf.bonded.bonuses.BondBonus;
@@ -51,7 +52,7 @@ public class BondBonusRegistry {
                 .toList();
 
         stripManagedBondedAttributeModifiers(gear);
-        ItemFunctions.restoreDefaultAttributeModifiers(gear);
+        AttributeModifierCompat.restoreDefaults(gear);
 
         for (var combinedModifier : combineAttributeModifiers(attributeModifierHolders)) {
             ItemFunctions.addModifier(
@@ -157,7 +158,10 @@ public class BondBonusRegistry {
 
         for (var modifier : existingModifiers.modifiers()) {
             if (!isManagedBondedModifier(modifier.modifier(), defaultModifierIds)) {
+                //? if >=1.21.6
                 builder.add(modifier.attribute(), modifier.modifier(), modifier.slot(), modifier.display());
+                //? if <1.21.6
+                /*builder.add(modifier.attribute(), modifier.modifier(), modifier.slot());*/
             }
         }
 
@@ -166,10 +170,7 @@ public class BondBonusRegistry {
 
     private Set<Identifier> getDefaultModifierIds(ItemStack gear) {
         Set<Identifier> defaultModifierIds = new HashSet<>();
-        for (var modifier : gear.getItem()
-                .getDefaultInstance()
-                .getOrDefault(net.minecraft.core.component.DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.EMPTY)
-                .modifiers()) {
+        for (var modifier : AttributeModifierCompat.defaults(gear).modifiers()) {
             defaultModifierIds.add(modifier.modifier().id());
         }
         return defaultModifierIds;

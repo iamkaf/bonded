@@ -23,7 +23,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Repairable;
+import com.iamkaf.bonded.rules.RepairMaterial;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -36,14 +36,17 @@ public class RepairBenchBlock extends Block {
     }
 
     @Override
+    //? if >=1.21.2
     protected @NotNull InteractionResult useItemOn(ItemStack stack, BlockState state, Level level,
+    //? if <1.21.2
+    /*protected @NotNull net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level,*/
             BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (!level.isClientSide() && hand.equals(InteractionHand.MAIN_HAND) && !Bonded.CONFIG.enableRepairing.get()) {
             PlayerFunctions.sendActionBarMessage(
                     player,
                     Component.translatable("bonded.repair_bench.disabled").withStyle(ChatFormatting.RED)
             );
-            return InteractionResult.SUCCESS_SERVER;
+            return BenchInteraction.handledByServer();
         }
 
         if (!shouldHandle(level, player, hand)) {
@@ -54,7 +57,7 @@ public class RepairBenchBlock extends Block {
 
         var leveler = Bonded.GEAR.getLeveler(handItem);
         assert leveler != null;
-        Repairable repairable = BondedRules.repairable(handItem);
+        RepairMaterial repairable = BondedRules.repairable(handItem);
 
         if (repairable == null) {
             return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
@@ -67,7 +70,7 @@ public class RepairBenchBlock extends Block {
                     Component.translatable("bonded.repair_bench.fully_repaired")
                             .withStyle(ChatFormatting.RED)
             );
-            return InteractionResult.SUCCESS_SERVER;
+            return BenchInteraction.handledByServer();
         }
 
         Optional<ItemStack> repairIngredient = findRepairIngredient(player.getInventory(), repairable);
@@ -83,7 +86,7 @@ public class RepairBenchBlock extends Block {
                     Component.translatable("bonded.repair_bench.missing_ingredient")
                             .withStyle(ChatFormatting.RED)
             );
-            return InteractionResult.SUCCESS_SERVER;
+            return BenchInteraction.handledByServer();
         }
 
         ItemStack material = repairIngredient.get();
@@ -100,7 +103,7 @@ public class RepairBenchBlock extends Block {
                 repairAmount
         );
         if (repairAmount <= 0) {
-            return InteractionResult.SUCCESS_SERVER;
+            return BenchInteraction.handledByServer();
         }
 
         Optional<ItemStack> consumedRepairIngredient = consumeRepairIngredient(player.getInventory(), repairable);
@@ -118,7 +121,7 @@ public class RepairBenchBlock extends Block {
                     Component.translatable("bonded.repair_bench.missing_ingredient")
                             .withStyle(ChatFormatting.RED)
             );
-            return InteractionResult.SUCCESS_SERVER;
+            return BenchInteraction.handledByServer();
         }
 
         material = consumedRepairIngredient.get();
@@ -161,10 +164,10 @@ public class RepairBenchBlock extends Block {
                     0.05d
             );
         }
-        return InteractionResult.SUCCESS;
+        return BenchInteraction.succeeded();
     }
 
-    private Optional<ItemStack> findRepairIngredient(Inventory inventory, Repairable repairable) {
+    private Optional<ItemStack> findRepairIngredient(Inventory inventory, RepairMaterial repairable) {
         Optional<ItemStack> scrap = findFirstMatching(inventory, RepairBenchBlock::isScrap);
         if (scrap.isPresent()) {
             return scrap;
@@ -173,7 +176,7 @@ public class RepairBenchBlock extends Block {
         return findFirstMatching(inventory, repairable::isValidRepairItem);
     }
 
-    private Optional<ItemStack> consumeRepairIngredient(Inventory inventory, Repairable repairable) {
+    private Optional<ItemStack> consumeRepairIngredient(Inventory inventory, RepairMaterial repairable) {
         Optional<ItemStack> scrap = consumeFirstMatching(inventory, RepairBenchBlock::isScrap);
         if (scrap.isPresent()) {
             return scrap;
@@ -206,7 +209,7 @@ public class RepairBenchBlock extends Block {
         return Optional.empty();
     }
 
-    private boolean isRepairIngredient(ItemStack stack, Repairable repairable) {
+    private boolean isRepairIngredient(ItemStack stack, RepairMaterial repairable) {
         return isScrap(stack) || repairable.isValidRepairItem(stack);
     }
 
@@ -214,7 +217,7 @@ public class RepairBenchBlock extends Block {
         return stack.is(Items.SCRAP.get());
     }
 
-    public static Optional<ItemStack> getInventoryRepairIngredientPreview(Inventory inventory, Repairable repairable) {
+    public static Optional<ItemStack> getInventoryRepairIngredientPreview(Inventory inventory, RepairMaterial repairable) {
         if (hasMatching(inventory, RepairBenchBlock::isScrap)) {
             return Optional.of(Items.SCRAP.get().getDefaultInstance());
         }

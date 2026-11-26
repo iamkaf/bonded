@@ -98,7 +98,7 @@ describe("Bonded augment commands", () => {
 
       await expectProgress(ctx, "bonded:cake_destroyer", 63);
       await ctx.commands.assert(
-        "/execute if items entity @s weapon.mainhand minecraft:iron_sword[bonded:augment_progress~{progress:{\"example:unknown\":7}}]",
+        '/execute if data entity @s SelectedItem{id:"minecraft:iron_sword",components:{"bonded:augment_progress":{progress:{"example:unknown":7}}}}',
       );
     } finally {
       await cleanup(ctx);

@@ -29,6 +29,7 @@ public abstract class ItemStackMixin {
     @Unique
     private boolean bonded$insideDamageApplication;
 
+    //? if >=1.21.2 {
     @Inject(method = "isValidRepairItem", at = @At("HEAD"), cancellable = true)
     private void bonded$useResolvedRepairRule(ItemStack ingredient, CallbackInfoReturnable<Boolean> cir) {
         ItemStack stack = (ItemStack) (Object) this;
@@ -40,6 +41,7 @@ public abstract class ItemStackMixin {
         cir.setReturnValue(repairable != null
                 && repairable.items().contains(ingredient.getItem().builtInRegistryHolder()));
     }
+    //?}
 
     /*
      * This is deliberately hooked at the equipped-item entry point. On Minecraft 26.1.2 with
@@ -101,7 +103,12 @@ public abstract class ItemStackMixin {
     @Unique
     private boolean bonded$didBreakOrReachBreakDamage(ItemStack stack, int previousDamage) {
         return stack.isEmpty()
+                //? if >=1.21.2 {
                 || (stack.isBroken() && stack.getDamageValue() > previousDamage);
+                //?} else {
+                /*|| (stack.isDamageableItem() && stack.getDamageValue() >= stack.getMaxDamage()
+                && stack.getDamageValue() > previousDamage);
+                *///?}
     }
 
     @Inject(method = "setDamageValue(I)V", at = @At("TAIL"))
@@ -112,8 +119,10 @@ public abstract class ItemStackMixin {
         MaxDamageModifiers.consumeOverRepairIfThresholdReached((ItemStack) (Object) this);
     }
 
+    //? if >=1.21.2 {
     @Inject(method = "hurtWithoutBreaking(ILnet/minecraft/world/entity/player/Player;)V", at = @At("TAIL"))
     private void bonded$consumeOverRepairAfterNonBreakingDamage(int amount, Player player, CallbackInfo ci) {
         MaxDamageModifiers.consumeOverRepairIfThresholdReached((ItemStack) (Object) this);
     }
+    //?}
 }

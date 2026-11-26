@@ -51,16 +51,18 @@ fun mcCatalog(): VersionCatalog {
 }
 
 dependencies {
-    fun addAvailableFixture(alias: String) {
-        if (multiloader.versionOrNull(catalog, alias) != null) {
-            runtimeOnly(catalog.findLibrary(alias).get())
-        }
-    }
-
     // Fixtures missing from the shared catalogs pin their Modrinth version in versions/*/gradle.properties.
     fun addPropertyFixture(alias: String, modrinthProject: String) {
         multiloader.optionalProperty("fixtures.$alias")?.let { version ->
             runtimeOnly("maven.modrinth:$modrinthProject:$version")
+        }
+    }
+
+    fun addAvailableFixture(alias: String, modrinthProject: String) {
+        if (multiloader.versionOrNull(catalog, alias) != null) {
+            runtimeOnly(catalog.findLibrary(alias).get())
+        } else {
+            addPropertyFixture(alias, modrinthProject)
         }
     }
 
@@ -85,20 +87,20 @@ dependencies {
     }
 
     if ("basic-weapons" in compatFixtures) {
-        addAvailableFixture("basic-weapons-neoforge")
-        addAvailableFixture("khazodacore-neoforge")
+        addAvailableFixture("basic-weapons-neoforge", "basicweapons")
+        addAvailableFixture("khazodacore-neoforge", "khazodacore")
     }
     if ("advanced-netherite" in compatFixtures) {
-        addAvailableFixture("advanced-netherite-neoforge")
+        addAvailableFixture("advanced-netherite-neoforge", "advanced-netherite")
     }
     if ("immersive-armors" in compatFixtures) {
-        addAvailableFixture("immersive-armors-neoforge")
+        addAvailableFixture("immersive-armors-neoforge", "immersive-armors")
     }
     if ("betterend" in compatFixtures) {
-        addAvailableFixture("betterend-neoforge")
+        addAvailableFixture("betterend-neoforge", "betterend")
     }
     if ("betternether" in compatFixtures) {
-        addAvailableFixture("betternether-neoforge")
+        addAvailableFixture("betternether-neoforge", "betternether")
     }
     if ("weapons-expanded" in compatFixtures) {
         addPropertyFixture("weapons-expanded-neoforge", "weaponsexpanded")

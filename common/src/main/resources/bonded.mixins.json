@@ -9,6 +9,7 @@
   ],
   "mixins": [
     "ItemStackMixin",
+    "AnvilMenuMixin",
     "LivingEntityMixin",
     "ServerPlayerMixin",
     "AxeItemMixin",

@@ -50,6 +50,7 @@ beforeEach(async (ctx) => {
 
 describe("Bonded gameplay", () => {
   test("uses repair and tool bench materials from adjacent storage", async (ctx) => {
+    const up = await stoneUpgrade(ctx);
     try {
       await ctx.commands.batch([
         "/clear @s",
@@ -62,9 +63,10 @@ describe("Bonded gameplay", () => {
         "/setblock 4 71 0 bonded:tool_bench",
         "/setblock 5 71 0 bonded:repair_bench",
         "/setblock 6 71 0 minecraft:chest[facing=north]",
-        "/item replace block 6 71 0 container.0 with minecraft:copper_ingot 1",
+        // Iron also repairs the iron pickaxe, and the repair bench at 7 reaches this chest first, so leave one spare.
+        `/item replace block 6 71 0 container.0 with ${up.ingot} ${up.copper ? 1 : 2}`,
         "/setblock 7 71 0 bonded:repair_bench",
-        "/setblock 8 71 0 minecraft:copper_chest[facing=north]",
+        `/setblock 8 71 0 ${up.chest}[facing=north]`,
         "/item replace block 8 71 0 container.0 with minecraft:iron_ingot 1",
       ]);
       await expectBlock(ctx, { x: 0, y: 71, z: 0 }, "bonded:repair_bench", 3000);
@@ -89,7 +91,7 @@ describe("Bonded gameplay", () => {
       await ctx.commands.assert("/bonded xp set @s 10 levels");
       await ctx.commands.run("/tp @s 4 72 -1");
       await ctx.player.useBlockServer({ x: 4, y: 71, z: 0 }, { face: "up", hand: "main_hand" });
-      await expectPlayerItem(ctx, {"id":"minecraft:copper_pickaxe","slot":0,"count":1});
+      await expectPlayerItem(ctx, {"id":up.pickaxe,"slot":0,"count":1});
       await ctx.runtime.wait(250);
       await ctx.client.screenshot("bonded-adjacent-storage-benches", { hideOverlay: true });
     } finally {
@@ -262,6 +264,7 @@ describe("Bonded gameplay", () => {
   });
 
   test("clears temporary durability when upgrading a tool", async (ctx) => {
+    const up = await stoneUpgrade(ctx);
     try {
       await ctx.commands.batch([
         "/clear @s",
@@ -277,12 +280,12 @@ describe("Bonded gameplay", () => {
       await ctx.commands.batch([
         "/item replace entity @s weapon.mainhand with minecraft:stone_pickaxe[minecraft:damage=1,bonded:item_level={experience:0,maxExperience:50,level:10,bond:500}]",
         "/item replace entity @s hotbar.1 with bonded:scrap 1",
-        "/item replace entity @s hotbar.2 with minecraft:copper_ingot 1",
+        `/item replace entity @s hotbar.2 with ${up.ingot} 1`,
       ]);
       await ctx.player.useBlockServer({ x: 0, y: 71, z: 0 }, { face: "up", hand: "main_hand" });
       await expectPlayerItem(ctx, {"id":"minecraft:stone_pickaxe","slot":0,"damage":0,"maxDamage":216});
       await ctx.player.useBlockServer({ x: 2, y: 71, z: 0 }, { face: "up", hand: "main_hand" });
-      await expectPlayerItem(ctx, {"id":"minecraft:copper_pickaxe","slot":0,"damage":0,"maxDamage":240});
+      await expectPlayerItem(ctx, {"id":up.pickaxe,"slot":0,"damage":0,"maxDamage":up.pickaxeMaxDamage});
     } finally {
       await ctx.commands.batch([
         "/clear @s",
@@ -370,6 +373,7 @@ describe("Bonded gameplay", () => {
   });
 
   test("preserves damage through the full material upgrade chain", async (ctx) => {
+    const up = await stoneUpgrade(ctx);
     try {
       await ctx.commands.batch([
         "/clear @s",
@@ -412,29 +416,31 @@ describe("Bonded gameplay", () => {
       await expectBlock(ctx, { x: 5, y: 71, z: 0 }, "minecraft:dirt", 3000);
       await ctx.player.useBlockServer({ x: 5, y: 71, z: 0 }, { face: "up", hand: "main_hand" });
       await ctx.commands.batch([
-        "/item replace entity @s hotbar.1 with minecraft:copper_ingot 1",
+        `/item replace entity @s hotbar.1 with ${up.ingot} 1`,
         "/tp @s 2 72 -1",
       ]);
       await ctx.player.useBlockServer({ x: 2, y: 71, z: 0 }, { face: "up", hand: "main_hand" });
-      await expectPlayerItem(ctx, {"id":"minecraft:copper_shovel","slot":0,"damage":0});
-      await ctx.commands.assert("/bonded xp set @s 10 levels");
-      await ctx.commands.batch([
-        "/item replace entity @s hotbar.1 with bonded:scrap 1",
-        "/tp @s 0 72 -1",
-      ]);
-      await ctx.player.useBlockServer({ x: 0, y: 71, z: 0 }, { face: "up", hand: "main_hand" });
-      await ctx.commands.batch([
-        "/setblock 6 71 0 minecraft:dirt",
-        "/tp @s 6 72 -1",
-      ]);
-      await expectBlock(ctx, { x: 6, y: 71, z: 0 }, "minecraft:dirt", 3000);
-      await ctx.player.useBlockServer({ x: 6, y: 71, z: 0 }, { face: "up", hand: "main_hand" });
-      await ctx.commands.batch([
-        "/item replace entity @s hotbar.1 with minecraft:iron_ingot 1",
-        "/tp @s 2 72 -1",
-      ]);
-      await ctx.player.useBlockServer({ x: 2, y: 71, z: 0 }, { face: "up", hand: "main_hand" });
-      await expectPlayerItem(ctx, {"id":"minecraft:iron_shovel","slot":0,"damage":0});
+      await expectPlayerItem(ctx, {"id":up.shovel,"slot":0,"damage":0});
+      if (up.copper) {
+        await ctx.commands.assert("/bonded xp set @s 10 levels");
+        await ctx.commands.batch([
+          "/item replace entity @s hotbar.1 with bonded:scrap 1",
+          "/tp @s 0 72 -1",
+        ]);
+        await ctx.player.useBlockServer({ x: 0, y: 71, z: 0 }, { face: "up", hand: "main_hand" });
+        await ctx.commands.batch([
+          "/setblock 6 71 0 minecraft:dirt",
+          "/tp @s 6 72 -1",
+        ]);
+        await expectBlock(ctx, { x: 6, y: 71, z: 0 }, "minecraft:dirt", 3000);
+        await ctx.player.useBlockServer({ x: 6, y: 71, z: 0 }, { face: "up", hand: "main_hand" });
+        await ctx.commands.batch([
+          "/item replace entity @s hotbar.1 with minecraft:iron_ingot 1",
+          "/tp @s 2 72 -1",
+        ]);
+        await ctx.player.useBlockServer({ x: 2, y: 71, z: 0 }, { face: "up", hand: "main_hand" });
+        await expectPlayerItem(ctx, {"id":"minecraft:iron_shovel","slot":0,"damage":0});
+      }
       await ctx.commands.batch([
         "/setblock 7 71 0 minecraft:dirt",
         "/tp @s 7 72 -1",
@@ -538,6 +544,7 @@ describe("Bonded gameplay", () => {
   });
 
   test("drops scrap from tool damage and material upgrades", async (ctx) => {
+    const up = await stoneUpgrade(ctx);
     try {
       await ctx.commands.batch([
         "/clear @s",
@@ -558,11 +565,11 @@ describe("Bonded gameplay", () => {
       await ctx.commands.batch([
         "/clear @s",
         "/item replace entity @s weapon.mainhand with minecraft:stone_pickaxe",
-        "/item replace entity @s hotbar.1 with minecraft:copper_ingot 1",
+        `/item replace entity @s hotbar.1 with ${up.ingot} 1`,
       ]);
       await ctx.commands.assert("/bonded xp set @s 10 levels");
       await ctx.player.useBlockServer({ x: 4, y: 71, z: 0 }, { face: "up", hand: "main_hand" });
-      await expectPlayerItem(ctx, {"id":"minecraft:copper_pickaxe","slot":0,"count":1});
+      await expectPlayerItem(ctx, {"id":up.pickaxe,"slot":0,"count":1});
       await ctx.entities.query({ origin: await ctx.player.position(), radius: 8, type: "minecraft:item", item: "bonded:scrap" }).waitForCountAtMost(2, { timeout: 5000 });
     } finally {
       await ctx.commands.batch([
@@ -575,6 +582,26 @@ describe("Bonded gameplay", () => {
   });
 
 });
+
+/** True when the game version is at least major.minor.patch. */
+function versionAtLeast(version: string, major: number, minor: number, patch = 0): boolean {
+  const [vMajor = 0, vMinor = 0, vPatch = 0] = version.split(".").map((part) => Number.parseInt(part, 10) || 0);
+  if (vMajor !== major) return vMajor > major;
+  if (vMinor !== minor) return vMinor > minor;
+  return vPatch >= patch;
+}
+
+/**
+ * The tier above stone. Copper tools arrived in 1.21.9; before them stone tools upgrade straight to iron, and
+ * copper chests do not exist either.
+ */
+async function stoneUpgrade(ctx: TeaKitTestContext) {
+  const version = (await ctx.runtime.health()).minecraftVersion ?? "";
+  if (versionAtLeast(version, 1, 21, 9)) {
+    return { copper: true, ingot: "minecraft:copper_ingot", pickaxe: "minecraft:copper_pickaxe", shovel: "minecraft:copper_shovel", pickaxeMaxDamage: 240, chest: "minecraft:copper_chest" } as const;
+  }
+  return { copper: false, ingot: "minecraft:iron_ingot", pickaxe: "minecraft:iron_pickaxe", shovel: "minecraft:iron_shovel", pickaxeMaxDamage: 300, chest: "minecraft:trapped_chest" } as const;
+}
 
 async function expectBlock(ctx: TeaKitTestContext, position: BlockPos, blockId: BlockId, timeout: number) {
   await expect(async () => (await ctx.world.block(position)).id).toEventuallyEqual(blockId, { timeout });

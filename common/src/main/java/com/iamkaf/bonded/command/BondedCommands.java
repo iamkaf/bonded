@@ -59,7 +59,10 @@ public final class BondedCommands {
 
     private static LiteralArgumentBuilder<CommandSourceStack> createExperienceCommand(String name) {
         return Commands.literal(name)
+                //? if >=1.21.2
                 .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
+                //? if <1.21.2
+                /*.requires(source -> source.hasPermission(2))*/
                 .then(createAddCommand())
                 .then(createSetCommand())
                 .then(createQueryCommand());

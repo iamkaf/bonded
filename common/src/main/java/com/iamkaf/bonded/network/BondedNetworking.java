@@ -6,6 +6,7 @@ import com.iamkaf.bonded.Bonded;
 import com.iamkaf.bonded.rules.BondedRules;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+//? if >=1.21.2
 import net.minecraft.server.players.NameAndId;
 
 public final class BondedNetworking {
@@ -65,7 +66,10 @@ public final class BondedNetworking {
         CHANNEL.sendToPlayer(
                 new GearRulesPacket(
                         json,
+                        //? if >=1.21.2
                         !player.level().getServer().isSingleplayerOwner(new NameAndId(player.getGameProfile()))
+                        //? if <1.21.2
+                        /*!player.level().getServer().isSingleplayerOwner(player.getGameProfile())*/
                 ),
                 player
         );

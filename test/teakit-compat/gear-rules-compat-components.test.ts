@@ -114,13 +114,13 @@ describe.configure({
 
 describe("Bonded compatibility gear components", () => {
   test("loads every compatibility fixture used by the gameplay checks", {
-    target: { minecraft: "26.1.2", loader: "fabric" },
+    target: { minecraft: ">=1.21.1", loader: "fabric", mods: ["betterend", "betternether"] },
   }, async ({ registry }) => {
     await expect(registry.missing([...REQUIRED_ITEMS])).resolves.toEqual([]);
   });
 
   test("classifies external armor and tools through their shipped profiles", {
-    target: { minecraft: "26.1.2", loader: "fabric" },
+    target: { minecraft: ">=1.21.1", loader: "fabric", mods: ["betterend", "betternether"] },
   }, async (ctx) => {
     try {
       for (const fixture of CLASSIFICATION_CASES) {
@@ -132,7 +132,7 @@ describe("Bonded compatibility gear components", () => {
   });
 
   test("repairs compatibility gear with its native material without dropping components", {
-    target: { minecraft: "26.1.2", loader: "fabric" },
+    target: { minecraft: ">=1.21.1", loader: "fabric", mods: ["betterend", "betternether"] },
   }, async (ctx) => {
     try {
       await prepareBench(ctx, "bonded:repair_bench");
@@ -159,7 +159,7 @@ describe("Bonded compatibility gear components", () => {
   });
 
   test("upgrades external gear without dropping third-party components", {
-    target: { minecraft: "26.1.2", loader: "fabric" },
+    target: { minecraft: ">=1.21.1", loader: "fabric", mods: ["betterend", "betternether"] },
   }, async (ctx) => {
     try {
       await prepareBench(ctx, "bonded:tool_bench");
@@ -177,8 +177,9 @@ describe("Bonded compatibility gear components", () => {
         });
         await ctx.player.inventory().waitForItemAbsent(fixture.ingredient, { timeout: "5s" });
         await ctx.commands.assert(
-          `/execute if items entity @s weapon.mainhand ${fixture.result}[minecraft:damage=7,immersive_armors:set_count=${fixture.marker},bonded:item_level~{bond:${fixture.marker}}]`,
+          `/execute if items entity @s weapon.mainhand ${fixture.result}[minecraft:damage=7,immersive_armors:set_count=${fixture.marker}]`,
         );
+        await expectHeldItemLevel(ctx, { bond: fixture.marker });
       }
     } finally {
       await cleanup(ctx);
@@ -213,4 +214,18 @@ async function expectHeldRule(
     expectOutputContains: [...expectedOutput],
     requireSuccess: true,
   });
+}
+
+/** Checks the held item's Bonded state; 1.21.1 item predicates cannot match modded components partially. */
+async function expectHeldItemLevel(
+  ctx: TeaKitTestContext,
+  expected: { bond: number; level?: number },
+): Promise<void> {
+  await ctx.commands.run("/scoreboard objectives add bonded_compat_check dummy", { requireSuccess: false });
+  for (const [field, value] of Object.entries(expected)) {
+    await ctx.commands.assert(
+      `/execute store result score @s bonded_compat_check run data get entity @s SelectedItem.components."bonded:item_level".${field}`,
+    );
+    await ctx.commands.assert(`/execute if score @s bonded_compat_check matches ${value}`);
+  }
 }

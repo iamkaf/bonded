@@ -1,5 +1,6 @@
 package com.iamkaf.bonded.leveling;
 
+import com.iamkaf.bonded.util.RegistryCompat;
 import com.iamkaf.bonded.Bonded;
 import com.iamkaf.bonded.component.ItemLevelContainer;
 import com.iamkaf.bonded.leveling.levelers.GearTypeLeveler;
@@ -55,12 +56,12 @@ public class GearManager {
         if (loadedServer == server) return;
         LOGGER.info("Now loading leveling registries...");
 
-        Registry<Item> itemRegistry = serverLevel.registryAccess().lookupOrThrow(Registries.ITEM);
+        Registry<Item> itemRegistry = RegistryCompat.registry(serverLevel.registryAccess(), Registries.ITEM);
         BondedRules.resolve(itemRegistry);
         gearTypeLevelerRegistry.clear();
 
-        Registry<Block> blockRegistry = serverLevel.registryAccess().lookupOrThrow(Registries.BLOCK);
-        Optional<HolderSet.Named<Block>> ores = blockRegistry.get(Tags.ORES);
+        Registry<Block> blockRegistry = RegistryCompat.registry(serverLevel.registryAccess(), Registries.BLOCK);
+        Optional<HolderSet.Named<Block>> ores = RegistryCompat.tag(blockRegistry, Tags.ORES);
         ores.ifPresent(holders -> {
             LOGGER.info("Found {} ores [{}]", holders.size(), Tags.ORES.location());
             holders.stream()
@@ -73,7 +74,7 @@ public class GearManager {
         for (var type : gearTypeLevelerRegistry.gearTypeLevelers()) {
             TagKey<Item> tag = type.tag();
             LOGGER.info("Processing leveler: {} with tag: {}", type.name(), tag.location());
-            Optional<HolderSet.Named<Item>> items = itemRegistry.get(tag);
+            Optional<HolderSet.Named<Item>> items = RegistryCompat.tag(itemRegistry, tag);
             items.ifPresent(holders -> {
                 LOGGER.info("Found {} {} [{}]", holders.size(), type.name(), tag.location());
                 holders.stream()
@@ -97,7 +98,7 @@ public class GearManager {
             if (loadedServer != server) {
                 return;
             }
-            Registry<Item> itemRegistry = server.registryAccess().lookupOrThrow(Registries.ITEM);
+            Registry<Item> itemRegistry = RegistryCompat.registry(server.registryAccess(), Registries.ITEM);
             BondedRules.resolve(itemRegistry);
             BondedNetworking.broadcastGearRules(server);
         };

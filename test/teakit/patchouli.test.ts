@@ -16,23 +16,31 @@ describe.configure({
 });
 
 describe("Patchouli field guide", () => {
-  test(
-    "does not expose the guide recipe when Patchouli is absent",
-    {
-      target: {
-        minecraft: ">=26.2",
-        loader: ["fabric", "neoforge"],
+  for (const minecraft of ["1.21.1", ">=26.2"]) {
+    test(
+      `exposes the guide recipe only when Patchouli is loaded on ${minecraft}`,
+      {
+        target: {
+          minecraft,
+          loader: ["fabric", "neoforge"],
+        },
       },
-    },
-    async ({ commands }) => {
-      await expect(
-        commands.run("/recipe give @s bonded:bonded_field_guide", {
+      async ({ commands, runtime }) => {
+        // Crafting in an earlier run may have unlocked it already.
+        await commands.run("/recipe take @s bonded:bonded_field_guide", { requireSuccess: false });
+        const recipe = commands.run("/recipe give @s bonded:bonded_field_guide", {
           captureOutput: true,
           requireSuccess: true,
-        }),
-      ).rejects.toThrow();
-    },
-  );
+        });
+        if (await runtime.mods.isLoaded("patchouli")) {
+          await recipe;
+          await commands.run("/recipe take @s bonded:bonded_field_guide");
+        } else {
+          await expect(recipe).rejects.toThrow();
+        }
+      },
+    );
+  }
 
   test(
     "does not expose an unsupported Forge guide recipe",
@@ -51,12 +59,14 @@ describe("Patchouli field guide", () => {
     },
   );
 
+  for (const minecraft of ["1.21.1", ">=26.1 <26.2"]) {
   test(
-    "crafts the guide and exposes its recipe and augment chapters",
+    `crafts the guide and exposes its recipe and augment chapters on ${minecraft}`,
     {
       target: {
-        minecraft: ">=26.1 <26.2",
+        minecraft,
         loader: ["fabric", "neoforge"],
+        mods: "patchouli",
       },
     },
     async (ctx) => {
@@ -74,6 +84,7 @@ describe("Patchouli field guide", () => {
       await ctx.commands.assert("/item replace entity @s hotbar.0 with minecraft:book");
       await ctx.commands.assert("/item replace entity @s hotbar.1 with bonded:scrap");
 
+      await ctx.runtime.wait(500);
       let screen = await ctx.client.openInventory();
       const inventorySlots = screen.menu().slots();
       const bookSlot = inventorySlots.find((slot) => menuItemId(slot.item) === "minecraft:book");
@@ -146,6 +157,7 @@ describe("Patchouli field guide", () => {
       }
     },
   );
+  }
 });
 
 function menuItemId(item: unknown): string | undefined {

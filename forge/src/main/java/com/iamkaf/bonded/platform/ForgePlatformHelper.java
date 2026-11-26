@@ -17,7 +17,10 @@ public class ForgePlatformHelper implements IPlatformHelper {
     @Override
     public boolean isModLoaded(String modId) {
 
+        //? if >=1.21.2
         return LoadingModList.getModFileById(modId) != null;
+        //? if <1.21.2
+        /*return LoadingModList.get().getModFileById(modId) != null;*/
     }
 
     @Override

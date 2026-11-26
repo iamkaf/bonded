@@ -1,8 +1,13 @@
 package com.iamkaf.bonded.mixin;
 
 import com.iamkaf.bonded.api.event.GameEvents;
+import com.iamkaf.bonded.util.InteractionCompat;
+//? if >=1.21.2 {
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
+//?} else {
+/*import org.spongepowered.asm.mixin.Unique;
+*///?}
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
@@ -28,9 +33,20 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 //? if <26.3
 @Mixin(ShovelItem.class)
 public abstract class ShovelItemMixin {
+    //? if <1.21.2 {
+    /*// Forge before 1.21.2 does not ship MixinExtras, so the head hands its answer to the return through the thread.
+    @Unique
+    private static final ThreadLocal<Boolean> bonded$awardPathXp = ThreadLocal.withInitial(() -> false);
+    *///?}
+
+    //? if >=1.21.2 {
     @Inject(method = "useOn", at = @At("HEAD"))
     private void bonded$useOnHead(UseOnContext context, CallbackInfoReturnable<InteractionResult> cir,
             @Share("bonded$awardPathXp") LocalBooleanRef awardPathXp) {
+    //?} else {
+    /*@Inject(method = "useOn", at = @At("HEAD"))
+    private void bonded$useOnHead(UseOnContext context, CallbackInfoReturnable<InteractionResult> cir) {
+    *///?}
         Player player = context.getPlayer();
         Level level = context.getLevel();
         BlockPos clickedPos = context.getClickedPos();
@@ -48,15 +64,28 @@ public abstract class ShovelItemMixin {
                 && level.getBlockState(clickedPos).is(Blocks.GRASS_BLOCK)
                 && level.getBlockState(clickedPos.above()).isAir();
 
+        //? if >=1.21.2
         awardPathXp.set(isGrassPathCandidate);
+        //? if <1.21.2
+        /*bonded$awardPathXp.set(isGrassPathCandidate);*/
     }
 
+    //? if >=1.21.2 {
     @Inject(method = "useOn", at = @At("RETURN"))
     private void bonded$useOnReturn(UseOnContext context, CallbackInfoReturnable<InteractionResult> cir,
             @Share("bonded$awardPathXp") LocalBooleanRef awardPathXp) {
-        if (!awardPathXp.get() || cir.getReturnValue() != InteractionResult.SUCCESS) {
+        if (!awardPathXp.get() || !InteractionCompat.succeeded(cir.getReturnValue())) {
             return;
         }
+    //?} else {
+    /*@Inject(method = "useOn", at = @At("RETURN"))
+    private void bonded$useOnReturn(UseOnContext context, CallbackInfoReturnable<InteractionResult> cir) {
+        boolean awardPathXp = bonded$awardPathXp.get();
+        bonded$awardPathXp.set(false);
+        if (!awardPathXp || !InteractionCompat.succeeded(cir.getReturnValue())) {
+            return;
+        }
+    *///?}
 
         Player player = context.getPlayer();
         Level level = context.getLevel();
