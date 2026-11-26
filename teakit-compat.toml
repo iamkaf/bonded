@@ -57,9 +57,8 @@ minecraft = "1.21.1"
 tasks = [":neoforge:1.21.1:runClient"]
 gameDirectory = "neoforge/versions/1.21.1/run"
 
-# Basic Weapons and Weapons Expanded need a newer NeoForge than the 1.21.1 development runtime provides.
 [nodes."1.21.1-neoforge".gradleProperties]
-"bonded.compatFixtures" = "advanced-netherite,immersive-armors"
+"bonded.compatFixtures" = "basic-weapons,advanced-netherite,immersive-armors,weapons-expanded"
 
 [nodes."1.21.1-forge"]
 loader = "forge"
