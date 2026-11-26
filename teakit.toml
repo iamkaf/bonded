@@ -81,11 +81,23 @@ GLFW_PLATFORM = "x11"
 XDG_SESSION_TYPE = "x11"
 WAYLAND_DISPLAY = ""
 
+[nodes."1.21.1-forge".gradleProperties]
+"bonded.withModonomicon" = "true"
+
+[nodes."1.21.1-forge".systemProperties]
+"bonded.withModonomicon" = "true"
+
 [nodes."1.21.1-neoforge"]
 loader = "neoforge"
 minecraft = "1.21.1"
 tasks = [":neoforge:1.21.1:runClient"]
 gameDirectory = "neoforge/versions/1.21.1/run"
+
+[nodes."1.21.1-neoforge".gradleProperties]
+"bonded.withModonomicon" = "true"
+
+[nodes."1.21.1-neoforge".systemProperties]
+"bonded.withModonomicon" = "true"
 
 [nodes."26.1.2-fabric"]
 loader = "fabric"

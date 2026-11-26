@@ -46,16 +46,18 @@ fun mcCatalog(): VersionCatalog {
 }
 
 dependencies {
-    fun addAvailableFixture(alias: String) {
-        if (multiloader.versionOrNull(catalog, alias) != null) {
-            runtimeOnly(catalog.findLibrary(alias).get())
-        }
-    }
-
     // Fixtures missing from the shared catalogs pin their Modrinth version in versions/*/gradle.properties.
     fun addPropertyFixture(alias: String, modrinthProject: String) {
         multiloader.optionalProperty("fixtures.$alias")?.let { version ->
             runtimeOnly("maven.modrinth:$modrinthProject:$version")
+        }
+    }
+
+    fun addAvailableFixture(alias: String, modrinthProject: String) {
+        if (multiloader.versionOrNull(catalog, alias) != null) {
+            runtimeOnly(catalog.findLibrary(alias).get())
+        } else {
+            addPropertyFixture(alias, modrinthProject)
         }
     }
 
@@ -76,20 +78,20 @@ dependencies {
     }
 
     if ("basic-weapons" in compatFixtures) {
-        addAvailableFixture("basic-weapons-forge")
-        addAvailableFixture("khazodacore-forge")
+        addAvailableFixture("basic-weapons-forge", "basicweapons")
+        addAvailableFixture("khazodacore-forge", "khazodacore")
     }
     if ("advanced-netherite" in compatFixtures) {
-        addAvailableFixture("advanced-netherite-forge")
+        addAvailableFixture("advanced-netherite-forge", "advanced-netherite")
     }
     if ("immersive-armors" in compatFixtures) {
-        addAvailableFixture("immersive-armors-forge")
+        addAvailableFixture("immersive-armors-forge", "immersive-armors")
     }
     if ("betterend" in compatFixtures) {
-        addAvailableFixture("betterend-forge")
+        addAvailableFixture("betterend-forge", "betterend")
     }
     if ("betternether" in compatFixtures) {
-        addAvailableFixture("betternether-forge")
+        addAvailableFixture("betternether-forge", "betternether")
     }
     if ("weapons-expanded" in compatFixtures) {
         addPropertyFixture("weapons-expanded-forge", "weaponsexpanded")

@@ -1,0 +1,50 @@
+modId = "bonded"
+projectKey = "bonded-bare"
+
+[defaults]
+launcher = "gradle"
+workingDirectory = "."
+gradleWrapper = "./gradlew"
+noDaemon = true
+console = "plain"
+maxWorkers = 1
+configureOnDemand = true
+
+[defaults.gradleProperties]
+"bonded.withTeaKit" = "true"
+"bonded.withLiteminer" = "true"
+"bonded.withPatchouli" = "false"
+
+[defaults.systemProperties]
+"bonded.withTeaKit" = "true"
+"bonded.withLiteminer" = "true"
+"bonded.withPatchouli" = "false"
+"teakit.enabled" = "true"
+"teakit.autoWorld" = "true"
+"teakit.runtimeApi.required" = "1"
+"teakit.worldId" = "bonded_teakit_bare"
+"teakit.worldName" = "Bonded Without Guide Mods TeaKit"
+
+# Runs without Patchouli and Modonomicon to prove the guide recipes stay hidden.
+[nodes."1.21.1-fabric"]
+loader = "fabric"
+minecraft = "1.21.1"
+tasks = [":fabric:1.21.1:runClient"]
+gameDirectory = "fabric/versions/1.21.1/runs/client"
+
+[nodes."1.21.1-forge"]
+loader = "forge"
+minecraft = "1.21.1"
+tasks = [":forge:1.21.1:runClient"]
+gameDirectory = "forge/versions/1.21.1/run"
+
+[nodes."1.21.1-forge".environment]
+GLFW_PLATFORM = "x11"
+XDG_SESSION_TYPE = "x11"
+WAYLAND_DISPLAY = ""
+
+[nodes."1.21.1-neoforge"]
+loader = "neoforge"
+minecraft = "1.21.1"
+tasks = [":neoforge:1.21.1:runClient"]
+gameDirectory = "neoforge/versions/1.21.1/run"
