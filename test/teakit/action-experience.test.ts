@@ -1,5 +1,5 @@
 import { Capability, Readiness, describe, test } from "@teakit/test";
-import type { BlockPos, ItemId, TeaKitTestContext } from "@teakit/test";
+import type { BlockPos, EntityTypeId, ItemId, TeaKitTestContext } from "@teakit/test";
 
 const LEVEL_ONE = "bonded:item_level={experience:0,maxExperience:1000,level:1,bond:0}";
 const TARGET: BlockPos = { x: 1, y: 71, z: 0 };
@@ -106,7 +106,7 @@ describe("Bonded action experience", () => {
 
   test("awards experience for shearing and igniting mobs and brushing an armadillo", async (ctx) => {
     const interact =
-      (type: string, nbt = "") =>
+      (type: EntityTypeId, nbt = "") =>
       async ({ commands, entities, player }: TeaKitTestContext) => {
         const at = { x: TARGET.x + 0.5, y: TARGET.y, z: TARGET.z + 0.5 };
         await commands.assert(`/summon ${type} ${at.x} ${at.y} ${at.z} {NoAI:1b,Silent:1b,Tags:["bonded_target"]${nbt}}`);

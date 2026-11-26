@@ -39,7 +39,7 @@ describe("Bonded client visuals", () => {
       await ctx.client.closeMenus();
       await ctx.player.reset({ gameMode: "creative", inventory: "clear" });
     }
-    expect(await errorCount(ctx), "errors logged while drawing the tooltip").toBe(errors);
+    expect(await errorCount(ctx)).toBe(errors);
   });
 
   test("draws the over-repair bar on a damaged over-repaired item", async (ctx) => {
@@ -73,7 +73,7 @@ describe("Bonded client visuals", () => {
       await ctx.player.reset({ gameMode: "creative", inventory: "clear" });
       await ctx.world.clear({ x: -1, y: 71, z: -1 }, { x: 3, y: 73, z: 3 });
     }
-    expect(await errorCount(ctx), "errors logged while drawing the durability bar").toBe(errors);
+    expect(await errorCount(ctx)).toBe(errors);
   });
 
   test("previews the repair material and the upgrade on the benches", async (ctx) => {
@@ -101,7 +101,7 @@ describe("Bonded client visuals", () => {
       await ctx.player.reset({ gameMode: "creative", inventory: "clear" });
       await ctx.world.clear(BENCH, BENCH);
     }
-    expect(await errorCount(ctx), "errors logged while drawing the bench previews").toBe(errors);
+    expect(await errorCount(ctx)).toBe(errors);
   });
 });
 

@@ -136,5 +136,5 @@ async function expectAdvancements(ctx: TeaKitTestContext, ids: readonly string[]
       missing.push(id);
     }
   }
-  expect(missing, "advancements not granted").toEqual([]);
+  expect(missing).toEqual([]);
 }

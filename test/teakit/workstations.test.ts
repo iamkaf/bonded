@@ -1,5 +1,5 @@
 import { Capability, Readiness, describe, test } from "@teakit/test";
-import type { BlockPos, ClientScreen, ItemId, TeaKitTestContext } from "@teakit/test";
+import type { BlockId, BlockPos, ClientScreen, ItemId, TeaKitTestContext } from "@teakit/test";
 
 const STATION: BlockPos = { x: 0, y: 71, z: 1 };
 
@@ -76,7 +76,7 @@ describe("Bonded vanilla workstations", () => {
   });
 });
 
-async function prepare(ctx: TeaKitTestContext, station: string): Promise<void> {
+async function prepare(ctx: TeaKitTestContext, station: BlockId): Promise<void> {
   await ctx.player.reset({ gameMode: "creative", inventory: "clear" });
   await ctx.world.fill({ x: -3, y: 70, z: -3 }, { x: 3, y: 70, z: 3 }, "minecraft:stone");
   await ctx.world.fill({ x: -3, y: 71, z: -3 }, { x: 3, y: 74, z: 3 }, "minecraft:air");
